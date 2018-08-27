@@ -1,0 +1,21 @@
+{
+    "name": "DataTables/Editor-PHP",
+	"description": "PHP server-side libraries for Editor",
+	"type": "library",
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "keywords": ["DataTables","jQuery","Editor"],
+    "homepage": "https://editor.datatables.net",
+    "authors": [
+        {
+            "name": "SpryMedia Ltd",
+            "homepage": "https://datatables.net"
+        }
+	],
+    "autoload": {
+        "psr-4": {
+            "DataTables\\": ""
+        }
+    }
+}
