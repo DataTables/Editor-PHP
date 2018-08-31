@@ -126,7 +126,7 @@ class Editor extends Ext {
 	 *  @param string|array $table The table name in the database to read and write
 	 *    information from and to. Can be given here or with the 'table' method.
 	 *  @param string|array $pkey Primary key column name in the table given in
-	      the $table parameter. Can be given here or with the 'pkey' method.
+	 *    the $table parameter. Can be given here or with the 'pkey' method.
 	 */
 	function __construct( $db=null, $table=null, $pkey=null )
 	{
@@ -143,7 +143,7 @@ class Editor extends Ext {
 	 */
 
 	/** @var string */
-	public $version = '__VERSION__';
+	public $version = '1.7.4';
 
 
 
