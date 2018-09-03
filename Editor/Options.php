@@ -87,10 +87,33 @@ class Options extends DataTables\Ext {
 	/** @var string ORDER BY clause */
 	private $_order = null;
 
+	private $_manualAdd = array();
+
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
 	 */
+
+	/**
+	 * Add extra options to the list, in addition to any obtained from the database
+	 *
+	 * @param string $label The label to use for the option
+	 * @param string|null $value Value for the option. If not given, the label will be used
+	 * @return Options Self for chaining
+	 */
+	public function add ( $label, $value=null )
+	{
+		if ( $value === null ) {
+			$value = $label;
+		}
+
+		$this->_manualAdd[] = array(
+			'label' => $label,
+			'value' => $value
+		);
+
+		return $this;
+	}
 
 	/**
 	 * Get / set the column(s) to use as the label value of the options
@@ -271,6 +294,11 @@ class Options extends DataTables\Ext {
 				"label" => $formatter( $rows[$i] ),
 				"value" => $rows[$i][$value]
 			);
+		}
+
+		// Stick on any extra manually added options
+		if ( count( $this->_manualAdd ) ) {
+			$out = array_merge( $out, $this->_manualAdd );
 		}
 
 		// Only sort if there was no SQL order field
