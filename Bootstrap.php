@@ -40,7 +40,7 @@ spl_autoload_register( function ($class) {
 		// If just a single top level namespace is given, then we just need to
 		// include the class from its own Directory
 		//syslog( LOG_INFO, dirname(__FILE__).'/'.$a[1].'/'.$a[1].'.php' );
-		require( dirname(__FILE__).'/'.$a[1].'/'.$a[1].'.php' );
+		require( dirname(__FILE__).'/'.$a[1].'.php' );
 	}
 	else if ( count( $a ) === 3 ) {
 		// If a sub-namespace is used, then we can use A-Z to separate classes in
