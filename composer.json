@@ -1,5 +1,5 @@
 {
-    "name": "datatables/editor-php",
+    "name": "datatables.net/editor-php",
 	"description": "PHP server-side libraries for Editor",
 	"type": "library",
     "require": {
