@@ -10,7 +10,7 @@
  *  @link      http://editor.datatables.net
  */
 
-namespace DataTables\Database;
+namespace DataTables\Database\Driver;
 if (!defined('DATATABLES')) exit();
 
 use PDO;
@@ -18,10 +18,10 @@ use DataTables\Database\Result;
 
 
 /**
- * Postgres driver for DataTables Database Result class
+ * MySQL driver for DataTables Database Result class
  *  @internal
  */
-class DriverPostgresResult extends Result {
+class MysqlResult extends Result {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
 	 */
@@ -67,9 +67,7 @@ class DriverPostgresResult extends Result {
 
 	public function insertId ()
 	{
-		// Only useful after an insert of course...
-		$rows = $this->_stmt->fetchAll();
-		return $rows[0]['dt_pkey'];
+		return $this->_dbh->lastInsertId();
 	}
 }
 

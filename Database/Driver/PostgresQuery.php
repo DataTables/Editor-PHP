@@ -10,26 +10,27 @@
  *  @link      http://editor.datatables.net
  */
 
-namespace DataTables\Database;
+namespace DataTables\Database\Driver;
 if (!defined('DATATABLES')) exit();
 
 use PDO;
 use DataTables\Database\Query;
-use DataTables\Database\DriverSqliteResult;
+use DataTables\Database\Driver\PostgresResult;
 
 
 /**
- * SQLite3 driver for DataTables Database Query class
+ * Postgres driver for DataTables Database Query class
  *  @internal
  */
-class DriverSqliteQuery extends Query {
+class PostgresQuery extends Query {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private properties
 	 */
 	private $_stmt;
 
-
 	protected $_identifier_limiter = null;
+
+	protected $_field_quote = '"';
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -41,16 +42,22 @@ class DriverSqliteQuery extends Query {
 			$opts = $user;
 			$user = $opts['user'];
 			$pass = $opts['pass'];
+			$port = $opts['port'];
+			$host = $opts['host'];
 			$db   = $opts['db'];
 			$dsn  = isset( $opts['dsn'] ) ? $opts['dsn'] : '';
 			$pdoAttr = isset( $opts['pdoAttr'] ) ? $opts['pdoAttr'] : array();
+		}
+
+		if ( $port !== "" ) {
+			$port = "port={$port};";
 		}
 
 		try {
 			$pdoAttr[ PDO::ATTR_ERRMODE ] = PDO::ERRMODE_EXCEPTION;
 
 			$pdo = @new PDO(
-				"sqlite:{$db}".self::dsnPostfix( $dsn ),
+				"pgsql:host={$host};{$port}dbname={$db}".self::dsnPostfix( $dsn ),
 				$user,
 				$pass,
 				$pdoAttr
@@ -77,8 +84,33 @@ class DriverSqliteQuery extends Query {
 	protected function _prepare( $sql )
 	{
 		$this->database()->debugInfo( $sql, $this->_bindings );
-
+	
 		$resource = $this->database()->resource();
+		
+		// Add a RETURNING command to postgres insert queries so we can get the
+		// pkey value from the query reliably
+		if ( $this->_type === 'insert' ) {
+			$table = explode( ' as ', $this->_table[0] );
+
+			// Get the pkey field name
+			$pkRes = $resource->prepare( 
+				"SELECT
+					pg_attribute.attname, 
+					format_type(pg_attribute.atttypid, pg_attribute.atttypmod) 
+				FROM pg_index, pg_class, pg_attribute 
+				WHERE 
+					pg_class.oid = '{$table[0]}'::regclass AND
+					indrelid = pg_class.oid AND
+					pg_attribute.attrelid = pg_class.oid AND 
+					pg_attribute.attnum = any(pg_index.indkey)
+					AND indisprimary"
+			);
+			$pkRes->execute();
+			$row = $pkRes->fetch();
+
+			$sql .= ' RETURNING '.$row['attname'].' as dt_pkey';
+		}
+
 		$this->_stmt = $resource->prepare( $sql );
 
 		// bind values
@@ -99,14 +131,14 @@ class DriverSqliteQuery extends Query {
 		try {
 			$this->_stmt->execute();
 		}
-		catch (PDOException $e) {
+		catch (\PDOException $e) {
 			throw new \Exception( "An SQL error occurred: ".$e->getMessage() );
 			error_log( "An SQL error occurred: ".$e->getMessage() );
 			return false;
 		}
 
 		$resource = $this->database()->resource();
-		return new DriverSqliteResult( $resource, $this->_stmt );
+		return new PostgresResult( $resource, $this->_stmt );
 	}
 }
 

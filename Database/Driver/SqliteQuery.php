@@ -10,25 +10,26 @@
  *  @link      http://editor.datatables.net
  */
 
-namespace DataTables\Database;
+namespace DataTables\Database\Driver;
 if (!defined('DATATABLES')) exit();
 
 use PDO;
 use DataTables\Database\Query;
-use DataTables\Database\DriverMysqlResult;
+use DataTables\Database\Driver\SqliteResult;
 
 
 /**
- * MySQL driver for DataTables Database Query class
+ * SQLite3 driver for DataTables Database Query class
  *  @internal
  */
-class DriverMysqlQuery extends Query {
+class SqliteQuery extends Query {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private properties
 	 */
 	private $_stmt;
 
 
+	protected $_identifier_limiter = null;
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -40,22 +41,16 @@ class DriverMysqlQuery extends Query {
 			$opts = $user;
 			$user = $opts['user'];
 			$pass = $opts['pass'];
-			$port = $opts['port'];
-			$host = $opts['host'];
 			$db   = $opts['db'];
 			$dsn  = isset( $opts['dsn'] ) ? $opts['dsn'] : '';
 			$pdoAttr = isset( $opts['pdoAttr'] ) ? $opts['pdoAttr'] : array();
-		}
-
-		if ( $port !== "" ) {
-			$port = "port={$port};";
 		}
 
 		try {
 			$pdoAttr[ PDO::ATTR_ERRMODE ] = PDO::ERRMODE_EXCEPTION;
 
 			$pdo = @new PDO(
-				"mysql:host={$host};{$port}dbname={$db}".self::dsnPostfix( $dsn ),
+				"sqlite:{$db}".self::dsnPostfix( $dsn ),
 				$user,
 				$pass,
 				$pdoAttr
@@ -104,14 +99,14 @@ class DriverMysqlQuery extends Query {
 		try {
 			$this->_stmt->execute();
 		}
-		catch (\PDOException $e) {
+		catch (PDOException $e) {
 			throw new \Exception( "An SQL error occurred: ".$e->getMessage() );
 			error_log( "An SQL error occurred: ".$e->getMessage() );
 			return false;
 		}
 
 		$resource = $this->database()->resource();
-		return new DriverMysqlResult( $resource, $this->_stmt );
+		return new SqliteResult( $resource, $this->_stmt );
 	}
 }
 

@@ -26,7 +26,7 @@ if ( ! isset( $sql_details ) ) {
 
 //
 // Auto-loader
-//   Automatically loads DataTables classes
+//   Automatically loads DataTables classes - they are psr-4 compliant
 //
 spl_autoload_register( function ($class) {
 	$a = explode("\\", $class);
@@ -36,19 +36,13 @@ spl_autoload_register( function ($class) {
 		return;
 	}
 
-	if ( count( $a ) === 2 ) {
-		// If just a single top level namespace is given, then we just need to
-		// include the class from its own Directory
-		require( dirname(__FILE__).'/'.$a[1].'.php' );
-	}
-	else if ( count( $a ) === 3 ) {
-		// If a sub-namespace is used, then we can use A-Z to separate classes in
-		// that namespace
-		preg_match_all( "/[A-Z]+[^A-Z]*/", $a[2], $matches );
-		$location = implode( '/', $matches[0] );
+	array_shift( $a );
+	$className = array_pop( $a );
+	$path = count( $a ) ?
+		implode('/', $a).'/' :
+		'';
 
-		require( dirname(__FILE__).'/'.$a[1].'/'.$location.'.php' );
-	}
+	require( dirname(__FILE__).'/'.$path.$className.'.php' );
 } );
 
 

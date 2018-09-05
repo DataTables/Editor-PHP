@@ -59,7 +59,7 @@ class Database {
 			);
 		}
 
-		$this->query_driver = "DataTables\\Database\\Driver".$opts['type'].'Query';
+		$this->query_driver = "DataTables\\Database\\Driver\\".$opts['type'].'Query';
 		$this->_dbResource = isset( $opts['pdo'] ) ?
 			$opts['pdo'] :
 			call_user_func($this->query_driver.'::connect', $opts );

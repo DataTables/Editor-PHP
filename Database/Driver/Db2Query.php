@@ -4,17 +4,17 @@
  * BETA! Feedback welcome
  */
 
-namespace DataTables\Database;
+namespace DataTables\Database\Driver;
 if (!defined('DATATABLES')) exit();
 
 use DataTables\Database\Query;
-use DataTables\Database\DriverDb2Result;
+use DataTables\Database\Driver\Db2Result;
 
 /**
  * DB2 driver for DataTables Database Query class
  *  @internal
  */
-class DriverDb2Query extends Query {
+class Db2Query extends Query {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private properties
 	 */
@@ -140,7 +140,7 @@ class DriverDb2Query extends Query {
         }
 
         $resource = $this->database()->resource();
-        return new DriverDb2Result($resource, $this->_stmt, $this->_editor_pkey_value);
+        return new Db2Result($resource, $this->_stmt, $this->_editor_pkey_value);
     }
 
     protected function _build_table()

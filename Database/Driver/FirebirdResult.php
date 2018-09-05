@@ -1,14 +1,16 @@
 <?php
 /**
- * SQL Server driver for DataTables PHP libraries
+ * DataTables PHP libraries.
+ *
+ * PHP libraries for DataTables and DataTables Editor, utilising PHP 5.3+.
  *
  *  @author    SpryMedia
- *  @copyright 2013 SpryMedia ( http://sprymedia.co.uk )
+ *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
  *  @link      http://editor.datatables.net
  */
 
-namespace DataTables\Database;
+namespace DataTables\Database\Driver;
 if (!defined('DATATABLES')) exit();
 
 use PDO;
@@ -16,18 +18,19 @@ use DataTables\Database\Result;
 
 
 /**
- * SQL Server driver for DataTables Database Result class
+ * Firebird driver for DataTables Database Result class
  *  @internal
  */
-class DriverSqlserverResult extends Result {
+class FirebirdResult extends Result {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
 	 */
 
-	function __construct( $dbh, $stmt )
+	function __construct( $dbh, $stmt, $pkey )
 	{
 		$this->_dbh = $dbh;
 		$this->_stmt = $stmt;
+		$this->_pkey = $pkey;
 	}
 
 
@@ -38,6 +41,7 @@ class DriverSqlserverResult extends Result {
 
 	private $_stmt;
 	private $_dbh;
+	private $_pkey;
 
 
 
@@ -65,7 +69,9 @@ class DriverSqlserverResult extends Result {
 
 	public function insertId ()
 	{
-		return $this->_dbh->lastInsertId();
+		// Only useful after an insert of course...
+		$rows = $this->_stmt->fetchAll();
+		return $rows[0][$this->_pkey];
 	}
 }
 

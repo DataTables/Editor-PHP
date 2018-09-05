@@ -9,7 +9,7 @@
  *  @link      http://editor.datatables.net
  */
 
-namespace DataTables\Database;
+namespace DataTables\Database\Driver;
 if (!defined('DATATABLES')) exit();
 
 use PDO;
@@ -20,7 +20,7 @@ use DataTables\Database\Result;
  * SQL Server driver for DataTables Database Result class
  *  @internal
  */
-class DriverDb2Result extends Result {
+class Db2Result extends Result {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
 	 */

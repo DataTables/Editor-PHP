@@ -1,40 +1,33 @@
 <?php
 /**
- * DataTables PHP libraries.
- *
- * PHP libraries for DataTables and DataTables Editor, utilising PHP 5.3+.
+ * SQL Server driver for DataTables PHP libraries
  *
  *  @author    SpryMedia
- *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
+ *  @copyright 2013 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
  *  @link      http://editor.datatables.net
  */
 
-namespace DataTables\Database;
+namespace DataTables\Database\Driver;
 if (!defined('DATATABLES')) exit();
 
 use PDO;
 use DataTables\Database\Query;
-use DataTables\Database\DriverFirebirdResult;
+use DataTables\Database\Driver\PostgresResult;
 
 
 /**
- * Firebird driver for DataTables Database Query class
+ * SQL Server driver for DataTables Database Query class
  *  @internal
  */
-class DriverFirebirdQuery extends Query {
+class SqlserverQuery extends Query {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private properties
 	 */
 	private $_stmt;
 
-	protected $_identifier_limiter = ['"', '"'];
 
-	protected $_field_quote = '"';
-
-	protected $_supportsAsAlias = false;
-
-	public $_pkeyInsertedTo;
+	protected $_identifier_limiter = array( '[', ']' );
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -53,21 +46,15 @@ class DriverFirebirdQuery extends Query {
 			$pdoAttr = isset( $opts['pdoAttr'] ) ? $opts['pdoAttr'] : array();
 		}
 
-		if ( $host !== "" ) {
-			$host = "{$host}";
-
-			if ( $port !== "" ) {
-				$host .= "/{$port}";
-			}
-
-			$host .= ';';
+		if ( $port !== "" ) {
+			$port = ",{$port}";
 		}
 
 		try {
 			$pdoAttr[ PDO::ATTR_ERRMODE ] = PDO::ERRMODE_EXCEPTION;
 
-			$pdo = @new PDO(
-				"firebird:{$host}dbname={$db}".self::dsnPostfix( $dsn ),
+			$pdo = new PDO(
+				"sqlsrv:Server={$host}{$port};Database={$db}".self::dsnPostfix( $dsn ),
 				$user,
 				$pass,
 				$pdoAttr
@@ -94,16 +81,8 @@ class DriverFirebirdQuery extends Query {
 	protected function _prepare( $sql )
 	{
 		$this->database()->debugInfo( $sql, $this->_bindings );
-	
+
 		$resource = $this->database()->resource();
-		$pkey = $this->pkey();
-
-		// If insert, add the pkey column
-		if ( $this->_type === 'insert' && $pkey ) {
-			$this->_pkeyInsertedTo = (is_array($pkey) ? $pkey[0] : $pkey);
-			$sql .= ' RETURNING "'.$this->_pkeyInsertedTo.'"';
-		}
-
 		$this->_stmt = $resource->prepare( $sql );
 
 		// bind values
@@ -124,14 +103,34 @@ class DriverFirebirdQuery extends Query {
 		try {
 			$this->_stmt->execute();
 		}
-		catch (\PDOException $e) {
+		catch (PDOException $e) {
 			throw new \Exception( "An SQL error occurred: ".$e->getMessage() );
 			error_log( "An SQL error occurred: ".$e->getMessage() );
 			return false;
 		}
 
 		$resource = $this->database()->resource();
-		return new DriverFirebirdResult( $resource, $this->_stmt, $this->_pkeyInsertedTo );
+		return new SqlserverResult( $resource, $this->_stmt );
+	}
+
+
+	// SQL Server 2012+ only
+	protected function _build_limit()
+	{
+		$out = '';
+
+		if ( $this->_offset ) {
+			$out .= ' OFFSET '.$this->_offset.' ROWS';
+		}
+		
+		if ( $this->_limit ) {
+			if ( ! $this->_offset ) {
+				$out .= ' OFFSET 0 ROWS';
+			}
+			$out .= ' FETCH NEXT '.$this->_limit. ' ROWS ONLY';
+		}
+
+		return $out;
 	}
 }
 

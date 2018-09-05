@@ -10,27 +10,25 @@
  *  @link      http://editor.datatables.net
  */
 
-namespace DataTables\Database;
+namespace DataTables\Database\Driver;
 if (!defined('DATATABLES')) exit();
 
 use PDO;
 use DataTables\Database\Query;
-use DataTables\Database\DriverPostgresResult;
+use DataTables\Database\Driver\MysqlResult;
 
 
 /**
- * Postgres driver for DataTables Database Query class
+ * MySQL driver for DataTables Database Query class
  *  @internal
  */
-class DriverPostgresQuery extends Query {
+class MysqlQuery extends Query {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private properties
 	 */
 	private $_stmt;
 
-	protected $_identifier_limiter = null;
 
-	protected $_field_quote = '"';
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -57,7 +55,7 @@ class DriverPostgresQuery extends Query {
 			$pdoAttr[ PDO::ATTR_ERRMODE ] = PDO::ERRMODE_EXCEPTION;
 
 			$pdo = @new PDO(
-				"pgsql:host={$host};{$port}dbname={$db}".self::dsnPostfix( $dsn ),
+				"mysql:host={$host};{$port}dbname={$db}".self::dsnPostfix( $dsn ),
 				$user,
 				$pass,
 				$pdoAttr
@@ -84,33 +82,8 @@ class DriverPostgresQuery extends Query {
 	protected function _prepare( $sql )
 	{
 		$this->database()->debugInfo( $sql, $this->_bindings );
-	
+
 		$resource = $this->database()->resource();
-		
-		// Add a RETURNING command to postgres insert queries so we can get the
-		// pkey value from the query reliably
-		if ( $this->_type === 'insert' ) {
-			$table = explode( ' as ', $this->_table[0] );
-
-			// Get the pkey field name
-			$pkRes = $resource->prepare( 
-				"SELECT
-					pg_attribute.attname, 
-					format_type(pg_attribute.atttypid, pg_attribute.atttypmod) 
-				FROM pg_index, pg_class, pg_attribute 
-				WHERE 
-					pg_class.oid = '{$table[0]}'::regclass AND
-					indrelid = pg_class.oid AND
-					pg_attribute.attrelid = pg_class.oid AND 
-					pg_attribute.attnum = any(pg_index.indkey)
-					AND indisprimary"
-			);
-			$pkRes->execute();
-			$row = $pkRes->fetch();
-
-			$sql .= ' RETURNING '.$row['attname'].' as dt_pkey';
-		}
-
 		$this->_stmt = $resource->prepare( $sql );
 
 		// bind values
@@ -138,7 +111,7 @@ class DriverPostgresQuery extends Query {
 		}
 
 		$resource = $this->database()->resource();
-		return new DriverPostgresResult( $resource, $this->_stmt );
+		return new MysqlResult( $resource, $this->_stmt );
 	}
 }
 

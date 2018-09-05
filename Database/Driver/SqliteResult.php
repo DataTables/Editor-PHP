@@ -10,7 +10,7 @@
  *  @link      http://editor.datatables.net
  */
 
-namespace DataTables\Database;
+namespace DataTables\Database\Driver;
 if (!defined('DATATABLES')) exit();
 
 use PDO;
@@ -18,19 +18,18 @@ use DataTables\Database\Result;
 
 
 /**
- * Firebird driver for DataTables Database Result class
+ * Sqlite driver for DataTables Database Result class
  *  @internal
  */
-class DriverFirebirdResult extends Result {
+class SqliteResult extends Result {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
 	 */
 
-	function __construct( $dbh, $stmt, $pkey )
+	function __construct( $dbh, $stmt )
 	{
 		$this->_dbh = $dbh;
 		$this->_stmt = $stmt;
-		$this->_pkey = $pkey;
 	}
 
 
@@ -41,7 +40,6 @@ class DriverFirebirdResult extends Result {
 
 	private $_stmt;
 	private $_dbh;
-	private $_pkey;
 
 
 
@@ -69,9 +67,7 @@ class DriverFirebirdResult extends Result {
 
 	public function insertId ()
 	{
-		// Only useful after an insert of course...
-		$rows = $this->_stmt->fetchAll();
-		return $rows[0][$this->_pkey];
+		return $this->_dbh->lastInsertId();
 	}
 }
 

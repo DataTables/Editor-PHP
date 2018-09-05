@@ -11,19 +11,19 @@
  *  @link      http://editor.datatables.net
  */
 
-namespace DataTables\Database;
+namespace DataTables\Database\Driver;
 if (!defined('DATATABLES')) exit();
 
 use PDO;
 use DataTables\Database\Query;
-use DataTables\Database\DriverOracleResult;
+use DataTables\Database\Driver\OracleResult;
 
 
 /**
  * Oracle driver for DataTables Database Query class
  *  @internal
  */
-class DriverOracleQuery extends Query {
+class OracleQuery extends Query {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private properties
 	 */
@@ -169,7 +169,7 @@ class DriverOracleQuery extends Query {
 		}
 
 		$resource = $this->database()->resource();
-		return new DriverOracleResult( $resource, $this->_stmt, $this->_editor_pkey_value );
+		return new OracleResult( $resource, $this->_stmt, $this->_editor_pkey_value );
 	}
 
 

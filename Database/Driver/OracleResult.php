@@ -8,7 +8,7 @@
  *  @link      http://editor.datatables.net
  */
 
-namespace DataTables\Database;
+namespace DataTables\Database\Driver;
 if (!defined('DATATABLES')) exit();
 
 use PDO;
@@ -19,7 +19,7 @@ use DataTables\Database\Result;
  * MySQL driver for DataTables Database Result class
  *  @internal
  */
-class DriverOracleResult extends Result {
+class OracleResult extends Result {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
 	 */

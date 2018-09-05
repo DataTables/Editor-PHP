@@ -1,16 +1,14 @@
 <?php
 /**
- * DataTables PHP libraries.
- *
- * PHP libraries for DataTables and DataTables Editor, utilising PHP 5.3+.
+ * SQL Server driver for DataTables PHP libraries
  *
  *  @author    SpryMedia
- *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
+ *  @copyright 2013 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
  *  @link      http://editor.datatables.net
  */
 
-namespace DataTables\Database;
+namespace DataTables\Database\Driver;
 if (!defined('DATATABLES')) exit();
 
 use PDO;
@@ -18,10 +16,10 @@ use DataTables\Database\Result;
 
 
 /**
- * MySQL driver for DataTables Database Result class
+ * SQL Server driver for DataTables Database Result class
  *  @internal
  */
-class DriverMysqlResult extends Result {
+class SqlserverResult extends Result {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
 	 */
