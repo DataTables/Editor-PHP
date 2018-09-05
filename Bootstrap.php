@@ -39,7 +39,6 @@ spl_autoload_register( function ($class) {
 	if ( count( $a ) === 2 ) {
 		// If just a single top level namespace is given, then we just need to
 		// include the class from its own Directory
-		//syslog( LOG_INFO, dirname(__FILE__).'/'.$a[1].'/'.$a[1].'.php' );
 		require( dirname(__FILE__).'/'.$a[1].'.php' );
 	}
 	else if ( count( $a ) === 3 ) {
@@ -48,7 +47,6 @@ spl_autoload_register( function ($class) {
 		preg_match_all( "/[A-Z]+[^A-Z]*/", $a[2], $matches );
 		$location = implode( '/', $matches[0] );
 
-		//syslog( LOG_INFO, dirname(__FILE__).'/'.$a[1].'/'.$location.'.php' );
 		require( dirname(__FILE__).'/'.$a[1].'/'.$location.'.php' );
 	}
 } );
