@@ -16,7 +16,10 @@
     "autoload": {
         "psr-4": {
             "DataTables\\": ""
-        }
+        },
+        "files": [
+            "composer.php"
+        ]
     },
     "license": "MIT"
 }
