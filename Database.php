@@ -199,8 +199,16 @@ class Database {
 	 */
 	public function push ( $table, $set, $where=null, $pkey='' )
 	{
+		$selectColumn = '*';
+		
+		if ( $pkey ) {
+			$selectColumn = is_array($pkey) ?
+				$pkey[0] :
+				$pkey;
+		}
+
 		// Update or insert
-		if ( $this->select( $table, "*", $where )->count() > 0 ) {
+		if ( $this->select( $table, $selectColumn, $where )->count() > 0 ) {
 			return $this->update( $table, $set, $where );
 		}
 
