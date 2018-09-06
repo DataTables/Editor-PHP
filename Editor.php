@@ -205,6 +205,9 @@ class Editor extends Ext {
 	/** @var boolean Enable true / catch when processing */
 	private $_tryCatch = true;
 
+	/** @var boolean Enable / disable delete on left joined tables */
+	private $_leftJoinRemove = false;
+
 
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -501,6 +504,22 @@ class Editor extends Ext {
 		);
 
 		return $this;
+	}
+
+
+	/**
+	 * Indicate if a remove should be performed on left joined tables when deleting
+	 * from the parent row. Note that this is disabled by default and will be
+	 * removed completely in v2. Use `ON DELETE CASCADE` in your database instead.
+	 * 
+	 *  @deprecated
+	 *  @param boolean $_ Value to set. If not given, then used as a getter.
+	 *  @return boolean|self Value if no parameter is given, or
+	 *    self if used as a setter.
+	 */
+	public function leftJoinRemove ( $_=null )
+	{
+		return $this->_getSet( $this->_leftJoinRemove, $_ );
 	}
 
 
@@ -1188,26 +1207,28 @@ class Editor extends Ext {
 		}
 
 		// Remove from the left join tables
-		for ( $i=0, $ien=count($this->_leftJoin) ; $i<$ien ; $i++ ) {
-			$join = $this->_leftJoin[$i];
-			$table = $this->_alias( $join['table'], 'orig' );
+		if ( $this->_leftJoinRemove ) {
+			for ( $i=0, $ien=count($this->_leftJoin) ; $i<$ien ; $i++ ) {
+				$join = $this->_leftJoin[$i];
+				$table = $this->_alias( $join['table'], 'orig' );
 
-			// which side of the join refers to the parent table?
-			if ( strpos( $join['field1'], $join['table'] ) === 0 ) {
-				$parentLink = $join['field2'];
-				$childLink = $join['field1'];
-			}
-			else {
-				$parentLink = $join['field1'];
-				$childLink = $join['field2'];
-			}
+				// which side of the join refers to the parent table?
+				if ( strpos( $join['field1'], $join['table'] ) === 0 ) {
+					$parentLink = $join['field2'];
+					$childLink = $join['field1'];
+				}
+				else {
+					$parentLink = $join['field1'];
+					$childLink = $join['field2'];
+				}
 
-			// Only delete on the primary key, since that is what the ids refer
-			// to - otherwise we'd be deleting random data! Note that this
-			// won't work with compound keys since the parent link would be
-			// over multiple fields.
-			if ( $parentLink === $this->_pkey[0] && count($this->_pkey) === 1 ) {
-				$this->_remove_table( $join['table'], $ids, array($childLink) );
+				// Only delete on the primary key, since that is what the ids refer
+				// to - otherwise we'd be deleting random data! Note that this
+				// won't work with compound keys since the parent link would be
+				// over multiple fields.
+				if ( $parentLink === $this->_pkey[0] && count($this->_pkey) === 1 ) {
+					$this->_remove_table( $join['table'], $ids, array($childLink) );
+				}
 			}
 		}
 
