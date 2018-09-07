@@ -199,6 +199,9 @@ class Editor extends Ext {
 	/** @var array */
 	private $_debugInfo = array();
 
+	/** @var string Log output path */
+	private $_debugLog = '';
+
 	/** @var callback */
 	private $_validator = null;
 
@@ -256,15 +259,20 @@ class Editor extends Ext {
 	 *  @param boolean|* $_ Debug mode state. If not given, then used as a
 	 *    getter. If given as anything other than a boolean, it will be added
 	 *    to the debug information sent back to the client.
+	 *  @param string [$path=null] Set an output path to log debug information
 	 *  @return boolean|self Debug mode state if no parameter is given, or
 	 *    self if used as a setter or when adding a debug message.
 	 */
-	public function debug ( $_=null )
+	public function debug ( $_=null, $path=null )
 	{
 		if ( ! is_bool( $_ ) ) {
 			$this->_debugInfo[] = $_;
 
 			return $this;
+		}
+
+		if ( $path ) {
+			$this->_debugLog = $path;
 		}
 
 		return $this->_getSet( $this->_debug, $_ );
@@ -727,6 +735,12 @@ class Editor extends Ext {
 
 		if ( $this->_debug ) {
 			$this->_out['debug'] = $this->_debugInfo;
+
+			// Save to a log file
+			if ( $this->_debugLog ) {
+				file_put_contents( $this->_debugLog, json_encode( $this->_debugInfo )."\n", FILE_APPEND );
+			}
+
 			$this->_db->debug( false );
 		}
 
