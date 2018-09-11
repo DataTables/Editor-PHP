@@ -516,7 +516,26 @@ class Join extends DataTables\Ext {
 					$this->_table.'.'.$this->_join['child'] .' = '. $dteTableLocal.'.'.$this->_join['parent']
 				);
 		}
-		
+
+		// Get list of pkey values and apply as a WHERE IN condition
+		// This is primarily useful in server-side processing mode and when filtering
+		// the table as it means only a sub-set will be selected
+		// This is only applied for "sensible" data sets. It will just complicate
+		// matters for really large data sets:
+		// https://stackoverflow.com/questions/21178390/in-clause-limitation-in-sql-server
+		if ( count($data) < 1000 ) {
+			$whereIn = array();
+
+			for ( $i=0 ; $i<count($data) ; $i++ ) {
+				$whereIn[] = $pkeyIsJoin ? 
+					str_replace( $idPrefix, '', $data[$i]['DT_RowId'] ) :
+					$this->_readProp( $readField, $data[$i] );
+			}
+
+			$stmt->where_in( $dteTableLocal.'.'.$joinField, $whereIn );
+		}
+
+		// Go!
 		$res = $stmt->exec();
 		if ( ! $res ) {
 			return;

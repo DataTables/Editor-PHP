@@ -148,6 +148,8 @@ class Query {
 
 	protected $_supportsAsAlias = true;
 
+	protected $_whereInCnt = 1;
+
 
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -665,6 +667,44 @@ class Query {
 		}
 
 		return $this;
+	}
+
+
+	/**
+	 * Provide a method that can be used to perform a `WHERE ... IN (...)` query
+	 * with bound values and parameters.
+	 * 
+	 * Note this is only suitable for local values, not a sub-query. For that use
+	 * `->where()` with an unbound value.
+	 *
+	 *  @param string Field name
+	 *  @param array Values
+	 *  @param string Conditional operator to use to join to the
+	 *      preceding condition. Default `AND`.
+	 *  @return self
+	 */
+	public function where_in ( $field, $arr, $operator="AND" )
+	{
+		$binders = array();
+		$prefix = ':wherein';
+
+		// Need to build an array of the binders (having bound the values) so
+		// the query can be constructed
+		for ( $i=0, $ien=count($arr) ; $i<$ien ; $i++ ) {
+			$binder = $prefix.$this->_whereInCnt;
+
+			$this->bind( $binder, $arr[$i] );
+
+			$binders[] = $binder;
+			$this->_whereInCnt++;
+		}
+
+		$this->_where[] = array(
+			'operator' => $operator,
+			'group'    => null,
+			'field'    => $this->_protect_identifiers($field),
+			'query'    => $this->_protect_identifiers($field) .' IN ('.implode(', ', $binders).')' 
+		);
 	}
 
 
