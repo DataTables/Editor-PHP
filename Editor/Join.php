@@ -517,6 +517,26 @@ class Join extends DataTables\Ext {
 				);
 		}
 
+		// Check that the joining field is available.  The joining key can
+		// come from the Editor instance's primary key, or any other field,
+		// including a nested value (from a left join). If the instance's 
+		// pkey, then we've got that in the DT_RowId parameter, so we can
+		// use that. Otherwise, the key must be in the field list.
+		if ( $this->_propExists( $dteTable.'.'.$joinField, $data[0] ) ) {
+			$readField = $dteTable.'.'.$joinField;
+		}
+		else if ( $this->_propExists( $joinField, $data[0] ) ) {
+			$readField = $joinField;
+		}
+		else if ( ! $pkeyIsJoin ) {
+			echo json_encode( array(
+				"sError" => "Join was performed on the field '{$joinField}' which was not "
+					."included in the Editor field list. The join field must be included "
+					."as a regular field in the Editor instance."
+			) );
+			exit(0);
+		}
+
 		// Get list of pkey values and apply as a WHERE IN condition
 		// This is primarily useful in server-side processing mode and when filtering
 		// the table as it means only a sub-set will be selected
@@ -565,26 +585,6 @@ class Join extends DataTables\Ext {
 		}
 
 		if ( count($data) > 0 ) {
-			// Check that the joining field is available.  The joining key can
-			// come from the Editor instance's primary key, or any other field,
-			// including a nested value (from a left join). If the instance's 
-			// pkey, then we've got that in the DT_RowId parameter, so we can
-			// use that. Otherwise, the key must be in the field list.
-			if ( $this->_propExists( $dteTable.'.'.$joinField, $data[0] ) ) {
-				$readField = $dteTable.'.'.$joinField;
-			}
-			else if ( $this->_propExists( $joinField, $data[0] ) ) {
-				$readField = $joinField;
-			}
-			else if ( ! $pkeyIsJoin ) {
-				echo json_encode( array(
-					"sError" => "Join was performed on the field '{$joinField}' which was not "
-						."included in the Editor field list. The join field must be included "
-						."as a regular field in the Editor instance."
-				) );
-				exit(0);
-			}
-
 			// Loop over the data and do a join based on the data available
 			for ( $i=0 ; $i<count($data) ; $i++ ) {
 				$rowPKey = $pkeyIsJoin ? 
