@@ -685,6 +685,10 @@ class Query {
 	 */
 	public function where_in ( $field, $arr, $operator="AND" )
 	{
+		if ( count($arr) === 0 ) {
+			return;
+		}
+
 		$binders = array();
 		$prefix = ':wherein';
 

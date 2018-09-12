@@ -1098,7 +1098,7 @@ class Editor extends Ext {
 			array(
 				'data'    => $out,
 				'options' => $options,
-				'files'   => $this->_fileData()
+				'files'   => $this->_fileData( null, null, $out )
 			),
 			$ssp
 		);
@@ -1317,7 +1317,7 @@ class Editor extends Ext {
 			);
 		}
 		else {
-			$files = $this->_fileData( $upload->table(), $res );
+			$files = $this->_fileData( $upload->table(), array($res) );
 
 			$this->_out['files'] = $files;
 			$this->_out['upload']['id'] = $res;
@@ -1333,20 +1333,32 @@ class Editor extends Ext {
 	 *
 	 * @param  string [$limitTable=null] Limit the data gathering to a single
 	 *     table only
-	 * @param number [$id=null] Limit to a specific id
+	 * @param number[] [$id=null] Limit to a specific set of ids
 	 * @return array File information
 	 * @private
 	 */
-	private function _fileData ( $limitTable=null, $id=null )
+	private function _fileData ( $limitTable=null, $ids=null, $data=null )
 	{
 		$files = array();
 
 		// The fields in this instance
-		$this->_fileDataFields( $files, $this->_fields, $limitTable, $id );
+		$this->_fileDataFields( $files, $this->_fields, $limitTable, $ids, $data );
 		
 		// From joined tables
 		for ( $i=0 ; $i<count($this->_join) ; $i++ ) {
-			$this->_fileDataFields( $files, $this->_join[$i]->fields(), $limitTable, $id );
+			$joinData = null;
+
+			// If we have data from the get, it is nested from the join, so we need to
+			// un-nest it (i.e. get the array of joined data for each row)
+			if ( $data ) {
+				$joinData = array();
+
+				for ( $j=0, $jen=count($data) ; $j<$jen ; $j++ ) {
+					$joinData = array_merge( $joinData, $data[$j][$this->_join[$i]->name()] );
+				}
+			}
+
+			$this->_fileDataFields( $files, $this->_join[$i]->fields(), $limitTable, $ids, $joinData );
 		}
 
 		return $files;
@@ -1357,11 +1369,11 @@ class Editor extends Ext {
 	 * Common file get method for any array of fields
 	 * @param  array &$files File output array
 	 * @param  Field[] $fields Fields to get file information about
-	 * @param  string $limitTable Limit the data gathering to a single table
+	 * @param  string[] $limitTable Limit the data gathering to a single table
 	 *     only
 	 * @private
 	 */
-	private function _fileDataFields ( &$files, $fields, $limitTable, $id=null )
+	private function _fileDataFields ( &$files, $fields, $limitTable, $ids=null, $data=null )
 	{
 		foreach ($fields as $field) {
 			$upload = $field->upload();
@@ -1381,7 +1393,32 @@ class Editor extends Ext {
 					continue;
 				}
 
-				$fileData = $upload->data( $this->_db, $id );
+				// Make a collection of the ids used in this data set to get a limited data set
+				// in return (security and performance)
+				if ( $ids === null ) {
+					$ids = array();
+				}
+
+				if ( $data !== null ) {
+					for ( $i=0, $ien=count($data); $i<$ien ; $i++ ) {
+						$val = $field->val( 'set', $data[$i] );
+
+						if ( $val ) {
+							$ids[] = $val;
+						}
+					}
+
+					if ( count($ids) === 0 ) {
+						// If no data to fetch, then don't bother
+						return;
+					}
+					else if ( count($ids) > 1000 ) {
+						// Don't use `where_in` for really large data sets
+						$ids = array();
+					}
+				}
+
+				$fileData = $upload->data( $this->_db, $ids );
 
 				if ( $fileData !== null ) {
 					$files[ $table ] = $fileData;

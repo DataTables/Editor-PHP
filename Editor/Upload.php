@@ -302,11 +302,11 @@ class Upload extends DataTables\Ext {
 	 * Get database information data from the table
 	 *
 	 * @param \DataTables\Database $db Database
-	 * @param number [$id=null] Limit to a specific id
+	 * @param number[] [$ids=null] Limit to a specific set of ids
 	 * @return array Database information
 	 * @internal
 	 */
-	public function data ( $db, $id=null )
+	public function data ( $db, $ids=null )
 	{
 		if ( ! $this->_dbTable ) {
 			return null;
@@ -324,8 +324,8 @@ class Upload extends DataTables\Ext {
 			}
 		}
 
-		if ( $id !== null ) {
-			$q->where( $this->_dbPKey, $id );
+		if ( $ids !== null ) {
+			$q->where_in( $this->_dbPKey, $ids );
 		}
 
 		for ( $i=0, $ien=count($this->_where) ; $i<$ien ; $i++ ) {
