@@ -686,7 +686,7 @@ class Query {
 	public function where_in ( $field, $arr, $operator="AND" )
 	{
 		if ( count($arr) === 0 ) {
-			return;
+			return $this;
 		}
 
 		$binders = array();
@@ -709,6 +709,8 @@ class Query {
 			'field'    => $this->_protect_identifiers($field),
 			'query'    => $this->_protect_identifiers($field) .' IN ('.implode(', ', $binders).')' 
 		);
+
+		return $this;
 	}
 
 
