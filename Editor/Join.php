@@ -454,137 +454,137 @@ class Join extends DataTables\Ext {
 			throw new \Exception("MJoin is not currently supported with a compound primary key for the main table", 1);
 		}
 
-		$pkey = $pkey[0];
-		$pkeyIsJoin = $pkey === $joinField || $pkey === $dteTable.'.'.$joinField;
+		if ( count($data) > 0 ) {
+			$pkey = $pkey[0];
+			$pkeyIsJoin = $pkey === $joinField || $pkey === $dteTable.'.'.$joinField;
 
-		// Sanity check that table selector fields are read only, and have an name without
-		// a dot (for DataTables mData to be able to read it)
-		for ( $i=0 ; $i<count($this->_fields) ; $i++ ) {
-			$field = $this->_fields[$i];
+			// Sanity check that table selector fields are read only, and have an name without
+			// a dot (for DataTables mData to be able to read it)
+			for ( $i=0 ; $i<count($this->_fields) ; $i++ ) {
+				$field = $this->_fields[$i];
 
-			if ( strpos( $field->dbField() , "." ) !== false ) {
-				if ( $field->set() !== Field::SET_NONE && $this->_set ) {
-					echo json_encode( array(
-						"sError" => "Table selected fields (i.e. '{table}.{column}') in `Join` ".
-							"must be read only. Use `set(false)` for the field to disable writing."
-					) );
-					exit(0);
-				}
+				if ( strpos( $field->dbField() , "." ) !== false ) {
+					if ( $field->set() !== Field::SET_NONE && $this->_set ) {
+						echo json_encode( array(
+							"sError" => "Table selected fields (i.e. '{table}.{column}') in `Join` ".
+								"must be read only. Use `set(false)` for the field to disable writing."
+						) );
+						exit(0);
+					}
 
-				if ( strpos( $field->name() , "." ) !== false ) {
-					echo json_encode( array(
-						"sError" => "Table selected fields (i.e. '{table}.{column}') in `Join` ".
-							"must have a name alias which does not contain a period ('.'). Use ".
-							"name('---') to set a name for the field"
-					) );
-					exit(0);
-				}
-			}
-		}
-
-		// Set up the JOIN query
-		$stmt = $db
-			->query( 'select' )
-			->distinct( true )
-			->get( $dteTableLocal.'.'.$joinField.' as dteditor_pkey' )
-			->get( $this->_fields('get') )
-			->table( $dteTable .' as '. $dteTableLocal );
-
-		if ( $this->order() ) {
-			$stmt->order( $this->order() );
-		}
-
-		$this->_apply_where( $stmt );
-
-		if ( isset($this->_join['table']) ) {
-			// Working with a link table
-			$stmt
-				->join(
-					$this->_join['table'],
-					$dteTableLocal.'.'.$this->_join['parent'][0] .' = '. $this->_join['table'].'.'.$this->_join['parent'][1]
-				)
-				->join(
-					$this->_table,
-					$this->_table.'.'.$this->_join['child'][0] .' = '. $this->_join['table'].'.'.$this->_join['child'][1]
-				);
-		}
-		else {
-			// No link table in the middle
-			$stmt
-				->join(
-					$this->_table,
-					$this->_table.'.'.$this->_join['child'] .' = '. $dteTableLocal.'.'.$this->_join['parent']
-				);
-		}
-
-		// Check that the joining field is available.  The joining key can
-		// come from the Editor instance's primary key, or any other field,
-		// including a nested value (from a left join). If the instance's 
-		// pkey, then we've got that in the DT_RowId parameter, so we can
-		// use that. Otherwise, the key must be in the field list.
-		if ( $this->_propExists( $dteTable.'.'.$joinField, $data[0] ) ) {
-			$readField = $dteTable.'.'.$joinField;
-		}
-		else if ( $this->_propExists( $joinField, $data[0] ) ) {
-			$readField = $joinField;
-		}
-		else if ( ! $pkeyIsJoin ) {
-			echo json_encode( array(
-				"sError" => "Join was performed on the field '{$joinField}' which was not "
-					."included in the Editor field list. The join field must be included "
-					."as a regular field in the Editor instance."
-			) );
-			exit(0);
-		}
-
-		// Get list of pkey values and apply as a WHERE IN condition
-		// This is primarily useful in server-side processing mode and when filtering
-		// the table as it means only a sub-set will be selected
-		// This is only applied for "sensible" data sets. It will just complicate
-		// matters for really large data sets:
-		// https://stackoverflow.com/questions/21178390/in-clause-limitation-in-sql-server
-		if ( count($data) < 1000 ) {
-			$whereIn = array();
-
-			for ( $i=0 ; $i<count($data) ; $i++ ) {
-				$whereIn[] = $pkeyIsJoin ? 
-					str_replace( $idPrefix, '', $data[$i]['DT_RowId'] ) :
-					$this->_readProp( $readField, $data[$i] );
-			}
-
-			$stmt->where_in( $dteTableLocal.'.'.$joinField, $whereIn );
-		}
-
-		// Go!
-		$res = $stmt->exec();
-		if ( ! $res ) {
-			return;
-		}
-
-		// Map to primary key for fast lookup
-		$join = array();
-		while ( $row=$res->fetch() ) {
-			$inner = array();
-
-			for ( $j=0 ; $j<count($this->_fields) ; $j++ ) {
-				$field = $this->_fields[$j];
-				if ( $field->apply('get') ) {
-					$inner[ $field->name() ] = $field->val('get', $row);
+					if ( strpos( $field->name() , "." ) !== false ) {
+						echo json_encode( array(
+							"sError" => "Table selected fields (i.e. '{table}.{column}') in `Join` ".
+								"must have a name alias which does not contain a period ('.'). Use ".
+								"name('---') to set a name for the field"
+						) );
+						exit(0);
+					}
 				}
 			}
 
-			if ( $this->_type === 'object' ) {
-				$join[ $row['dteditor_pkey'] ] = $inner;
+			// Set up the JOIN query
+			$stmt = $db
+				->query( 'select' )
+				->distinct( true )
+				->get( $dteTableLocal.'.'.$joinField.' as dteditor_pkey' )
+				->get( $this->_fields('get') )
+				->table( $dteTable .' as '. $dteTableLocal );
+
+			if ( $this->order() ) {
+				$stmt->order( $this->order() );
+			}
+
+			$this->_apply_where( $stmt );
+
+			if ( isset($this->_join['table']) ) {
+				// Working with a link table
+				$stmt
+					->join(
+						$this->_join['table'],
+						$dteTableLocal.'.'.$this->_join['parent'][0] .' = '. $this->_join['table'].'.'.$this->_join['parent'][1]
+					)
+					->join(
+						$this->_table,
+						$this->_table.'.'.$this->_join['child'][0] .' = '. $this->_join['table'].'.'.$this->_join['child'][1]
+					);
 			}
 			else {
-				if ( !isset( $join[ $row['dteditor_pkey'] ] ) ) {
-					$join[ $row['dteditor_pkey'] ] = array();
-				}
-				$join[ $row['dteditor_pkey'] ][] = $inner;
+				// No link table in the middle
+				$stmt
+					->join(
+						$this->_table,
+						$this->_table.'.'.$this->_join['child'] .' = '. $dteTableLocal.'.'.$this->_join['parent']
+					);
 			}
-		}
 
-		if ( count($data) > 0 ) {
+			// Check that the joining field is available.  The joining key can
+			// come from the Editor instance's primary key, or any other field,
+			// including a nested value (from a left join). If the instance's 
+			// pkey, then we've got that in the DT_RowId parameter, so we can
+			// use that. Otherwise, the key must be in the field list.
+			if ( $this->_propExists( $dteTable.'.'.$joinField, $data[0] ) ) {
+				$readField = $dteTable.'.'.$joinField;
+			}
+			else if ( $this->_propExists( $joinField, $data[0] ) ) {
+				$readField = $joinField;
+			}
+			else if ( ! $pkeyIsJoin ) {
+				echo json_encode( array(
+					"sError" => "Join was performed on the field '{$joinField}' which was not "
+						."included in the Editor field list. The join field must be included "
+						."as a regular field in the Editor instance."
+				) );
+				exit(0);
+			}
+
+			// Get list of pkey values and apply as a WHERE IN condition
+			// This is primarily useful in server-side processing mode and when filtering
+			// the table as it means only a sub-set will be selected
+			// This is only applied for "sensible" data sets. It will just complicate
+			// matters for really large data sets:
+			// https://stackoverflow.com/questions/21178390/in-clause-limitation-in-sql-server
+			if ( count($data) < 1000 ) {
+				$whereIn = array();
+
+				for ( $i=0 ; $i<count($data) ; $i++ ) {
+					$whereIn[] = $pkeyIsJoin ? 
+						str_replace( $idPrefix, '', $data[$i]['DT_RowId'] ) :
+						$this->_readProp( $readField, $data[$i] );
+				}
+
+				$stmt->where_in( $dteTableLocal.'.'.$joinField, $whereIn );
+			}
+
+			// Go!
+			$res = $stmt->exec();
+			if ( ! $res ) {
+				return;
+			}
+
+			// Map to primary key for fast lookup
+			$join = array();
+			while ( $row=$res->fetch() ) {
+				$inner = array();
+
+				for ( $j=0 ; $j<count($this->_fields) ; $j++ ) {
+					$field = $this->_fields[$j];
+					if ( $field->apply('get') ) {
+						$inner[ $field->name() ] = $field->val('get', $row);
+					}
+				}
+
+				if ( $this->_type === 'object' ) {
+					$join[ $row['dteditor_pkey'] ] = $inner;
+				}
+				else {
+					if ( !isset( $join[ $row['dteditor_pkey'] ] ) ) {
+						$join[ $row['dteditor_pkey'] ] = array();
+					}
+					$join[ $row['dteditor_pkey'] ][] = $inner;
+				}
+			}
+
 			// Loop over the data and do a join based on the data available
 			for ( $i=0 ; $i<count($data) ; $i++ ) {
 				$rowPKey = $pkeyIsJoin ? 
