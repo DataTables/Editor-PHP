@@ -835,6 +835,20 @@ class Query {
 	 */
 	protected function _build_table()
 	{
+		if ( $this->_type === 'insert' ) {
+			// insert, update and delete statements don't need or want aliases in the table name
+			$a = array();
+	
+			for ( $i=0, $ien=count($this->_table) ; $i<$ien ; $i++ ) {
+				$table = str_ireplace( ' as ', ' ', $this->_table[$i] );
+				$tableParts = explode( ' ', $table );
+	
+				$a[] = $tableParts[0];
+			}
+	
+			return ' '.implode(', ', $a).' ';
+		}
+
 		return ' '.implode(', ', $this->_table).' ';
 	}
 
