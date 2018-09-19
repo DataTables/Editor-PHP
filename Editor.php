@@ -175,6 +175,9 @@ class Editor extends Ext {
 	/** @var string[] */
 	private $_table = array();
 
+	/** @var string[] */
+	private $_readTableNames = array();
+
 	/** @var boolean */
 	private $_transaction = true;
 
@@ -708,6 +711,25 @@ class Editor extends Ext {
 
 
 	/**
+	 * The CRUD read table name. If this method is used, Editor will create from the
+	 * table name(s) given rather than those given by `Editor->table()`. This can be
+	 * a useful distinction to allow a read from a VIEW (which could make use of a
+	 * complex SELECT) while writing to a different table.
+	 *
+	 *  @param string|array $_,... Read table names given as a single string, an array
+	 *    of strings or multiple string parameters for the function.
+	 *  @return string[]|self Array of read tables names, or self if used as a setter.
+	 */
+	public function readTable ( $_=null )
+	{
+		if ( $_ !== null && !is_array($_) ) {
+			$_ = func_get_args();
+		}
+		return $this->_getSet( $this->_readTableNames, $_, true );
+	}
+
+
+	/**
 	 * Get / set the table name.
 	 * 
 	 * The table name designated which DB table Editor will use as its data
@@ -1032,7 +1054,7 @@ class Editor extends Ext {
 
 		$query = $this->_db
 			->query('select')
-			->table( $this->_table )
+			->table( $this->_read_table() )
 			->get( $this->_pkey );
 
 		// Add all fields that we need to get from the database
@@ -1481,7 +1503,7 @@ class Editor extends Ext {
 		// Get the number of rows in the result set
 		$ssp_set_count = $this->_db
 			->query('select')
-			->table( $this->_table )
+			->table( $this->_read_table() )
 			->get( 'COUNT('.$this->_pkey[0].') as cnt' );
 		$this->_get_where( $ssp_set_count );
 		$this->_ssp_filter( $ssp_set_count, $http );
@@ -1491,7 +1513,7 @@ class Editor extends Ext {
 		// Get the number of rows in the full set
 		$ssp_full_count = $this->_db
 			->query('select')
-			->table( $this->_table )
+			->table( $this->_read_table() )
 			->get( 'COUNT('.$this->_pkey[0].') as cnt' );
 		$this->_get_where( $ssp_full_count );
 		if ( count( $this->_where ) ) { // only needed if there is a where condition
@@ -2139,6 +2161,13 @@ class Editor extends Ext {
 		$str = implode(',', $this->_pkey);
 
 		return hash( 'crc32', $str );
+	}
+
+	private function _read_table ()
+	{
+		return count($this->_readTableNames) ?
+			$this->_readTableNames :
+			$this->_table;
 	}
 }
 
