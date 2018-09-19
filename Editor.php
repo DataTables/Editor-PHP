@@ -553,47 +553,6 @@ class Editor extends Ext {
 
 
 	/**
-	 * Get / set the table name.
-	 * 
-	 * The table name designated which DB table Editor will use as its data
-	 * source for working with the database. Table names can be given with an
-	 * alias, which can be used to simplify larger table names. The field
-	 * names would also need to reflect the alias, just like an SQL query. For
-	 * example: `users as a`.
-	 *
-	 *  @param string|array $_,... Table names given as a single string, an array of
-	 *    strings or multiple string parameters for the function.
-	 *  @return string[]|self Array of tables names, or self if used as a setter.
-	 */
-	public function table ( $_=null )
-	{
-		if ( $_ !== null && !is_array($_) ) {
-			$_ = func_get_args();
-		}
-		return $this->_getSet( $this->_table, $_, true );
-	}
-
-
-	/**
-	 * Get / set transaction support.
-	 *
-	 * When enabled (which it is by default) Editor will use an SQL transaction
-	 * to ensure data integrity while it is performing operations on the table.
-	 * This can be optionally disabled using this method, if required by your
-	 * database configuration.
-	 *
-	 *  @param boolean $_ Enable (`true`) or disabled (`false`) transactions.
-	 *    If not given, then used as a getter.
-	 *  @return boolean|self Transactions enabled flag, or self if used as a
-	 *    setter.
-	 */
-	public function transaction ( $_=null )
-	{
-		return $this->_getSet( $this->_transaction, $_ );
-	}
-
-
-	/**
 	 * Get / set the primary key.
 	 *
 	 * The primary key must be known to Editor so it will know which rows are being
@@ -745,6 +704,47 @@ class Editor extends Ext {
 		}
 
 		return $this;
+	}
+
+
+	/**
+	 * Get / set the table name.
+	 * 
+	 * The table name designated which DB table Editor will use as its data
+	 * source for working with the database. Table names can be given with an
+	 * alias, which can be used to simplify larger table names. The field
+	 * names would also need to reflect the alias, just like an SQL query. For
+	 * example: `users as a`.
+	 *
+	 *  @param string|array $_,... Table names given as a single string, an array of
+	 *    strings or multiple string parameters for the function.
+	 *  @return string[]|self Array of tables names, or self if used as a setter.
+	 */
+	public function table ( $_=null )
+	{
+		if ( $_ !== null && !is_array($_) ) {
+			$_ = func_get_args();
+		}
+		return $this->_getSet( $this->_table, $_, true );
+	}
+
+
+	/**
+	 * Get / set transaction support.
+	 *
+	 * When enabled (which it is by default) Editor will use an SQL transaction
+	 * to ensure data integrity while it is performing operations on the table.
+	 * This can be optionally disabled using this method, if required by your
+	 * database configuration.
+	 *
+	 *  @param boolean $_ Enable (`true`) or disabled (`false`) transactions.
+	 *    If not given, then used as a getter.
+	 *  @return boolean|self Transactions enabled flag, or self if used as a
+	 *    setter.
+	 */
+	public function transaction ( $_=null )
+	{
+		return $this->_getSet( $this->_transaction, $_ );
 	}
 
 
