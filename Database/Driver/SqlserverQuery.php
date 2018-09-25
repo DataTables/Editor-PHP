@@ -47,18 +47,31 @@ class SqlserverQuery extends Query {
 		}
 
 		if ( $port !== "" ) {
-			$port = ",{$port}";
+			$port = ":{$port}";
 		}
 
 		try {
 			$pdoAttr[ PDO::ATTR_ERRMODE ] = PDO::ERRMODE_EXCEPTION;
 
+			if ( in_array( 'sqlsrv', PDO::getAvailableDrivers() ) ) {
+				// Windows
+				$pdo = new PDO(
+					"sqlsrv:Server={$host}{$port};Database={$db}".self::dsnPostfix( $dsn ),
+					$user,
+					$pass,
+					$pdoAttr
+				);
+			}
+			else {
+				// Linux
 			$pdo = new PDO(
-				"sqlsrv:Server={$host}{$port};Database={$db}".self::dsnPostfix( $dsn ),
+				"dblib:host={$host}{$port};dbname={$db}".self::dsnPostfix( $dsn ),
 				$user,
 				$pass,
 				$pdoAttr
 			);
+		}
+
 		} catch (\PDOException $e) {
 			// If we can't establish a DB connection then we return a DataTables
 			// error.
