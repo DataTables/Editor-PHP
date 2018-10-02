@@ -108,7 +108,9 @@ class PostgresQuery extends Query {
 			$pkRes->execute();
 			$row = $pkRes->fetch();
 
-			$sql .= ' RETURNING '.$row['attname'].' as dt_pkey';
+			if ( $row && isset($row['attname'] ) ) {
+				$sql .= ' RETURNING '.$row['attname'].' as dt_pkey';
+			}
 		}
 
 		$this->_stmt = $resource->prepare( $sql );
