@@ -90,7 +90,7 @@ class Database {
 	 * @param string|string[] $table Table name(s) to act upon.
 	 * @param array $where Where condition for what to select - see {@link
 	 *   Query::where}.
-	 * @return [boolean] Boolean flag - true if there were rows
+	 * @return boolean Boolean flag - true if there were rows
 	 */
 	public function any( $table, $where=null )
 	{

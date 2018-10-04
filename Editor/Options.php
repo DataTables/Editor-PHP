@@ -141,7 +141,7 @@ class Options extends DataTables\Ext {
 	/**
 	 * Get / set the LIMIT clause to limit the number of records returned.
 	 *
-	 * @param  [type] $_ null|number Number of rows to limit the result to
+	 * @param  null|number $_ Number of rows to limit the result to
 	 * @return Options|string[] Self if setting for chaining, limit if getting.
 	 */
 	public function limit ( $_=null )

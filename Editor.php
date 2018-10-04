@@ -259,7 +259,7 @@ class Editor extends Ext {
 	 * added to the debug information sent back to the client-side. This can
 	 * be useful when debugging event listeners, etc.
 	 * 
-	 *  @param boolean|* $_ Debug mode state. If not given, then used as a
+	 *  @param boolean|mixed $_ Debug mode state. If not given, then used as a
 	 *    getter. If given as anything other than a boolean, it will be added
 	 *    to the debug information sent back to the client.
 	 *  @param string [$path=null] Set an output path to log debug information
@@ -538,8 +538,8 @@ class Editor extends Ext {
 	 * Add an event listener. The `Editor` class will trigger an number of
 	 * events that some action can be taken on.
 	 *
-	 * @param  [type] $name     Event name
-	 * @param  [type] $callback Callback function to execute when the event
+	 * @param  string $name     Event name
+	 * @param  callable $callback Callback function to execute when the event
 	 *     occurs
 	 * @return self Self for chaining.
 	 */
@@ -793,7 +793,7 @@ class Editor extends Ext {
 	 * Any formatting required by `setFormatter` is performed after the data
 	 * from the client has been validated.
 	 *
-	 *  @param &array $errors Output array to which field error information will
+	 *  @param array $errors Output array to which field error information will
 	 *      be written. Each element in the array represents a field in an error
 	 *      condition. These elements are themselves arrays with two properties
 	 *      set; `name` and `status`.
@@ -836,10 +836,10 @@ class Editor extends Ext {
 	 * Get / set a global validator that will be triggered for the create, edit
 	 * and remove actions performed from the client-side.
 	 *
-	 * @param  [type] $_ Function to execute when validating the input data.
+	 * @param  callable $_ Function to execute when validating the input data.
 	 *   It is passed three parameters: 1. The editor instance, 2. The action
 	 *   and 3. The values.
-	 * @return [Editor|callback] Editor instance if called as a setter, or the
+	 * @return Editor|callback Editor instance if called as a setter, or the
 	 *   validator function if not.
 	 */
 	public function validator ( $_=null )

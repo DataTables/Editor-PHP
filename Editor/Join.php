@@ -721,7 +721,7 @@ class Join extends DataTables\Ext {
 	/**
 	 * Validate input data
 	 *
-	 * @param &array $errors Errors array
+	 * @param array $errors Errors array
 	 * @param Editor $editor Editor instance
 	 * @param string[] $data Data to validate
 	 * @internal
@@ -971,7 +971,7 @@ class Join extends DataTables\Ext {
 	/**
 	 * Validate input data
 	 *
-	 * @param &array $errors Errors array
+	 * @param array $errors Errors array
 	 * @param Editor $editor Editor instance
 	 * @param string[] $data Data to validate
 	 * @param string $prefix Field error prefix for client-side to show the

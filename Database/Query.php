@@ -230,9 +230,9 @@ class Query {
 	 * query is executed. This allows user input to be safely executed without
 	 * risk of an SQL injection attack.
 	 *
-	 * @param  [type] $name  Parameter name. This should include a leading colon
-	 * @param  [type] $value Value to bind
-	 * @param  [type] $type  Data type. See the PHP PDO documentation:
+	 * @param  string $name  Parameter name. This should include a leading colon
+	 * @param  string $value Value to bind
+	 * @param  mixed $type  Data type. See the PHP PDO documentation:
 	 *   http://php.net/manual/en/pdo.constants.php
 	 * @return Query
 	 */

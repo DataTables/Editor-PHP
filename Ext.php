@@ -69,7 +69,7 @@ class Ext {
 	 *  @param boolean $array Treat the target property as an array or not
 	 *    (default false). If used as an array, then values passed in are added
 	 *    to the $prop array.
-	 *  @return self|* Class instance if setting (allowing chaining), or
+	 *  @return self|mixed Class instance if setting (allowing chaining), or
 	 *    the value requested if getting.
 	 */
 	protected function _getSet( &$prop, $val, $array=false )

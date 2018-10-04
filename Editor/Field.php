@@ -638,7 +638,7 @@ class Field extends DataTables\Ext {
 	 *
 	 * @param array $data Data submitted from the client-side 
 	 * @param Editor $editor Editor instance
-	 * @param * $id Row id that is being validated
+	 * @param mixed $id Row id that is being validated
 	 * @return boolean|string `true` if valid, string with error message if not
 	 * @internal
 	 */
@@ -717,7 +717,7 @@ class Field extends DataTables\Ext {
 	/**
 	 * Perform XSS prevention on an input.
 	 *
-	 * @param  * $val Value to be escaped
+	 * @param  mixed $val Value to be escaped
 	 * @return string Safe value
 	 */
 	public function xssSafety ( $val ) {
