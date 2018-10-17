@@ -46,15 +46,15 @@ class SqlserverQuery extends Query {
 			$pdoAttr = isset( $opts['pdoAttr'] ) ? $opts['pdoAttr'] : array();
 		}
 
-		if ( $port !== "" ) {
-			$port = ":{$port}";
-		}
-
 		try {
 			$pdoAttr[ PDO::ATTR_ERRMODE ] = PDO::ERRMODE_EXCEPTION;
 
 			if ( in_array( 'sqlsrv', PDO::getAvailableDrivers() ) ) {
 				// Windows
+				if ( $port !== "" ) {
+					$port = ",{$port}";
+				}
+
 				$pdo = new PDO(
 					"sqlsrv:Server={$host}{$port};Database={$db}".self::dsnPostfix( $dsn ),
 					$user,
@@ -64,12 +64,16 @@ class SqlserverQuery extends Query {
 			}
 			else {
 				// Linux
-			$pdo = new PDO(
-				"dblib:host={$host}{$port};dbname={$db}".self::dsnPostfix( $dsn ),
-				$user,
-				$pass,
-				$pdoAttr
-			);
+				if ( $port !== "" ) {
+					$port = ":{$port}";
+				}
+
+				$pdo = new PDO(
+					"dblib:host={$host}{$port};dbname={$db}".self::dsnPostfix( $dsn ),
+					$user,
+					$pass,
+					$pdoAttr
+				);
 		}
 
 		} catch (\PDOException $e) {
