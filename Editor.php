@@ -1894,12 +1894,17 @@ class Editor extends Ext {
 			return null;
 		}
 
+		// Use pkey only for the host table
+		$pkey = in_array( $table, $this->_pkey ) !== false ?
+			$this->_pkey :
+			'';
+
 		// Insert or update
 		if ( $action === 'create' ) {
-			return $this->_db->insert( $table, $set, $this->_pkey );
+			return $this->_db->insert( $table, $set, $pkey );
 		}
 		else {
-			return $this->_db->push( $table, $set, $where, $this->_pkey );
+			return $this->_db->push( $table, $set, $where, $pkey );
 		}
 	}
 
