@@ -1895,7 +1895,7 @@ class Editor extends Ext {
 		}
 
 		// Use pkey only for the host table
-		$pkey = in_array( $table, $this->_pkey ) !== false ?
+		$pkey = in_array( $table, $this->_table ) !== false ?
 			$this->_pkey :
 			'';
 
