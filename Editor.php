@@ -1564,13 +1564,15 @@ class Editor extends Ext {
 	 */
 	private function _ssp_sort ( $query, $http )
 	{
-		for ( $i=0 ; $i<count($http['order']) ; $i++ ) {
-			$order = $http['order'][$i];
+		if ( isset( $http['order'] ) ) {
+			for ( $i=0 ; $i<count($http['order']) ; $i++ ) {
+				$order = $http['order'][$i];
 
-			$query->order(
-				$this->_ssp_field( $http, $order['column'] ) .' '.
-				($order['dir']==='asc' ? 'asc' : 'desc')
-			);
+				$query->order(
+					$this->_ssp_field( $http, $order['column'] ) .' '.
+					($order['dir']==='asc' ? 'asc' : 'desc')
+				);
+			}
 		}
 	}
 
