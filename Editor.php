@@ -1411,10 +1411,6 @@ class Editor extends Ext {
 					continue;
 				}
 
-				if ( isset( $files[ $table ] ) ) {
-					continue;
-				}
-
 				// Make a collection of the ids used in this data set to get a limited data set
 				// in return (security and performance)
 				if ( $ids === null ) {
@@ -1443,7 +1439,12 @@ class Editor extends Ext {
 				$fileData = $upload->data( $this->_db, $ids );
 
 				if ( $fileData !== null ) {
-					$files[ $table ] = $fileData;
+					if ( isset($files[$table]) ) {
+						$files[$table] = $files[$table] + $fileData;
+					}
+					else {
+						$files[$table] = $fileData;
+					}
 				}
 			}
 		}
