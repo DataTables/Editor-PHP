@@ -10,7 +10,7 @@
  *  @link      http://editor.datatables.net
  */
 
-define("DATATABLES", true, true);
+define("DATATABLES", true, false);
 
 //
 // Error checking - check that we are PHP 5.3 or newer

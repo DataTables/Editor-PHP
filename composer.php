@@ -9,4 +9,4 @@
  * composer only.
  */
 
-define("DATATABLES", true, true);
+define("DATATABLES", true, false);
