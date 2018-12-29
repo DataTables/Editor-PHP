@@ -99,6 +99,7 @@ class Database {
 			->table( $table )
 			->get( '*' )
 			->where( $where )
+			->limit(1)
 			->exec();
 
 		return $res->count() > 0;
