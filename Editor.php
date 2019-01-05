@@ -1522,11 +1522,11 @@ class Editor extends Ext {
 		}
 		$ssp_full_count = $ssp_full_count->exec()->fetch();
 
-		return array(
-			"draw" => intval( $http['draw'] ),
-			"recordsTotal" => $ssp_full_count['cnt'],
-			"recordsFiltered" => $ssp_set_count['cnt']
-		);
+        return array(
+            "draw" => intval( $http['draw'] ),
+            "recordsTotal" => isset( $ssp_full_count['CNT'] ) ? $ssp_full_count['CNT'] : $ssp_full_count['cnt'],
+            "recordsFiltered" => isset( $ssp_set_count['CNT'] ) ? $ssp_set_count['CNT'] : $ssp_set_count['cnt']
+        );
 	}
 
 
