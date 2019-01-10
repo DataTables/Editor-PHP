@@ -183,7 +183,7 @@ class OracleQuery extends Query {
 
 			if ( strpos($t, ' as ') ) {
 				$a = explode( ' as ', $t );
-				$out[] = $a[0].' '.$a[1];
+				$out[] = $this->_protect_identifiers($a[0]).' '.$this->_protect_identifiers($a[1]);
 			}
 			else {
 				$out[] = $t;
