@@ -121,14 +121,10 @@ class OracleQuery extends Query {
 			$sql .= ' RETURNING '.$this->_protect_identifiers(is_array($pkey) ? $pkey[0] : $pkey).' INTO :editor_pkey_value';
 		}
 		else if ( $this->_type === 'select' && $this->_oracle_offset !== null ) {
-			$sql = strpos($sql, 'SELECT DISTINCT') === 0 ?
-				str_replace('SELECT DISTINCT', 'SELECT DISTINCT rownum rn, ', $sql) :
-				str_replace('SELECT ', 'SELECT rownum rn, ', $sql);
-
 			$sql = '
 				select *
 				from ('.$sql.')
-				where rn > '.$this->_oracle_offset .' AND rn <= '.($this->_oracle_offset+$this->_oracle_limit);
+				where rownum > '.$this->_oracle_offset .' AND rownum <= '.($this->_oracle_offset+$this->_oracle_limit);
 		}
 
 		$this->database()->debugInfo( $sql, $this->_bindings );
