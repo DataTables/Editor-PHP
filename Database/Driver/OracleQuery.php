@@ -31,10 +31,11 @@ class OracleQuery extends Query {
 
 	private $_editor_pkey_value;
 
-
-	protected $_identifier_limiter = null;
+	protected $_identifier_limiter = array( '"', '"' );
 
 	protected $_field_quote = '"';
+
+	protected $_supportsAsAlias = false;
 
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -117,7 +118,7 @@ class OracleQuery extends Query {
 
 		// If insert, add the pkey column
 		if ( $this->_type === 'insert' && $pkey ) {
-			$sql .= ' RETURNING '.(is_array($pkey) ? $pkey[0] : $pkey).' INTO :editor_pkey_value';
+			$sql .= ' RETURNING '.$this->_protect_identifiers(is_array($pkey) ? $pkey[0] : $pkey).' INTO :editor_pkey_value';
 		}
 		else if ( $this->_type === 'select' && $this->_oracle_offset !== null ) {
 			$sql = strpos($sql, 'SELECT DISTINCT') === 0 ?

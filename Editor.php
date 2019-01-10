@@ -1503,9 +1503,9 @@ class Editor extends Ext {
 
 		// Get the number of rows in the result set
 		$ssp_set_count = $this->_db
-			->query('select')
+			->query('count')
 			->table( $this->_read_table() )
-			->get( 'COUNT('.$this->_pkey[0].') as cnt' );
+			->get( $this->_pkey[0] );
 		$this->_get_where( $ssp_set_count );
 		$this->_ssp_filter( $ssp_set_count, $http );
 		$this->_perform_left_join( $ssp_set_count );
@@ -1513,9 +1513,9 @@ class Editor extends Ext {
 
 		// Get the number of rows in the full set
 		$ssp_full_count = $this->_db
-			->query('select')
+			->query('count')
 			->table( $this->_read_table() )
-			->get( 'COUNT('.$this->_pkey[0].') as cnt' );
+			->get( $this->_pkey[0] );
 		$this->_get_where( $ssp_full_count );
 		if ( count( $this->_where ) ) { // only needed if there is a where condition
 			$this->_perform_left_join( $ssp_full_count );
@@ -1524,8 +1524,8 @@ class Editor extends Ext {
 
         return array(
             "draw" => intval( $http['draw'] ),
-            "recordsTotal" => isset( $ssp_full_count['CNT'] ) ? $ssp_full_count['CNT'] : $ssp_full_count['cnt'],
-            "recordsFiltered" => isset( $ssp_set_count['CNT'] ) ? $ssp_set_count['CNT'] : $ssp_set_count['cnt']
+            "recordsTotal" => $ssp_full_count['cnt'],
+            "recordsFiltered" => $ssp_set_count['cnt']
         );
 	}
 

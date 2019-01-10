@@ -292,6 +292,9 @@ class Query {
 		else if ( $type === 'delete' ) {
 			return $this->_delete();
 		}
+		else if ( $type === 'count' ) {
+			return $this->_count();
+		}
 		else if ( $type === 'raw' ) {
 			return $this->_raw( $sql );
 		}
@@ -1050,6 +1053,28 @@ class Query {
 			.$this->_build_join()
 			.$this->_build_where()
 			.$this->_build_order()
+			.$this->_build_limit()
+		);
+
+		return $this->_exec();
+	}
+
+	/**
+	 * Create a SELECT COUNT statement
+	 *  @return Result
+	 *  @internal
+	 */
+	protected function _count()
+	{
+		$select = $this->_supportsAsAlias ?
+			'SELECT COUNT('.$this->_build_field().') as '.$this->_protect_identifiers('cnt') :
+			'SELECT COUNT('.$this->_build_field().') '.$this->_protect_identifiers('cnt');
+
+		$this->_prepare( 
+			$select
+			.'FROM '.$this->_build_table()
+			.$this->_build_join()
+			.$this->_build_where()
 			.$this->_build_limit()
 		);
 

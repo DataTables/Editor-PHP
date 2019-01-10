@@ -118,6 +118,26 @@ class Database {
 
 
 	/**
+	 * Get a count from a table.
+	 *  @param string|string[] $table Table name(s) to act upon.
+	 *  @param string $field Primary key field name
+	 *  @param array $where Where condition for what to select - see {@link
+	 *    Query::where}.
+	 *  @return Number
+	 */
+	public function count ( $table, $field="id", $where=null )
+	{
+		$res = $this->query( 'count' )
+			->table( $table )
+			->get( $field )
+			->where( $where )
+			->exec();
+
+		return $res->fetch()['cnt'];
+	}
+
+
+	/**
 	 * Get / set debug mode.
 	 * 
 	 *  @param boolean $_ Debug mode state. If not given, then used as a getter.
