@@ -91,6 +91,9 @@ class Format {
 		return function ( $val, $data ) use ( $format ) {
 			// Note that this assumes the date is in the correct format (should be
 			// checked by validation before being used here!)
+			if ( substr($format, 0, 1) !== '!' ) {
+				$format = '!'.$format;
+			}
 			$date = date_create_from_format($format, $val);
 
 			// Invalid dates or empty string are replaced with null. Use the
