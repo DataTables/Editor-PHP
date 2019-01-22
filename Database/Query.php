@@ -1072,7 +1072,7 @@ class Query {
 
 		$this->_prepare( 
 			$select
-			.'FROM '.$this->_build_table()
+			.' FROM '.$this->_build_table()
 			.$this->_build_join()
 			.$this->_build_where()
 			.$this->_build_limit()
