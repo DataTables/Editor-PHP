@@ -121,6 +121,9 @@ class Format {
 	 */
 	public static function datetime( $from, $to ) {
 		return function ( $val, $data ) use ( $from, $to ) {
+			if ( substr($from, 0, 1) !== '!' ) {
+				$from = '!'.$from;
+			}
 			$date = date_create_from_format( $from, $val );
 
 			// Allow empty strings or invalid dates

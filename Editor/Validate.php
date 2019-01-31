@@ -903,6 +903,10 @@ class Validate {
 					$common;
 			}
 
+			if ( substr($format, 0, 1) !== '!' ) {
+				$format = '!'.$format;
+			}
+
 			$date = \DateTime::createFromFormat( $format, $val) ;
 			
 			return $date && $date->format( $format ) == $val ?
