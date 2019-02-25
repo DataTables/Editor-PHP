@@ -327,7 +327,7 @@ class Query {
 				}
 			}
 			else {
-				$this->_field[] = trim( $get );
+				$this->_field[] = trim( $args[$i] );
 			}
 		}
 
