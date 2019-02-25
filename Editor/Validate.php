@@ -903,12 +903,12 @@ class Validate {
 					$common;
 			}
 
-			if ( substr($format, 0, 1) !== '!' ) {
-				$format = '!'.$format;
-			}
+			$formatCreate = substr($format, 0, 1) !== '!' ?
+				'!'.$format :
+				$format;
 
-			$date = \DateTime::createFromFormat( $format, $val) ;
-			
+			$date = \DateTime::createFromFormat( $formatCreate, $val );
+
 			return $date && $date->format( $format ) == $val ?
 				true :
 				$opts->message();
