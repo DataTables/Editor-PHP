@@ -1086,6 +1086,33 @@ class Validate {
 	}
 
 
+
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	* Mjoin validation methods
+	*/
+	static function mjoinMinCount ( $count, $msg="Too few files uploaded." ) {
+		return function ( $action, $values ) use ( $count, $msg ) {
+			if ( $action === 'create' || $action === 'edit' ) {
+				return count($values) < $count ?
+					$msg :
+					true;
+			}
+			return true;
+		};
+	}
+
+	static function mjoinMaxCount ( $count, $msg="Too many files uploaded." ) {
+		return function ( $action, $values ) use ( $count, $msg ) {
+			if ( $action === 'create' || $action === 'edit' ) {
+				return count($values) > $count ?
+					$msg :
+					true;
+			}
+			return true;
+		};
+	}
+
+
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Internal functions
 	 * These legacy methods are for backwards compatibility with the old way of

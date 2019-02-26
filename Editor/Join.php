@@ -120,6 +120,9 @@ class Join extends DataTables\Ext {
 	/** @var string */
 	private $_customOrder = null;
 
+	/** @var callable[] */
+	private $_validators = array();
+
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -357,6 +360,25 @@ class Join extends DataTables\Ext {
 	public function type ( $_=null )
 	{
 		return $this->_getSet( $this->_type, $_ );
+	}
+
+
+	/**
+	 * Set a validator for the array of data (not on a field basis)
+	 *
+	 * @param string $fieldName Name of the field that any error should be shown
+	 *   against on the client-side
+	 * @param callable $fn Callback function for validation
+	 * @return self Chainable
+	 */
+	public function validator ( $fieldName, $fn )
+	{
+		$this->_validators[] = array(
+			'fieldName' => $fieldName,
+			'fn' => $fn
+		);
+
+		return $this;
 	}
 
 
@@ -724,17 +746,33 @@ class Join extends DataTables\Ext {
 	 * @param array $errors Errors array
 	 * @param Editor $editor Editor instance
 	 * @param string[] $data Data to validate
+	 * @param string $action `create` or `edit`
 	 * @internal
 	 */
-	public function validate ( &$errors, $editor, $data )
+	public function validate ( &$errors, $editor, $data, $action )
 	{
-		if ( ! $this->_set || ! isset($data[$this->_name]) ) {
+		if ( ! $this->_set && ! isset($data[$this->_name.'-many-count']) ) {
 			return;
 		}
 
 		$this->_prep( $editor );
 
-		$joinData = $data[$this->_name];
+		$joinData = isset($data[$this->_name]) ?
+			$data[$this->_name] :
+			[];
+
+		for ( $i=0 ; $i<count($this->_validators) ; $i++ ) {
+			$validator = $this->_validators[$i];
+			$fn = $validator['fn'];
+			$res = $fn( $action, $joinData );
+
+			if ( is_string($res) ) {
+				$errors[] = array(
+					"name" => $validator['fieldName'],
+					"status" => $res
+				);
+			}
+		}
 
 		if ( $this->_type === 'object' ) {
 			$this->_validateFields( $errors, $editor, $joinData, $this->_name.'.' );

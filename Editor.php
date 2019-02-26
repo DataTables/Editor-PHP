@@ -143,7 +143,7 @@ class Editor extends Ext {
 	 */
 
 	/** @var string */
-	public $version = '1.8.1';
+	public $version = '1.8.2-dev';
 
 
 
@@ -824,7 +824,7 @@ class Editor extends Ext {
 
 			// MJoin validation
 			for ( $i=0 ; $i<count($this->_join) ; $i++ ) {
-				$this->_join[$i]->validate( $errors, $this, $values );
+				$this->_join[$i]->validate( $errors, $this, $values, $data['action'] );
 			}
 		}
 
