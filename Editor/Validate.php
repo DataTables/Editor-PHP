@@ -632,7 +632,7 @@ class Validate {
 					$common;
 			}
 	
-			return strlen( $val ) < $min ?
+			return mb_strlen( $val ) < $min ?
 				$opts->message() :
 				true;
 		};
@@ -665,7 +665,7 @@ class Validate {
 					$common;
 			}
 	
-			return strlen( $val ) > $max ?
+			return mb_strlen( $val ) > $max ?
 				$opts->message() :
 				true;
 		};
@@ -1090,7 +1090,7 @@ class Validate {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	* Mjoin validation methods
 	*/
-	static function mjoinMinCount ( $count, $msg="Too few files uploaded." ) {
+	static function mjoinMinCount ( $count, $msg="Too few items." ) {
 		return function ( $action, $values ) use ( $count, $msg ) {
 			if ( $action === 'create' || $action === 'edit' ) {
 				return count($values) < $count ?
@@ -1101,7 +1101,7 @@ class Validate {
 		};
 	}
 
-	static function mjoinMaxCount ( $count, $msg="Too many files uploaded." ) {
+	static function mjoinMaxCount ( $count, $msg="Too many items." ) {
 		return function ( $action, $values ) use ( $count, $msg ) {
 			if ( $action === 'create' || $action === 'edit' ) {
 				return count($values) > $count ?
