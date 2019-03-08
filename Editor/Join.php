@@ -764,7 +764,7 @@ class Join extends DataTables\Ext {
 		for ( $i=0 ; $i<count($this->_validators) ; $i++ ) {
 			$validator = $this->_validators[$i];
 			$fn = $validator['fn'];
-			$res = $fn( $action, $joinData );
+			$res = $fn( $editor, $action, $joinData );
 
 			if ( is_string($res) ) {
 				$errors[] = array(

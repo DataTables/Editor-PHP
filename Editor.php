@@ -143,7 +143,7 @@ class Editor extends Ext {
 	 */
 
 	/** @var string */
-	public $version = '1.8.2-dev';
+	public $version = '1.9.0';
 
 
 
@@ -206,7 +206,7 @@ class Editor extends Ext {
 	private $_debugLog = '';
 
 	/** @var callback */
-	private $_validator = null;
+	private $_validator = array();
 
 	/** @var boolean Enable true / catch when processing */
 	private $_tryCatch = true;
@@ -834,7 +834,8 @@ class Editor extends Ext {
 
 	/**
 	 * Get / set a global validator that will be triggered for the create, edit
-	 * and remove actions performed from the client-side.
+	 * and remove actions performed from the client-side. Multiple validators
+	 * can be added.
 	 *
 	 * @param  callable $_ Function to execute when validating the input data.
 	 *   It is passed three parameters: 1. The editor instance, 2. The action
@@ -844,7 +845,7 @@ class Editor extends Ext {
 	 */
 	public function validator ( $_=null )
 	{
-		return $this->_getSet( $this->_validator, $_ );
+		return $this->_getSet( $this->_validator, $_, true );
 	}
 
 
@@ -933,7 +934,7 @@ class Editor extends Ext {
 
 		$this->_processData = $data;
 		$this->_formData = isset($data['data']) ? $data['data'] : null;
-		$validator = $this->_validator;
+		$validators = $this->_validator;
 
 		if ( $this->_transaction ) {
 			$this->_db->transaction();
@@ -941,11 +942,15 @@ class Editor extends Ext {
 
 		$this->_prepJoin();
 
-		if ( $validator ) {
-			$ret = $validator( $this, !isset($data['action']) ? self::ACTION_READ : $data['action'], $data );
+		if ( $validators ) {
+			for ( $i=0 ; $i<count($validators) ; $i++ ) {
+				$validator = $validators[$i];
+				$ret = $validator( $this, !isset($data['action']) ? self::ACTION_READ : $data['action'], $data );
 
-			if ( $ret ) {
-				$this->_out['error'] = $ret;
+				if ( is_string($ret) ) {
+					$this->_out['error'] = $ret;
+					break;
+				}
 			}
 		}
 
