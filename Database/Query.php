@@ -901,7 +901,7 @@ class Query {
 				// Nothing
 			}
 			else {
-				$condition .= $this->_where[$i]['operator'];
+				$condition .= $this->_where[$i]['operator'].' ';
 			}
 
 			if ( $this->_where[$i]['group'] !== null ) {
