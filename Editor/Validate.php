@@ -382,7 +382,7 @@ class Validate {
 			}
 	
 			if ( filter_var($val, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) === null ) {
-				return $opt->message();
+				return $opts->message();
 			}
 			return true;
 		};
