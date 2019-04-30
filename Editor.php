@@ -1937,12 +1937,29 @@ class Editor extends Ext {
 		$count = 0;
 
 		foreach ($this->_fields as $field) {
-			if ( strpos( $field->dbField(), '.') === false || (
-					$this->_part( $field->dbField(), 'table' ) === $table &&
-					$field->set() !== Field::SET_NONE
-				)
-			) {
-				$count++;
+			$fieldName = $field->dbField();
+			$fieldDots = substr_count( $fieldName, '.' );
+
+			if ( $fieldDots === 0 ) {
+				$count++;	
+			}
+			else if ( $fieldDots === 1 ) {
+				if (
+					$field->set() !== Field::SET_NONE &&
+					$this->_part( $fieldName, 'table' ) === $table
+				) {
+					$count++;
+				}
+			}
+			else {
+				// db link
+				// note that if the table name for the constructor uses a db part, we need to also have
+				// the fields using the db name as Editor doesn't do any conflict resolution.
+				$dbTable = $this->_part( $fieldName, 'db' ) .'.'. $this->_part( $fieldName, 'table' );
+
+				if ( $field->set() !== Field::SET_NONE && $dbTable === $table ) {
+					$count++;
+				}
 			}
 		}
 
