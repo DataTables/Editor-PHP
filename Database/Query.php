@@ -1132,12 +1132,23 @@ class Query {
 			}
 			else if ( $bind ) {
 				// Binding condition (i.e. escape data)
-				$this->_where[] = array(
-					'operator' => $type,
-					'group'    => null,
-					'field'    => $this->_protect_identifiers($key),
-					'query'    => $this->_protect_identifiers($key) .' '.$op.' '.$this->_safe_bind(':where_'.$i)
-				);
+				if ( $this->_dbHost->type === 'Postgres' && $op === 'like' ) {
+					// Postgres specific a it needs a case for string searching non-text data
+					$this->_where[] = array(
+						'operator' => $type,
+						'group'    => null,
+						'field'    => $this->_protect_identifiers($key),
+						'query'    => $this->_protect_identifiers($key).'::text ilike '.$this->_safe_bind(':where_'.$i)
+					);
+				}
+				else {
+					$this->_where[] = array(
+						'operator' => $type,
+						'group'    => null,
+						'field'    => $this->_protect_identifiers($key),
+						'query'    => $this->_protect_identifiers($key) .' '.$op.' '.$this->_safe_bind(':where_'.$i)
+					);
+				}
 				$this->bind( ':where_'.$i, $value );
 			}
 			else {

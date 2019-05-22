@@ -59,6 +59,7 @@ class Database {
 			);
 		}
 
+		$this->type = $opts['type'];
 		$this->query_driver = "DataTables\\Database\\Driver\\".$opts['type'].'Query';
 		$this->_dbResource = isset( $opts['pdo'] ) ?
 			$opts['pdo'] :
