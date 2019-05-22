@@ -458,7 +458,7 @@ class Query {
 		}
 
 		if ( !is_array($order) ) {
-			$order = preg_split('/\,(?![^(]*))/',$order);
+			$order = preg_split('/\,(?![^\(]*\))/',$order);
 		}
 
 		for ( $i=0 ; $i<count($order) ; $i++ ) {
