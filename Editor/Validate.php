@@ -1091,7 +1091,7 @@ class Validate {
 	* Mjoin validation methods
 	*/
 	static function mjoinMinCount ( $count, $msg="Too few items." ) {
-		return function ( $action, $values ) use ( $count, $msg ) {
+		return function ( $editor, $action, $values ) use ( $count, $msg ) {
 			if ( $action === 'create' || $action === 'edit' ) {
 				return count($values) < $count ?
 					$msg :
@@ -1102,7 +1102,7 @@ class Validate {
 	}
 
 	static function mjoinMaxCount ( $count, $msg="Too many items." ) {
-		return function ( $action, $values ) use ( $count, $msg ) {
+		return function ( $editor, $action, $values ) use ( $count, $msg ) {
 			if ( $action === 'create' || $action === 'edit' ) {
 				return count($values) > $count ?
 					$msg :
