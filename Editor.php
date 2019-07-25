@@ -936,20 +936,27 @@ class Editor extends Ext {
 		$this->_formData = isset($data['data']) ? $data['data'] : null;
 		$validators = $this->_validator;
 
-		if ( $this->_transaction ) {
-			$this->_db->transaction();
+		// Sanity check that data isn't getting truncated as that can lead to data corruption
+		if ( count($data, COUNT_RECURSIVE) == ini_get('max_input_vars') ) {
+			$this->_out['error'] = 'Too many rows edited at the same time (tech info: max_input_vars exceeded).';
 		}
 
-		$this->_prepJoin();
+		if ( ! $this->_out['error'] ) {
+			if ( $this->_transaction ) {
+				$this->_db->transaction();
+			}
 
-		if ( $validators ) {
-			for ( $i=0 ; $i<count($validators) ; $i++ ) {
-				$validator = $validators[$i];
-				$ret = $validator( $this, !isset($data['action']) ? self::ACTION_READ : $data['action'], $data );
+			$this->_prepJoin();
 
-				if ( is_string($ret) ) {
-					$this->_out['error'] = $ret;
-					break;
+			if ( $validators ) {
+				for ( $i=0 ; $i<count($validators) ; $i++ ) {
+					$validator = $validators[$i];
+					$ret = $validator( $this, !isset($data['action']) ? self::ACTION_READ : $data['action'], $data );
+
+					if ( is_string($ret) ) {
+						$this->_out['error'] = $ret;
+						break;
+					}
 				}
 			}
 		}
