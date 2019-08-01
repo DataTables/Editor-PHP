@@ -631,8 +631,12 @@ class Validate {
 					$opts->message() :
 					$common;
 			}
-	
-			return mb_strlen( $val ) < $min ?
+
+			$strlen = is_callable('mb_strlen') ?
+				'mb_strlen' :
+				'strlen';
+
+			return $strlen( $val ) < $min ?
 				$opts->message() :
 				true;
 		};
@@ -664,8 +668,12 @@ class Validate {
 					$opts->message() :
 					$common;
 			}
-	
-			return mb_strlen( $val ) > $max ?
+
+			$strlen = is_callable('mb_strlen') ?
+				'mb_strlen' :
+				'strlen';
+
+			return $strlen( $val ) > $max ?
 				$opts->message() :
 				true;
 		};
