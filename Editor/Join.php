@@ -462,6 +462,12 @@ class Join extends DataTables\Ext {
 		$idPrefix = $editor->idPrefix();
 
 		$dteTable = $dteTable[0];
+		if ( strpos($dteTable, ' as ') !== false ) {
+			$arr = explode(' as ', $dteTable);
+			$dteTable = $arr[0];
+			$this->_aliasParentTable = $arr[1];
+		}
+		
 		$dteTableLocal = $this->_aliasParentTable ? // Can be aliased to allow a self join
 			$this->_aliasParentTable :
 			$dteTable;
@@ -478,7 +484,7 @@ class Join extends DataTables\Ext {
 
 		if ( count($data) > 0 ) {
 			$pkey = $pkey[0];
-			$pkeyIsJoin = $pkey === $joinField || $pkey === $dteTable.'.'.$joinField;
+			$pkeyIsJoin = $pkey === $joinField || $pkey === $dteTableLocal.'.'.$joinField;
 
 			// Sanity check that table selector fields are read only, and have an name without
 			// a dot (for DataTables mData to be able to read it)
@@ -876,6 +882,11 @@ class Join extends DataTables\Ext {
 			$editorTable = $editor->table();
 			$editorTable = $editorTable[0];
 			$joinTable = $this->table();
+			if ( strpos($editorTable, ' as ') !== false ) {
+				$arr = explode(' as ', $editorTable);
+				$editorTable = $arr[0];
+				$this->_aliasParentTable = $arr[1];
+			}
 
 			if ( $this->_aliasParentTable ) {
 				$editorTable = $this->_aliasParentTable;
@@ -1031,4 +1042,3 @@ class Join extends DataTables\Ext {
 		}
 	}
 }
-
