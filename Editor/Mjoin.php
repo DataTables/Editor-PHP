@@ -24,7 +24,7 @@ use DataTables\Editor\Join;
  *
  * This class is recommended over the `Join` class.
  */
-class MJoin extends Join
+class Mjoin extends Join
 {
 	function __construct( $table=null )
 	{
