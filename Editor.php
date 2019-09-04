@@ -1940,6 +1940,8 @@ class Editor extends Ext {
 			$pkey = $this->_pkey;
 		}
 
+		$tableMatch = $this->_alias($table, 'alias');
+
 		// Check there is a field which has a set option for this table
 		$count = 0;
 
@@ -1953,7 +1955,7 @@ class Editor extends Ext {
 			else if ( $fieldDots === 1 ) {
 				if (
 					$field->set() !== Field::SET_NONE &&
-					$this->_part( $fieldName, 'table' ) === $table
+					$this->_part( $fieldName, 'table' ) === $tableMatch
 				) {
 					$count++;
 				}
