@@ -134,7 +134,8 @@ class Database {
 			->where( $where )
 			->exec();
 
-		return $res->fetch()['cnt'];
+		$cnt = $res->fetch();
+		return $cnt['cnt'];
 	}
 
 
