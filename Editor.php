@@ -1012,9 +1012,9 @@ class Editor extends Ext {
 							$this->_out['data'][] = $d;
 						}
 					}
-				}
 
-				$this->_fileClean();
+					$this->_fileClean();
+				}
 			}
 		}
 
