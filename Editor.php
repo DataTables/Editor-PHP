@@ -932,6 +932,7 @@ class Editor extends Ext {
 			"cancelled" => array()
 		);
 
+		$action = Editor::action($data);
 		$this->_processData = $data;
 		$this->_formData = isset($data['data']) ? $data['data'] : null;
 		$validators = $this->_validator;
@@ -951,7 +952,7 @@ class Editor extends Ext {
 			if ( $validators ) {
 				for ( $i=0 ; $i<count($validators) ; $i++ ) {
 					$validator = $validators[$i];
-					$ret = $validator( $this, !isset($data['action']) ? self::ACTION_READ : $data['action'], $data );
+					$ret = $validator( $this, $action, $data );
 
 					if ( is_string($ret) ) {
 						$this->_out['error'] = $ret;
@@ -962,26 +963,26 @@ class Editor extends Ext {
 		}
 
 		if ( ! $this->_out['error'] ) {
-			if ( ! isset($data['action']) ) {
+			if ( $action === Editor::ACTION_READ ) {
 				/* Get data */
 				$this->_out = array_merge( $this->_out, $this->_get( null, $data ) );
 			}
-			else if ( $data['action'] == "upload" ) {
+			else if ( $action === Editor::ACTION_UPLOAD ) {
 				/* File upload */
 				$this->_upload( $data );
 			}
-			else if ( $data['action'] == "remove" ) {
+			else if ( $action === Editor::ACTION_DELETE ) {
 				/* Remove rows */
 				$this->_remove( $data );
 				$this->_fileClean();
 			}
-			else {
+			else if ( $action === Editor::ACTION_CREATE || $action === Editor::ACTION_EDIT ) {
 				/* Create or edit row */
 				// Pre events so they can occur before the validation
 				foreach ($data['data'] as $idSrc => &$values) {
 					$cancel = null;
 
-					if ( $data['action'] == 'create' ) {
+					if ( $action === Editor::ACTION_CREATE ) {
 						$cancel = $this->_trigger( 'preCreate', $values );
 					}
 					else {
@@ -1004,7 +1005,7 @@ class Editor extends Ext {
 
 				if ( $valid ) {
 					foreach ($data['data'] as $id => &$values) {
-						$d = $data['action'] == "create" ?
+						$d = $action === Editor::ACTION_CREATE ?
 							$this->_insert( $values ) :
 							$this->_update( $id, $values );
 
