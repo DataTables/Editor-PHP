@@ -83,17 +83,18 @@ class Editor extends Ext {
 	 * 
 	 * @param array $http Typically $_POST, but can be any array used to carry
 	 *   an Editor payload
+	 * @param string $name The parameter name that the action should be read from.
 	 * @return string `Editor::ACTION_READ`, `Editor::ACTION_CREATE`,
 	 *   `Editor::ACTION_EDIT` or `Editor::ACTION_DELETE` indicating the request
 	 *   type.
 	 */
-	static public function action ( $http )
+	static public function action ( $http, $name='action' )
 	{
-		if ( ! isset( $http['action'] ) ) {
+		if ( ! isset( $http[$name] ) ) {
 			return self::ACTION_READ;
 		}
 
-		switch ( $http['action'] ) {
+		switch ( $http[$name] ) {
 			case 'create':
 				return self::ACTION_CREATE;
 
@@ -214,11 +215,27 @@ class Editor extends Ext {
 	/** @var boolean Enable / disable delete on left joined tables */
 	private $_leftJoinRemove = false;
 
+	/** @var string Action name allowing for configuration */
+	private $_actionName = 'action';
+
 
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
 	 */
+
+	/**
+	 * Get / set the action name to read in HTTP parameters. This can be useful
+	 * to set if you are using a framework that uses the default name of `action`
+	 * for something else (e.g. WordPress).
+	 *  @param string Value to set. If not given, then used as a getter.
+	 *  @return string|self Value, or self if used as a setter.
+	 */
+	public function actionName ( $_=null )
+	{
+		return $this->_getSet( $this->_actionName, $_ );
+	}
+
 
 	/**
 	 * Get the data constructed in this instance.
@@ -803,7 +820,7 @@ class Editor extends Ext {
 	public function validate ( &$errors, $data )
 	{
 		// Validation is only performed on create and edit
-		if ( $data['action'] != "create" && $data['action'] != "edit" ) {
+		if ( $data[$this->_actionName] != "create" && $data[$this->_actionName] != "edit" ) {
 			return true;
 		}
 
@@ -824,7 +841,7 @@ class Editor extends Ext {
 
 			// MJoin validation
 			for ( $i=0 ; $i<count($this->_join) ; $i++ ) {
-				$this->_join[$i]->validate( $errors, $this, $values, $data['action'] );
+				$this->_join[$i]->validate( $errors, $this, $values, $data[$this->_actionName] );
 			}
 		}
 
