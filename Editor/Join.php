@@ -765,7 +765,7 @@ class Join extends DataTables\Ext {
 
 		$joinData = isset($data[$this->_name]) ?
 			$data[$this->_name] :
-			[];
+			array();
 
 		for ( $i=0 ; $i<count($this->_validators) ; $i++ ) {
 			$validator = $this->_validators[$i];
