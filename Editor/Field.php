@@ -128,8 +128,14 @@ class Field extends DataTables\Ext {
 	/** @var Options */
 	private $_opts = null;
 
+	/** @var SearchPaneOptions */
+	private $_spopts = null;
+
 	/** @var callable */
 	private $_optsFn = null;
+
+	/** @var callable */
+	private $_spoptsFn = null;
 
 	/** @var string */
 	private $_name = null;
@@ -338,6 +344,47 @@ class Field extends DataTables\Ext {
 
 		return $this;
 	}
+
+	public function searchPaneOptions ( $table=null, $value=null, $label=null )
+	{
+		if ( $table === null ) {
+			return $this->_spopts;
+		}
+
+		// Overloads for backwards compatibility
+		if ( is_a( $table, '\DataTables\Editor\SearchPaneOptions' ) ) {
+			// Options class
+			$this->_spoptsFn = null;
+			$this->_spopts = $table;
+		}
+		else if ( is_callable($table) && is_object($table) ) {
+			// Function
+			$this->_spopts = null;
+			$this->_spoptsFn = $table;
+		}
+		else {
+			$this->_spoptsFn = null;
+			$this->_spopts = SearchPaneOptions::inst()
+				->table( $table )
+				->value( $value )
+				->label( $label );
+
+			if ( $condition ) {
+				$this->_spopts->where( $condition );
+			}
+
+			if ( $format ) {
+				$this->_spopts->render( $format );
+			}
+
+			if ( $order ) {
+				$this->_spopts->order( $order );
+			}
+		}
+
+		return $this;
+	}
+
 
 
 	/**
@@ -571,6 +618,21 @@ class Field extends DataTables\Ext {
 
 		return false;
 	}
+
+	public function searchPaneOptionsExec ( $db )
+	{
+		if ( $this->_spoptsFn ) {
+			$fn = $this->_spoptsFn;
+			return $fn();
+		}
+		else if ( $this->_spopts ) {
+			return $this->_spopts->exec( $db );
+		}
+
+		return false;
+	}
+
+	
 
 
 	/**

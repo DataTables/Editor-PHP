@@ -1128,6 +1128,8 @@ class Editor extends Ext {
 
 		// Field options
 		$options = array();
+		$spOptions = array();
+		$searchPanes = array();
 
 		if ( $id === null ) {
 			foreach ($this->_fields as $field) {
@@ -1136,8 +1138,17 @@ class Editor extends Ext {
 				if ( $opts !== false ) {
 					$options[ $field->name() ] = $opts;
 				}
+
+				// SearchPanes options
+				$spOpts = $field->searchPaneOptionsExec( $this->_db );
+
+				if ( $spOpts !== false ) {
+					$spOptions[ $field->name() ] = $spOpts;
+				}
 			}
 		}
+
+		$searchPanes[ 'options' ] = $spOptions; 
 
 		// Row based "joins"
 		for ( $i=0 ; $i<count($this->_join) ; $i++ ) {
@@ -1150,7 +1161,8 @@ class Editor extends Ext {
 			array(
 				'data'    => $out,
 				'options' => $options,
-				'files'   => $this->_fileData( null, null, $out )
+				'files'   => $this->_fileData( null, null, $out ),
+				'searchPanes' => $searchPanes
 			),
 			$ssp
 		);
@@ -1628,14 +1640,40 @@ class Editor extends Ext {
 			$query->where( function ($q) use (&$that, &$fields, $http) {
 				for ( $i=0 ; $i<count($http['columns']) ; $i++ ) {
 					if ( $http['columns'][$i]['searchable'] == 'true' ) {
-						$field = $that->_ssp_field( $http, $i );
+						$fieldName = $that->_ssp_field( $http, $i );
 
-						if ( $field ) {
-							$q->or_where( $field, '%'.$http['search']['value'].'%', 'like' );
+						if ( $fieldName ) {
+							$q->or_where( $fieldName, '%'.$http['search']['value'].'%', 'like' );
 						}
 					}
 				}
 			} );
+		}
+
+		/*
+			foreach ($this->_fields as $field) {
+			// Don't reselect a pkey column if it was already added
+			if ( in_array( $field->dbField(), $this->_pkey ) ) {
+				continue;
+			}
+
+			if ( $field->apply('get') && $field->getValue() === null ) {
+				$query->get( $field->dbField() );
+			}
+		}
+		*/
+
+		if( isset($http['searchPanes']) ) {
+			foreach ($this->_fields as $field) {
+				if( isset($http['searchPanes'][$field->name()])){
+					$query->where( function ($q) use ($field, $http) {
+
+						for($j=0 ; $j<count($http['searchPanes'][$field->name()]) ; $j++){
+							$q->or_where( $field->dbField(), '%'.$http['searchPanes'][$field->name()][$j].'%', 'like' );
+						}
+					});
+				}
+			}
 		}
 
 		// if ( $http['search']['value'] ) {
@@ -1670,6 +1708,8 @@ class Editor extends Ext {
 				$query->where( $this->_ssp_field( $http, $i ), '%'.$search.'%', 'like' );
 			}
 		}
+
+
 	}
 
 
