@@ -1140,7 +1140,7 @@ class Editor extends Ext {
 				}
 
 				// SearchPanes options
-				$spOpts = $field->searchPaneOptionsExec( $this->_db );
+				$spOpts = $field->searchPaneOptionsExec( $field, $this );
 
 				if ( $spOpts !== false ) {
 					$spOptions[ $field->name() ] = $spOpts;

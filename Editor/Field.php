@@ -619,14 +619,14 @@ class Field extends DataTables\Ext {
 		return false;
 	}
 
-	public function searchPaneOptionsExec ( $db )
+	public function searchPaneOptionsExec ( $field, $editor )
 	{
 		if ( $this->_spoptsFn ) {
 			$fn = $this->_spoptsFn;
 			return $fn();
 		}
 		else if ( $this->_spopts ) {
-			return $this->_spopts->exec( $db );
+			return $this->_spopts->exec( $field, $editor );
 		}
 
 		return false;

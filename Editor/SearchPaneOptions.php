@@ -75,6 +75,8 @@ class SearchPaneOptions extends DataTables\Ext {
 	/** @var string[] Column names for the label(s) */
 	private $_label = array();
 
+	private $_leftJoin = array();
+
 	/** @var integer Row limit */
 	private $_limit = null;
 
@@ -213,7 +215,17 @@ class SearchPaneOptions extends DataTables\Ext {
 		return $this->_getSet( $this->_where, $_ );
 	}
 
+	public function leftJoin ( $table, $field1, $operator, $field2 )
+	{
+		$this->_leftJoin[] = array(
+			"table"    => $table,
+			"field1"   => $field1,
+			"field2"   => $field2,
+			"operator" => $operator
+		);
 
+		return $this;
+	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Internal methods
@@ -226,37 +238,63 @@ class SearchPaneOptions extends DataTables\Ext {
 	 * @return array        List of options
 	 * @internal
 	 */
-	public function exec ( $db )
+	public function exec ( $field, $editor )
 	{
-		$label = $this->_label;
-		$value = $this->_value;
-		$formatter = $this->_renderer;
+		// If the value is not yet set then set the variable to be the field name
+		if ( $this->_value == null) {
+			$value = $field->dbField();
+		}
+		else {
+			$value = $this->_value;
+		}
 
-		// Create a list of the fields that we need to get from the db
-		$fields = array();
-		$fields[] = $value;
-		$fields = array_merge( $fields, $label );
+		// If the table is not yet set then set the table variable to be the same as editor
+		if ( $this->_table == null) {
+			$table = $editor->table();
+		}
+		else {
+			$table = $this->_table;
+		}
+
+		// If the label value has not yet been set then just set it to be the same as value
+		if ( $this->_label == null ) {
+			$label = $value;
+		}
+		else {
+			$label = $this->_label[0];
+		}
+
+		// Set the database from editor
+		$db = $editor->db();
+
+		$formatter = $this->_renderer;
 
 		// We need a default formatter if one isn't provided
 		if ( ! $formatter ) {
-			$formatter = function ( $row ) use ( $label ) {
-				$a = array();
-
-				for ( $i=0, $ien=count($label) ; $i<$ien ; $i++ ) {
-					$a[] = $row[ $label[$i] ];
-				}
-
-				return implode(' ', $a);
+			$formatter = function ( $row ) {
+				return implode(' ', $row);
 			};
+		}
+
+		if(count($this->_leftJoin) > 0){
+			$join = $this->_leftJoin[0];
+		}
+		else {
+			$join = $this->_leftJoin;
 		}
 
 		// Get the data
 		$q = $db
 			->query('select')
-			->table( $this->_table )
-			->distinct( true )
-			->get( $fields )
+			->table( $table )
+			->get( $label." as label", $value." as value", "COUNT(*) as count" )
+			->group_by( $value )
 			->where( $this->_where );
+
+		// If a join is required then we need to add the following to the query
+		if (count($join) > 0){
+			$q->join( $join['table'], $join['field1'].' '.$join['operator'].' '.$join['field2'], 'LEFT' );
+		}
 
 		if ( $this->_order ) {
 			// For cases where we are ordering by a field which isn't included in the list
@@ -291,8 +329,9 @@ class SearchPaneOptions extends DataTables\Ext {
 
 		for ( $i=0, $ien=count($rows) ; $i<$ien ; $i++ ) {
 			$out[] = array(
-				"label" => $formatter( $rows[$i] ),
-				"value" => $rows[$i][$value]
+				"label" => $rows[$i]['label'],
+				"count" => $rows[$i]['count'],
+				"value" => $rows[$i]['value']
 			);
 		}
 

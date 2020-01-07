@@ -116,6 +116,8 @@ class Query {
 	 */
 	protected $_limit = null;
 
+	protected $_group_by = null;
+
 	/**
 	 * @var int
 	 * @internal
@@ -376,6 +378,13 @@ class Query {
 	public function limit ( $lim )
 	{
 		$this->_limit = $lim;
+
+		return $this;
+	}
+
+	public function group_by ( $group_by )
+	{
+		$this->_group_by = $group_by;
 
 		return $this;
 	}
@@ -795,6 +804,17 @@ class Query {
 		return $out;
 	}
 
+	protected function _build_group_by()
+	{
+		$out = '';
+
+		if ( $this->_group_by) {
+			$out .= ' GROUP BY '.$this->_group_by;
+		}
+
+		return $out;
+	}
+
 	/**
 	 * Create the ORDER BY string
 	 *  @return string
@@ -1052,6 +1072,7 @@ class Query {
 			.'FROM '.$this->_build_table()
 			.$this->_build_join()
 			.$this->_build_where()
+			.$this->_build_group_by()
 			.$this->_build_order()
 			.$this->_build_limit()
 		);
