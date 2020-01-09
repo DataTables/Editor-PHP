@@ -1076,11 +1076,13 @@ class Editor extends Ext {
 	 */
 	private function _get( $id=null, $http=null )
 	{
-
 		$cancel = $this->_trigger( 'preGet', $id );
 		if ( $cancel === false ) {
 			return array();
 		}
+
+		// print_r($id);
+		// print_r($http);
 
 		$query = $this->_db
 			->query('select')
@@ -1102,7 +1104,7 @@ class Editor extends Ext {
 		$this->_get_where( $query );
 		$this->_perform_left_join( $query );
 		$ssp = $this->_ssp_query( $query, $http );
-
+		
 		if ( $id !== null ) {
 			$query->where( $this->pkeyToArray( $id, true ) );
 		}
@@ -1140,7 +1142,7 @@ class Editor extends Ext {
 				}
 
 				// SearchPanes options
-				$spOpts = $field->searchPaneOptionsExec( $field, $this );
+				$spOpts = $field->searchPaneOptionsExec( $field, $this, $http, $this->_fields, $this->_leftJoin);
 
 				if ( $spOpts !== false ) {
 					$spOptions[ $field->name() ] = $spOpts;

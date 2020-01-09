@@ -227,6 +227,32 @@ class SearchPaneOptions extends DataTables\Ext {
 		return $this;
 	}
 
+	private function _get_where ( $query )
+	{
+		for ( $i=0 ; $i<count($this->_where) ; $i++ ) {
+			if ( is_callable( $this->_where[$i] ) ) {
+				$this->_where[$i]( $query );
+			}
+			else {
+				$query->where(
+					$this->_where[$i]['key'],
+					$this->_where[$i]['value'],
+					$this->_where[$i]['op']
+				);
+			}
+		}
+	}
+
+	private function _perform_left_join ( $query )
+	{
+		if ( count($this->_leftJoin) ) {
+			for ( $i=0, $ien=count($this->_leftJoin) ; $i<$ien ; $i++ ) {
+				$join = $this->_leftJoin[$i];
+				$query->join( $join['table'], $join['field1'].' '.$join['operator'].' '.$join['field2'], 'LEFT' );
+			}
+		}
+	}
+
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Internal methods
 	 */
@@ -238,7 +264,7 @@ class SearchPaneOptions extends DataTables\Ext {
 	 * @return array        List of options
 	 * @internal
 	 */
-	public function exec ( $field, $editor )
+	public function exec ( $field, $editor, $http, $fields, $leftJoinIn )
 	{
 		// If the value is not yet set then set the variable to be the field name
 		if ( $this->_value == null) {
@@ -276,6 +302,7 @@ class SearchPaneOptions extends DataTables\Ext {
 			};
 		}
 
+		// Set up the join variable so that it will fit nicely later
 		if(count($this->_leftJoin) > 0){
 			$join = $this->_leftJoin[0];
 		}
@@ -283,11 +310,51 @@ class SearchPaneOptions extends DataTables\Ext {
 			$join = $this->_leftJoin;
 		}
 
-		// Get the data
+		// Set up the left join varaible so that it will fit nicely later
+		if(count($leftJoinIn) > 0) {
+			$leftJoin = $leftJoinIn[0];
+		}
+		else {
+			$leftJoin = $leftJoinIn;
+		}
+
+		// Set the query to get the current counts for viewTotal
+		$query = $db
+			->query('select')
+			->table( $table );
+
+		if ( $field->apply('get') && $field->getValue() === null ) {
+			$query->get( $value." as value", "COUNT(*) as count");
+			$query->group_by( $value);
+		}
+
+		// If a join is required then we need to add the following to the query
+		if (count($leftJoin) > 0){
+			$query->join( $leftJoin['table'], $leftJoin['field1'].' '.$leftJoin['operator'].' '.$leftJoin['field2'], 'LEFT' );
+		}
+
+		// Construct the where queries based upon the options selected by the user
+		if( isset($http['searchPanes']) ) {
+			foreach ($fields as $fieldOpt) {
+				if( isset($http['searchPanes'][$fieldOpt->name()])){
+					$query->where( function ($q) use ($fieldOpt, $http) {
+						for($j=0 ; $j<count($http['searchPanes'][$fieldOpt->name()]) ; $j++){
+							$q->or_where( $fieldOpt->dbField(), '%'.$http['searchPanes'][$fieldOpt->name()][$j].'%', 'like' );
+						}
+					});
+				}
+			}
+		}
+
+		$res = $query
+			->exec()
+			->fetchAll();
+
+		// Get the data for the pane options
 		$q = $db
 			->query('select')
 			->table( $table )
-			->get( $label." as label", $value." as value", "COUNT(*) as count" )
+			->get( $label." as label", $value." as value", "COUNT(*) as total" )
 			->group_by( $value )
 			->where( $this->_where );
 
@@ -328,11 +395,27 @@ class SearchPaneOptions extends DataTables\Ext {
 		$out = array();
 
 		for ( $i=0, $ien=count($rows) ; $i<$ien ; $i++ ) {
-			$out[] = array(
-				"label" => $rows[$i]['label'],
-				"count" => $rows[$i]['count'],
-				"value" => $rows[$i]['value']
-			);
+			$set = false;
+			for( $j=0 ; $j<count($res) ; $j ++) {
+				if($res[$j]['value'] == $rows[$i]['value']){
+					$out[] = array(
+						"label" => $rows[$i]['label'],
+						"total" => $rows[$i]['total'],
+						"value" => $rows[$i]['value'],
+						"count" => $res[$j]['count']
+					);
+					$set = true;
+				}
+			}
+			if(!$set) {
+				$out[] = array(
+					"label" => $rows[$i]['label'],
+					"total" => $rows[$i]['total'],
+					"value" => $rows[$i]['value'],
+					"count" => 0
+				);
+			}
+			
 		}
 
 		// Stick on any extra manually added options

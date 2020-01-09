@@ -619,14 +619,14 @@ class Field extends DataTables\Ext {
 		return false;
 	}
 
-	public function searchPaneOptionsExec ( $field, $editor )
+	public function searchPaneOptionsExec ( $field, $editor, $http, $fields, $leftJoin)
 	{
 		if ( $this->_spoptsFn ) {
 			$fn = $this->_spoptsFn;
 			return $fn();
 		}
 		else if ( $this->_spopts ) {
-			return $this->_spopts->exec( $field, $editor );
+			return $this->_spopts->exec( $field, $editor, $http, $fields, $leftJoin );
 		}
 
 		return false;
