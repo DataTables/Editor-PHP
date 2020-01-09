@@ -116,6 +116,10 @@ class Query {
 	 */
 	protected $_limit = null;
 
+	/**
+	 * @var int
+	 * @internal
+	 */
 	protected $_group_by = null;
 
 	/**
@@ -382,6 +386,11 @@ class Query {
 		return $this;
 	}
 
+	/**
+	 * Group the results by the values in a field
+	 * @param string The field of which the values are to be grouped
+	 * @return self
+	 */
 	public function group_by ( $group_by )
 	{
 		$this->_group_by = $group_by;
@@ -785,7 +794,7 @@ class Query {
 	/**
 	 * Create the LIMIT / OFFSET string
 	 *
-	 * MySQL and Postgres stylee - anything else can have the driver override
+	 * MySQL and Postgres style - anything else can have the driver override
 	 *  @return string
 	 *  @internal
 	 */
@@ -804,6 +813,12 @@ class Query {
 		return $out;
 	}
 
+	/**
+	 * Create the GROUP BY string
+	 * 
+	 * @return string
+	 * @internal
+	 */
 	protected function _build_group_by()
 	{
 		$out = '';

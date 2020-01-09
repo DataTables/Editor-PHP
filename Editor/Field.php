@@ -345,6 +345,17 @@ class Field extends DataTables\Ext {
 		return $this;
 	}
 
+	/**
+	 * Get a list of values that can be used for the options list in SearchPanes
+	 * 
+	 * @param string|callable $table Database table name to use to get the
+	 *     paired data from, or a closure function if providing a method
+	 * @param  string          $value Table column name that contains the pair's
+	 *     value. Not used if the first parameter is given as a closure
+	 * @param  string          $label Table column name that contains the pair's
+	 *     label. Not used if the first parameter is given as a closure
+	 * @return self
+	 */
 	public function searchPaneOptions ( $table=null, $value=null, $label=null )
 	{
 		if ( $table === null ) {
