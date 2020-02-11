@@ -134,7 +134,7 @@ class Db2Query extends Query {
         $res = db2_execute($stmt);
 
         if (! $res) {
-			throw 'DB2 SQL error = '.db2_stmt_error($this->_stmt);
+			throw new \Exception('DB2 SQL error = '.db2_stmt_error($this->_stmt));
 
             return false;
         }
