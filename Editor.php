@@ -185,6 +185,9 @@ class Editor extends Ext {
 	/** @var array */
 	private $_where = array();
 
+	/** @var boolean */
+	private $_write = true;
+
 	/** @var array */
 	private $_leftJoin = array();
 
@@ -927,6 +930,10 @@ class Editor extends Ext {
 		return $this->_getSet( $this->_whereSet, $_ );
 	}
 
+	public function write ($_writeVal=null){
+		return $this->_getSet($this->_write, $_writeVal, true);
+	}
+
 
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -984,16 +991,16 @@ class Editor extends Ext {
 				/* Get data */
 				$this->_out = array_merge( $this->_out, $this->_get( null, $data ) );
 			}
-			else if ( $action === Editor::ACTION_UPLOAD ) {
+			else if ( $action === Editor::ACTION_UPLOAD && $this->_write === true ) {
 				/* File upload */
 				$this->_upload( $data );
 			}
-			else if ( $action === Editor::ACTION_DELETE ) {
+			else if ( $action === Editor::ACTION_DELETE && $this->_write === true) {
 				/* Remove rows */
 				$this->_remove( $data );
 				$this->_fileClean();
 			}
-			else if ( $action === Editor::ACTION_CREATE || $action === Editor::ACTION_EDIT ) {
+			else if (() $action === Editor::ACTION_CREATE || $action === Editor::ACTION_EDIT ) && $this->_write === true ) {
 				/* Create or edit row */
 				// Pre events so they can occur before the validation
 				foreach ($data['data'] as $idSrc => &$values) {
