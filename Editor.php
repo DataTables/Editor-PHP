@@ -962,7 +962,7 @@ class Editor extends Ext {
 		$validators = $this->_validator;
 
 		// Sanity check that data isn't getting truncated as that can lead to data corruption
-		if ( count($data, COUNT_RECURSIVE) >= ini_get('max_input_vars') ) {
+		if ( $data && count($data, COUNT_RECURSIVE) >= ini_get('max_input_vars') ) {
 			$this->_out['error'] = 'Too many rows edited at the same time (tech info: max_input_vars exceeded).';
 		}
 
