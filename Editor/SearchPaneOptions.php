@@ -75,6 +75,7 @@ class SearchPaneOptions extends DataTables\Ext {
 	/** @var string[] Column names for the label(s) */
 	private $_label = array();
 
+	/** @var string[] Column names for left join */
 	private $_leftJoin = array();
 
 	/** @var integer Row limit */
@@ -215,7 +216,17 @@ class SearchPaneOptions extends DataTables\Ext {
 		return $this->_getSet( $this->_where, $_ );
 	}
 
-	public function leftJoin ( $table, $field1, $operator, $field2 )
+	/**
+	 * Get / set the array values used for a leftJoin condition if it is to be
+	 * applied to the query to get the options.
+	 * 
+	 * @param string $table to get the information from
+	 * @param string $field1 the first field to get the information from
+	 * @param string $operator the operation to perform on the two fields
+	 * @param string $field2 the second field to get the information from
+	 * @return self
+	 */
+	 public function leftJoin ( $table, $field1, $operator, $field2 )
 	{
 		$this->_leftJoin[] = array(
 			"table"    => $table,
@@ -227,6 +238,12 @@ class SearchPaneOptions extends DataTables\Ext {
 		return $this;
 	}
 
+	/**
+	 * Adds all of the where conditions to the desired query
+	 * 
+	 * @param string $query the query being built
+	 * @return self
+	 */
 	private function _get_where ( $query )
 	{
 		for ( $i=0 ; $i<count($this->_where) ; $i++ ) {
@@ -241,8 +258,16 @@ class SearchPaneOptions extends DataTables\Ext {
 				);
 			}
 		}
+		return $this;
 	}
 
+	/**
+	 * Adds a join for all of the leftJoin conditions to the
+	 * desired query, using the appropriate values.
+	 * 
+	 * @param string $query the query being built
+	 * @return self
+	 */
 	private function _perform_left_join ( $query )
 	{
 		if ( count($this->_leftJoin) ) {
@@ -251,6 +276,7 @@ class SearchPaneOptions extends DataTables\Ext {
 				$query->join( $join['table'], $join['field1'].' '.$join['operator'].' '.$join['field2'], 'LEFT' );
 			}
 		}
+		return $this;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
