@@ -931,7 +931,7 @@ class Editor extends Ext {
 	}
 
 	public function write ($_writeVal=null){
-		return $this->_getSet($this->_write, $_writeVal, true);
+		return $this->_getSet($this->_write, $_writeVal);
 	}
 
 
@@ -1000,7 +1000,7 @@ class Editor extends Ext {
 				$this->_remove( $data );
 				$this->_fileClean();
 			}
-			else if (() $action === Editor::ACTION_CREATE || $action === Editor::ACTION_EDIT ) && $this->_write === true ) {
+			else if (($action === Editor::ACTION_CREATE || $action === Editor::ACTION_EDIT ) && $this->_write === true ) {
 				/* Create or edit row */
 				// Pre events so they can occur before the validation
 				foreach ($data['data'] as $idSrc => &$values) {
