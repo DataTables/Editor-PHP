@@ -28,7 +28,7 @@ class PostgresQuery extends Query {
 	 */
 	private $_stmt;
 
-	protected $_identifier_limiter = null;
+	protected $_identifier_limiter = array('"', '"');
 
 	protected $_field_quote = '"';
 
