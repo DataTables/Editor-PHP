@@ -1678,7 +1678,7 @@ class Editor extends Ext {
 					$query->where( function ($q) use ($field, $http) {
 
 						for($j=0 ; $j<count($http['searchPanes'][$field->name()]) ; $j++){
-							$q->or_where( $field->dbField(), '%'.$http['searchPanes'][$field->name()][$j].'%', 'like' );
+							$q->or_where( $field->dbField(), $http['searchPanes'][$field->name()][$j], '=' );
 						}
 					});
 				}
