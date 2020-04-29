@@ -78,9 +78,6 @@ class SearchPaneOptions extends DataTables\Ext {
 	/** @var string[] Column names for left join */
 	private $_leftJoin = array();
 
-	/** @var integer Row limit */
-	private $_limit = null;
-
 	/** @var callable Callback function to do rendering of labels */
 	private $_renderer = null;
 
@@ -90,33 +87,9 @@ class SearchPaneOptions extends DataTables\Ext {
 	/** @var string ORDER BY clause */
 	private $_order = null;
 
-	private $_manualAdd = array();
-
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
 	 */
-
-	/**
-	 * Add extra options to the list, in addition to any obtained from the database
-	 *
-	 * @param string $label The label to use for the option
-	 * @param string|null $value Value for the option. If not given, the label will be used
-	 * @return Options Self for chaining
-	 */
-	public function add ( $label, $value=null )
-	{
-		if ( $value === null ) {
-			$value = $label;
-		}
-
-		$this->_manualAdd[] = array(
-			'label' => $label,
-			'value' => $value
-		);
-
-		return $this;
-	}
 
 	/**
 	 * Get / set the column(s) to use as the label value of the options
@@ -139,17 +112,6 @@ class SearchPaneOptions extends DataTables\Ext {
 		}
 
 		return $this;
-	}
-
-	/**
-	 * Get / set the LIMIT clause to limit the number of records returned.
-	 *
-	 * @param  null|number $_ Number of rows to limit the result to
-	 * @return Options|string[] Self if setting for chaining, limit if getting.
-	 */
-	public function limit ( $_=null )
-	{
-		return $this->_getSet( $this->_limit, $_ );
 	}
 
 	/**
@@ -409,10 +371,6 @@ class SearchPaneOptions extends DataTables\Ext {
 			$q->order( $this->_order );
 		}
 
-		if ( $this->_limit !== null ) {
-			$q->limit( $this->_limit );
-		}
-
 		$rows = $q
 			->exec()
 			->fetchAll();
@@ -442,11 +400,6 @@ class SearchPaneOptions extends DataTables\Ext {
 				);
 			}
 			
-		}
-
-		// Stick on any extra manually added options
-		if ( count( $this->_manualAdd ) ) {
-			$out = array_merge( $out, $this->_manualAdd );
 		}
 
 		// Only sort if there was no SQL order field
