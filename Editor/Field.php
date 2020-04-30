@@ -610,7 +610,7 @@ class Field extends DataTables\Ext {
 	{
 		if ( $this->_spoptsFn ) {
 			$fn = $this->_spoptsFn;
-			return $fn();
+			return $fn($this->db(), $editor);
 		}
 		else if ( $this->_spopts ) {
 			return $this->_spopts->exec( $field, $editor, $http, $fields, $leftJoin );
