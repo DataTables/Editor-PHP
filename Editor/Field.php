@@ -348,49 +348,25 @@ class Field extends DataTables\Ext {
 	/**
 	 * Get a list of values that can be used for the options list in SearchPanes
 	 * 
-	 * @param string|callable $table Database table name to use to get the
-	 *     paired data from, or a closure function if providing a method
-	 * @param  string          $value Table column name that contains the pair's
-	 *     value. Not used if the first parameter is given as a closure
-	 * @param  string          $label Table column name that contains the pair's
-	 *     label. Not used if the first parameter is given as a closure
+	 * @param SearchPaneOptions|callable $spInput SearchPaneOptions instance or a closure function if providing a method
 	 * @return self
 	 */
-	public function searchPaneOptions ( $table=null, $value=null, $label=null )
+	public function searchPaneOptions ( $spInput=null )
 	{
-		if ( $table === null ) {
+		if ( $spInput === null ) {
 			return $this->_spopts;
 		}
 
 		// Overloads for backwards compatibility
-		if ( is_a( $table, '\DataTables\Editor\SearchPaneOptions' ) ) {
+		if ( is_a( $spInput, '\DataTables\Editor\SearchPaneOptions' ) ) {
 			// Options class
 			$this->_spoptsFn = null;
-			$this->_spopts = $table;
+			$this->_spopts = $spInput;
 		}
-		else if ( is_callable($table) && is_object($table) ) {
+		else if ( is_callable($spInput) && is_object($spInput) ) {
 			// Function
 			$this->_spopts = null;
-			$this->_spoptsFn = $table;
-		}
-		else {
-			$this->_spoptsFn = null;
-			$this->_spopts = SearchPaneOptions::inst()
-				->table( $table )
-				->value( $value )
-				->label( $label );
-
-			if ( $condition ) {
-				$this->_spopts->where( $condition );
-			}
-
-			if ( $format ) {
-				$this->_spopts->render( $format );
-			}
-
-			if ( $order ) {
-				$this->_spopts->order( $order );
-			}
+			$this->_spoptsFn = $spInput;
 		}
 
 		return $this;
