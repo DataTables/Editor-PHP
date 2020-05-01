@@ -606,11 +606,23 @@ class Field extends DataTables\Ext {
 		return false;
 	}
 
+	/**
+	 * Execute the spopts to get the list of options for SearchPanes to return
+	 * to the client-side
+	 * 
+	 * @param DataTables\Field $field The field to retrieve the data from
+	 * @param DataTables\Editor $editor The editor instance
+	 * @param DataTables\DTRequest $http The http request sent to the server
+	 * @param DataTables\Field[] $fields All of the fields
+	 * @param any $leftJoin Info for a leftJoin if required
+	 * @return Promise<IOption[]> | boolean
+	 * @internal
+	 */
 	public function searchPaneOptionsExec ( $field, $editor, $http, $fields, $leftJoin)
 	{
 		if ( $this->_spoptsFn ) {
 			$fn = $this->_spoptsFn;
-			return $fn($this->db(), $editor);
+			return $fn($editor->db(), $editor);
 		}
 		else if ( $this->_spopts ) {
 			return $this->_spopts->exec( $field, $editor, $http, $fields, $leftJoin );
@@ -620,8 +632,6 @@ class Field extends DataTables\Ext {
 	}
 
 	
-
-
 	/**
 	 * Get the value of the field, taking into account if it is coming from the
 	 * DB or from a POST. If formatting has been specified for this field, it
