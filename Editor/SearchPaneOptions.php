@@ -188,7 +188,7 @@ class SearchPaneOptions extends DataTables\Ext {
 	 * @param string $field2 the second field to get the information from
 	 * @return self
 	 */
-	 public function leftJoin ( $table, $field1, $operator, $field2 )
+	public function leftJoin ( $table, $field1, $operator, $field2 )
 	{
 		$this->_leftJoin[] = array(
 			"table"    => $table,
