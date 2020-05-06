@@ -1190,6 +1190,8 @@ class Editor extends Ext {
 		// generated values.
 		$this->_pkey_validate_insert( $values );
 
+		$this->_trigger( 'validatedCreate', $values );
+
 		// Insert the new row
 		$id = $this->_insert_or_update( null, $values );
 
@@ -1231,6 +1233,8 @@ class Editor extends Ext {
 	private function _update( $id, $values )
 	{
 		$id = str_replace( $this->_idPrefix, '', $id );
+
+		$this->_trigger( 'validatedEdit', $id, $values );
 
 		// Update or insert the rows for the parent table and the left joined
 		// tables
