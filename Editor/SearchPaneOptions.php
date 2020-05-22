@@ -285,8 +285,8 @@ class SearchPaneOptions extends DataTables\Ext {
 
 		// We need a default formatter if one isn't provided
 		if ( ! $formatter ) {
-			$formatter = function ( $row ) {
-				return implode(' ', $row);
+			$formatter = function ( $str ) {
+				return $str;
 			};
 		}
 
@@ -383,7 +383,7 @@ class SearchPaneOptions extends DataTables\Ext {
 			for( $j=0 ; $j<count($res) ; $j ++) {
 				if($res[$j]['value'] == $rows[$i]['value']){
 					$out[] = array(
-						"label" => $rows[$i]['label'],
+						"label" => $formatter($rows[$i]['label']),
 						"total" => $rows[$i]['total'],
 						"value" => $rows[$i]['value'],
 						"count" => $res[$j]['count']
@@ -393,7 +393,7 @@ class SearchPaneOptions extends DataTables\Ext {
 			}
 			if(!$set) {
 				$out[] = array(
-					"label" => $rows[$i]['label'],
+					"label" => $formatter($rows[$i]['label']),
 					"total" => $rows[$i]['total'],
 					"value" => $rows[$i]['value'],
 					"count" => 0
