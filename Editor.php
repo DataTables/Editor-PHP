@@ -144,7 +144,7 @@ class Editor extends Ext {
 	 */
 
 	/** @var string */
-	public $version = '1.9.3';
+	public $version = '1.9.4';
 
 
 
