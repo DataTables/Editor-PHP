@@ -190,6 +190,7 @@ class SearchPaneOptions extends DataTables\Ext {
 	 */
 	public function leftJoin ( $table, $field1, $operator, $field2 )
 	{
+		// echo("LEFT JOIN ".$table);
 		$this->_leftJoin[] = array(
 			"table"    => $table,
 			"field1"   => $field1,
@@ -232,6 +233,7 @@ class SearchPaneOptions extends DataTables\Ext {
 	 */
 	private function _perform_left_join ( $query )
 	{
+		// echo($this->_leftJoin." COUNT 236");
 		if ( count($this->_leftJoin) ) {
 			for ( $i=0, $ien=count($this->_leftJoin) ; $i<$ien ; $i++ ) {
 				$join = $this->_leftJoin[$i];
@@ -254,6 +256,7 @@ class SearchPaneOptions extends DataTables\Ext {
 	 */
 	public function exec ( $field, $editor, $http, $fields, $leftJoinIn )
 	{
+		// echo($this->_value." ".$field->dbField()."\n");
 		// If the value is not yet set then set the variable to be the field name
 		if ( $this->_value == null) {
 			$value = $field->dbField();
@@ -292,17 +295,17 @@ class SearchPaneOptions extends DataTables\Ext {
 
 		// Set up the join variable so that it will fit nicely later
 		if(count($this->_leftJoin) > 0){
-			$join = $this->_leftJoin[0];
+			$leftJoin = $this->_leftJoin[0];
 		}
 		else {
-			$join = $this->_leftJoin;
+			$leftJoin = $this->_leftJoin;
 		}
 
 		// Set up the left join varaible so that it will fit nicely later
-		if(count($leftJoinIn) > 0) {
+		if(count($leftJoinIn) > 0  && count($leftJoin) === 0) {
 			$leftJoin = $leftJoinIn[0];
 		}
-		else {
+		else if(count($leftJoin) === 0) {
 			$leftJoin = $leftJoinIn;
 		}
 
@@ -317,6 +320,7 @@ class SearchPaneOptions extends DataTables\Ext {
 		}
 
 		// If a join is required then we need to add the following to the query
+		// print_r($leftJoin);
 		if (count($leftJoin) > 0){
 			$query->join( $leftJoin['table'], $leftJoin['field1'].' '.$leftJoin['operator'].' '.$leftJoin['field2'], 'LEFT' );
 		}
@@ -333,6 +337,8 @@ class SearchPaneOptions extends DataTables\Ext {
 				}
 			}
 		}
+		
+		// print_r($query);
 
 		$res = $query
 			->exec()
@@ -347,8 +353,8 @@ class SearchPaneOptions extends DataTables\Ext {
 			->where( $this->_where );
 
 		// If a join is required then we need to add the following to the query
-		if (count($join) > 0){
-			$q->join( $join['table'], $join['field1'].' '.$join['operator'].' '.$join['field2'], 'LEFT' );
+		if (count($leftJoin) > 0){
+			$q->join( $leftJoin['table'], $leftJoin['field1'].' '.$leftJoin['operator'].' '.$leftJoin['field2'], 'LEFT' );
 		}
 
 		if ( $this->_order ) {
@@ -370,6 +376,8 @@ class SearchPaneOptions extends DataTables\Ext {
 
 			$q->order( $this->_order );
 		}
+
+		// print_r($q);
 
 		$rows = $q
 			->exec()
