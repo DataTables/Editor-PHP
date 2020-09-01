@@ -428,7 +428,7 @@ class Editor extends Ext {
 	public function json ( $print=true )
 	{
 		if ( $print ) {
-			$json = json_encode( $this->_out );
+			$json = json_encode( $this->_out, JSON_NUMERIC_CHECK );
 
 			if ( $json !== false ) {
 				echo $json;
