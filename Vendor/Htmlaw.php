@@ -67,8 +67,6 @@ class Htmlaw {
      * @see http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/htmLawed_README.htm
      */
     public static function filter($html, array $config = null, $spec = null) {
-        require_once __DIR__.'/htmLawed/htmLawed.php';
-
         if ($config === null) {
             $config = self::$defaultConfig;
         }
@@ -81,7 +79,7 @@ class Htmlaw {
             $spec = static::$defaultSpec;
         }
 
-        return htmLawed::hl($html, $config, $spec);
+        return \DataTables\Vendor\Htmlawed::hl($html, $config, $spec);
     }
 
 
