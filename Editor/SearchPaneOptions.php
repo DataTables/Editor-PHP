@@ -269,7 +269,7 @@ class SearchPaneOptions extends DataTables\Ext {
 		if($this->_table !== null) {
 			$table = $this->_table;
 		}
-		else if($readTable !== null) {
+		else if(count($readTable) > 0) {
 			$table = $readTable;
 		}
 		else {
