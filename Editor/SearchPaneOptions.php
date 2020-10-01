@@ -262,12 +262,18 @@ class SearchPaneOptions extends DataTables\Ext {
 			$value = $this->_value;
 		}
 
+		$readTable = $editor->readTable();
+
 		// If the table is not yet set then set the table variable to be the same as editor
-		if ( $this->_table == null) {
-			$table = $editor->table();
+		// This is not taking a value from the SearchPaneOptions instance as the table should be defined in value/label. This throws up errors if not.
+		if($this->_table !== null) {
+			$table = $this->_table;
+		}
+		else if($readTable !== null) {
+			$table = $readTable;
 		}
 		else {
-			$table = $this->_table;
+			$table = $editor->table();
 		}
 
 		// If the label value has not yet been set then just set it to be the same as value
