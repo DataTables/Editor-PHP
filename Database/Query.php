@@ -562,7 +562,7 @@ class Query {
 	 *         ->where( 'name', 'allan' )
 	 *         ->where( function ($q) {
 	 *           $q->where( 'location', 'Scotland' );
-	 *           $q->where( 'location', 'Canada' );
+	 *           $q->where_or( 'location', 'Canada' );
 	 *         } );
 	 *     </code>
 	 */
