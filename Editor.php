@@ -144,7 +144,7 @@ class Editor extends Ext {
 	 */
 
 	/** @var string */
-	public $version = '1.9.5';
+	public $version = '1.9.6';
 
 
 
@@ -390,7 +390,6 @@ class Editor extends Ext {
 		return $this->_processData;
 	}
 
-
 	/**
 	 * Get / set join instances. Note that for the majority of use cases you
 	 * will want to use the `leftJoin()` method. It is significantly easier
@@ -422,13 +421,14 @@ class Editor extends Ext {
 	 * return the JSON string of the data.
 	 *  @param boolean $print Echo the JSON string out (true, default) or return it
 	 *    (false).
+	 *  @param int JSON encode option https://www.php.net/manual/en/json.constants.php
 	 *  @return string|self self if printing the JSON, or JSON representation of 
 	 *    the processed data if false is given as the first parameter.
 	 */
-	public function json ( $print=true )
+	public function json ( $print=true, $options=0 )
 	{
 		if ( $print ) {
-			$json = json_encode( $this->_out, JSON_NUMERIC_CHECK );
+			$json = json_encode( $this->_out, $options );
 
 			if ( $json !== false ) {
 				echo $json;
