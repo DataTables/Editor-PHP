@@ -597,7 +597,7 @@ class Field extends DataTables\Ext {
 	{
 		if ( $this->_optsFn ) {
 			$fn = $this->_optsFn;
-			return $fn();
+			return $fn($db);
 		}
 		else if ( $this->_opts ) {
 			return $this->_opts->exec( $db );
