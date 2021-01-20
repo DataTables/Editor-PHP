@@ -144,7 +144,7 @@ class Editor extends Ext {
 	 */
 
 	/** @var string */
-	public $version = '1.9.6';
+	public $version = '2.0.0-dev';
 
 
 
@@ -1166,15 +1166,28 @@ class Editor extends Ext {
 
 		$this->_trigger( 'postGet', $out, $id );
 
-		return array_merge(
-			array(
-				'data'    => $out,
-				'options' => $options,
-				'files'   => $this->_fileData( null, null, $out ),
-				'searchPanes' => $searchPanes
-			),
-			$ssp
-		);
+		if (count($searchPanes['options']) > 0) {
+			return array_merge(
+				array(
+					'data'    => $out,
+					'options' => $options,
+					'files'   => $this->_fileData( null, null, $out ),
+					'searchPanes' => $searchPanes
+				),
+				$ssp
+			);
+		}
+		else {
+			return array_merge(
+				array(
+					'data'    => $out,
+					'options' => $options,
+					'files'   => $this->_fileData( null, null, $out )
+				),
+				$ssp
+			);
+		}
+
 	}
 
 
