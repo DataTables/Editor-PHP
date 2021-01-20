@@ -348,7 +348,7 @@ class Query {
 	 *  @param string $type      JOIN type
 	 *  @return self
 	 */
-	public function join ( $table, $condition, $type='' )
+	public function join ( $table, $condition, $type='', $bind=true )
 	{
 		// Tidy and check we know what the join type is
 		if ($type !== '') {
@@ -360,7 +360,7 @@ class Query {
 		}
 
 		// Protect the identifiers
-		if (preg_match('/([\w\.]+)([\W\s]+)(.+)/', $condition, $match))
+		if ($bind && preg_match('/([\w\.]+)([\W\s]+)(.+)/', $condition, $match))
 		{
 			$match[1] = $this->_protect_identifiers( $match[1] );
 			$match[3] = $this->_protect_identifiers( $match[3] );

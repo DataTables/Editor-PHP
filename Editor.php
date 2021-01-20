@@ -525,7 +525,7 @@ class Editor extends Ext {
 	 *      LEFT JOIN dept ON users.dept_id = dept.id
 	 *    </code>
 	 */
-	public function leftJoin ( $table, $field1, $operator, $field2 )
+	public function leftJoin ( $table, $field1, $operator = null, $field2 = null )
 	{
 		$this->_leftJoin[] = array(
 			"table"    => $table,
@@ -1758,7 +1758,21 @@ class Editor extends Ext {
 			for ( $i=0, $ien=count($this->_leftJoin) ; $i<$ien ; $i++ ) {
 				$join = $this->_leftJoin[$i];
 
-				$query->join( $join['table'], $join['field1'].' '.$join['operator'].' '.$join['field2'], 'LEFT' );
+				if ($join['field2'] === null && $join['operator'] === null) {
+					$query->join(
+						$join['table'],
+						$join['field1'],
+						'LEFT',
+						false
+					);
+				}
+				else {
+					$query->join(
+						$join['table'],
+						$join['field1'].' '.$join['operator'].' '.$join['field2'],
+						'LEFT'
+					);
+				}
 			}
 		}
 	}
