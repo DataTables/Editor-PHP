@@ -1212,11 +1212,18 @@ class Editor extends Ext {
 			return null;
 		}
 
+		// Get values to generate the id, including from setValue, not just the
+		// submitted values
+		$all = array();
+		foreach ($this->_fields as $field) {
+			$this->_writeProp($all, $field->name(), $field->val( 'set', $values ));
+		}
+
 		// Was the primary key altered as part of the edit, if so use the
 		// submitted values
 		$id = count( $this->_pkey ) > 1 ?
-			$this->pkeyToValue( $values ) :
-			$this->_pkey_submit_merge( $id, $values );
+			$this->pkeyToValue( $all ) :
+			$this->_pkey_submit_merge( $id, $all );
 
 		// Join tables
 		for ( $i=0 ; $i<count($this->_join) ; $i++ ) {
