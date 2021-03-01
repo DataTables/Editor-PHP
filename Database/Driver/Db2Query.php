@@ -44,14 +44,12 @@ class Db2Query extends Query {
 			$dsn  = isset( $opts['dsn'] ) ? $opts['dsn'] : '';
 		}
 
-		$connStr = 'DATABASE='.$db.';HOSTNAME='.$host;
-		if ( $port ) {
-			$connStr .= ';PORT='.$port;
-		}
-		$connStr .= ';UID='.$user.';PWD='.$pass.';AUTHENTICATION=server';
-
-//$conn = db2_connect( 'DATABASE=SAMPLE;HOSTNAME=localhost;PORT=50000;UID=db2inst1;PWD=mylifehasbeen;AUTHENTICATION=server', 'db2inst1', 'mylifehasbeen' );
-
+		// $connStr = 'DATABASE='.$db.';HOSTNAME='.$host;
+		// if ( $port ) {
+		// 	$connStr .= ';PORT='.$port;
+		// }
+		// $connStr .= ';UID='.$user.';PWD='.$pass.';AUTHENTICATION=server';
+		$connStr = $db;
 
 		$conn = db2_connect($connStr, $user, $pass);
 
