@@ -43,9 +43,10 @@ use
  *  @example 
  *    A very basic example of using Editor to create a table with four fields.
  *    This is all that is needed on the server-side to create a editable
- *    table - the {@link process} method determines what action DataTables /
+ *    table - the {@see Editor->process()} method determines what action DataTables /
  *    Editor is requesting from the server-side and will correctly action it.
- *    <code>
+ *    
+ *    ```php
  *      Editor::inst( $db, 'browsers' )
  *          ->fields(
  *              Field::inst( 'first_name' )->validator( Validate::required() ),
@@ -55,7 +56,7 @@ use
  *          )
  *          ->process( $_POST )
  *          ->json();
- *    </code>
+ *    ```
  */
 class Editor extends Ext {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -121,9 +122,6 @@ class Editor extends Ext {
 	 * Constructor.
 	 *  @param Database $db An instance of the DataTables Database class that we can
 	 *    use for the DB connection. Can be given here or with the 'db' method.
-	 *    <code>
-	 *      456
-	 *    </code>
 	 *  @param string|array $table The table name in the database to read and write
 	 *    information from and to. Can be given here or with the 'table' method.
 	 *  @param string|array $pkey Primary key column name in the table given in
@@ -313,14 +311,14 @@ class Editor extends Ext {
 	 *      * `null` - Get an array of all fields assigned to the instance
 	 * 	    * `string` - Get a specific field instance whose 'name' matches the
 	 *           field passed in
-	 *      * {@link Field} - Add a field to the instance's list of fields. This
+	 *      * {@see Field} - Add a field to the instance's list of fields. This
 	 *           can be as many fields as required (i.e. multiple arguments)
-	 *      * `array` - An array of {@link Field} instances to add to the list
+	 *      * `array` - An array of {@see Field} instances to add to the list
 	 *        of fields.
 	 *  @return Field|Field[]|Editor The selected field, an array of fields, or
 	 *      the Editor instance for chaining, depending on the input parameter.
 	 *  @throws \Exception Unkown field error
-	 *  @see {@link Field} for field documentation.
+	 *  @see {@see Field} for field documentation.
 	 */
 	public function field ( $_=null )
 	{
@@ -344,12 +342,12 @@ class Editor extends Ext {
 	/**
 	 * Get / set field instances.
 	 * 
-	 * An alias of {@link field}, for convenience.
-	 *  @param Field $_... Instances of the {@link Field} class, given as a single 
-	 *    instance of {@link Field}, an array of {@link Field} instances, or multiple
-	 *    {@link Field} instance parameters for the function.
+	 * An alias of {@see field}, for convenience.
+	 *  @param Field $_... Instances of the {@see Field} class, given as a single 
+	 *    instance of {@see Field}, an array of {@see Field} instances, or multiple
+	 *    {@see Field} instance parameters for the function.
 	 *  @return Field[]|self Array of fields, or self if used as a setter.
-	 *  @see {@link Field} for field documentation.
+	 *  @see {@see Field} for field documentation.
 	 */
 	public function fields ( $_=null )
 	{
@@ -396,14 +394,13 @@ class Editor extends Ext {
 	 * to use if you are just doing a simple left join!
 	 * 
 	 * The list of Join instances that Editor will join the parent table to
-	 * (i.e. the one that the {@link table} and {@link fields} methods refer to
-	 * in this class instance).
+	 * (i.e. the one that the {@see Editor->table()} and {@see Editor->fields}
+	 * methods refer to in this class instance).
 	 *
-	 *  @param Join $_,... Instances of the {@link Join} class, given as a
-	 *    single instance of {@link Join}, an array of {@link Join} instances,
-	 *    or multiple {@link Join} instance parameters for the function.
+	 *  @param Join $_,... Instances of the {@see Join} class, given as a
+	 *    single instance of {@see Join}, an array of {@see Join} instances,
+	 *    or multiple {@see Join} instance parameters for the function.
 	 *  @return Join[]|self Array of joins, or self if used as a setter.
-	 *  @see {@link Join} for joining documentation.
 	 */
 	public function join ( $_=null )
 	{
@@ -417,7 +414,7 @@ class Editor extends Ext {
 	/**
 	 * Get the JSON for the data constructed in this instance.
 	 * 
-	 * Basically the same as the {@link data} method, but in this case we echo, or
+	 * Basically the same as the {@see Editor->data()} method, but in this case we echo, or
 	 * return the JSON string of the data.
 	 *  @param boolean $print Echo the JSON string out (true, default) or return it
 	 *    (false).
@@ -447,7 +444,7 @@ class Editor extends Ext {
 
 	/**
 	 * Echo out JSONP for the data constructed and processed in this instance.
-	 * This is basically the same as {@link json} but wraps the return in a
+	 * This is basically the same as {@see Editor->json()} but wraps the return in a
 	 * JSONP callback.
 	 *
 	 * @param string $callback The callback function name to use. If not given
@@ -505,7 +502,8 @@ class Editor extends Ext {
 	 *
 	 * @example 
 	 *    Simple join:
-	 *    <code>
+	 *    
+	 *    ```php
 	 *        ->field( 
 	 *          Field::inst( 'users.first_name as myField' ),
 	 *          Field::inst( 'users.last_name' ),
@@ -515,15 +513,15 @@ class Editor extends Ext {
 	 *        ->leftJoin( 'dept', 'users.dept_id', '=', 'dept.id' )
 	 *        ->process($_POST)
 	 *        ->json();
-	 *    </code>
+	 *    ```</code>```
 	 *
 	 *    This is basically the same as the following SQL statement:
 	 * 
-	 *    <code>
+	 *    ```sql
 	 *      SELECT users.first_name, users.last_name, user.dept_id, dept.name
 	 *      FROM users
 	 *      LEFT JOIN dept ON users.dept_id = dept.id
-	 *    </code>
+	 *    ```
 	 */
 	public function leftJoin ( $table, $field1, $operator = null, $field2 = null )
 	{

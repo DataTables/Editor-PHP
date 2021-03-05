@@ -19,10 +19,10 @@ if (!defined('DATATABLES')) exit();
 //
 
 /**
- * Result object given by a {@link Query} performed on a database.
+ * Result object given by a {@see Query} performed on a database.
  * 
  * The typical pattern for using this class is to receive an instance of it as a
- * result of using the {@link Database} and {@link Query} class methods that
+ * result of using the {@see Database} and {@see Query} class methods that
  * return a result. This class should not be initialised independently.
  *
  * Note that this is a stub class that a driver will extend and complete as

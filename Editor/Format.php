@@ -53,8 +53,8 @@ class Format {
 	 * parameter.
 	 *
 	 * Typical use of this method is to use it with the 
-	 * {@link Field::getFormatter} and {@link Field::setFormatter} methods of
-	 * {@link Field} where the parameters required for this method will be 
+	 * {@see Field::getFormatter()} and {@see Field::setFormatter()} methods of
+	 * {@see Field} where the parameters required for this method will be 
 	 * automatically satisfied.
 	 *   @param string $val Value to convert from MySQL date format
 	 *   @param string[] $data Data for the whole row / submitted data
@@ -79,8 +79,8 @@ class Format {
 	 * SQL servers will recognise as a date.
 	 *
 	 * Typical use of this method is to use it with the 
-	 * {@link Field::getFormatter} and {@link Field::setFormatter} methods of
-	 * {@link Field} where the parameters required for this method will be 
+	 * {@see Field::getFormatter()} and {@see Field::setFormatter()} methods of
+	 * {@see Field} where the parameters required for this method will be 
 	 * automatically satisfied.
 	 *   @param string $val Value to convert to SQL date format
 	 *   @param string[] $data Data for the whole row / submitted data
@@ -110,8 +110,8 @@ class Format {
 	 * Convert from one date time format to another
 	 *
 	 * Typical use of this method is to use it with the 
-	 * {@link Field::getFormatter} and {@link Field::setFormatter} methods of
-	 * {@link Field} where the parameters required for this method will be 
+	 * {@see Field::getFormatter()} and {@see Field::setFormatter()} methods of
+	 * {@see Field} where the parameters required for this method will be 
 	 * automatically satisfied.
 	 *   @param string $val Value to convert
 	 *   @param string[] $data Data for the whole row / submitted data

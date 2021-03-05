@@ -22,22 +22,22 @@ use DataTables;
  * edited, and a list of the values available from the joined table is shown to
  * the end user to let them select from.
  *
- * `Options` instances are used with the {@link Field::options} method.
+ * `Options` instances are used with the {@see Field->options()} method.
  *
  *  @example
  *   Get a list of options from the `sites` table
- *    <code>
+ *    ```php
  *    Field::inst( 'users.site' )
  *        ->options( Options::inst()
  *            ->table( 'sites' )
  *            ->value( 'id' )
  *            ->label( 'name' )
  *        )
- *    </code>
+ *    ```
  *
  *  @example
  *   Get a list of options with custom ordering
- *    <code>
+ *    ```php
  *    Field::inst( 'users.site' )
  *        ->options( Options::inst()
  *            ->table( 'sites' )
@@ -45,11 +45,11 @@ use DataTables;
  *            ->label( 'name' )
  *            ->order( 'name DESC' )
  *        )
- *    </code>
+ *    ```
  *
  *  @example
  *   Get a list of options showing the id and name in the label
- *    <code>
+ *    ```php
  *    Field::inst( 'users.site' )
  *        ->options( Options::inst()
  *            ->table( 'sites' )
@@ -59,7 +59,7 @@ use DataTables;
  *              return $row['name'].' ('.$row['id'].')';
  *            } )
  *        )
- *    </code>
+ *    ```
  */
 class SearchPaneOptions extends DataTables\Ext {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

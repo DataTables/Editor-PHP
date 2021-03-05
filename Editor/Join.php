@@ -22,7 +22,7 @@ use
 /**
  * Join table class for DataTables Editor.
  *
- * The Join class can be used with {@link Editor::join} to allow Editor to
+ * The Join class can be used with {@see Editor->join()} to allow Editor to
  * obtain joined information from the database.
  *
  * For an overview of how Join tables work, please refer to the 
@@ -31,10 +31,10 @@ use
  * before fully getting to grips with it's API.
  *
  *  @example
- *    Join the parent table (the one specified in the {@link Editor::table}
+ *    Join the parent table (the one specified in the {@see Editor->table()}
  *    method) with the table *access*, with a link table *user__access*, which
  *    allows multiple properties to be found for each row in the parent table.
- *    <code>
+ *    ```php
  *      Join::inst( 'access', 'array' )
  *          ->link( 'users.id', 'user_access.user_id' )
  *          ->link( 'access.id', 'user_access.access_id' )
@@ -42,21 +42,21 @@ use
  *              Field::inst( 'id' )->validator( 'Validate::required' ),
  *              Field::inst( 'name' )
  *          )
- *    </code>
+ *    ```
  *
  *  @example
  *    Single row join - here we join the parent table with a single row in
  *    the child table, without an intermediate link table. In this case the
  *    child table is called *extra* and the two fields give the columns that
  *    Editor will read from that table.
- *    <code>
+ *    ```php
  *        Join::inst( 'extra', 'object' )
  *            ->link( 'user.id', 'extra.user_id' )
  *            ->field(
  *                Field::inst( 'comments' ),
  *                Field::inst( 'review' )
  *            )
- *    </code>
+ *    ```
  */
 class Join extends DataTables\Ext {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -134,11 +134,11 @@ class Join extends DataTables\Ext {
 	 * When working with a self referencing table (i.e. a column in the table contains
 	 * a primary key value from its own table) it can be useful to set an alias on the
 	 * parent table's name, allowing a self referencing Join. For example:
-	 *   <code>
+	 *   ```
 	 *   SELECT p2.publisher 
 	 *   FROM   publisher as p2
 	 *   JOIN   publisher on (publisher.idPublisher = p2.idPublisher)
-	 *   <code>
+	 *   ```
 	 * Where, in this case, `publisher` is the table that is used by the Editor instance,
 	 * and you want to use `Join` to link back to the table (resolving a name for example).
 	 * This method allows that alias to be set. Fields can then use standard SQL notation
@@ -158,11 +158,11 @@ class Join extends DataTables\Ext {
 	 * 
 	 * The list of fields designates which columns in the table that will be read
 	 * from the joined table.
-	 *  @param Field $_... Instances of the {@link Field} class, given as a single 
-	 *    instance of {@link Field}, an array of {@link Field} instances, or multiple
-	 *    {@link Field} instance parameters for the function.
+	 *  @param Field $_... Instances of the {@see Field} class, given as a single 
+	 *    instance of {@see Field}, an array of {@see Field} instances, or multiple
+	 *    {@see Field} instance parameters for the function.
 	 *  @return Field[]|self Array of fields, or self if used as a setter.
-	 *  @see {@link Field} for field documentation.
+	 *  @see {@see Field} for field documentation.
 	 */
 	public function field ( $_=null )
 	{
@@ -176,12 +176,12 @@ class Join extends DataTables\Ext {
 	/**
 	 * Get / set field instances.
 	 * 
-	 * An alias of {@link field}, for convenience.
-	 *  @param Field $_... Instances of the {@link Field} class, given as a single 
-	 *    instance of {@link Field}, an array of {@link Field} instances, or multiple
-	 *    {@link Field} instance parameters for the function.
+	 * An alias of {@see field}, for convenience.
+	 *  @param Field $_... Instances of the {@see Field} class, given as a single 
+	 *    instance of {@see Field}, an array of {@see Field} instances, or multiple
+	 *    {@see Field} instance parameters for the function.
 	 *  @return Field[]|self Array of fields, or self if used as a setter.
-	 *  @see {@link Field} for field documentation.
+	 *  @see {@see Field} for field documentation.
 	 */
 	public function fields ( $_=null )
 	{
@@ -212,7 +212,7 @@ class Join extends DataTables\Ext {
 	 * basically two types of join that are supported by Editor here, a direct
 	 * foreign key reference in the join table to the parent table's primary
 	 * key, or a link table that contains just primary keys for the parent and
-	 * child tables (this approach is usually used with a {@link type} of
+	 * child tables (this approach is usually used with a {@see Join->type()} of
 	 * 'array' since you can often have multiple links between the two tables,
 	 * while a direct foreign key reference will typically use a type of
 	 * 'object' (i.e. a single entry).
@@ -229,7 +229,7 @@ class Join extends DataTables\Ext {
 	 *    link table.
 	 *  @param string $table Join table name, if using a link table
 	 *  @returns Join This for chaining
-	 *  @deprecated 1.5 Please use the {@link link} method rather than this
+	 *  @deprecated 1.5 Please use the {@see Join->link()} method rather than this
 	 *      method now.
 	 */
 	public function join ( $parent=null, $child=null, $table=null )
@@ -330,10 +330,10 @@ class Join extends DataTables\Ext {
 	/**
 	 * Get / set join table name.
 	 *
-	 * Please note that this will also set the {@link name} used by the Join
+	 * Please note that this will also set the {@see Join->name()} used by the Join
 	 * as well. This is for convenience as the JSON output / HTTP input will
 	 * typically use the same name as the database name. If you want to set a
-	 * custom name, the {@link name} method must be called ***after*** this one.
+	 * custom name, the {@see Join->name()} method must be called ***after*** this one.
 	 *  @param string $_ Name of the table to read the join data from
 	 *  @return String|self Name of the join table, or self if used as a setter.
 	 */

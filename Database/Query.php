@@ -27,8 +27,8 @@ use
 /**
  * Perform an individual query on the database.
  * 
- * The typical pattern for using this class is through the {@link
- * \DataTables\Database::query} method (and it's 'select', etc short-cuts).
+ * The typical pattern for using this class is through the {@see
+ * \DataTables\Database->query()} method (and it's 'select', etc short-cuts).
  * Typically it would not be initialised directly.
  *
  * Note that this is a stub class that a driver will extend and complete as
@@ -45,10 +45,10 @@ class Query {
 	 * Query instance constructor.
 	 *
 	 * Note that typically instances of this class will be automatically created
-	 * through the {@link \DataTables\Database::query} method.
+	 * through the {@see \DataTables\Database->query()} method.
 	 *  @param Database        $db    Database instance
 	 *  @param string          $type  Query type - 'select', 'insert', 'update' or 'delete'
-	 *  @param string|string[] $table Tables to operate on - see {@link table}.
+	 *  @param string|string[] $table Tables to operate on - see {@see Query->table()}.
 	 */
 	public function __construct( $dbHost, $type, $table=null )
 	{
@@ -557,14 +557,14 @@ class Query {
 	 *     The following will produce
 	 *     `'WHERE name='allan' AND ( location='Scotland' OR location='Canada' )`:
 	 *
-	 *     <code>
+	 *     ```php
 	 *       $query
 	 *         ->where( 'name', 'allan' )
 	 *         ->where( function ($q) {
 	 *           $q->where( 'location', 'Scotland' );
 	 *           $q->where_or( 'location', 'Canada' );
 	 *         } );
-	 *     </code>
+	 *     ```
 	 */
 	public function where ( $key, $value=null, $op="=", $bind=true )
 	{
@@ -669,12 +669,12 @@ class Query {
 	 *  @return self
 	 *
 	 *  @example
-	 *     <code>
+	 *     ```php
 	 *     $query->where_group( function ($q) {
 	 *       $q->where( 'location', 'Edinburgh' );
 	 *       $q->where( 'position', 'Manager' );
 	 *     } );
-	 *     </code>
+	 *     ```
 	 */
 	public function where_group ( $inOut, $op='AND' )
 	{

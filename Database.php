@@ -37,7 +37,7 @@ class Database {
 	/**
 	 * Database instance constructor.
 	 *  @param string[] $opts Array of connection parameters for the database:
-	 *    <code>
+	 *    ```php
 	 *      array(
 	 *          "user" => "", // User name
 	 *          "pass" => "", // Password
@@ -46,7 +46,7 @@ class Database {
 	 *          "db"   => "", // Database name
 	 *          "type" => ""  // Datable type: "Mysql", "Postgres" or "Sqlite"
 	 *      )
-	 *    </code>
+	 *    ```
 	 */
 	function __construct( $opts )
 	{
@@ -89,8 +89,8 @@ class Database {
 	 * condition
 	 *
 	 * @param string|string[] $table Table name(s) to act upon.
-	 * @param array $where Where condition for what to select - see {@link
-	 *   Query::where}.
+	 * @param array $where Where condition for what to select - see {@see
+	 *   Query->where()}.
 	 * @return boolean Boolean flag - true if there were rows
 	 */
 	public function any( $table, $where=null )
@@ -108,7 +108,7 @@ class Database {
 	/**
 	 * Commit a database transaction.
 	 *
-	 * Use with {@link transaction} and {@link rollback}.
+	 * Use with {@see Database->transaction()} and {@see Database->rollback()}.
 	 *  @return self
 	 */
 	public function commit ()
@@ -122,8 +122,8 @@ class Database {
 	 * Get a count from a table.
 	 *  @param string|string[] $table Table name(s) to act upon.
 	 *  @param string $field Primary key field name
-	 *  @param array $where Where condition for what to select - see {@link
-	 *    Query::where}.
+	 *  @param array $where Where condition for what to select - see {@see
+	 *    Query->where()}.
 	 *  @return Number
 	 */
 	public function count ( $table, $field="id", $where=null )
@@ -168,8 +168,8 @@ class Database {
 	 * This is a short cut method that creates an update query and then uses
 	 * the query('delete'), table, where and exec methods of the query.
 	 *  @param string|string[] $table Table name(s) to act upon.
-	 *  @param array $where Where condition for what to delete - see {@link
-	 *    Query::where}.
+	 *  @param array $where Where condition for what to delete - see {@see
+	 *    Query->where()}.
 	 *  @return Result
 	 */
 	public function delete ( $table, $where=null )
@@ -187,8 +187,8 @@ class Database {
 	 * This is a short cut method that creates an update query and then uses
 	 * the query('insert'), table, set and exec methods of the query.
 	 *  @param string|string[] $table Table name(s) to act upon.
-	 *  @param array $set Field names and values to set - see {@link
-	 *    Query::set}.
+	 *  @param array $set Field names and values to set - see {@see
+	 *    Query->set()}.
 	 *  @param  array $pkey Primary key column names (this is an array for
 	 *    forwards compt, although only the first item in the array is actually
 	 *    used). This doesn't need to be set, but it must be if you want to use
@@ -209,10 +209,10 @@ class Database {
 	 * Update or Insert data. When doing an insert, the where condition is
 	 * added as a set field
 	 *  @param string|string[] $table Table name(s) to act upon.
-	 *  @param array $set Field names and values to set - see {@link
-	 *    Query::set}.
-	 *  @param array $where Where condition for what to update - see {@link
-	 *    Query::where}.
+	 *  @param array $set Field names and values to set - see {@see
+	 *    Query->set()}.
+	 *  @param array $where Where condition for what to update - see {@see
+	 *    Query->where()}.
 	 *  @param  array $pkey Primary key column names (this is an array for
 	 *    forwards compt, although only the first item in the array is actually
 	 *    used). This doesn't need to be set, but it must be if you want to use
@@ -280,12 +280,12 @@ class Database {
 	 *
 	 *  @example
 	 *    Safely escape user input
-	 *    <code>
+	 *    ```php
 	 *    $db
 	 *      ->raw()
 	 *      ->bind( ':date', $_POST['date'] )
 	 *      ->exec( 'SELECT * FROM staff where date < :date' );
-	 *    </code>
+	 *    ```
 	 */
 	public function raw ()
 	{
@@ -306,7 +306,7 @@ class Database {
 	/**
 	 * Rollback the database state to the start of the transaction.
 	 *
-	 * Use with {@link transaction} and {@link commit}.
+	 * Use with {@see Database->transaction()} and {@see Database->commit()}.
 	 *  @return self
 	 */
 	public function rollback ()
@@ -322,12 +322,12 @@ class Database {
 	 * This is a short cut method that creates an update query and then uses
 	 * the query('select'), table, get, where and exec methods of the query.
 	 *  @param string|string[] $table Table name(s) to act upon.
-	 *  @param array $field Fields to get from the table(s) - see {@link
-	 *    Query::get}.
-	 *  @param array $where Where condition for what to select - see {@link
-	 *    Query::where}.
-	 *  @param array $orderBy Order condition - see {@link
-	 *    Query::order}.
+	 *  @param array $field Fields to get from the table(s) - see {@see
+	 *    Query->get()}.
+	 *  @param array $where Where condition for what to select - see {@see
+	 *    Query->where()}.
+	 *  @param array $orderBy Order condition - see {@see
+	 *    Query->order()}.
 	 *  @return Result
 	 */
 	public function select ( $table, $field="*", $where=null, $orderBy=null )
@@ -348,12 +348,12 @@ class Database {
 	 * query('select'), distinct ,table, get, where and exec methods of the
 	 * query.
 	 *  @param string|string[] $table Table name(s) to act upon.
-	 *  @param array $field Fields to get from the table(s) - see {@link
-	 *    Query::get}.
-	 *  @param array $where Where condition for what to select - see {@link
-	 *    Query::where}.
-	 *  @param array $orderBy Order condition - see {@link
-	 *    Query::order}.
+	 *  @param array $field Fields to get from the table(s) - see {@see
+	 *    Query->get()}.
+	 *  @param array $where Where condition for what to select - see {@see
+	 *    Query->where()}.
+	 *  @param array $orderBy Order condition - see {@see
+	 *    Query->order()}.
 	 *  @return Result
 	 */
 	public function selectDistinct ( $table, $field="*", $where=null, $orderBy=null )
@@ -379,17 +379,17 @@ class Database {
 	 *
 	 *  @example
 	 *    Basic select
-	 *    <code>
+	 *    ```php
 	 *    $result = $db->sql( 'SELECT * FROM myTable;' );
-	 *    </code>
+	 *    ```
 	 *
 	 *  @example
 	 *    Set the character set of the connection
-	 *    <code>
+	 *    ```php
 	 *    $db->sql("SET character_set_client=utf8");
 	 *    $db->sql("SET character_set_connection=utf8");
 	 *    $db->sql("SET character_set_results=utf8");
-	 *    </code>
+	 *    ```
 	 */
 	public function sql ( $sql )
 	{
@@ -401,7 +401,7 @@ class Database {
 	/**
 	 * Start a new database transaction.
 	 *
-	 * Use with {@link commit} and {@link rollback}.
+	 * Use with {@see Database->commit()} and {@see Database->rollback()}.
 	 *  @return self
 	 */
 	public function transaction ()
@@ -417,10 +417,10 @@ class Database {
 	 * This is a short cut method that creates an update query and then uses
 	 * the query('update'), table, set, where and exec methods of the query.
 	 *  @param string|string[] $table Table name(s) to act upon.
-	 *  @param array $set Field names and values to set - see {@link
-	 *    Query::set}.
-	 *  @param array $where Where condition for what to update - see {@link
-	 *    Query::where}.
+	 *  @param array $set Field names and values to set - see {@see
+	 *    Query->set()}.
+	 *  @param array $where Where condition for what to update - see {@see
+	 *    Query->where()}.
 	 *  @return Result
 	 */
 	public function update ( $table, $set=null, $where=null )

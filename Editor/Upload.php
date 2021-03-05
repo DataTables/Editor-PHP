@@ -21,31 +21,31 @@ use DataTables;
  * file upload information, specifically how the file should be recorded on
  * the server (database and file system).
  *
- * An instance of this class is attached to a field using the {@link
- * Field.upload} method. When Editor detects a file upload for that file the
+ * An instance of this class is attached to a field using the {@see
+ * Field->upload()} method. When Editor detects a file upload for that file the
  * information provided for this instance is executed.
  *
- * The configuration is primarily driven through the {@link db} and {@link
- * action} methods:
+ * The configuration is primarily driven through the {@see Upload->db()} and
+ * {@see Upload->action()} methods:
  *
- * * {@link db} Describes how information about the uploaded file is to be
+ * * {@see Upload->db()} Describes how information about the uploaded file is to be
  *   stored on the database.
- * * {@link action} Describes where the file should be stored on the file system
+ * * {@see Upload->action()} Describes where the file should be stored on the file system
  *   and provides the option of specifying a custom action when a file is
  *   uploaded.
  *
  * Both methods are optional - you can store the file on the server using the
- * {@link db} method only if you want to store the file in the database, or if
- * you don't want to store relational data on the database us only {@link
- * action}. However, the majority of the time it is best to use both - store
- * information about the file on the database for fast retrieval (using a {@link
- * Editor.leftJoin()} for example) and the file on the file system for direct
+ * {@see Upload->db()} method only if you want to store the file in the database, or if
+ * you don't want to store relational data on the database us only 
+ * {@see Upload->action()}. However,  the majority of the time it is best to use 
+ * both - store information about the file on the database for fast retrieval (using a
+ * {@see Editor->leftJoin()} for example) and the file on the file system for direct
  * web access.
  *
  * @example
  * 	 Store information about a file in a table called `files` and the actual
  * 	 file in an `uploads` directory.
- *   <code>
+ *   ```
  *		Field::inst( 'imageId' )
  *			->upload(
  *				Upload::inst( $_SERVER['DOCUMENT_ROOT'].'/uploads/__ID__.__EXTN__' )
@@ -57,12 +57,12 @@ use DataTables;
  *					) )
  *					->allowedExtensions( array( 'png', 'jpg' ), "Please upload an image file" )
  *			)
- *	</code>
+ *	```
  *
  * @example
  * 	 As above, but with PHP 5.4 (which allows chaining from new instances of a
  * 	 class)
- *   <code>
+ *   ```
  *		newField( 'imageId' )
  *			->upload(
  *				new Upload( $_SERVER['DOCUMENT_ROOT'].'/uploads/__ID__.__EXTN__' )
@@ -74,7 +74,7 @@ use DataTables;
  *					) )
  *					->allowedExtensions( array( 'png', 'jpg' ), "Please upload an image file" )
  *			)
- *	</code>
+ *	```
  */
 class Upload extends DataTables\Ext {
 	/*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
@@ -142,7 +142,7 @@ class Upload extends DataTables\Ext {
 	/**
 	 * Upload instance constructor
 	 * @param string|callable $action Action to take on upload - this is applied
-	 *     directly to {@link action}.
+	 *     directly to {@see Upload->action()}.
 	 */
 	function __construct( $action=null )
 	{
@@ -164,7 +164,7 @@ class Upload extends DataTables\Ext {
 	 *   which are replaced by the script dependent on the uploaded file:
 	 *   * `__EXTN__` - the file extension
 	 *   * `__NAME__` - the uploaded file's name (including the extension)
-	 *   * `__ID__` - Database primary key value if the {@link db} method is
+	 *   * `__ID__` - Database primary key value if the {@see Upload->db()} method is
 	 *     used.
 	 * * A closure - if a function is given the responsibility of what to do
 	 *   with the uploaded file is transferred to this function. That will

@@ -18,7 +18,7 @@ use DataTables\Editor\ValidateOptions;
 /**
  * Validation methods for DataTables Editor fields.
  *
- * These methods will typically be applied through the {@link Field::validator}
+ * These methods will typically be applied through the {@see Field::validator()}
  * method and thus the arguments to be passed will be automatically resolved
  * by Editor.
  *
@@ -29,10 +29,10 @@ use DataTables\Editor\ValidateOptions;
  *    for dependent validation).
  * 3. Validation configuration options.
  *
- * When using the `Validate` class functions with the {@link Field::validator}
- * method, the second parameter passed into {@link Field::validator} is given
+ * When using the `Validate` class functions with the {@see Field::validator()}
+ * method, the second parameter passed into {@see Field::validator()} is given
  * to the validation functions here as the third parameter. The first and
- * second parameters are automatically resolved by the {@link Field} class.
+ * second parameters are automatically resolved by the {@see Field} class.
  *
  * The validation configuration options is an array of options that can be used
  * to customise the validation - for example defining a date format for date
@@ -56,43 +56,43 @@ use DataTables\Editor\ValidateOptions;
  *   English language).
  *
  *  @example
- *    <code>
+ *    ```
  *      // Ensure that a non-empty value is given for a field
  *      Field::inst( 'engine' )->validator( Validate::required() )
- *    </code>
+ *    ```
  *
  *  @example
- *    <code>
+ *    ```
  *      // Don't require a field to be submitted, but if it is submitted, it
  *      // must be non-empty
  *      Field::inst( 'reg_date' )->validator( Validate::notEmpty() )
- *    </code>
+ *    ```
  *
  *  @example
- *    <code>
+ *    ```
  *      // Date validation
  *      Field::inst( 'reg_date' )->validator( Validate::dateFormat( 'D, d M y' ) )
- *    </code>
+ *    ```
  *
  *  @example
- *    <code>
+ *    ```
  *      // Date validation with a custom error message
  *      Field::inst( 'reg_date' )->validator( Validate::dateFormat( 'D, d M y',
  *          ValidateOptions::inst()
  *              ->message( 'Invalid date' )
  *      ) )
- *    </code>
+ *    ```
  *
  *  @example
- *    <code>
+ *    ```
  *      // Require a non-empty e-mail address
  *      Field::inst( 'reg_date' )->validator( Validate::email( ValidateOptions::inst()
  *        ->empty( false )
  *      ) )
- *    </code>
+ *    ```
  *
  *  @example
- *    <code>
+ *    ```
  *      // Custom validation - closure
  *      Field::inst( 'engine' )->validator( function($val, $data, $opts) {
  *         if ( ! preg_match( '/^1/', $val ) ) {
@@ -100,7 +100,7 @@ use DataTables\Editor\ValidateOptions;
  *         }
  *         return true;
  *      } )
- *    </code>
+ *    ```
  */
 class Validate {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

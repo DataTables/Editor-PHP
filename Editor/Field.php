@@ -28,38 +28,38 @@ use
  * Editor what table column to use, how to format the data and if you want
  * to read and/or write this column.
  *
- * Field instances are used with the {@link Editor::field} and 
- * {@link Join::field} methods to describe what fields should be interacted
+ * Field instances are used with the {@see Editor->field()} and 
+ * {@see Join->field()} methods to describe what fields should be interacted
  * with by the editable table.
  *
  *  @example
  *    Simply get a column with the name "city". No validation is performed.
- *    <code>
+ *    ```php
  *      Field::inst( 'city' )
- *    </code>
+ *    ```
  *
  *  @example
  *    Get a column with the name "first_name" - when edited a value must
- *    be given due to the "required" validation from the {@link Validate} class.
- *    <code>
+ *    be given due to the "required" validation from the {@see Validate} class.
+ *    ```php
  *      Field::inst( 'first_name' )->validator( 'Validate::required' )
- *    </code>
+ *    ```
  *
  *  @example
  *    Working with a date field, which is validated, and also has *get* and
  *    *set* formatters.
- *    <code>
+ *    ```php
  *      Field::inst( 'registered_date' )
  *          ->validator( 'Validate::dateFormat', 'D, d M y' )
  *          ->getFormatter( 'Format::date_sql_to_format', 'D, d M y' )
  *          ->setFormatter( 'Format::date_format_to_sql', 'D, d M y' )
- *    </code>
+ *    ```
  *
  *  @example
  *    Using an alias in the first parameter
- *    <code>
+ *    ```php
  *      Field::inst( 'name.first as first_name' )
- *    </code>
+ *    ```
  */
 class Field extends DataTables\Ext {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -232,7 +232,7 @@ class Field extends DataTables\Ext {
 	 * can be useful when, for example, working with dates and a particular format
 	 * is required on the client-side.
 	 *
-	 * Editor has a number of formatters available with the {@link Format} class
+	 * Editor has a number of formatters available with the {@see Format} class
 	 * which can be used directly with this method.
 	 *  @param callable|string $_ Value to set if using as a setter. Can be given as
 	 *    a closure function or a string with a reference to a function that will
@@ -415,7 +415,7 @@ class Field extends DataTables\Ext {
 	 * can be useful when, for example, working with dates and a particular format
 	 * is required on the client-side.
 	 *
-	 * Editor has a number of formatters available with the {@link Format} class
+	 * Editor has a number of formatters available with the {@see Format} class
 	 * which can be used directly with this method.
 	 *  @param callable|string $_ Value to set if using as a setter. Can be given as
 	 *    a closure function or a string with a reference to a function that will
@@ -473,7 +473,7 @@ class Field extends DataTables\Ext {
 	 * this method multiple times. For example, it would be possible to have a
 	 * 'required' validation and a 'maxLength' validation with multiple calls.
 	 * 
-	 * Editor has a number of validation available with the {@link Validate} class
+	 * Editor has a number of validation available with the {@see Validate} class
 	 * which can be used directly with this method.
 	 *  @param callable|string $_ Value to set if using as the validation method.
 	 *    Can be given as a closure function or a string with a reference to a 
