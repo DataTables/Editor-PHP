@@ -142,7 +142,7 @@ class Editor extends Ext {
 	 */
 
 	/** @var string */
-	public $version = '2.0.0-dev';
+	public $version = '2.0.1-dev';
 
 
 
@@ -1195,11 +1195,18 @@ class Editor extends Ext {
 	 */
 	private function _insert( $values )
 	{
+		// Get values to generate the id, including from setValue, not just the
+		// submitted values
+		$all = array();
+		foreach ($this->_fields as $field) {
+			$this->_writeProp($all, $field->name(), $field->val( 'set', $values ));
+		}
+
 		// Only allow a composite insert if the values for the key are
 		// submitted. This is required because there is no reliable way in MySQL
 		// to return the newly inserted row, so we can't know any newly
 		// generated values.
-		$this->_pkey_validate_insert( $values );
+		$this->_pkey_validate_insert( $all );
 
 		$this->_trigger( 'validatedCreate', $values );
 
@@ -1208,13 +1215,6 @@ class Editor extends Ext {
 
 		if ( $id === null ) {
 			return null;
-		}
-
-		// Get values to generate the id, including from setValue, not just the
-		// submitted values
-		$all = array();
-		foreach ($this->_fields as $field) {
-			$this->_writeProp($all, $field->name(), $field->val( 'set', $values ));
 		}
 
 		// Was the primary key altered as part of the edit, if so use the
