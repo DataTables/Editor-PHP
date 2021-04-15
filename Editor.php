@@ -2043,7 +2043,19 @@ class Editor extends Ext {
 			$pkey = $this->_pkey;
 		}
 
-		$tableMatch = $this->_alias($table, 'alias');
+		$tableAlias = $this->_alias($table, 'alias');
+		$tableOrig = $this->_alias($table, 'orig');
+
+		// If using an alias we need to replace the alias'ed table name in our pkey
+		// with the real table name
+		for ($i=0 ; $i<count($pkey) ; $i++) {
+			$a = explode('.', $pkey[$i]);
+
+			if (count($a) > 1 && $a[0] === $tableAlias) {
+				$a[0] = $tableOrig;
+				$pkey[$i] = implode('.', $a);
+			}
+		}
 
 		// Check there is a field which has a set option for this table
 		$count = 0;
@@ -2058,7 +2070,7 @@ class Editor extends Ext {
 			else if ( $fieldDots === 1 ) {
 				if (
 					$field->set() !== Field::SET_NONE &&
-					$this->_part( $fieldName, 'table' ) === $tableMatch
+					$this->_part( $fieldName, 'table' ) === $tableAlias
 				) {
 					$count++;
 				}
@@ -2078,7 +2090,7 @@ class Editor extends Ext {
 		if ( $count > 0 ) {
 			$q = $this->_db
 				->query( 'delete' )
-				->table( $table );
+				->table( $tableOrig );
 
 			for ( $i=0, $ien=count($ids) ; $i<$ien ; $i++ ) {
 				$cond = $this->pkeyToArray( $ids[$i], true, $pkey );
