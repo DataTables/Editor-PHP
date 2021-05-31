@@ -331,23 +331,21 @@ class SearchPaneOptions extends DataTables\Ext {
 			}
 		}
 
+		
 		// Construct the where queries based upon the options selected by the user
-		if( isset($http['searchPanes']) ) {
-			foreach ($fields as $fieldOpt) {
-				if( isset($http['searchPanes'][$fieldOpt->name()])){
-					$query->where( function ($q) use ($fieldOpt, $http) {
-						for($j=0 ; $j<count($http['searchPanes'][$fieldOpt->name()]) ; $j++){
-							$q->or_where(
-								$fieldOpt->dbField(),
-								isset($http['searchPanes_null'][$fieldOpt->name()][$j]) 
-									? null
-									: $http['searchPanes'][$fieldOpt->name()][$j],
-								'='
-							);
-						}
-					});
+		// THIS IS TO GET THE SP OPTIONS, NOT THE TABLE ENTRIES
+		if( isset($http['searchPanes']) && isset($http['searchPanes'][$field->name()])){
+			$query->where( function ($q) use ($field, $http) {
+				for($j=0, $jen=count($http['searchPanes'][$field->name()]); $j < $jen ; $j++){
+					$q->or_where(
+						$field->dbField(),
+						isset($http['searchPanes_null'][$field->name()][$j]) 
+							? null
+							: $http['searchPanes'][$field->name()][$j],
+						'='
+					);
 				}
-			}
+			});
 		}
 		
 		// print_r($query);

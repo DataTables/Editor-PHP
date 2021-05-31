@@ -142,7 +142,7 @@ class Editor extends Ext {
 	 */
 
 	/** @var string */
-	public $version = '2.0.2';
+	public $version = '2.0.3-dev';
 
 
 
@@ -1700,7 +1700,13 @@ class Editor extends Ext {
 					$query->where( function ($q) use ($field, $http) {
 
 						for($j=0 ; $j<count($http['searchPanes'][$field->name()]) ; $j++){
-							$q->or_where( $field->dbField(), $http['searchPanes'][$field->name()][$j], '=' );
+							$q->or_where(
+								$field->dbField(),
+								isset($http['searchPanes_null'][$field->name()][$j]) 
+									? null
+									: $http['searchPanes'][$field->name()][$j],
+								'='
+							);
 						}
 					});
 				}
