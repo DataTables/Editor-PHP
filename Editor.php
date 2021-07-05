@@ -1741,7 +1741,7 @@ class Editor extends Ext {
 			$column = $http['columns'][$i];
 			$search = $column['search']['value'];
 
-			if ( $search !== '' && $column['searchable'] == 'true' ) {
+			if ( !empty($search) && $column['searchable'] == 'true' ) {
 				$query->where( $this->_ssp_field( $http, $i ), '%'.$search.'%', 'like' );
 			}
 		}
