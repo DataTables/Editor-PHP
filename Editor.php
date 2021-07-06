@@ -1199,7 +1199,9 @@ class Editor extends Ext {
 		// submitted values
 		$all = array();
 		foreach ($this->_fields as $field) {
-			$this->_writeProp($all, $field->name(), $field->val( 'set', $values ));
+			if ($field->apply('set', $values)) {
+				$this->_writeProp($all, $field->name(), $field->val( 'set', $values ));
+			}
 		}
 
 		// Only allow a composite insert if the values for the key are
