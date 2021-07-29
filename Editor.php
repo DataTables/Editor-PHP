@@ -1652,6 +1652,165 @@ class Editor extends Ext {
 		}
 	}
 
+	private function _constructSearchBuilderConditions($query, $data) {
+		$first = true;
+
+		// Iterate over every group or criteria in the current group
+		foreach($data['criteria'] as $crit) {
+			// If criteria is defined then this must be a group
+			if(isset($crit['criteria'])) {
+				// Check if this is the first, or if it is and logic
+				if($data['logic'] === 'AND' || $first) {
+					// Call the function for the next group
+					$query->where(_constructSearchBuilderQuery([$crit]));
+					// Set first to false so that in future only the logic is checked
+					$first = false;
+				}
+				else {
+					$query->or_where(_constructSearchBuilderQuery([$crit]));
+				}
+			}
+			else if (isset($crit['condition']) && isset($crit['value'])) {
+				// Sometimes the structure of the object that is passed across is named in a strange way.
+				// This conditional assignment solves that issue
+				$val1 = !isset($crit['value'][0]) ? $crit['value']['[0]'] : $crit['value'][0];
+				$val2 = '';
+
+				if (count($crit['value']) > 1) {
+					$val2 = !isset($crit['value'][1]) ? $crit['value']['[1]'] : $crit['value'][1]; 
+				}
+
+				// Switch on the condition that has been passed in
+				switch($crit['condition']) {
+					case '=':
+						// Check if this is the first, or if it is and logic
+						if($data['logic'] === 'AND' || $first) {
+							// Call the where function for this condition
+							$query->where($crit['origData'], $val1, '=');
+							// Set first to false so that in future only the logic is checked
+							$first = false;
+						}
+						else {
+							// Call the or_where function - has to be or logic in this block
+							$query->or_where($crit['origData'], $val1, '!=');
+						}
+						break;
+					case '!=':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1, '!=');
+							$first = false;
+						}
+						else {
+							$query->or_where($crit['origData'], $val1, '!=');
+						}
+						break;
+					case 'contains':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], '%'.$val1.'%', 'LIKE');
+							$first = false;
+						}
+						else {
+							$query->or_where($query->where($crit['origData'], '%'.$val1.'%'), 'LIKE');
+						}
+						break;
+					case 'starts':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1.'%', 'LIKE');
+							$first = false;
+						}
+						else {
+							$query->or_where($query->where($crit['origData'], $val1.'%'), 'LIKE');
+						}
+						break;
+					case 'ends':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], '%'.$val1, 'LIKE');
+							$first = false;
+						}
+						else {
+							$query->or_where($query->where($crit['origData'], '%'.$val1), 'LIKE');
+						}
+						break;
+					case '<':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1, '<');
+							$first = false;
+						}
+						else {
+							$query->or_where($query->where($crit['origData'], $val1), '<');
+						}
+						break;
+					case '<=':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1, '<=');
+							$first = false;
+						}
+						else {
+							$query->or_where($query->where($crit['origData'], $val1), '<=');
+						}
+						break;
+					case '>=':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1, '>=');
+							$first = false;
+						}
+						else {
+							$query->or_where($query->where($crit['origData'], $val1), '>=');
+						}
+						break;
+					case '>':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1, '>');
+							$first = false;
+						}
+						else {
+							$query->or_where($query->where($crit['origData'], $val1), '>');
+						}
+						break;
+					case 'between':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1, '>')->where($crit['origData'], $val2, '<');
+							$first = false;
+						}
+						else {
+							$query->or_where($query->whereBetween($crit['origData'], [$val1, $val2]));
+						}
+						break;
+					case '!between':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1, '<')->or_where($crit['origData'], $val2, '>');
+							$first = false;
+						}
+						else {
+							$query->or_where($query->whereNotBetween($crit['origData'], [$val1, $val2]));
+						}
+						break;
+					case 'empty':
+						if($data['logic'] === 'AND' || $first) {
+							$query->whereNull($crit['origData']);
+							$first = false;
+						}
+						else {
+							$query->whereNull($crit['origData']);
+						}
+						break;
+					case '!empty':
+						if($data['logic'] === 'AND' || $first) {
+							$query->whereNotNull($crit['origData']);
+							$first = false;
+						}
+						else {
+							$query->whereNotNull($crit['origData']);
+						}
+						break;
+					default:
+						break;
+				}
+			}
+		}
+		return $query;
+	}
+
 
 	/**
 	 * Add DataTables' 'where' condition to a server-side processing query. This
@@ -1713,6 +1872,10 @@ class Editor extends Ext {
 					});
 				}
 			}
+		}
+
+		if(isset($http['searchBuilder']) && $http['searchBuilder'] !== 'false') {
+			$this->_constructSearchBuilderConditions($query, $http['searchBuilder']);
 		}
 
 		// if ( $http['search']['value'] ) {
