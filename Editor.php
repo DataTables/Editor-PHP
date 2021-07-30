@@ -1662,12 +1662,16 @@ class Editor extends Ext {
 				// Check if this is the first, or if it is and logic
 				if($data['logic'] === 'AND' || $first) {
 					// Call the function for the next group
-					$query->where(_constructSearchBuilderQuery([$crit]));
+					$query->where_group(function($q) use ($crit) {
+						$this->_constructSearchBuilderConditions($q, $crit);
+					});
 					// Set first to false so that in future only the logic is checked
 					$first = false;
 				}
 				else {
-					$query->or_where(_constructSearchBuilderQuery([$crit]));
+					$query->where_group(function ($q) use ($crit) {
+						$this->_constructSearchBuilderConditions($q, $crit);
+					}, 'OR');
 				}
 			}
 			else if (isset($crit['condition']) && isset($crit['value'])) {
@@ -1710,7 +1714,7 @@ class Editor extends Ext {
 							$first = false;
 						}
 						else {
-							$query->or_where($query->where($crit['origData'], '%'.$val1.'%'), 'LIKE');
+							$query->or_where($crit['origData'], '%'.$val1.'%', 'LIKE');
 						}
 						break;
 					case 'starts':
@@ -1719,7 +1723,7 @@ class Editor extends Ext {
 							$first = false;
 						}
 						else {
-							$query->or_where($query->where($crit['origData'], $val1.'%'), 'LIKE');
+							$query->or_where($crit['origData'], $val1.'%', 'LIKE');
 						}
 						break;
 					case 'ends':
@@ -1728,7 +1732,7 @@ class Editor extends Ext {
 							$first = false;
 						}
 						else {
-							$query->or_where($query->where($crit['origData'], '%'.$val1), 'LIKE');
+							$query->or_where($crit['origData'], '%'.$val1, 'LIKE');
 						}
 						break;
 					case '<':
@@ -1737,7 +1741,7 @@ class Editor extends Ext {
 							$first = false;
 						}
 						else {
-							$query->or_where($query->where($crit['origData'], $val1), '<');
+							$query->or_where($crit['origData'], $val1, '<');
 						}
 						break;
 					case '<=':
@@ -1746,7 +1750,7 @@ class Editor extends Ext {
 							$first = false;
 						}
 						else {
-							$query->or_where($query->where($crit['origData'], $val1), '<=');
+							$query->or_where($crit['origData'], $val1, '<=');
 						}
 						break;
 					case '>=':
@@ -1755,7 +1759,7 @@ class Editor extends Ext {
 							$first = false;
 						}
 						else {
-							$query->or_where($query->where($crit['origData'], $val1), '>=');
+							$query->or_where($crit['origData'], $val1, '>=');
 						}
 						break;
 					case '>':
@@ -1764,7 +1768,7 @@ class Editor extends Ext {
 							$first = false;
 						}
 						else {
-							$query->or_where($query->where($crit['origData'], $val1), '>');
+							$query->or_where($crit['origData'], $val1, '>');
 						}
 						break;
 					case 'between':
@@ -1773,7 +1777,7 @@ class Editor extends Ext {
 							$first = false;
 						}
 						else {
-							$query->or_where($query->whereBetween($crit['origData'], [$val1, $val2]));
+							$query->or_where($crit['origData'], $val1, '>')->where($crit['origData'], $val2, '<');
 						}
 						break;
 					case '!between':
@@ -1782,7 +1786,7 @@ class Editor extends Ext {
 							$first = false;
 						}
 						else {
-							$query->or_where($query->whereNotBetween($crit['origData'], [$val1, $val2]));
+							$query->or_where($crit['origData'], $val1, '<')->or_where($crit['origData'], $val2, '>');
 						}
 						break;
 					case 'empty':
@@ -1875,7 +1879,9 @@ class Editor extends Ext {
 		}
 
 		if(isset($http['searchBuilder']) && $http['searchBuilder'] !== 'false') {
-			$this->_constructSearchBuilderConditions($query, $http['searchBuilder']);
+			$query->where_group(function($q) use ($http) {
+				$this->_constructSearchBuilderConditions($q, $http['searchBuilder']);
+			});
 		}
 
 		// if ( $http['search']['value'] ) {
