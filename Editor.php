@@ -1655,6 +1655,9 @@ class Editor extends Ext {
 	private function _constructSearchBuilderConditions($query, $data) {
 		$first = true;
 
+		if(!isset($data['criteria'])) {
+			return;
+		}
 		// Iterate over every group or criteria in the current group
 		foreach($data['criteria'] as $crit) {
 			// If criteria is defined then this must be a group
@@ -1674,15 +1677,27 @@ class Editor extends Ext {
 					}, 'OR');
 				}
 			}
-			else if (isset($crit['condition']) && isset($crit['value'])) {
+			else if (isset($crit['condition']) && (isset($crit['value']) || $crit['condition'] === 'null' || $crit['condition'] === '!null')) {
 				// Sometimes the structure of the object that is passed across is named in a strange way.
 				// This conditional assignment solves that issue
-				$val1 = !isset($crit['value'][0]) ? $crit['value']['[0]'] : $crit['value'][0];
+				$val1 = '';
 				$val2 = '';
+				if(isset($crit['value'])) {
+					$val1 = !isset($crit['value'][0]) ? $crit['value']['[0]'] : $crit['value'][0];
+					
+					if(strlen($val1) === 0) {
+						continue;
+					}
+					
+					if (count($crit['value']) > 1) {
+						$val2 = !isset($crit['value'][1]) ? $crit['value']['[1]'] : $crit['value'][1]; 
 
-				if (count($crit['value']) > 1) {
-					$val2 = !isset($crit['value'][1]) ? $crit['value']['[1]'] : $crit['value'][1]; 
+						if(strlen($val2) === 0) {
+							continue;
+						}
+					}
 				}
+
 
 				// Switch on the condition that has been passed in
 				switch($crit['condition']) {
@@ -1789,22 +1804,35 @@ class Editor extends Ext {
 							$query->or_where($crit['origData'], $val1, '<')->or_where($crit['origData'], $val2, '>');
 						}
 						break;
-					case 'empty':
+					case 'null':
 						if($data['logic'] === 'AND' || $first) {
-							$query->whereNull($crit['origData']);
+							$query->where_group(function ($q) use ($crit) {
+								$q->where($crit['origData'], null, "=");
+								$q->or_where($crit['origData'], "", "=");
+							});
 							$first = false;
 						}
 						else {
-							$query->whereNull($crit['origData']);
+							$query->where_group(function ($q) use ($crit) {
+								$q->where($crit['origData'], null, "=");
+								$q->or_where($crit['origData'], "", "=");
+							}, 'OR');
 						}
 						break;
-					case '!empty':
+					case '!null':
 						if($data['logic'] === 'AND' || $first) {
-							$query->whereNotNull($crit['origData']);
+							$query->where_group(function ($q) use ($crit) {
+								$q->where($crit['origData'], null, "!=");
+								$q->where($crit['origData'], "", "!=");
+							});
 							$first = false;
 						}
 						else {
-							$query->whereNotNull($crit['origData']);
+							$query->where_group(function ($q) use ($crit) {
+								$q->where($crit['origData'], null, "!=");
+								$q->where($crit['origData'], "", "!=");
+							}, 'OR');
+
 						}
 						break;
 					default:
