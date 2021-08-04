@@ -1470,7 +1470,7 @@ class Editor extends Ext {
 	 *     only
 	 * @private
 	 */
-	private function _fileDataFields ( &$files, $fields, $limitTable, $ids=null, $data=null )
+	private function _fileDataFields ( &$files, $fields, $limitTable, $idsIn=null, $data=null )
 	{
 		foreach ($fields as $field) {
 			$upload = $field->upload();
@@ -1488,6 +1488,8 @@ class Editor extends Ext {
 
 				// Make a collection of the ids used in this data set to get a limited data set
 				// in return (security and performance)
+				$ids = $idsIn;
+
 				if ( $ids === null ) {
 					$ids = array();
 				}
@@ -1496,14 +1498,14 @@ class Editor extends Ext {
 					for ( $i=0, $ien=count($data); $i<$ien ; $i++ ) {
 						$val = $field->val( 'set', $data[$i] );
 
-						if ( $val ) {
+						if ( $val && ! in_array($val, $ids) ) {
 							$ids[] = $val;
 						}
 					}
 
 					if ( count($ids) === 0 ) {
-						// If no data to fetch, then don't bother
-						return;
+						// If no data to fetch for this field, so don't bother
+						continue;
 					}
 					else if ( count($ids) > 1000 ) {
 						// Don't use `where_in` for really large data sets
