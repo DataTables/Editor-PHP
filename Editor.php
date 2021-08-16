@@ -1790,7 +1790,9 @@ class Editor extends Ext {
 						break;
 					case 'between':
 						if($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], $val1, '>')->where($crit['origData'], $val2, '<');
+							$query->where_group(function($q) use ($crit, $val1, $val2) {
+								$q->where($crit['origData'], $val1, '>')->where($crit['origData'], $val2, '<');
+							});
 							$first = false;
 						}
 						else {
@@ -1799,7 +1801,9 @@ class Editor extends Ext {
 						break;
 					case '!between':
 						if($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], $val1, '<')->or_where($crit['origData'], $val2, '>');
+							$query->where_group(function($q) use ($crit, $val1, $val2) {
+								$q->where($crit['origData'], $val1, '<')->or_where($crit['origData'], $val2, '>');
+							});
 							$first = false;
 						}
 						else {
