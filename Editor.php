@@ -1805,14 +1805,18 @@ class Editor extends Ext {
 						if($data['logic'] === 'AND' || $first) {
 							$query->where_group(function ($q) use ($crit) {
 								$q->where($crit['origData'], null, "=");
-								$q->or_where($crit['origData'], "", "=");
+								if (strpos($crit['type'], 'date') === false && str_contains($crit['type'], 'moment') === false && str_contains($crit['type'], 'luxon') === false) {
+									$q->or_where($crit['origData'], "", "=");
+								}
 							});
 							$first = false;
 						}
 						else {
 							$query->where_group(function ($q) use ($crit) {
 								$q->where($crit['origData'], null, "=");
-								$q->or_where($crit['origData'], "", "=");
+								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
+									$q->or_where($crit['origData'], "", "=");
+								}
 							}, 'OR');
 						}
 						break;
@@ -1820,14 +1824,18 @@ class Editor extends Ext {
 						if($data['logic'] === 'AND' || $first) {
 							$query->where_group(function ($q) use ($crit) {
 								$q->where($crit['origData'], null, "!=");
-								$q->where($crit['origData'], "", "!=");
+								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
+									$q->where($crit['origData'], "", "!=");
+								}
 							});
 							$first = false;
 						}
 						else {
 							$query->where_group(function ($q) use ($crit) {
 								$q->where($crit['origData'], null, "!=");
-								$q->where($crit['origData'], "", "!=");
+								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
+									$q->where($crit['origData'], "", "!=");
+								}
 							}, 'OR');
 
 						}
