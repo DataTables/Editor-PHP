@@ -1704,7 +1704,7 @@ class Editor extends Ext {
 						}
 						else {
 							// Call the or_where function - has to be or logic in this block
-							$query->or_where($crit['origData'], $val1, '!=');
+							$query->or_where($crit['origData'], $val1, '=');
 						}
 						break;
 					case '!=':
