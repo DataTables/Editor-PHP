@@ -1679,27 +1679,18 @@ class Editor extends Ext {
 					}, 'OR');
 				}
 			}
-			else if (isset($crit['condition']) && (isset($crit['value']) || $crit['condition'] === 'null' || $crit['condition'] === '!null')) {
+			else if (isset($crit['condition']) && (isset($crit['value1']) || $crit['condition'] === 'null' || $crit['condition'] === '!null')) {
 				// Sometimes the structure of the object that is passed across is named in a strange way.
 				// This conditional assignment solves that issue
-				$val1 = '';
-				$val2 = '';
-				if(isset($crit['value'])) {
-					$val1 = !isset($crit['value'][0]) ? $crit['value']['[0]'] : $crit['value'][0];
-					
-					if(strlen($val1) === 0) {
-						continue;
-					}
-					
-					if (count($crit['value']) > 1) {
-						$val2 = !isset($crit['value'][1]) ? $crit['value']['[1]'] : $crit['value'][1]; 
+				$val1 = isset($crit['value1']) ? $crit['value1'] : '';
+				$val2 = isset($crit['value2']) ? $crit['value2'] : '';
 
-						if(strlen($val2) === 0) {
-							continue;
-						}
-					}
+				if(strlen($val1) === 0 && $crit['condition'] !== 'null' && $crit['condition'] !== '!null') {
+					continue;
 				}
-
+				if(strlen($val2) === 0 && ($crit['condition'] === 'between' || $crit['condition'] === '!between')) {
+					continue;
+				}
 
 				// Switch on the condition that has been passed in
 				switch($crit['condition']) {
