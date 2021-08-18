@@ -1805,7 +1805,7 @@ class Editor extends Ext {
 						if($data['logic'] === 'AND' || $first) {
 							$query->where_group(function ($q) use ($crit) {
 								$q->where($crit['origData'], null, "=");
-								if (strpos($crit['type'], 'date') === false && str_contains($crit['type'], 'moment') === false && str_contains($crit['type'], 'luxon') === false) {
+								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
 									$q->or_where($crit['origData'], "", "=");
 								}
 							});
