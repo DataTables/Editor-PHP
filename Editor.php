@@ -1679,27 +1679,18 @@ class Editor extends Ext {
 					}, 'OR');
 				}
 			}
-			else if (isset($crit['condition']) && (isset($crit['value']) || $crit['condition'] === 'null' || $crit['condition'] === '!null')) {
+			else if (isset($crit['condition']) && (isset($crit['value1']) || $crit['condition'] === 'null' || $crit['condition'] === '!null')) {
 				// Sometimes the structure of the object that is passed across is named in a strange way.
 				// This conditional assignment solves that issue
-				$val1 = '';
-				$val2 = '';
-				if(isset($crit['value'])) {
-					$val1 = !isset($crit['value'][0]) ? $crit['value']['[0]'] : $crit['value'][0];
-					
-					if(strlen($val1) === 0) {
-						continue;
-					}
-					
-					if (count($crit['value']) > 1) {
-						$val2 = !isset($crit['value'][1]) ? $crit['value']['[1]'] : $crit['value'][1]; 
+				$val1 = isset($crit['value1']) ? $crit['value1'] : '';
+				$val2 = isset($crit['value2']) ? $crit['value2'] : '';
 
-						if(strlen($val2) === 0) {
-							continue;
-						}
-					}
+				if(strlen($val1) === 0 && $crit['condition'] !== 'null' && $crit['condition'] !== '!null') {
+					continue;
 				}
-
+				if(strlen($val2) === 0 && ($crit['condition'] === 'between' || $crit['condition'] === '!between')) {
+					continue;
+				}
 
 				// Switch on the condition that has been passed in
 				switch($crit['condition']) {
@@ -1713,7 +1704,7 @@ class Editor extends Ext {
 						}
 						else {
 							// Call the or_where function - has to be or logic in this block
-							$query->or_where($crit['origData'], $val1, '!=');
+							$query->or_where($crit['origData'], $val1, '=');
 						}
 						break;
 					case '!=':
@@ -1790,34 +1781,42 @@ class Editor extends Ext {
 						break;
 					case 'between':
 						if($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], $val1, '>')->where($crit['origData'], $val2, '<');
+							$query->where_group(function($q) use ($crit, $val1, $val2) {
+								$q->where($crit['origData'], is_numeric($val1) ? intval($val1) : $val1, '>')->where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '<');
+							});
 							$first = false;
 						}
 						else {
-							$query->or_where($crit['origData'], $val1, '>')->where($crit['origData'], $val2, '<');
+							$query->or_where($crit['origData'], is_numeric($val1) ? intval($val1) : $val1, '>')->where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '<');
 						}
 						break;
 					case '!between':
 						if($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], $val1, '<')->or_where($crit['origData'], $val2, '>');
+							$query->where_group(function($q) use ($crit, $val1, $val2) {
+								$q->where($crit['origData'], is_numeric($val1) ? intval($val1) : $val1, '<')->or_where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '>');
+							});
 							$first = false;
 						}
 						else {
-							$query->or_where($crit['origData'], $val1, '<')->or_where($crit['origData'], $val2, '>');
+							$query->or_where($crit['origData'], is_numeric($val1) ? intval($val1) : $val1, '<')->or_where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '>');
 						}
 						break;
 					case 'null':
 						if($data['logic'] === 'AND' || $first) {
 							$query->where_group(function ($q) use ($crit) {
 								$q->where($crit['origData'], null, "=");
-								$q->or_where($crit['origData'], "", "=");
+								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
+									$q->or_where($crit['origData'], "", "=");
+								}
 							});
 							$first = false;
 						}
 						else {
 							$query->where_group(function ($q) use ($crit) {
 								$q->where($crit['origData'], null, "=");
-								$q->or_where($crit['origData'], "", "=");
+								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
+									$q->or_where($crit['origData'], "", "=");
+								}
 							}, 'OR');
 						}
 						break;
@@ -1825,14 +1824,18 @@ class Editor extends Ext {
 						if($data['logic'] === 'AND' || $first) {
 							$query->where_group(function ($q) use ($crit) {
 								$q->where($crit['origData'], null, "!=");
-								$q->where($crit['origData'], "", "!=");
+								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
+									$q->where($crit['origData'], "", "!=");
+								}
 							});
 							$first = false;
 						}
 						else {
 							$query->where_group(function ($q) use ($crit) {
 								$q->where($crit['origData'], null, "!=");
-								$q->where($crit['origData'], "", "!=");
+								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
+									$q->where($crit['origData'], "", "!=");
+								}
 							}, 'OR');
 
 						}
