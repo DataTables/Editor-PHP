@@ -40,9 +40,9 @@ class MysqlQuery extends Query {
 			$opts = $user;
 			$user = $opts['user'];
 			$pass = $opts['pass'];
-			$port = $opts['port'];
 			$host = $opts['host'];
 			$db   = $opts['db'];
+			$port = isset( $opts['port'] ) ? $opts['port'] : '';
 			$dsn  = isset( $opts['dsn'] ) ? $opts['dsn'] : '';
 			$pdoAttr = isset( $opts['pdoAttr'] ) ? $opts['pdoAttr'] : array();
 		}
