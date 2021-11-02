@@ -1022,17 +1022,23 @@ class Query {
 		$right = $idl[1];
 
 		// Dealing with a function or other expression? Just return immediately
-		if (strpos($identifier, '(') !== FALSE || strpos($identifier, '*') !== FALSE || strpos($identifier, ' ') !== FALSE)
+		if (strpos($identifier, '(') !== FALSE || strpos($identifier, '*') !== FALSE)
 		{
 			return $identifier;
 		}
 
 		// Going to be operating on the spaces in strings, to simplify the white-space
 		$identifier = preg_replace('/[\t ]+/', ' ', $identifier);
+		$identifier = str_replace(' as ', ' ', $identifier);
+
+		// If more that a single space, then return
+		if (substr_count($identifier, ' ') > 1) {
+			return $identifier;
+		}
 
 		// Find if our identifier has an alias, so we don't escape that
-		if ( strpos($identifier, ' as ') !== false ) {
-			$alias = strstr($identifier, ' as ');
+		if ( strpos($identifier, ' ') !== false ) {
+			$alias = strstr($identifier, ' ');
 			$identifier = substr($identifier, 0, - strlen($alias));
 		}
 		else {

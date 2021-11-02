@@ -1199,7 +1199,9 @@ class Editor extends Ext {
 		// submitted values
 		$all = array();
 		foreach ($this->_fields as $field) {
-			$this->_writeProp($all, $field->name(), $field->val( 'set', $values ));
+			if ($field->apply('set', $values)) {
+				$this->_writeProp($all, $field->name(), $field->val( 'set', $values ));
+			}
 		}
 
 		// Only allow a composite insert if the values for the key are
@@ -1468,7 +1470,7 @@ class Editor extends Ext {
 	 *     only
 	 * @private
 	 */
-	private function _fileDataFields ( &$files, $fields, $limitTable, $ids=null, $data=null )
+	private function _fileDataFields ( &$files, $fields, $limitTable, $idsIn=null, $data=null )
 	{
 		foreach ($fields as $field) {
 			$upload = $field->upload();
@@ -1486,6 +1488,8 @@ class Editor extends Ext {
 
 				// Make a collection of the ids used in this data set to get a limited data set
 				// in return (security and performance)
+				$ids = $idsIn;
+
 				if ( $ids === null ) {
 					$ids = array();
 				}
@@ -1494,14 +1498,14 @@ class Editor extends Ext {
 					for ( $i=0, $ien=count($data); $i<$ien ; $i++ ) {
 						$val = $field->val( 'set', $data[$i] );
 
-						if ( $val ) {
+						if ( $val && ! in_array($val, $ids) ) {
 							$ids[] = $val;
 						}
 					}
 
 					if ( count($ids) === 0 ) {
-						// If no data to fetch, then don't bother
-						return;
+						// If no data to fetch for this field, so don't bother
+						continue;
 					}
 					else if ( count($ids) > 1000 ) {
 						// Don't use `where_in` for really large data sets
@@ -1650,6 +1654,200 @@ class Editor extends Ext {
 		}
 	}
 
+	private function _constructSearchBuilderConditions($query, $data) {
+		$first = true;
+
+		if(!isset($data['criteria'])) {
+			return;
+		}
+		// Iterate over every group or criteria in the current group
+		foreach($data['criteria'] as $crit) {
+			// If criteria is defined then this must be a group
+			if(isset($crit['criteria'])) {
+				// Check if this is the first, or if it is and logic
+				if($data['logic'] === 'AND' || $first) {
+					// Call the function for the next group
+					$query->where_group(function($q) use ($crit) {
+						$this->_constructSearchBuilderConditions($q, $crit);
+					});
+					// Set first to false so that in future only the logic is checked
+					$first = false;
+				}
+				else {
+					$query->where_group(function ($q) use ($crit) {
+						$this->_constructSearchBuilderConditions($q, $crit);
+					}, 'OR');
+				}
+			}
+			else if (isset($crit['condition']) && (isset($crit['value1']) || $crit['condition'] === 'null' || $crit['condition'] === '!null')) {
+				// Sometimes the structure of the object that is passed across is named in a strange way.
+				// This conditional assignment solves that issue
+				$val1 = isset($crit['value1']) ? $crit['value1'] : '';
+				$val2 = isset($crit['value2']) ? $crit['value2'] : '';
+
+				if(strlen($val1) === 0 && $crit['condition'] !== 'null' && $crit['condition'] !== '!null') {
+					continue;
+				}
+				if(strlen($val2) === 0 && ($crit['condition'] === 'between' || $crit['condition'] === '!between')) {
+					continue;
+				}
+
+				// Switch on the condition that has been passed in
+				switch($crit['condition']) {
+					case '=':
+						// Check if this is the first, or if it is and logic
+						if($data['logic'] === 'AND' || $first) {
+							// Call the where function for this condition
+							$query->where($crit['origData'], $val1, '=');
+							// Set first to false so that in future only the logic is checked
+							$first = false;
+						}
+						else {
+							// Call the or_where function - has to be or logic in this block
+							$query->or_where($crit['origData'], $val1, '=');
+						}
+						break;
+					case '!=':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1, '!=');
+							$first = false;
+						}
+						else {
+							$query->or_where($crit['origData'], $val1, '!=');
+						}
+						break;
+					case 'contains':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], '%'.$val1.'%', 'LIKE');
+							$first = false;
+						}
+						else {
+							$query->or_where($crit['origData'], '%'.$val1.'%', 'LIKE');
+						}
+						break;
+					case 'starts':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1.'%', 'LIKE');
+							$first = false;
+						}
+						else {
+							$query->or_where($crit['origData'], $val1.'%', 'LIKE');
+						}
+						break;
+					case 'ends':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], '%'.$val1, 'LIKE');
+							$first = false;
+						}
+						else {
+							$query->or_where($crit['origData'], '%'.$val1, 'LIKE');
+						}
+						break;
+					case '<':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1, '<');
+							$first = false;
+						}
+						else {
+							$query->or_where($crit['origData'], $val1, '<');
+						}
+						break;
+					case '<=':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1, '<=');
+							$first = false;
+						}
+						else {
+							$query->or_where($crit['origData'], $val1, '<=');
+						}
+						break;
+					case '>=':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1, '>=');
+							$first = false;
+						}
+						else {
+							$query->or_where($crit['origData'], $val1, '>=');
+						}
+						break;
+					case '>':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1, '>');
+							$first = false;
+						}
+						else {
+							$query->or_where($crit['origData'], $val1, '>');
+						}
+						break;
+					case 'between':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where_group(function($q) use ($crit, $val1, $val2) {
+								$q->where($crit['origData'], is_numeric($val1) ? intval($val1) : $val1, '>')->where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '<');
+							});
+							$first = false;
+						}
+						else {
+							$query->or_where($crit['origData'], is_numeric($val1) ? intval($val1) : $val1, '>')->where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '<');
+						}
+						break;
+					case '!between':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where_group(function($q) use ($crit, $val1, $val2) {
+								$q->where($crit['origData'], is_numeric($val1) ? intval($val1) : $val1, '<')->or_where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '>');
+							});
+							$first = false;
+						}
+						else {
+							$query->or_where($crit['origData'], is_numeric($val1) ? intval($val1) : $val1, '<')->or_where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '>');
+						}
+						break;
+					case 'null':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where_group(function ($q) use ($crit) {
+								$q->where($crit['origData'], null, "=");
+								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
+									$q->or_where($crit['origData'], "", "=");
+								}
+							});
+							$first = false;
+						}
+						else {
+							$query->where_group(function ($q) use ($crit) {
+								$q->where($crit['origData'], null, "=");
+								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
+									$q->or_where($crit['origData'], "", "=");
+								}
+							}, 'OR');
+						}
+						break;
+					case '!null':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where_group(function ($q) use ($crit) {
+								$q->where($crit['origData'], null, "!=");
+								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
+									$q->where($crit['origData'], "", "!=");
+								}
+							});
+							$first = false;
+						}
+						else {
+							$query->where_group(function ($q) use ($crit) {
+								$q->where($crit['origData'], null, "!=");
+								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
+									$q->where($crit['origData'], "", "!=");
+								}
+							}, 'OR');
+
+						}
+						break;
+					default:
+						break;
+				}
+			}
+		}
+		return $query;
+	}
+
 
 	/**
 	 * Add DataTables' 'where' condition to a server-side processing query. This
@@ -1700,11 +1898,23 @@ class Editor extends Ext {
 					$query->where( function ($q) use ($field, $http) {
 
 						for($j=0 ; $j<count($http['searchPanes'][$field->name()]) ; $j++){
-							$q->or_where( $field->dbField(), $http['searchPanes'][$field->name()][$j], '=' );
+							$q->or_where(
+								$field->dbField(),
+								isset($http['searchPanes_null'][$field->name()][$j]) 
+									? null
+									: $http['searchPanes'][$field->name()][$j],
+								'='
+							);
 						}
 					});
 				}
 			}
+		}
+
+		if(isset($http['searchBuilder']) && $http['searchBuilder'] !== 'false') {
+			$query->where_group(function($q) use ($http) {
+				$this->_constructSearchBuilderConditions($q, $http['searchBuilder']);
+			});
 		}
 
 		// if ( $http['search']['value'] ) {
@@ -2043,7 +2253,19 @@ class Editor extends Ext {
 			$pkey = $this->_pkey;
 		}
 
-		$tableMatch = $this->_alias($table, 'alias');
+		$tableAlias = $this->_alias($table, 'alias');
+		$tableOrig = $this->_alias($table, 'orig');
+
+		// If using an alias we need to replace the alias'ed table name in our pkey
+		// with the real table name
+		for ($i=0 ; $i<count($pkey) ; $i++) {
+			$a = explode('.', $pkey[$i]);
+
+			if (count($a) > 1 && $a[0] === $tableAlias) {
+				$a[0] = $tableOrig;
+				$pkey[$i] = implode('.', $a);
+			}
+		}
 
 		// Check there is a field which has a set option for this table
 		$count = 0;
@@ -2058,7 +2280,7 @@ class Editor extends Ext {
 			else if ( $fieldDots === 1 ) {
 				if (
 					$field->set() !== Field::SET_NONE &&
-					$this->_part( $fieldName, 'table' ) === $tableMatch
+					$this->_part( $fieldName, 'table' ) === $tableAlias
 				) {
 					$count++;
 				}
@@ -2078,7 +2300,7 @@ class Editor extends Ext {
 		if ( $count > 0 ) {
 			$q = $this->_db
 				->query( 'delete' )
-				->table( $table );
+				->table( $tableOrig );
 
 			for ( $i=0, $ien=count($ids) ; $i<$ien ; $i++ ) {
 				$cond = $this->pkeyToArray( $ids[$i], true, $pkey );

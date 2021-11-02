@@ -666,7 +666,7 @@ class Field extends DataTables\Ext {
 		else {
 			// Sanity check that we aren't operating on a function
 			if ( strpos( $this->dbField(), '(' ) !== false ) {
-				throw new \Exception('Cannot set the value for an SQL function field. These fields are read only.');
+				throw new \Exception('Cannot set the value for an SQL function field. These fields are read only: ' . $this->name());
 			}
 
 			// Setting data, so using from the payload (POST usually) and thus
