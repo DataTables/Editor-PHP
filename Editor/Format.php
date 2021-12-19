@@ -183,7 +183,7 @@ class Format {
 
 	/**
 	 * Formatter that can be used to specify what value should be used if an
-	 * empty value is submitted by the client-side (e.g. null, 0, 'Not set',
+	 * empty value is submitted by the client-side (e.g. null, 0, '', '0', [], false,
 	 * etc)
 	 *   @param string $val Value to convert to from a string to an array
 	 *   @param string[] $data Data for the whole row / submitted data
@@ -192,7 +192,7 @@ class Format {
 	 */
 	public static function ifEmpty ( $ret ) {
 		return function ( $val, $data ) use ( $ret ) {
-			return $val === '' ?
+			return empty($val) ?
 				$ret :
 				$val;
 		};
