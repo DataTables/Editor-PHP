@@ -6,14 +6,14 @@
  * 
  * Changes:
  * 
- *  * Add `DataTables/Vendor` namespace to this and htmLawed - this is to ensure
+ *  * Add `DataTables/HtmLawed` namespace to this and htmLawed - this is to ensure
  *    that if htmLawed is included by any other aspect of the site it will not
  *    result in a conflict.
  *  * Use the OOP version of htmLawed (required a single updated to call it) to
  *    make the namespacing relatively easy.
  *  * Change the name of the Vanilla class so it don't conflict with the
  *    htmLawed OOP class
- *  * Update all `htmLawed::` references to `\DataTables\Vendor\htmLawed::` in
+ *  * Update all `htmLawed::` references to `\DataTables\HtmLawed\HtmLawed::` in
  *    the htmLawed file (to allow callbacks to operate correctly)
  *  * Updated Vanilla wrapper to operate on PHP 5.3
  * 
@@ -29,7 +29,7 @@
  *   License: LGPL-3.0
  */
 
-namespace DataTables\Vendor;
+namespace DataTables\HtmLawed;
 
 /**
  * A class wrapper for the htmLawed library.
@@ -79,7 +79,7 @@ class Htmlaw {
             $spec = static::$defaultSpec;
         }
 
-        return \DataTables\Vendor\Htmlawed::hl($html, $config, $spec);
+        return Htmlawed::hl($html, $config, $spec);
     }
 
 

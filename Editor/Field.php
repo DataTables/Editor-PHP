@@ -18,6 +18,7 @@ use
 	DataTables\Editor,
 	DataTables\Editor\Options,
 	DataTables\Editor\Join;
+use DataTables\HtmLawed\Htmlaw;
 
 
 /**
@@ -788,7 +789,7 @@ class Field extends DataTables\Ext {
 			foreach ( $val as $individual ) {
 				$res[] = $xss ?
 					$xss( $individual ) :
-					DataTables\Vendor\Htmlaw::filter( $individual );
+					Htmlaw::filter( $individual );
 			}
 
 			return $res;
@@ -796,7 +797,7 @@ class Field extends DataTables\Ext {
 
 		return $xss ?
 			$xss( $val ) :
-			DataTables\Vendor\Htmlaw::filter( $val );
+			Htmlaw::filter( $val );
 	}
 
 
