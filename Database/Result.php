@@ -11,8 +11,6 @@
  */
 
 namespace DataTables\Database;
-if (!defined('DATATABLES')) exit();
-
 
 //
 // This is a stub class that a driver must extend and complete

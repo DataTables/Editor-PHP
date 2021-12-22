@@ -11,11 +11,9 @@
  */
 
 namespace DataTables\Database\Driver;
-if (!defined('DATATABLES')) exit();
 
 use PDO;
 use DataTables\Database\Result;
-
 
 /**
  * Firebird driver for DataTables Database Result class

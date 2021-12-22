@@ -11,7 +11,6 @@
  */
 
 namespace DataTables\Editor;
-if (!defined('DATATABLES')) exit();
 
 use DataTables;
 

@@ -11,10 +11,8 @@
  */
 
 namespace DataTables\Editor;
-if (!defined('DATATABLES')) exit();
 
 use DataTables;
-
 
 /**
  * Upload class for Editor. This class provides the ability to easily specify

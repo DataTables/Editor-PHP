@@ -11,13 +11,11 @@
  */
 
 namespace DataTables\Database;
-if (!defined('DATATABLES')) exit();
 
 use DataTables;
 use DataTables\Database;
 use DataTables\Database\Query;
 use DataTables\Database\Result;
-
 
 //
 // This is a stub class that a driver must extend and complete

@@ -11,13 +11,11 @@
  */
 
 namespace DataTables\Editor;
-if (!defined('DATATABLES')) exit();
 
 use DataTables;
 use DataTables\Editor;
 use DataTables\Editor\Options;
 use DataTables\HtmLawed\Htmlaw;
-
 
 /**
  * Field definitions for the DataTables Editor.
