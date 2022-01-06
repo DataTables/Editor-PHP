@@ -235,7 +235,21 @@ class SearchPaneOptions extends DataTables\Ext {
 		if ( count($this->_leftJoin) ) {
 			for ( $i=0, $ien=count($this->_leftJoin) ; $i<$ien ; $i++ ) {
 				$join = $this->_leftJoin[$i];
-				$query->join( $join['table'], $join['field1'].' '.$join['operator'].' '.$join['field2'], 'LEFT' );
+				if ($join['field2'] === null && $join['operator'] === null) {
+					$query->join(
+						$join['table'],
+						$join['field1'],
+						'LEFT',
+						false
+					);
+				}
+				else {
+					$query->join(
+						$join['table'],
+						$join['field1'].' '.$join['operator'].' '.$join['field2'],
+						'LEFT'
+					);
+				}
 			}
 		}
 		return $this;
@@ -334,8 +348,32 @@ class SearchPaneOptions extends DataTables\Ext {
 		// print_r($leftJoin);
 		if (count($leftJoin) > 0){
 			foreach($leftJoin as $lj) {
-				$query->join( $lj['table'], $lj['field1'].' '.$lj['operator'].' '.$lj['field2'], 'LEFT' );
-				$queryLast->join( $lj['table'], $lj['field1'].' '.$lj['operator'].' '.$lj['field2'], 'LEFT' );
+				if ($lj['field2'] === null && $lj['operator'] === null) {
+					$query->join(
+						$lj['table'],
+						$lj['field1'],
+						'LEFT',
+						false
+					);
+					$queryLast->join(
+						$lj['table'],
+						$lj['field1'],
+						'LEFT',
+						false
+					);
+				}
+				else {
+					$query->join(
+						$lj['table'],
+						$lj['field1'].' '.$lj['operator'].' '.$lj['field2'],
+						'LEFT'
+					);
+					$queryLast->join(
+						$lj['table'],
+						$lj['field1'].' '.$lj['operator'].' '.$lj['field2'],
+						'LEFT'
+					);
+				}
 			}
 		}
 
@@ -399,7 +437,21 @@ class SearchPaneOptions extends DataTables\Ext {
 		// If a join is required then we need to add the following to the query
 		if (count($leftJoin) > 0){
 			foreach($leftJoin as $lj) {
-				$q->join( $lj['table'], $lj['field1'].' '.$lj['operator'].' '.$lj['field2'], 'LEFT' );
+				if ($lj['field2'] === null && $lj['operator'] === null) {
+					$q->join(
+						$lj['table'],
+						$lj['field1'],
+						'LEFT',
+						false
+					);
+				}
+				else {
+					$q->join(
+						$lj['table'],
+						$lj['field1'].' '.$lj['operator'].' '.$lj['field2'],
+						'LEFT'
+					);
+				}
 			}
 		}
 
