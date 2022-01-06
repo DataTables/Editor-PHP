@@ -312,8 +312,7 @@ class Query {
 	/**
 	 * Get fields.
 	 *  @param string|string[] $get,... Fields to get - can be specified as
-	 *    individual fields, an array of fields, a string of comma separated
-	 *    fields or any combination of those.
+	 *    individual fields or an array of fields.
 	 *  @return self
 	 */
 	public function get ( $get )
@@ -330,6 +329,15 @@ class Query {
 			if ( is_array( $args[$i] ) ) {
 				for ( $j=0 ; $j<count($args[$i]) ; $j++ ) {
 					$this->get( $args[$i][$j] );
+				}
+			}
+			else if ( strpos($args[$i], ',') !== false && strpos($args[$i], '(') === false) {
+				// Comma delimited set of fields - legacy. Recommended that fields be split into
+				// an array on input
+				$a = explode(',', $args[$i]);
+
+				for ( $j=0 ; $j<count($a) ; $j++ ) {
+					$this->get( $a[$j] );
 				}
 			}
 			else {
