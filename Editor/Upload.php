@@ -403,37 +403,52 @@ class Upload extends DataTables\Ext {
 			}
 		}
 
-		// Validation - custom callback
-		for ( $i=0, $ien=count($this->_validators) ; $i<$ien ; $i++ ) {
-			$res = $this->_validators[$i]( $upload );
-
-			if ( is_string( $res ) ) {
-				$this->_error = $res;
+		$tempFile = tmpfile();
+		try {
+			$tempFileName = stream_get_meta_data($tempFile)['uri'];
+			$moveRes = move_uploaded_file($upload['tmp_name'], $tempFileName);
+			if ($tempFile === false || $moveRes === false || strlen($tempFileName) === 0) {
+				$this->_error = "An error occurred while moving the uploaded file.";
 				return false;
 			}
-		}
+			$upload['tmp_name'] = $tempFileName;
 
-		// Database
-		if ( $this->_dbTable ) {
-			foreach ( $this->_dbFields as $column => $prop ) {
-				// We can't know what the path is, if it has moved into place
-				// by an external function - throw an error if this does happen
-				if ( ! is_string( $this->_action ) &&
-					 ($prop === self::DB_SYSTEM_PATH || $prop === self::DB_WEB_PATH )
-				) {
-					$this->_error = "Cannot set path information in database ".
-						"if a custom method is used to save the file.";
+			// Validation - custom callback
+			for ( $i=0, $ien=count($this->_validators) ; $i<$ien ; $i++ ) {
+				$res = $this->_validators[$i]( $upload );
 
+				if ( is_string( $res ) ) {
+					$this->_error = $res;
 					return false;
 				}
 			}
 
-			// Commit to the database
-			$id = $this->_dbExec( $editor->db() );
-		}
+			// Database
+			if ( $this->_dbTable ) {
+				foreach ( $this->_dbFields as $column => $prop ) {
+					// We can't know what the path is, if it has moved into place
+					// by an external function - throw an error if this does happen
+					if ( ! is_string( $this->_action ) &&
+						 ($prop === self::DB_SYSTEM_PATH || $prop === self::DB_WEB_PATH )
+					) {
+						$this->_error = "Cannot set path information in database ".
+							"if a custom method is used to save the file.";
 
-		// Perform file system actions
-		return $this->_actionExec( $id );
+						return false;
+					}
+				}
+
+				// Commit to the database
+				$id = $this->_dbExec( $upload, $editor->db() );
+			}
+
+			// Perform file system actions
+			return $this->_actionExec( $upload, $id );
+		} finally {
+			if ($tempFile !== false) {
+				@fclose($tempFile);
+			}
+		}
 	}
 
 
@@ -469,13 +484,12 @@ class Upload extends DataTables\Ext {
 	/**
 	 * Execute the configured action for the upload
 	 *
-	 * @param  int $id Primary key value
-	 * @return int File identifier - typically the primary key
+	 * @param  array $upload $_FILES['upload']
+	 * @param  int   $id     Primary key value
+	 * @return int   File    identifier - typically the primary key
 	 */
-	private function _actionExec ( $id )
+	private function _actionExec ( $upload, $id )
 	{
-		$upload = $_FILES['upload'];
-
 		if ( ! is_string( $this->_action ) ) {
 			// Custom function
 			$action = $this->_action;
@@ -485,7 +499,7 @@ class Upload extends DataTables\Ext {
 		// Default action - move the file to the location specified by the
 		// action string
 		$to  = $this->_path( $upload['name'], $id );
-		$res = move_uploaded_file( $upload['tmp_name'], $to );
+		$res = rename( $upload['tmp_name'], $to );
 
 		if ( $res === false ) {
 			$this->_error = "An error occurred while moving the uploaded file.";
@@ -576,12 +590,12 @@ class Upload extends DataTables\Ext {
 	/**
 	 * Add a record to the database for a newly uploaded file
 	 *
-	 * @param  \DataTables\Database $db Database instance
+	 * @param  array                $upload $_FILES['upload']
+	 * @param  \DataTables\Database $db     Database instance
 	 * @return int Primary key value for the newly uploaded file
 	 */
-	private function _dbExec ( $db )
+	private function _dbExec ( $upload, $db )
 	{
-		$upload = $_FILES['upload'];
 		$pathFields = array();
 
 		// Insert the details requested, for the columns requested
