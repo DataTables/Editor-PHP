@@ -63,10 +63,14 @@ class Format {
 	 */
 	public static function dateSqlToFormat( $format ) {
 		return function ( $val, $data ) use ( $format ) {
+			if ( $val === null || $val === '' ) {
+				return null;
+			}
+
 			$date = new \DateTime( $val );
 
 			// Allow empty strings or invalid dates
-			if ( $val && $date ) {
+			if ( $date ) {
 				return date_format( $date, $format );
 			}
 			return null;
@@ -89,6 +93,10 @@ class Format {
 	 */
 	public static function dateFormatToSql( $format ) {
 		return function ( $val, $data ) use ( $format ) {
+			if ( $val === null || $val === '' ) {
+				return null;
+			}
+
 			// Note that this assumes the date is in the correct format (should be
 			// checked by validation before being used here!)
 			if ( substr($format, 0, 1) !== '!' ) {
@@ -98,7 +106,7 @@ class Format {
 
 			// Invalid dates or empty string are replaced with null. Use the
 			// validation to ensure the date given is valid if you don't want this!
-			if ( $val && $date ) {
+			if ( $date ) {
 				return date_format( $date, 'Y-m-d' );
 			}
 			return null;
@@ -121,6 +129,10 @@ class Format {
 	 */
 	public static function datetime( $from, $to ) {
 		return function ( $val, $data ) use ( $from, $to ) {
+			if ( $val === null || $val === '' ) {
+				return null;
+			}
+
 			if ( substr($from, 0, 1) !== '!' ) {
 				$from = '!'.$from;
 			}
