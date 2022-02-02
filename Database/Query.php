@@ -36,7 +36,7 @@ use
  * additional methods, but this is discouraged to ensure that the API is the
  * same for all database types.
  */
-class Query {
+abstract class Query {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
 	 */
@@ -179,10 +179,7 @@ class Query {
 	 *  @param string $db   Database name
 	 *  @return Query
 	 */
-	public static function connect ( $user, $pass='', $host='', $port='', $db='', $dsn='' )
-	{
-		return false;
-	}
+	abstract public static function connect ( $user, $pass='', $host='', $port='', $db='', $dsn='' );
 
 
 	/**
@@ -979,8 +976,7 @@ class Query {
 	 *  @return Result
 	 *  @internal
 	 */
-	protected function _exec()
-	{}
+	abstract protected function _exec();
 
 	/**
 	 * Create an INSERT statement
@@ -1008,8 +1004,7 @@ class Query {
 	 *  @return void
 	 *  @internal
 	 */
-	protected function _prepare( $sql )
-	{}
+	abstract protected function _prepare( $sql );
 
 	/**
 	 * Protect field names
