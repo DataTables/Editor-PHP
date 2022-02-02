@@ -10,7 +10,7 @@ A PHP Labware internal utility; www.bioinformatics.org/phplabware/internal_utili
 See htmLawed_README.txt/htm
 */
 
-namespace DataTables\Vendor;
+namespace DataTables\HtmLawed;
 
 class Htmlawed{
 // begin class
@@ -63,7 +63,7 @@ if(!isset($C['base_url']) or !preg_match('`^[a-zA-Z\d.+\-]+://[^/]+/(.+?/)?$`', 
 }
 // config rest
 $C['and_mark'] = empty($C['and_mark']) ? 0 : 1;
-$C['anti_link_spam'] = (isset($C['anti_link_spam']) && is_array($C['anti_link_spam']) && count($C['anti_link_spam']) == 2 && (empty($C['anti_link_spam'][0]) or \DataTables\Vendor\htmLawed::hl_regex($C['anti_link_spam'][0])) && (empty($C['anti_link_spam'][1]) or \DataTables\Vendor\htmLawed::hl_regex($C['anti_link_spam'][1]))) ? $C['anti_link_spam'] : 0;
+$C['anti_link_spam'] = (isset($C['anti_link_spam']) && is_array($C['anti_link_spam']) && count($C['anti_link_spam']) == 2 && (empty($C['anti_link_spam'][0]) or \DataTables\HtmLawed\HtmLawed::hl_regex($C['anti_link_spam'][0])) && (empty($C['anti_link_spam'][1]) or \DataTables\HtmLawed\HtmLawed::hl_regex($C['anti_link_spam'][1]))) ? $C['anti_link_spam'] : 0;
 $C['anti_mail_spam'] = isset($C['anti_mail_spam']) ? $C['anti_mail_spam'] : 0;
 $C['balance'] = isset($C['balance']) ? (bool)$C['balance'] : 1;
 $C['cdata'] = isset($C['cdata']) ? $C['cdata'] : (empty($C['safe']) ? 3 : 0);
@@ -88,7 +88,7 @@ $C['xml:lang'] = isset($C['xml:lang']) ? $C['xml:lang'] : 0;
 
 if(isset($GLOBALS['C'])){$reC = $GLOBALS['C'];}
 $GLOBALS['C'] = $C;
-$S = is_array($S) ? $S : \DataTables\Vendor\htmLawed::hl_spec($S);
+$S = is_array($S) ? $S : \DataTables\HtmLawed\HtmLawed::hl_spec($S);
 if(isset($GLOBALS['S'])){$reS = $GLOBALS['S'];}
 $GLOBALS['S'] = $S;
 
@@ -98,18 +98,18 @@ if($C['clean_ms_char']){
  $x = $x + ($C['clean_ms_char'] == 1 ? array("\x82"=>'&#8218;', "\x84"=>'&#8222;', "\x91"=>'&#8216;', "\x92"=>'&#8217;', "\x93"=>'&#8220;', "\x94"=>'&#8221;') : array("\x82"=>'\'', "\x84"=>'"', "\x91"=>'\'', "\x92"=>'\'', "\x93"=>'"', "\x94"=>'"'));
  $t = strtr($t, $x);
 }
-if($C['cdata'] or $C['comment']){$t = preg_replace_callback('`<!(?:(?:--.*?--)|(?:\[CDATA\[.*?\]\]))>`sm', '\DataTables\Vendor\htmLawed::hl_cmtcd', $t);}
-$t = preg_replace_callback('`&amp;([A-Za-z][A-Za-z0-9]{1,30}|#(?:[0-9]{1,8}|[Xx][0-9A-Fa-f]{1,7}));`', '\DataTables\Vendor\htmLawed::hl_ent', str_replace('&', '&amp;', $t));
+if($C['cdata'] or $C['comment']){$t = preg_replace_callback('`<!(?:(?:--.*?--)|(?:\[CDATA\[.*?\]\]))>`sm', '\DataTables\HtmLawed\HtmLawed::hl_cmtcd', $t);}
+$t = preg_replace_callback('`&amp;([A-Za-z][A-Za-z0-9]{1,30}|#(?:[0-9]{1,8}|[Xx][0-9A-Fa-f]{1,7}));`', '\DataTables\HtmLawed\HtmLawed::hl_ent', str_replace('&', '&amp;', $t));
 if($C['unique_ids'] && !isset($GLOBALS['hl_Ids'])){$GLOBALS['hl_Ids'] = array();}
 if($C['hook']){$t = $C['hook']($t, $C, $S);}
 if($C['show_setting'] && preg_match('`^[a-z][a-z0-9_]*$`i', $C['show_setting'])){
  $GLOBALS[$C['show_setting']] = array('config'=>$C, 'spec'=>$S, 'time'=>microtime());
 }
 // main
-$t = preg_replace_callback('`<(?:(?:\s|$)|(?:[^>]*(?:>|$)))|>`m', '\DataTables\Vendor\htmLawed::hl_tag', $t);
-$t = $C['balance'] ? \DataTables\Vendor\htmLawed::hl_bal($t, $C['keep_bad'], $C['parent']) : $t;
+$t = preg_replace_callback('`<(?:(?:\s|$)|(?:[^>]*(?:>|$)))|>`m', '\DataTables\HtmLawed\HtmLawed::hl_tag', $t);
+$t = $C['balance'] ? \DataTables\HtmLawed\HtmLawed::hl_bal($t, $C['keep_bad'], $C['parent']) : $t;
 $t = (($C['cdata'] or $C['comment']) && strpos($t, "\x01") !== false) ? str_replace(array("\x01", "\x02", "\x03", "\x04", "\x05"), array('', '', '&', '<', '>'), $t) : $t;
-$t = $C['tidy'] ? \DataTables\Vendor\htmLawed::hl_tidy($t, $C['tidy'], $C['parent']) : $t;
+$t = $C['tidy'] ? \DataTables\HtmLawed\HtmLawed::hl_tidy($t, $C['tidy'], $C['parent']) : $t;
 unset($C, $e);
 if(isset($reC)){$GLOBALS['C'] = $reC;}
 if(isset($reS)){$GLOBALS['S'] = $reS;}
@@ -406,8 +406,8 @@ for($i = count(($t = explode(';', $t))); --$i>=0;){
    if(empty($m) or ($p = strpos($m, '=')) == 0 or $p < 5){$y[$x] = 1; continue;}
    $y[$x][strtolower(substr($m, 0, $p))] = str_replace(array("\x01", "\x02", "\x03", "\x04", "\x05", "\x06", "\x07", "\x08"), array(";", "|", "~", " ", ",", "/", "(", ")"), substr($m, $p+1));
   }
-  if(isset($y[$x]['match']) && !\DataTables\Vendor\htmLawed::hl_regex($y[$x]['match'])){unset($y[$x]['match']);}
-  if(isset($y[$x]['nomatch']) && !\DataTables\Vendor\htmLawed::hl_regex($y[$x]['nomatch'])){unset($y[$x]['nomatch']);}
+  if(isset($y[$x]['match']) && !\DataTables\HtmLawed\HtmLawed::hl_regex($y[$x]['match'])){unset($y[$x]['match']);}
+  if(isset($y[$x]['nomatch']) && !\DataTables\HtmLawed\HtmLawed::hl_regex($y[$x]['nomatch'])){unset($y[$x]['nomatch']);}
  }
  if(!count($y) && !count($n)){continue;}
  foreach(explode(',', substr($w, 0, $e)) as $v){
@@ -437,7 +437,7 @@ $a = str_replace(array("\n", "\r", "\t"), ' ', trim($m[3]));
 // tag transform
 static $eD = array('applet'=>1, 'center'=>1, 'dir'=>1, 'embed'=>1, 'font'=>1, 'isindex'=>1, 'menu'=>1, 's'=>1, 'strike'=>1, 'u'=>1); // Deprecated
 if($C['make_tag_strict'] && isset($eD[$e])){
- $trt = \DataTables\Vendor\htmLawed::hl_tag2($e, $a, $C['make_tag_strict']);
+ $trt = \DataTables\HtmLawed\HtmLawed::hl_tag2($e, $a, $C['make_tag_strict']);
  if(!$e){return (($C['keep_bad']%2) ? str_replace(array('<', '>'), array('&lt;', '&gt;'), $t) : '');}
 }
 // close tag
@@ -514,11 +514,11 @@ foreach($aA as $k=>$v){
     static $sC = array('&#x20;'=>' ', '&#32;'=>' ', '&#x45;'=>'e', '&#69;'=>'e', '&#x65;'=>'e', '&#101;'=>'e', '&#x58;'=>'x', '&#88;'=>'x', '&#x78;'=>'x', '&#120;'=>'x', '&#x50;'=>'p', '&#80;'=>'p', '&#x70;'=>'p', '&#112;'=>'p', '&#x53;'=>'s', '&#83;'=>'s', '&#x73;'=>'s', '&#115;'=>'s', '&#x49;'=>'i', '&#73;'=>'i', '&#x69;'=>'i', '&#105;'=>'i', '&#x4f;'=>'o', '&#79;'=>'o', '&#x6f;'=>'o', '&#111;'=>'o', '&#x4e;'=>'n', '&#78;'=>'n', '&#x6e;'=>'n', '&#110;'=>'n', '&#x55;'=>'u', '&#85;'=>'u', '&#x75;'=>'u', '&#117;'=>'u', '&#x52;'=>'r', '&#82;'=>'r', '&#x72;'=>'r', '&#114;'=>'r', '&#x4c;'=>'l', '&#76;'=>'l', '&#x6c;'=>'l', '&#108;'=>'l', '&#x28;'=>'(', '&#40;'=>'(', '&#x29;'=>')', '&#41;'=>')', '&#x20;'=>':', '&#32;'=>':', '&#x22;'=>'"', '&#34;'=>'"', '&#x27;'=>"'", '&#39;'=>"'", '&#x2f;'=>'/', '&#47;'=>'/', '&#x2a;'=>'*', '&#42;'=>'*', '&#x5c;'=>'\\', '&#92;'=>'\\');
     $v = strtr($v, $sC);
    }
-   $v = preg_replace_callback('`(url(?:\()(?: )*(?:\'|"|&(?:quot|apos);)?)(.+?)((?:\'|"|&(?:quot|apos);)?(?: )*(?:\)))`iS', '\DataTables\Vendor\htmLawed::hl_prot', $v);
+   $v = preg_replace_callback('`(url(?:\()(?: )*(?:\'|"|&(?:quot|apos);)?)(.+?)((?:\'|"|&(?:quot|apos);)?(?: )*(?:\)))`iS', '\DataTables\HtmLawed\HtmLawed::hl_prot', $v);
    $v = !$C['css_expression'] ? preg_replace('`expression`i', ' ', preg_replace('`\\\\\S|(/|(%2f))(\*|(%2a))`i', ' ', $v)) : $v;
   }elseif(isset($aNP[$k]) or strpos($k, 'src') !== false or $k[0] == 'o'){
    $v = str_replace("­", ' ', (strpos($v, '&') !== false ? str_replace(array('&#xad;', '&#173;', '&shy;'), ' ', $v) : $v)); # double-quoted char is soft-hyphen; appears here as "­" or hyphen or something else depending on viewing software
-   $v = \DataTables\Vendor\htmLawed::hl_prot($v, $k);
+   $v = \DataTables\HtmLawed\HtmLawed::hl_prot($v, $k);
    if($k == 'href'){ // X-spam
     if($C['anti_mail_spam'] && strpos($v, 'mailto:') === 0){
      $v = str_replace('@', htmlspecialchars($C['anti_mail_spam']), $v);
@@ -536,7 +536,7 @@ foreach($aA as $k=>$v){
     }
    }
   }
-  if(isset($rl[$k]) && is_array($rl[$k]) && ($v = \DataTables\Vendor\htmLawed::hl_attrval($k, $v, $rl[$k])) === 0){continue;}
+  if(isset($rl[$k]) && is_array($rl[$k]) && ($v = \DataTables\HtmLawed\HtmLawed::hl_attrval($k, $v, $rl[$k])) === 0){continue;}
   $a[$k] = str_replace('"', '&quot;', $v);
  }
 }
@@ -722,9 +722,9 @@ foreach($h as $k=>$v){
 $C['cdata'] = $C['comment'] = $C['make_tag_strict'] = $C['no_deprecated_attr'] = $C['unique_ids'] = 0;
 $C['keep_bad'] = 1;
 $C['elements'] = count($h) ? strtolower(implode(',', array_keys($h))) : '-*';
-$C['hook'] = '\DataTables\Vendor\htmLawed::kses_hook';
+$C['hook'] = '\DataTables\HtmLawed\HtmLawed::kses_hook';
 $C['schemes'] = '*:'. implode(',', $p);
-return \DataTables\Vendor\htmLawed::hl($t, $C, $h);
+return \DataTables\HtmLawed\HtmLawed::hl($t, $C, $h);
 // eof
 }
 
