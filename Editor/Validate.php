@@ -917,7 +917,7 @@ class Validate {
 
 			$date = \DateTime::createFromFormat( $formatCreate, $val );
 
-			return $date && $date->format( $format ) == $val ?
+			return $date && $date->format( $format ) === $val ?
 				true :
 				$opts->message();
 		};
