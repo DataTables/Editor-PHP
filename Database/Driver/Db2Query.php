@@ -133,8 +133,6 @@ class Db2Query extends Query {
 
         if (! $res) {
 			throw new \Exception('DB2 SQL error = '.db2_stmt_error($this->_stmt));
-
-            return false;
         }
 
         $resource = $this->database()->resource();

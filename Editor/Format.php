@@ -69,11 +69,7 @@ class Format {
 
 			$date = new \DateTime( $val );
 
-			// Allow empty strings or invalid dates
-			if ( $date ) {
-				return date_format( $date, $format );
-			}
-			return null;
+			return date_format( $date, $format );
 		};
 	}
 

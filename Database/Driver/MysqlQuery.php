@@ -107,9 +107,7 @@ class MysqlQuery extends Query {
 			$this->_stmt->execute();
 		}
 		catch (\PDOException $e) {
-			throw new \Exception( "An SQL error occurred: ".$e->getMessage() );
-			error_log( "An SQL error occurred: ".$e->getMessage() );
-			return false;
+			throw new \Exception('An SQL error occurred: ' . $e->getMessage(), 0, $e);
 		}
 
 		// $this->database()->debugInfo( 'Execution complete - duration: '. (hrtime(true) - $start) . '  Time: '. microtime(true), [] );
