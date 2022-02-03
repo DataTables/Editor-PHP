@@ -15,7 +15,7 @@
 	],
     "require-dev": {
         "phpstan/extension-installer": "^1.1",
-        "phpstan/phpstan": "^1.2",
+        "phpstan/phpstan": "1.4.5",
         "phpstan/phpstan-deprecation-rules": "^1.0"
     },
     "autoload": {
@@ -26,5 +26,11 @@
             "composer.php"
         ]
     },
-    "license": "MIT"
+    "license": "MIT",
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        },
+        "sort-packages": true
+    }
 }
