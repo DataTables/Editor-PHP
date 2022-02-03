@@ -171,11 +171,6 @@ parameters:
 			path: Database/Query.php
 
 		-
-			message: "#^Method DataTables\\\\Database\\\\Query\\:\\:_exec\\(\\) should return DataTables\\\\Database\\\\Result but return statement is missing\\.$#"
-			count: 1
-			path: Database/Query.php
-
-		-
 			message: "#^Method DataTables\\\\Database\\\\Query\\:\\:_where_group\\(\\) should return string but return statement is missing\\.$#"
 			count: 1
 			path: Database/Query.php
@@ -355,7 +350,7 @@ parameters:
 
 		-
 			message: "#^Cannot call method join\\(\\) on string\\.$#"
-			count: 1
+			count: 2
 			path: Editor/SearchPaneOptions.php
 
 		-
