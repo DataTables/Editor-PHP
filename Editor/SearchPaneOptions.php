@@ -332,9 +332,16 @@ class SearchPaneOptions extends DataTables\Ext {
 			->query('select')
 			->table( $table );
 
+		// The last pane to have a selection runs a slightly different query
+		$queryLast = $db
+			->query('select')
+			->table( $table );
+
 		if ( $field->apply('get') && $field->getValue() === null ) {
 			$query->get( $value." as value", "COUNT(*) as count");
 			$query->group_by( $value);
+			$queryLast->get( $value." as value", "COUNT(*) as count");
+			$queryLast->group_by( $value);
 		}
 
 		// If a join is required then we need to add the following to the query
@@ -348,9 +355,20 @@ class SearchPaneOptions extends DataTables\Ext {
 						'LEFT',
 						false
 					);
+					$queryLast->join(
+						$lj['table'],
+						$lj['field1'],
+						'LEFT',
+						false
+					);
 				}
 				else {
 					$query->join(
+						$lj['table'],
+						$lj['field1'].' '.$lj['operator'].' '.$lj['field2'],
+						'LEFT'
+					);
+					$queryLast->join(
 						$lj['table'],
 						$lj['field1'].' '.$lj['operator'].' '.$lj['field2'],
 						'LEFT'
@@ -379,10 +397,32 @@ class SearchPaneOptions extends DataTables\Ext {
 				}
 			}
 		}
-		
-		// print_r($query);
 
+		// If there is a last value set then a slightly different set of results is required for cascade
+		// That panes results are based off of the results when only considering the selections of all of the others
+		if( isset($http['searchPanes']) && isset($http['searchPanesLast'])) {
+			foreach ($fields as $fieldOpt) {
+				if (isset($http['searchPanes'][$fieldOpt->name()]) && $fieldOpt->name() !== $http['searchPanesLast']) {
+					$queryLast->where( function ($q) use ($fieldOpt, $http) {
+						for($j=0, $jen=count($http['searchPanes'][$fieldOpt->name()]); $j < $jen ; $j++){
+							$q->or_where(
+								$fieldOpt->dbField(),
+								isset($http['searchPanes_null'][$fieldOpt->name()][$j]) 
+									? null
+									: $http['searchPanes'][$fieldOpt->name()][$j],
+								'='
+							);
+						}
+					});
+				}
+			}
+		}
+		
 		$res = $query
+			->exec()
+			->fetchAll();
+
+		$resLast = $queryLast
 			->exec()
 			->fetchAll();
 
@@ -446,15 +486,31 @@ class SearchPaneOptions extends DataTables\Ext {
 
 		for ( $i=0, $ien=count($rows) ; $i<$ien ; $i++ ) {
 			$set = false;
-			for( $j=0 ; $j<count($res) ; $j ++) {
-				if($res[$j]['value'] == $rows[$i]['value']){
-					$out[] = array(
-						"label" => $formatter($rows[$i]['label']),
-						"total" => $rows[$i]['total'],
-						"value" => $rows[$i]['value'],
-						"count" => $res[$j]['count']
-					);
-					$set = true;
+			// Send slightly different results if this is the last pane
+			if (isset($http['searchPanesLast']) && $field->name() === $http['searchPanesLast'] ) {
+				for( $j=0 ; $j<count($resLast) ; $j ++) {
+					if($resLast[$j]['value'] == $rows[$i]['value']){
+						$out[] = array(
+							"label" => $formatter($rows[$i]['label']),
+							"total" => $rows[$i]['total'],
+							"value" => $rows[$i]['value'],
+							"count" => $resLast[$j]['count']
+						);
+						$set = true;
+					}
+				}
+			}
+			else {
+				for( $j=0 ; $j<count($res) ; $j ++) {
+					if($res[$j]['value'] == $rows[$i]['value']){
+						$out[] = array(
+							"label" => $formatter($rows[$i]['label']),
+							"total" => $rows[$i]['total'],
+							"value" => $rows[$i]['value'],
+							"count" => $res[$j]['count']
+						);
+						$set = true;
+					}
 				}
 			}
 			if(!$set) {
