@@ -403,52 +403,37 @@ class Upload extends DataTables\Ext {
 			}
 		}
 
-		$tempFile = tmpfile();
-		try {
-			$tempFileName = stream_get_meta_data($tempFile)['uri'];
-			$moveRes = move_uploaded_file($upload['tmp_name'], $tempFileName);
-			if ($tempFile === false || $moveRes === false || strlen($tempFileName) === 0) {
-				$this->_error = "An error occurred while moving the uploaded file.";
+		// Validation - custom callback
+		for ( $i=0, $ien=count($this->_validators) ; $i<$ien ; $i++ ) {
+			$res = $this->_validators[$i]( $upload );
+
+			if ( is_string( $res ) ) {
+				$this->_error = $res;
 				return false;
 			}
-			$upload['tmp_name'] = $tempFileName;
+		}
 
-			// Validation - custom callback
-			for ( $i=0, $ien=count($this->_validators) ; $i<$ien ; $i++ ) {
-				$res = $this->_validators[$i]( $upload );
+		// Database
+		if ( $this->_dbTable ) {
+			foreach ( $this->_dbFields as $column => $prop ) {
+				// We can't know what the path is, if it has moved into place
+				// by an external function - throw an error if this does happen
+				if ( ! is_string( $this->_action ) &&
+						($prop === self::DB_SYSTEM_PATH || $prop === self::DB_WEB_PATH )
+				) {
+					$this->_error = "Cannot set path information in database ".
+						"if a custom method is used to save the file.";
 
-				if ( is_string( $res ) ) {
-					$this->_error = $res;
 					return false;
 				}
 			}
 
-			// Database
-			if ( $this->_dbTable ) {
-				foreach ( $this->_dbFields as $column => $prop ) {
-					// We can't know what the path is, if it has moved into place
-					// by an external function - throw an error if this does happen
-					if ( ! is_string( $this->_action ) &&
-						 ($prop === self::DB_SYSTEM_PATH || $prop === self::DB_WEB_PATH )
-					) {
-						$this->_error = "Cannot set path information in database ".
-							"if a custom method is used to save the file.";
-
-						return false;
-					}
-				}
-
-				// Commit to the database
-				$id = $this->_dbExec( $upload, $editor->db() );
-			}
-
-			// Perform file system actions
-			return $this->_actionExec( $upload, $id );
-		} finally {
-			if ($tempFile !== false) {
-				@fclose($tempFile);
-			}
+			// Commit to the database
+			$id = $this->_dbExec( $upload, $editor->db() );
 		}
+
+		// Perform file system actions
+		return $this->_actionExec( $upload, $id );
 	}
 
 
