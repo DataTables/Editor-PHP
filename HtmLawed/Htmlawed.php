@@ -12,7 +12,7 @@ See htmLawed_README.txt/htm
 
 namespace DataTables\HtmLawed;
 
-class htmLawed{
+class Htmlawed {
 // begin class
 public static function hl($t, $C=1, $S=array()){
 $C = is_array($C) ? $C : array();
