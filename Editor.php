@@ -1709,11 +1709,11 @@ class Editor extends Ext {
 						break;
 					case '!=':
 						if($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], $val1, '!=');
+							$query->where($crit['origData'], $val1, '<>');
 							$first = false;
 						}
 						else {
-							$query->or_where($crit['origData'], $val1, '!=');
+							$query->or_where($crit['origData'], $val1, '<>');
 						}
 						break;
 					case 'contains':
@@ -1725,6 +1725,15 @@ class Editor extends Ext {
 							$query->or_where($crit['origData'], '%'.$val1.'%', 'LIKE');
 						}
 						break;
+					case '!contains':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], '%'.$val1.'%', 'NOT LIKE');
+							$first = false;
+						}
+						else {
+							$query->or_where($crit['origData'], '%'.$val1.'%', 'NOT LIKE');
+						}
+						break;
 					case 'starts':
 						if($data['logic'] === 'AND' || $first) {
 							$query->where($crit['origData'], $val1.'%', 'LIKE');
@@ -1734,6 +1743,15 @@ class Editor extends Ext {
 							$query->or_where($crit['origData'], $val1.'%', 'LIKE');
 						}
 						break;
+					case '!starts':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1.'%', 'NOT LIKE');
+							$first = false;
+						}
+						else {
+							$query->or_where($crit['origData'], $val1.'%', 'NOT LIKE');
+						}
+						break;
 					case 'ends':
 						if($data['logic'] === 'AND' || $first) {
 							$query->where($crit['origData'], '%'.$val1, 'LIKE');
@@ -1741,6 +1759,15 @@ class Editor extends Ext {
 						}
 						else {
 							$query->or_where($crit['origData'], '%'.$val1, 'LIKE');
+						}
+						break;
+					case '!ends':
+						if($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], '%'.$val1, 'NOT LIKE');
+							$first = false;
+						}
+						else {
+							$query->or_where($crit['origData'], '%'.$val1, 'NOT LIKE');
 						}
 						break;
 					case '<':
