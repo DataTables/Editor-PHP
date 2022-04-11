@@ -131,6 +131,7 @@ class Upload extends DataTables\Ext {
 	private $_extns = null;
 	private $_extnError = null;
 	private $_error = null;
+	private $_mode = 0644;
 	private $_validators = array();
 	private $_where = array();
 
@@ -254,6 +255,17 @@ class Upload extends DataTables\Ext {
 
 		$this->_dbCleanCallback = $callback;
 		$this->_dbCleanTableField = $tableField;
+
+		return $this;
+	}
+
+
+	/**
+	 * Set the permissions on the file after it has been uploaded using
+	 * chmod.
+	 */
+	public function mode( $m ) {
+		$this->_mode = $m;
 
 		return $this;
 	}
@@ -489,6 +501,10 @@ class Upload extends DataTables\Ext {
 		if ( $res === false ) {
 			$this->_error = "An error occurred while moving the uploaded file.";
 			return false;
+		}
+
+		if ($this->_mode) {
+			chmod($to, $this->_mode);
 		}
 
 		return $id !== null ?
