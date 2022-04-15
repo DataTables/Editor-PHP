@@ -327,6 +327,44 @@ class SearchPaneOptions extends DataTables\Ext {
 			}
 		}
 
+		if( isset($http['searchPanes'])) {
+			// For every selection in every column
+			foreach ($fields as $fieldOpt) {
+				if (isset($http['searchPanes'][$fieldOpt->name()])) {
+					for($i = 0; $i < count($http['searchPanes'][$fieldOpt->name()]); $i++) {
+						// Check the number of rows...
+						$q = $db
+							->query('select')
+							->table($table)
+							->get('COUNT(*) as count');
+						
+						if (count($leftJoin) > 0) {
+							foreach($leftJoin as $lj) {
+								$q->join(
+									$lj['table'],
+									$lj['field1'],
+									'LEFT',
+									false
+								);
+							}
+						}
+
+						// ... where the selected option is present...
+						$r = $q
+							->where($fieldOpt->dbField(), $http['searchPanes'][$fieldOpt->name()][$i], '=')
+							->exec()
+							->fetchAll();
+
+						// ... If there are none then don't bother with this selection
+						if($r[0]['count'] == 0) {
+							array_splice($http['searchPanes'][$fieldOpt->name()], $i, 1);
+							$i--;
+						}
+					}
+				}
+			}
+		}
+
 		// Set the query to get the current counts for viewTotal
 		$query = $db
 			->query('select')

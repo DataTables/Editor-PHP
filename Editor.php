@@ -1920,8 +1920,42 @@ class Editor extends Ext {
 		*/
 
 		if( isset($http['searchPanes']) ) {
+			// Set the database from editor
+			$db = $this->_db;
+			// For every selection in every column
 			foreach ($this->_fields as $field) {
 				if( isset($http['searchPanes'][$field->name()])){
+					for($i = 0; $i < count($http['searchPanes'][$field->name()]); $i++) {
+						// Check the number of rows...
+						$q = $db
+							->query('select')
+							->table($this->_table)
+							->get('COUNT(*) as count');
+						
+						if (count($this->_leftJoin) > 0) {
+							foreach($this->_leftJoin as $lj) {
+								$q->join(
+									$lj['table'],
+									$lj['field1'],
+									'LEFT',
+									false
+								);
+							}
+						}
+
+						// ... where the selected option is present...
+						$r = $q
+							->where($field->dbField(), $http['searchPanes'][$field->name()][$i], '=')
+							->exec()
+							->fetchAll();
+
+						// ... If there are none then don't bother with this selection
+						if($r[0]['count'] == 0) {
+							array_splice($http['searchPanes'][$field->name()], $i, 1);
+							$i--;
+						}
+					}
+
 					$query->where( function ($q) use ($field, $http) {
 
 						for($j=0 ; $j<count($http['searchPanes'][$field->name()]) ; $j++){
