@@ -1136,6 +1136,7 @@ class Editor extends Ext {
 		// Field options
 		$options = array();
 		$spOptions = array();
+		$sbOptions = array();
 		$searchPanes = array();
 
 		if ( $id === null ) {
@@ -1152,10 +1153,17 @@ class Editor extends Ext {
 				if ( $spOpts !== false ) {
 					$spOptions[ $field->name() ] = $spOpts;
 				}
+
+				$sbOpts = $field->searchBuilderOptionsExec($field, $this, $http, $this->_fields, $this->_leftJoin);
+
+				if ( $sbOpts !== false) {
+					$sbOptions[ $field->name() ] = $sbOpts;
+				}
 			}
 		}
 
 		$searchPanes[ 'options' ] = $spOptions; 
+		$searchBuilder[ 'options' ] = $sbOptions; 
 
 		// Row based "joins"
 		for ( $i=0 ; $i<count($this->_join) ; $i++ ) {
@@ -1164,7 +1172,30 @@ class Editor extends Ext {
 
 		$this->_trigger( 'postGet', $out, $id );
 
-		if (count($searchPanes['options']) > 0) {
+		if (count($searchPanes['options']) > 0 && count($searchBuilder['options']) > 0) {
+			return array_merge(
+				array(
+					'data'    => $out,
+					'options' => $options,
+					'files'   => $this->_fileData( null, null, $out ),
+					'searchBuilder' => $searchBuilder,
+					'searchPanes' => $searchPanes
+				),
+				$ssp
+			);
+		}
+		else if (count($searchBuilder['options']) > 0) {
+			return array_merge(
+				array(
+					'data'    => $out,
+					'options' => $options,
+					'files'   => $this->_fileData( null, null, $out ),
+					'searchBuilder' => $searchBuilder
+				),
+				$ssp
+			);
+		}
+		else if (count($searchPanes['options']) > 0) {
 			return array_merge(
 				array(
 					'data'    => $out,

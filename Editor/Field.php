@@ -131,12 +131,18 @@ class Field extends DataTables\Ext {
 
 	/** @var SearchPaneOptions */
 	private $_spopts = null;
+	
+	/** @var SearchBuilderOptions */
+	private $_sbopts = null;
 
 	/** @var callable */
 	private $_optsFn = null;
 
 	/** @var callable */
 	private $_spoptsFn = null;
+
+	/** @var callable */
+	private $_sboptsFn = null;
 
 	/** @var string */
 	private $_name = null;
@@ -368,6 +374,33 @@ class Field extends DataTables\Ext {
 			// Function
 			$this->_spopts = null;
 			$this->_spoptsFn = $spInput;
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Get a list of values that can be used for the options list in SearchBuilder
+	 * 
+	 * @param SearchBuilderOptions|callable $sbInput SearchBuilderOptions instance or a closure function if providing a method
+	 * @return self
+	 */
+	public function searchBuilderOptions ( $sbInput=null )
+	{
+		if ( $sbInput === null ) {
+			return $this->_sbopts;
+		}
+
+		// Overloads for backwards compatibility
+		if ( is_a( $sbInput, '\DataTables\Editor\SearchBuilderOptions' ) ) {
+			// Options class
+			$this->_sboptsFn = null;
+			$this->_sbopts = $sbInput;
+		}
+		else if ( is_callable($sbInput) && is_object($sbInput) ) {
+			// Function
+			$this->_sbopts = null;
+			$this->_sboptsFn = $sbInput;
 		}
 
 		return $this;
@@ -627,6 +660,31 @@ class Field extends DataTables\Ext {
 		}
 		else if ( $this->_spopts ) {
 			return $this->_spopts->exec( $field, $editor, $http, $fields, $leftJoin );
+		}
+
+		return false;
+	}
+
+	/**
+	 * Execute the spopts to get the list of options for SearchBuilder to return
+	 * to the client-side
+	 * 
+	 * @param DataTables\Field $field The field to retrieve the data from
+	 * @param DataTables\Editor $editor The editor instance
+	 * @param DataTables\DTRequest $http The http request sent to the server
+	 * @param DataTables\Field[] $fields All of the fields
+	 * @param any $leftJoin Info for a leftJoin if required
+	 * @return Promise<IOption[]> | boolean
+	 * @internal
+	 */
+	public function searchBuilderOptionsExec ( $field, $editor, $http, $fields, $leftJoin)
+	{
+		if ( $this->_sboptsFn ) {
+			$fn = $this->_sboptsFn;
+			return $fn($editor->db(), $editor);
+		}
+		else if ( $this->_sbopts ) {
+			return $this->_sbopts->exec( $field, $editor, $http, $fields, $leftJoin );
 		}
 
 		return false;
