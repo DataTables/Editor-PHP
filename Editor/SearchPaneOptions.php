@@ -230,11 +230,16 @@ class SearchPaneOptions extends DataTables\Ext {
 	 * @param string $query the query being built
 	 * @return self
 	 */
-	private function _perform_left_join ( $query )
+	private function _perform_left_join ( $query, $leftJoin = null )
 	{
-		if ( count($this->_leftJoin) ) {
-			for ( $i=0, $ien=count($this->_leftJoin) ; $i<$ien ; $i++ ) {
-				$join = $this->_leftJoin[$i];
+		if ($leftJoin === null) {
+			$leftJoin = $this->_leftJoin;
+		}
+
+		if ( count($leftJoin) ) {
+			for ( $i=0, $ien=count($leftJoin) ; $i<$ien ; $i++ ) {
+				$join = $leftJoin[$i];
+
 				if ($join['field2'] === null && $join['operator'] === null) {
 					$query->join(
 						$join['table'],
@@ -252,6 +257,7 @@ class SearchPaneOptions extends DataTables\Ext {
 				}
 			}
 		}
+
 		return $this;
 	}
 
@@ -337,17 +343,8 @@ class SearchPaneOptions extends DataTables\Ext {
 							->query('select')
 							->table($table)
 							->get('COUNT(*) as count');
-						
-						if (count($leftJoin) > 0) {
-							foreach($leftJoin as $lj) {
-								$q->join(
-									$lj['table'],
-									$lj['field1'],
-									'LEFT',
-									false
-								);
-							}
-						}
+
+						$this->_perform_left_join($q, $leftJoin);
 
 						// ... where the selected option is present...
 						$r = $q
@@ -383,38 +380,8 @@ class SearchPaneOptions extends DataTables\Ext {
 		}
 
 		// If a join is required then we need to add the following to the query
-		// print_r($leftJoin);
-		if (count($leftJoin) > 0){
-			foreach($leftJoin as $lj) {
-				if ($lj['field2'] === null && $lj['operator'] === null) {
-					$query->join(
-						$lj['table'],
-						$lj['field1'],
-						'LEFT',
-						false
-					);
-					$queryLast->join(
-						$lj['table'],
-						$lj['field1'],
-						'LEFT',
-						false
-					);
-				}
-				else {
-					$query->join(
-						$lj['table'],
-						$lj['field1'].' '.$lj['operator'].' '.$lj['field2'],
-						'LEFT'
-					);
-					$queryLast->join(
-						$lj['table'],
-						$lj['field1'].' '.$lj['operator'].' '.$lj['field2'],
-						'LEFT'
-					);
-				}
-			}
-		}
-
+		$this->_perform_left_join($query, $leftJoin);
+		$this->_perform_left_join($queryLast, $leftJoin);
 		
 		// Construct the where queries based upon the options selected by the user
 		// THIS IS TO GET THE SP OPTIONS, NOT THE TABLE ENTRIES
@@ -473,25 +440,7 @@ class SearchPaneOptions extends DataTables\Ext {
 			->where( $this->_where );
 
 		// If a join is required then we need to add the following to the query
-		if (count($leftJoin) > 0){
-			foreach($leftJoin as $lj) {
-				if ($lj['field2'] === null && $lj['operator'] === null) {
-					$q->join(
-						$lj['table'],
-						$lj['field1'],
-						'LEFT',
-						false
-					);
-				}
-				else {
-					$q->join(
-						$lj['table'],
-						$lj['field1'].' '.$lj['operator'].' '.$lj['field2'],
-						'LEFT'
-					);
-				}
-			}
-		}
+		$this->_perform_left_join( $q, $leftJoin );
 
 		if ( $this->_order ) {
 			// For cases where we are ordering by a field which isn't included in the list
@@ -512,8 +461,6 @@ class SearchPaneOptions extends DataTables\Ext {
 
 			$q->order( $this->_order );
 		}
-
-		// print_r($q);
 
 		$rows = $q
 			->exec()

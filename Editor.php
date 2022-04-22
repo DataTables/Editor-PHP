@@ -1961,18 +1961,9 @@ class Editor extends Ext {
 						$q = $db
 							->query('select')
 							->table($this->_table)
-							->get('COUNT(*) as count');
-						
-						if (count($this->_leftJoin) > 0) {
-							foreach($this->_leftJoin as $lj) {
-								$q->join(
-									$lj['table'],
-									$lj['field1'],
-									'LEFT',
-									false
-								);
-							}
-						}
+							->get('COUNT(*) as cnt');
+
+						$this->_perform_left_join($q);
 
 						// ... where the selected option is present...
 						$r = $q
@@ -1981,7 +1972,7 @@ class Editor extends Ext {
 							->fetchAll();
 
 						// ... If there are none then don't bother with this selection
-						if($r[0]['count'] == 0) {
+						if($r[0]['cnt'] == 0) {
 							array_splice($http['searchPanes'][$field->name()], $i, 1);
 							$i--;
 						}
