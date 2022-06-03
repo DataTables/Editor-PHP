@@ -829,7 +829,7 @@ abstract class Query {
 		$out = '';
 
 		if ( $this->_group_by) {
-			$out .= ' GROUP BY '.$this->_group_by;
+			$out .= ' GROUP BY '.$this->_protect_identifiers( $this->_group_by );
 		}
 
 		return $out;
