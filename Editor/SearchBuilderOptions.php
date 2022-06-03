@@ -313,7 +313,7 @@ class SearchBuilderOptions extends DataTables\Ext {
 		// Set up the join variable so that it will fit nicely later
 		$leftJoin = gettype($this->_leftJoin) === 'array' ?
 			$this->_leftJoin :
-			[$this->_leftJoin];
+			array($this->_leftJoin);
 
 		foreach($leftJoinIn as $lj) {
 			$found = false;
