@@ -449,13 +449,13 @@ class SearchPaneOptions extends DataTables\Ext {
 			$orderFields = explode( ',', $this->_order );
 
 			for ( $i=0, $ien=count($orderFields) ; $i<$ien ; $i++ ) {
-				$field = strtolower( $orderFields[$i] );
-				$field = str_replace( ' asc', '', $field );
-				$field = str_replace( ' desc', '', $field );
-				$field = trim( $field );
+				$orderField = strtolower( $orderFields[$i] );
+				$orderField = str_replace( ' asc', '', $orderField );
+				$orderField = str_replace( ' desc', '', $orderField );
+				$orderField = trim( $orderField );
 
-				if ( ! in_array( $field, $fields ) ) {
-					$q->get( $field );
+				if ( ! in_array( $orderField, $fields ) ) {
+					$q->get( $orderField );
 				}
 			}
 
