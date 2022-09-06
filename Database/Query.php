@@ -806,13 +806,15 @@ abstract class Query {
 	protected function _build_limit()
 	{
 		$out = '';
+		$limit = intval($this->_limit);
+		$offset = intval($this->_offset);
 		
-		if ( $this->_limit ) {
-			$out .= ' LIMIT '.$this->_limit;
+		if ( $limit ) {
+			$out .= ' LIMIT '.$limit;
 		}
 
-		if ( $this->_offset ) {
-			$out .= ' OFFSET '.$this->_offset;
+		if ( $offset ) {
+			$out .= ' OFFSET '.$offset;
 		}
 
 		return $out;
