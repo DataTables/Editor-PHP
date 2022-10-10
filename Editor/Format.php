@@ -157,6 +157,10 @@ class Format {
 	 */
 	public static function explode( $char='|' ) {
 		return function ( $val, $data ) use ( $char ) {
+			if ($val === null) {
+				$val = '';
+			}
+
 			return explode($char, $val);
 		};
 	}
