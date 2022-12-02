@@ -735,7 +735,7 @@ class Field extends DataTables\Ext {
 				$this->_readProp( $this->name(), $data );
 
 			// XSS removal / checker
-			if ( $this->_xssFormat ) {
+			if ( $this->_xssFormat && $val ) {
 				$val = $this->xssSafety( $val );
 			}
 
