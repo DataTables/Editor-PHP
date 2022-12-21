@@ -767,16 +767,16 @@ abstract class Query {
 
 				if ( count($split) > 1 ) {
 					$a[] = $this->_protect_identifiers( $split[0] ).$asAlias.
-						$this->_field_quote. $split[1] .$this->_field_quote;
+						$this->_field_quote. $this->_escape_field($field) .$this->_field_quote;
 				}
 				else {
 					$a[] = $this->_protect_identifiers( $field ).$asAlias.
-						$this->_field_quote. $field .$this->_field_quote;
+						$this->_field_quote. $this->_escape_field($field) .$this->_field_quote;
 				}
 			}
 			else if ( $addAlias && strpos($field, '(') !== false && ! strpos($field, ' as ') ) {
 				$a[] = $this->_protect_identifiers( $field ).$asAlias.
-					$this->_field_quote. $field .$this->_field_quote;
+					$this->_field_quote. $this->_escape_field($field) .$this->_field_quote;
 			}
 			else {
 				$a[] = $this->_protect_identifiers( $field );
@@ -971,6 +971,17 @@ abstract class Query {
 		);
 
 		return $this->_exec();
+	}
+
+	/**
+	 * Escape quotes in a field identifier
+	 *  @internal
+	 */
+	protected function _escape_field( $field )
+	{
+		$quote = $this->_field_quote;
+
+		return str_replace($quote, "\\".$quote, $field);
 	}
 
 	/**
