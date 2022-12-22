@@ -713,8 +713,8 @@ class Field extends DataTables\Ext {
 			}
 			else {
 				// Getting data, so the db field name
-				$val = isset( $data[ $this->_dbField ] ) ?
-					$data[ $this->_dbField ] :
+				$val = isset( $data[ $this->_name ] ) ?
+					$data[ $this->_name ] :
 					null;
 			}
 

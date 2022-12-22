@@ -1086,9 +1086,6 @@ class Editor extends Ext {
 			return array();
 		}
 
-		// print_r($id);
-		// print_r($http);
-
 		$query = $this->_db
 			->query('select')
 			->table( $this->_read_table() )
@@ -1102,7 +1099,7 @@ class Editor extends Ext {
 			}
 
 			if ( $field->apply('get') && $field->getValue() === null ) {
-				$query->get( $field->dbField() );
+				$query->get( $field->dbField() .' as '. $field->name() );
 			}
 		}
 
