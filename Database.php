@@ -76,7 +76,9 @@ class Database {
 	private $_dbResource = null;
 
 	/** @var callable */
+	private $type = null;
 	private $_debugCallback = null;
+	private $query_driver = null;
 
 
 
