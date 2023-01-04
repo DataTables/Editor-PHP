@@ -422,14 +422,6 @@ class SearchPaneOptions extends DataTables\Ext {
 				}
 			}
 		}
-		
-		$res = $query
-			->exec()
-			->fetchAll();
-
-		$resLast = $queryLast
-			->exec()
-			->fetchAll();
 
 		// Get the data for the pane options
 		$q = $db
@@ -466,47 +458,34 @@ class SearchPaneOptions extends DataTables\Ext {
 			->exec()
 			->fetchAll();
 
-		// Create the output array
+		// Send slightly different results if this is the last pane
+		$entriesQuery = isset($http['searchPanesLast']) && $field->name() === $http['searchPanesLast']
+			? $queryLast
+			: $query;
+
+		$entriesRows = $entriesQuery
+			->exec()
+			->fetchAll();
+
+		// Key by the value for fast lookup
+		$entriesKeys = array_column($entriesRows, 'value');
+		$entries = array_combine($entriesKeys, $entriesRows);
+
 		$out = array();
 
 		for ( $i=0, $ien=count($rows) ; $i<$ien ; $i++ ) {
-			$set = false;
-			// Send slightly different results if this is the last pane
-			if (isset($http['searchPanesLast']) && $field->name() === $http['searchPanesLast'] ) {
-				for( $j=0 ; $j<count($resLast) ; $j ++) {
-					if($resLast[$j]['value'] == $rows[$i]['value']){
-						$out[] = array(
-							"label" => $formatter($rows[$i]['label']),
-							"total" => $rows[$i]['total'],
-							"value" => $rows[$i]['value'],
-							"count" => $resLast[$j]['count']
-						);
-						$set = true;
-					}
-				}
-			}
-			else {
-				for( $j=0 ; $j<count($res) ; $j ++) {
-					if($res[$j]['value'] == $rows[$i]['value']){
-						$out[] = array(
-							"label" => $formatter($rows[$i]['label']),
-							"total" => $rows[$i]['total'],
-							"value" => $rows[$i]['value'],
-							"count" => $res[$j]['count']
-						);
-						$set = true;
-					}
-				}
-			}
-			if(!$set) {
-				$out[] = array(
-					"label" => $formatter($rows[$i]['label']),
-					"total" => $rows[$i]['total'],
-					"value" => $rows[$i]['value'],
-					"count" => 0
-				);
-			}
-			
+			$row = $rows[$i];
+			$value = $row['value'];
+			$count = isset($entries[$value])
+				? $entries[$value]['count']
+				: 0;
+
+			$out[] = array(
+				"label" => $formatter($row['label']),
+				"total" => $row['total'],
+				"value" => $value,
+				"count" => $count
+			);
 		}
 
 		// Only sort if there was no SQL order field

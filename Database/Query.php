@@ -767,7 +767,7 @@ abstract class Query {
 
 				if ( count($split) > 1 ) {
 					$a[] = $this->_protect_identifiers( $split[0] ).$asAlias.
-						$this->_field_quote. $this->_escape_field($field) .$this->_field_quote;
+						$this->_field_quote. $split[1] .$this->_field_quote;
 				}
 				else {
 					$a[] = $this->_protect_identifiers( $field ).$asAlias.
