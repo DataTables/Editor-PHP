@@ -63,6 +63,12 @@ abstract class Query {
 	 */
 
 	/**
+	 * @var Database Database connection instance
+	 * @internal
+	 */
+	protected $_dbHost;
+
+	/**
 	 * @var string Driver to use
 	 * @internal
 	 */

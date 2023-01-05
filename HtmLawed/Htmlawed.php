@@ -199,12 +199,12 @@ class Htmlawed {
       // Handle CDATA, comments, and entities.
   
       if ($C['cdata'] || $C['comment']) {
-        $t = preg_replace_callback('`<!(?:(?:--.*?--)|(?:\[CDATA\[.*?\]\]))>`sm', 'self::hl_commentCdata', $t);
+        $t = preg_replace_callback('`<!(?:(?:--.*?--)|(?:\[CDATA\[.*?\]\]))>`sm', 'DataTables\HtmLawed\Htmlawed::hl_commentCdata', $t);
       }
       $t =
         preg_replace_callback(
           '`&amp;([a-zA-Z][a-zA-Z0-9]{1,30}|#(?:[0-9]{1,8}|[Xx][0-9A-Fa-f]{1,7}));`',
-          'self::hl_entity',
+          'DataTables\HtmLawed\Htmlawed::hl_entity',
           str_replace('&', '&amp;', $t));
       if ($C['unique_ids'] && !isset($GLOBALS['hl_Ids'])) {
         $GLOBALS['hl_Ids'] = array();
@@ -216,7 +216,7 @@ class Htmlawed {
   
       // Handle remaining text.
   
-      $t = preg_replace_callback('`<(?:(?:\s|$)|(?:[^>]*(?:>|$)))|>`m', 'self::hl_tag', $t);
+      $t = preg_replace_callback('`<(?:(?:\s|$)|(?:[^>]*(?:>|$)))|>`m', 'DataTables\HtmLawed\Htmlawed::hl_tag', $t);
       $t = $C['balance'] ? self::hl_balance($t, $C['keep_bad'], $C['parent']) : $t;
       $t = (($C['cdata'] || $C['comment']) && strpos($t, "\x01") !== false)
            ? str_replace(array("\x01", "\x02", "\x03", "\x04", "\x05"), array('', '', '&', '<', '>'), $t)
@@ -1186,7 +1186,7 @@ class Htmlawed {
             $v =
               preg_replace_callback(
                 '`(url(?:\()(?: )*(?:\'|"|&(?:quot|apos);)?)(.+?)((?:\'|"|&(?:quot|apos);)?(?: )*(?:\)))`iS',
-                'self::hl_url',
+                'DataTables\HtmLawed\Htmlawed::hl_url',
                 $v);
             $v = !$C['css_expression']
                  ? preg_replace('`expression`i', ' ', preg_replace('`\\\\\S|(/|(%2f))(\*|(%2a))`i', ' ', $v))
