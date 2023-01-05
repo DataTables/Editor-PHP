@@ -1190,7 +1190,7 @@ abstract class Query {
 			}
 			else if ( $bind ) {
 				// Binding condition (i.e. escape data)
-				if ( $this->_dbHost->type === 'Postgres' && $op === 'like' ) {
+				if ( $this->_dbHost->type() === 'Postgres' && $op === 'like' ) {
 					// Postgres specific a it needs a case for string searching non-text data
 					$this->_where[] = array(
 						'operator' => $type,
