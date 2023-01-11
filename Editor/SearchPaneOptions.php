@@ -236,15 +236,16 @@ class SearchPaneOptions extends DataTables\Ext {
 	 */
 	public function exec ( $field, $editor, $http, $fields, $leftJoinIn )
 	{
-		// If the value is not yet set then set the variable to be the field name
-		if ( $this->_value == null) {
-			$value = $field->dbField();
-		}
-		else {
-			$value = $this->_value;
-		}
-
+		$db = $editor->db();
 		$readTable = $editor->readTable();
+		$filteringActive = isset($http['searchPanes']);
+		$entries = null;
+
+		// If the value is not yet set then set the variable to be the field name
+		$value = $this->_value == null
+			? $field->dbField()
+			: $this->_value;
+
 
 		// If the table is not yet set then set the table variable to be the same as editor
 		// This is not taking a value from the SearchPaneOptions instance as the table should be defined in value/label. This throws up errors if not.
@@ -259,24 +260,15 @@ class SearchPaneOptions extends DataTables\Ext {
 		}
 
 		// If the label value has not yet been set then just set it to be the same as value
-		if ( $this->_label == null ) {
-			$label = $value;
-		}
-		else {
-			$label = $this->_label[0];
-		}
+		$label = $this->_label == null
+			? $value
+			: $this->_label[0];
 
-		// Set the database from editor
-		$db = $editor->db();
-
-		$formatter = $this->_renderer;
-
-		// We need a default formatter if one isn't provided
-		if ( ! $formatter ) {
-			$formatter = function ( $str ) {
+		$formatter = $this->_renderer
+			? $this->_renderer
+			: function ( $str ) {
 				return $str;
 			};
-		}
 
 		// Set up the join variable so that it will fit nicely later
 		$leftJoin = gettype($this->_leftJoin) === 'array' ?
@@ -285,17 +277,19 @@ class SearchPaneOptions extends DataTables\Ext {
 
 		foreach($leftJoinIn as $lj) {
 			$found = false;
+
 			foreach($leftJoin as $lje) {
 				if($lj['table'] === $lje['table']) {
 					$found = true;
 				}
 			}
+
 			if(!$found) {
 				array_push($leftJoin, $lj);
 			}
 		}
 
-		if( isset($http['searchPanes'])) {
+		if($filteringActive) {
 			// For every selection in every column
 			foreach ($fields as $fieldOpt) {
 				if (isset($http['searchPanes'][$fieldOpt->name()])) {
@@ -324,27 +318,27 @@ class SearchPaneOptions extends DataTables\Ext {
 		}
 
 		// Set the query to get the current counts for viewTotal
-		$query = $db
-			->query('select')
-			->table( $table )
-			->left_join($leftJoin);
+		if ($filteringActive) {
+			$query = $db
+				->query('select')
+				->table( $table )
+				->left_join($leftJoin);
 
-		// The last pane to have a selection runs a slightly different query
-		$queryLast = $db
-			->query('select')
-			->table( $table )
-			->left_join($leftJoin);
+			// The last pane to have a selection runs a slightly different query
+			$queryLast = $db
+				->query('select')
+				->table( $table )
+				->left_join($leftJoin);
 
-		if ( $field->apply('get') && $field->getValue() === null ) {
-			$query->get( $value." as value", "COUNT(*) as count");
-			$query->group_by( $value);
-			$queryLast->get( $value." as value", "COUNT(*) as count");
-			$queryLast->group_by( $value);
-		}
-		
-		// Construct the where queries based upon the options selected by the user
-		// THIS IS TO GET THE SP OPTIONS, NOT THE TABLE ENTRIES
-		if( isset($http['searchPanes'])) {
+			if ( $field->apply('get') && $field->getValue() === null ) {
+				$query->get( $value." as value", "COUNT(*) as count");
+				$query->group_by( $value);
+				$queryLast->get( $value." as value", "COUNT(*) as count");
+				$queryLast->group_by( $value);
+			}
+			
+			// Construct the where queries based upon the options selected by the user
+			// THIS IS TO GET THE SP OPTIONS, NOT THE TABLE ENTRIES
 			foreach ($fields as $fieldOpt) {
 				if (isset($http['searchPanes'][$fieldOpt->name()])) {
 					$query->where( function ($q) use ($fieldOpt, $http) {
@@ -360,35 +354,40 @@ class SearchPaneOptions extends DataTables\Ext {
 					});
 				}
 			}
-		}
 
-		// If there is a last value set then a slightly different set of results is required for cascade
-		// That panes results are based off of the results when only considering the selections of all of the others
-		if( isset($http['searchPanes']) && isset($http['searchPanesLast'])) {
-			foreach ($fields as $fieldOpt) {
-				if (isset($http['searchPanes'][$fieldOpt->name()]) && $fieldOpt->name() !== $http['searchPanesLast']) {
-					$queryLast->where( function ($q) use ($fieldOpt, $http) {
-						for($j=0, $jen=count($http['searchPanes'][$fieldOpt->name()]); $j < $jen ; $j++){
-							$q->or_where(
-								$fieldOpt->dbField(),
-								isset($http['searchPanes_null'][$fieldOpt->name()][$j]) 
-									? null
-									: $http['searchPanes'][$fieldOpt->name()][$j],
-								'='
-							);
-						}
-					});
+			// If there is a last value set then a slightly different set of results is required for cascade
+			// That panes results are based off of the results when only considering the selections of all of the others
+			if(isset($http['searchPanesLast'])) {
+				foreach ($fields as $fieldOpt) {
+					if (isset($http['searchPanes'][$fieldOpt->name()]) && $fieldOpt->name() !== $http['searchPanesLast']) {
+						$queryLast->where( function ($q) use ($fieldOpt, $http) {
+							for($j=0, $jen=count($http['searchPanes'][$fieldOpt->name()]); $j < $jen ; $j++){
+								$q->or_where(
+									$fieldOpt->dbField(),
+									isset($http['searchPanes_null'][$fieldOpt->name()][$j]) 
+										? null
+										: $http['searchPanes'][$fieldOpt->name()][$j],
+									'='
+								);
+							}
+						});
+					}
 				}
 			}
-		}
-		
-		$res = $query
-			->exec()
-			->fetchAll();
 
-		$resLast = $queryLast
-			->exec()
-			->fetchAll();
+			// Send slightly different results if this is the last pane
+			$entriesQuery = isset($http['searchPanesLast']) && $field->name() === $http['searchPanesLast']
+				? $queryLast
+				: $query;
+	
+			$entriesRows = $entriesQuery
+				->exec()
+				->fetchAll();
+	
+			// Key by the value for fast lookup
+			$entriesKeys = array_column($entriesRows, 'value');
+			$entries = array_combine($entriesKeys, $entriesRows);
+		}
 
 		// Get the data for the pane options
 		$q = $db
@@ -423,47 +422,25 @@ class SearchPaneOptions extends DataTables\Ext {
 			->exec()
 			->fetchAll();
 
-		// Create the output array
 		$out = array();
 
 		for ( $i=0, $ien=count($rows) ; $i<$ien ; $i++ ) {
-			$set = false;
-			// Send slightly different results if this is the last pane
-			if (isset($http['searchPanesLast']) && $field->name() === $http['searchPanesLast'] ) {
-				for( $j=0 ; $j<count($resLast) ; $j ++) {
-					if($resLast[$j]['value'] == $rows[$i]['value']){
-						$out[] = array(
-							"label" => $formatter($rows[$i]['label']),
-							"total" => $rows[$i]['total'],
-							"value" => $rows[$i]['value'],
-							"count" => $resLast[$j]['count']
-						);
-						$set = true;
-					}
-				}
+			$row = $rows[$i];
+			$value = $row['value'];
+			$count = $row['total'];
+
+			if ($entries !== null) {
+				$count = isset($entries[$value])
+					? $entries[$value]['count']
+					: 0;
 			}
-			else {
-				for( $j=0 ; $j<count($res) ; $j ++) {
-					if($res[$j]['value'] == $rows[$i]['value']){
-						$out[] = array(
-							"label" => $formatter($rows[$i]['label']),
-							"total" => $rows[$i]['total'],
-							"value" => $rows[$i]['value'],
-							"count" => $res[$j]['count']
-						);
-						$set = true;
-					}
-				}
-			}
-			if(!$set) {
-				$out[] = array(
-					"label" => $formatter($rows[$i]['label']),
-					"total" => $rows[$i]['total'],
-					"value" => $rows[$i]['value'],
-					"count" => 0
-				);
-			}
-			
+
+			$out[] = array(
+				"label" => $formatter($row['label']),
+				"total" => $row['total'],
+				"value" => $value,
+				"count" => $count
+			);
 		}
 
 		// Only sort if there was no SQL order field

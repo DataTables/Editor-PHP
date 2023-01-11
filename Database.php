@@ -59,7 +59,7 @@ class Database {
 			);
 		}
 
-		$this->type = $opts['type'];
+		$this->_type = $opts['type'];
 		$this->query_driver = "DataTables\\Database\\Driver\\".$opts['type'].'Query';
 		$this->_dbResource = isset( $opts['pdo'] ) ?
 			$opts['pdo'] :
@@ -76,7 +76,9 @@ class Database {
 	private $_dbResource = null;
 
 	/** @var callable */
+	private $_type = null;
 	private $_debugCallback = null;
+	private $query_driver = null;
 
 
 
@@ -409,6 +411,15 @@ class Database {
 	{
 		call_user_func($this->query_driver.'::transaction', $this->_dbResource );
 		return $this;
+	}
+
+
+	/**
+	 * Get the database type (e.g. Postgres, Mysql, etc)
+	 */
+	public function type ()
+	{
+		return $this->_type;
 	}
 
 
