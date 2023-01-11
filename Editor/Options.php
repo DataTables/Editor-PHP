@@ -75,6 +75,9 @@ class Options extends DataTables\Ext {
 	/** @var string[] Column names for the label(s) */
 	private $_label = array();
 
+	/** Information for left join */
+	private $_leftJoin = array();
+
 	/** @var integer Row limit */
 	private $_limit = null;
 
@@ -134,6 +137,28 @@ class Options extends DataTables\Ext {
 		else {
 			$this->_label = $_;
 		}
+
+		return $this;
+	}
+
+	/**
+	 * Get / set the array values used for a leftJoin condition if it is to be
+	 * applied to the query to get the options.
+	 * 
+	 * @param string $table to get the information from
+	 * @param string $field1 the first field to get the information from
+	 * @param string $operator the operation to perform on the two fields
+	 * @param string $field2 the second field to get the information from
+	 * @return self
+	 */
+	public function leftJoin ( $table, $field1, $operator, $field2 )
+	{
+		$this->_leftJoin[] = array(
+			"table"    => $table,
+			"field1"   => $field1,
+			"field2"   => $field2,
+			"operator" => $operator
+		);
 
 		return $this;
 	}
@@ -253,8 +278,9 @@ class Options extends DataTables\Ext {
 		// Get the data
 		$q = $db
 			->query('select')
-			->table( $this->_table )
 			->distinct( true )
+			->table( $this->_table )
+			->left_join($this->_leftJoin)
 			->get( $fields )
 			->where( $this->_where );
 

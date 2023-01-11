@@ -378,6 +378,41 @@ abstract class Query {
 		return $this;
 	}
 
+	/**
+	 * Add a left join, with common logic for handling binding or not
+	 */
+	public function left_join( $joins )
+	{
+		// Allow a single associative array
+		if ($this->_is_assoc($joins)) {
+			$joins = array(
+				$joins
+			);
+		}
+
+		for ( $i=0, $ien=count($joins) ; $i<$ien ; $i++ ) {
+			$join = $joins[$i];
+
+			if ($join['field2'] === null && $join['operator'] === null) {
+				$this->join(
+					$join['table'],
+					$join['field1'],
+					'LEFT',
+					false
+				);
+			}
+			else {
+				$this->join(
+					$join['table'],
+					$join['field1'].' '.$join['operator'].' '.$join['field2'],
+					'LEFT'
+				);
+			}
+		}
+
+		return $this;
+	}
+
 
 	/**
 	 * Limit the result set to a certain size.
@@ -1221,6 +1256,18 @@ abstract class Query {
 			"group"    => $inOut ? '(' : ')',
 			"operator" => $op
 		);
+	}
+
+	/**
+	 * Check if an array is associative or sequential
+	 */
+	private function _is_assoc(array $arr)
+	{
+		if (array() === $arr) {
+			return false;
+		}
+
+		return array_keys($arr) !== range(0, count($arr) - 1);
 	}
 };
 

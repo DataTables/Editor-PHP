@@ -223,38 +223,6 @@ class SearchBuilderOptions extends DataTables\Ext {
 		return $this;
 	}
 
-	/**
-	 * Adds a join for all of the leftJoin conditions to the
-	 * desired query, using the appropriate values.
-	 * 
-	 * @param string $query the query being built
-	 * @return self
-	 */
-	private function _perform_left_join ( $query )
-	{
-		if ( count($this->_leftJoin) ) {
-			for ( $i=0, $ien=count($this->_leftJoin) ; $i<$ien ; $i++ ) {
-				$join = $this->_leftJoin[$i];
-				if ($join['field2'] === null && $join['operator'] === null) {
-					$query->join(
-						$join['table'],
-						$join['field1'],
-						'LEFT',
-						false
-					);
-				}
-				else {
-					$query->join(
-						$join['table'],
-						$join['field1'].' '.$join['operator'].' '.$join['field2'],
-						'LEFT'
-					);
-				}
-			}
-		}
-		return $this;
-	}
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Internal methods
 	 */
@@ -330,33 +298,12 @@ class SearchBuilderOptions extends DataTables\Ext {
 		// Set the query to get the current counts for viewTotal
 		$query = $db
 			->query('select')
-			->table( $table );
+			->table( $table )
+			->left_join($leftJoin);
 
 		if ( $field->apply('get') && $field->getValue() === null ) {
 			$query->get($value." as value", $label." as label");
 			$query->group_by( $value);
-		}
-
-		// If a join is required then we need to add the following to the query
-		// print_r($leftJoin);
-		if (count($leftJoin) > 0){
-			foreach($leftJoin as $lj) {
-				if ($lj['field2'] === null && $lj['operator'] === null) {
-					$query->join(
-						$lj['table'],
-						$lj['field1'],
-						'LEFT',
-						false
-					);
-				}
-				else {
-					$query->join(
-						$lj['table'],
-						$lj['field1'].' '.$lj['operator'].' '.$lj['field2'],
-						'LEFT'
-					);
-				}
-			}
 		}
 		
 		$res = $query
