@@ -223,44 +223,6 @@ class SearchPaneOptions extends DataTables\Ext {
 		return $this;
 	}
 
-	/**
-	 * Adds a join for all of the leftJoin conditions to the
-	 * desired query, using the appropriate values.
-	 * 
-	 * @param string $query the query being built
-	 * @return self
-	 */
-	private function _perform_left_join ( $query, $leftJoin = null )
-	{
-		if ($leftJoin === null) {
-			$leftJoin = $this->_leftJoin;
-		}
-
-		if ( count($leftJoin) ) {
-			for ( $i=0, $ien=count($leftJoin) ; $i<$ien ; $i++ ) {
-				$join = $leftJoin[$i];
-
-				if ($join['field2'] === null && $join['operator'] === null) {
-					$query->join(
-						$join['table'],
-						$join['field1'],
-						'LEFT',
-						false
-					);
-				}
-				else {
-					$query->join(
-						$join['table'],
-						$join['field1'].' '.$join['operator'].' '.$join['field2'],
-						'LEFT'
-					);
-				}
-			}
-		}
-
-		return $this;
-	}
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Internal methods
 	 */
@@ -345,9 +307,8 @@ class SearchPaneOptions extends DataTables\Ext {
 						$q = $db
 							->query('select')
 							->table($table)
-							->get('COUNT(*) as count');
-
-						$this->_perform_left_join($q, $leftJoin);
+							->get('COUNT(*) as count')
+							->left_join($leftJoin);
 
 						// ... where the selected option is present...
 						$r = $q
@@ -369,12 +330,14 @@ class SearchPaneOptions extends DataTables\Ext {
 		if ($viewCount || $cascade) {
 			$query = $db
 				->query('select')
-				->table( $table );
+				->table( $table )
+				->left_join($leftJoin);
 
 			// The last pane to have a selection runs a slightly different query
 			$queryLast = $db
 				->query('select')
-				->table( $table );
+				->table( $table )
+				->left_join($leftJoin);
 
 			if ( $field->apply('get') && $field->getValue() === null ) {
 				$query->get($value." as value");
@@ -393,10 +356,6 @@ class SearchPaneOptions extends DataTables\Ext {
 					$queryLast->get("(1) as count");
 				}
 			}
-
-			// If a join is required then we need to add the following to the query
-			$this->_perform_left_join($query, $leftJoin);
-			$this->_perform_left_join($queryLast, $leftJoin);
 			
 			// Construct the where queries based upon the options selected by the user
 			// THIS IS TO GET THE SP OPTIONS, NOT THE TABLE ENTRIES
@@ -455,15 +414,13 @@ class SearchPaneOptions extends DataTables\Ext {
 			->query('select')
 			->table( $table )
 			->get( $label." as label", $value." as value" )
+			->left_join($leftJoin)
 			->group_by( $value )
 			->where( $this->_where );
 
 		if ($viewTotal) {
 			$q->get("COUNT(*) as total");
 		}
-
-		// If a join is required then we need to add the following to the query
-		$this->_perform_left_join( $q, $leftJoin );
 
 		if ( $this->_order ) {
 			// For cases where we are ordering by a field which isn't included in the list

@@ -101,6 +101,8 @@ class MysqlQuery extends Query {
 
 	protected function _exec()
 	{
+		$start = hrtime(true);
+
 		try {
 			$this->_stmt->execute();
 		}
@@ -109,6 +111,8 @@ class MysqlQuery extends Query {
 			error_log( "An SQL error occurred: ".$e->getMessage() );
 			return false;
 		}
+
+		$this->database()->debugInfo( 'Execution complete - duration: '. (hrtime(true) - $start) . '  Time: '. microtime(true), [] );
 
 		$resource = $this->database()->resource();
 		return new MysqlResult( $resource, $this->_stmt );

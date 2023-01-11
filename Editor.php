@@ -1107,7 +1107,7 @@ class Editor extends Ext {
 		}
 
 		$this->_get_where( $query );
-		$this->_perform_left_join( $query );
+		$query->left_join($this->_leftJoin);
 		$ssp = $this->_ssp_query( $query, $http );
 		
 		if ( $id !== null ) {
@@ -1616,7 +1616,7 @@ class Editor extends Ext {
 			->get( $this->_pkey[0] );
 		$this->_get_where( $ssp_set_count );
 		$this->_ssp_filter( $ssp_set_count, $http );
-		$this->_perform_left_join( $ssp_set_count );
+		$ssp_set_count->left_join($this->_leftJoin);
 		$ssp_set_count = $ssp_set_count->exec()->fetch();
 
 		// Get the number of rows in the full set
@@ -1626,7 +1626,7 @@ class Editor extends Ext {
 			->get( $this->_pkey[0] );
 		$this->_get_where( $ssp_full_count );
 		if ( count( $this->_where ) ) { // only needed if there is a where condition
-			$this->_perform_left_join( $ssp_full_count );
+			$ssp_full_count->left_join($this->_leftJoin);
 		}
 		$ssp_full_count = $ssp_full_count->exec()->fetch();
 
@@ -1963,7 +1963,7 @@ class Editor extends Ext {
 							->table($this->_table)
 							->get('COUNT(*) as cnt');
 
-						$this->_perform_left_join($q);
+						$q->left_join($this->_leftJoin);
 
 						// ... where the selected option is present...
 						$r = $q
@@ -2056,38 +2056,6 @@ class Editor extends Ext {
 	/*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
 	 * Internal helper methods
 	 */
-
-	/**
-	 * Add left join commands for the instance to a query.
-	 *
-	 *  @param \DataTables\Database\Query $query Query instance to apply the joins to
-	 *  @private
-	 */
-	private function _perform_left_join ( $query )
-	{
-		if ( count($this->_leftJoin) ) {
-			for ( $i=0, $ien=count($this->_leftJoin) ; $i<$ien ; $i++ ) {
-				$join = $this->_leftJoin[$i];
-
-				if ($join['field2'] === null && $join['operator'] === null) {
-					$query->join(
-						$join['table'],
-						$join['field1'],
-						'LEFT',
-						false
-					);
-				}
-				else {
-					$query->join(
-						$join['table'],
-						$join['field1'].' '.$join['operator'].' '.$join['field2'],
-						'LEFT'
-					);
-				}
-			}
-		}
-	}
-
 
 	/**
 	 * Add local WHERE condition to query
