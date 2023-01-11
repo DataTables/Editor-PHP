@@ -277,6 +277,15 @@ class SearchPaneOptions extends DataTables\Ext {
 		$db = $editor->db();
 		$readTable = $editor->readTable();
 		$filteringActive = isset($http['searchPanes']);
+		$viewCount = isset($http['searchPanes_options'])
+			? filter_var($http['searchPanes_options']['viewCount'], FILTER_VALIDATE_BOOLEAN)
+			: true;
+		$viewTotal = isset($http['searchPanes_options'])
+			? filter_var($http['searchPanes_options']['viewTotal'], FILTER_VALIDATE_BOOLEAN)
+			: false;
+		$cascade = isset($http['searchPanes_options'])
+			? filter_var($http['searchPanes_options']['cascade'], FILTER_VALIDATE_BOOLEAN)
+			: false;
 		$entries = null;
 
 		// If the value is not yet set then set the variable to be the field name
@@ -356,8 +365,8 @@ class SearchPaneOptions extends DataTables\Ext {
 			}
 		}
 
-		// Set the query to get the current counts for viewTotal
-		if ($filteringActive) {
+		// Set the query to get the current counts for viewCount
+		if ($viewCount || $cascade) {
 			$query = $db
 				->query('select')
 				->table( $table );
@@ -368,10 +377,21 @@ class SearchPaneOptions extends DataTables\Ext {
 				->table( $table );
 
 			if ( $field->apply('get') && $field->getValue() === null ) {
-				$query->get( $value." as value", "COUNT(*) as count");
-				$query->group_by( $value);
-				$queryLast->get( $value." as value", "COUNT(*) as count");
-				$queryLast->group_by( $value);
+				$query->get($value." as value");
+				$query->group_by($value);
+				$queryLast->get($value." as value");
+				$queryLast->group_by($value);
+
+				// We viewTotal is enabled, we need to do a count to get the number of records,
+				// If it isn't we still need to know it exists, but don't care about the cardinality
+				if ($viewCount) {
+					$query->get("COUNT(*) as count");
+					$queryLast->get("COUNT(*) as count");
+				}
+				else {
+					$query->get("(1) as count");
+					$queryLast->get("(1) as count");
+				}
 			}
 
 			// If a join is required then we need to add the following to the query
@@ -434,9 +454,13 @@ class SearchPaneOptions extends DataTables\Ext {
 		$q = $db
 			->query('select')
 			->table( $table )
-			->get( $label." as label", $value." as value", "COUNT(*) as total" )
+			->get( $label." as label", $value." as value" )
 			->group_by( $value )
 			->where( $this->_where );
+
+		if ($viewTotal) {
+			$q->get("COUNT(*) as total");
+		}
 
 		// If a join is required then we need to add the following to the query
 		$this->_perform_left_join( $q, $leftJoin );
@@ -470,17 +494,18 @@ class SearchPaneOptions extends DataTables\Ext {
 		for ( $i=0, $ien=count($rows) ; $i<$ien ; $i++ ) {
 			$row = $rows[$i];
 			$value = $row['value'];
-			$count = $row['total'];
+			$total = $viewTotal ? $row['total'] : null;
+			$count = $total;
 
 			if ($entries !== null) {
-				$count = isset($entries[$value])
+				$count = isset($entries[$value]) && isset($entries[$value]['count'])
 					? $entries[$value]['count']
 					: 0;
 			}
 
 			$out[] = array(
 				"label" => $formatter($row['label']),
-				"total" => $row['total'],
+				"total" => $total,
 				"value" => $value,
 				"count" => $count
 			);
