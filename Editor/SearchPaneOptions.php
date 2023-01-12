@@ -298,30 +298,53 @@ class SearchPaneOptions extends DataTables\Ext {
 			}
 		}
 
-		if($filteringActive) {
-			// For every selection in every column
-			foreach ($fields as $fieldOpt) {
-				if (isset($http['searchPanes'][$fieldOpt->name()])) {
-					for($i = 0; $i < count($http['searchPanes'][$fieldOpt->name()]); $i++) {
-						// Check the number of rows...
-						$q = $db
-							->query('select')
-							->table($table)
-							->get('COUNT(*) as count')
-							->left_join($leftJoin);
+		// Get the data for the pane options
+		$q = $db
+			->query('select')
+			->table( $table )
+			->get( $label." as label", $value." as value" )
+			->left_join($leftJoin)
+			->group_by( $value )
+			->where( $this->_where );
 
-						// ... where the selected option is present...
-						$r = $q
-							->where($fieldOpt->dbField(), $http['searchPanes'][$fieldOpt->name()][$i], '=')
-							->exec()
-							->fetchAll();
+		if ($viewTotal) {
+			$q->get("COUNT(*) as total");
+		}
 
-						// ... If there are none then don't bother with this selection
-						if($r[0]['count'] == 0) {
-							array_splice($http['searchPanes'][$fieldOpt->name()], $i, 1);
-							$i--;
-						}
-					}
+		if ( $this->_order ) {
+			// For cases where we are ordering by a field which isn't included in the list
+			// of fields to display, we need to add the ordering field, due to the
+			// select distinct.
+			$orderFields = explode( ',', $this->_order );
+
+			for ( $i=0, $ien=count($orderFields) ; $i<$ien ; $i++ ) {
+				$orderField = strtolower( $orderFields[$i] );
+				$orderField = str_replace( ' asc', '', $orderField );
+				$orderField = str_replace( ' desc', '', $orderField );
+				$orderField = trim( $orderField );
+
+				if ( ! in_array( $orderField, $fields ) ) {
+					$q->get( $orderField );
+				}
+			}
+
+			$q->order( $this->_order );
+		}
+
+		$rows = $q
+			->exec()
+			->fetchAll();
+
+		// Remove any filtering entries that don't exist in the database (values might have changed)
+		if (isset($http['searchPanes'][$field->name()])) {
+			$values = array_column($rows, 'value');
+			$selected = $http['searchPanes'][$field->name()];
+
+			for ($i=0 ; $i<count($selected) ; $i++) {
+				$idx = array_search($selected[$i], $values);
+
+				if ($idx !== false) {
+					array_splice($http['searchPanes'][$field->name()], $idx, 1);
 				}
 			}
 		}
@@ -408,43 +431,6 @@ class SearchPaneOptions extends DataTables\Ext {
 			$entriesKeys = array_column($entriesRows, 'value');
 			$entries = array_combine($entriesKeys, $entriesRows);
 		}
-
-		// Get the data for the pane options
-		$q = $db
-			->query('select')
-			->table( $table )
-			->get( $label." as label", $value." as value" )
-			->left_join($leftJoin)
-			->group_by( $value )
-			->where( $this->_where );
-
-		if ($viewTotal) {
-			$q->get("COUNT(*) as total");
-		}
-
-		if ( $this->_order ) {
-			// For cases where we are ordering by a field which isn't included in the list
-			// of fields to display, we need to add the ordering field, due to the
-			// select distinct.
-			$orderFields = explode( ',', $this->_order );
-
-			for ( $i=0, $ien=count($orderFields) ; $i<$ien ; $i++ ) {
-				$orderField = strtolower( $orderFields[$i] );
-				$orderField = str_replace( ' asc', '', $orderField );
-				$orderField = str_replace( ' desc', '', $orderField );
-				$orderField = trim( $orderField );
-
-				if ( ! in_array( $orderField, $fields ) ) {
-					$q->get( $orderField );
-				}
-			}
-
-			$q->order( $this->_order );
-		}
-
-		$rows = $q
-			->exec()
-			->fetchAll();
 
 		$out = array();
 
