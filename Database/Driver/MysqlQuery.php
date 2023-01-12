@@ -101,7 +101,7 @@ class MysqlQuery extends Query {
 
 	protected function _exec()
 	{
-		$start = hrtime(true);
+		// $start = hrtime(true);
 
 		try {
 			$this->_stmt->execute();
@@ -112,7 +112,7 @@ class MysqlQuery extends Query {
 			return false;
 		}
 
-		$this->database()->debugInfo( 'Execution complete - duration: '. (hrtime(true) - $start) . '  Time: '. microtime(true), [] );
+		// $this->database()->debugInfo( 'Execution complete - duration: '. (hrtime(true) - $start) . '  Time: '. microtime(true), [] );
 
 		$resource = $this->database()->resource();
 		return new MysqlResult( $resource, $this->_stmt );
