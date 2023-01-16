@@ -90,6 +90,9 @@ class Join extends DataTables\Ext {
 		"table" => null
 	);
 
+	/**	@var array */
+	private $_leftJoin = array();
+
 	/** @var string */
 	private $_table = null;
 
@@ -241,6 +244,28 @@ class Join extends DataTables\Ext {
 		$this->_join['parent'] = $parent;
 		$this->_join['child'] = $child;
 		$this->_join['table'] = $table;
+		return $this;
+	}
+
+
+	/**
+	 * Set up a left join operation for the Mjoined data
+	 *
+	 * @param string $table to get the information from
+	 * @param string $field1 the first field to get the information from
+	 * @param string $operator the operation to perform on the two fields
+	 * @param string $field2 the second field to get the information from
+	 * @return self
+	 */
+	public function leftJoin ( $table, $field1, $operator, $field2 )
+	{
+		$this->_leftJoin[] = array(
+			"table"    => $table,
+			"field1"   => $field1,
+			"field2"   => $field2,
+			"operator" => $operator
+		);
+
 		return $this;
 	}
 
@@ -486,31 +511,6 @@ class Join extends DataTables\Ext {
 			$pkey = $pkey[0];
 			$pkeyIsJoin = $pkey === $joinField || $pkey === $dteTableLocal.'.'.$joinField;
 
-			// Sanity check that table selector fields are read only, and have an name without
-			// a dot (for DataTables mData to be able to read it)
-			for ( $i=0 ; $i<count($this->_fields) ; $i++ ) {
-				$field = $this->_fields[$i];
-
-				if ( strpos( $field->dbField() , "." ) !== false ) {
-					if ( $field->set() !== Field::SET_NONE && $this->_set ) {
-						echo json_encode( array(
-							"sError" => "Table selected fields (i.e. '{table}.{column}') in `Join` ".
-								"must be read only. Use `set(false)` for the field to disable writing."
-						) );
-						exit(0);
-					}
-
-					if ( strpos( $field->name() , "." ) !== false ) {
-						echo json_encode( array(
-							"sError" => "Table selected fields (i.e. '{table}.{column}') in `Join` ".
-								"must have a name alias which does not contain a period ('.'). Use ".
-								"name('---') to set a name for the field"
-						) );
-						exit(0);
-					}
-				}
-			}
-
 			// Set up the JOIN query
 			$stmt = $db
 				->query( 'select' )
@@ -523,6 +523,7 @@ class Join extends DataTables\Ext {
 				$stmt->order( $this->order() );
 			}
 
+			$stmt->left_join($this->_leftJoin);
 			$this->_apply_where( $stmt );
 
 			if ( isset($this->_join['table']) ) {
@@ -598,7 +599,7 @@ class Join extends DataTables\Ext {
 				for ( $j=0 ; $j<count($this->_fields) ; $j++ ) {
 					$field = $this->_fields[$j];
 					if ( $field->apply('get') ) {
-						$inner[ $field->name() ] = $field->val('get', $row);
+						$field->write($inner, $row);
 					}
 				}
 
