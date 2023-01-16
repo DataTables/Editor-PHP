@@ -142,8 +142,7 @@ class Options extends DataTables\Ext {
 	}
 
 	/**
-	 * Get / set the array values used for a leftJoin condition if it is to be
-	 * applied to the query to get the options.
+	 * Set up a left join operation for the options
 	 * 
 	 * @param string $table to get the information from
 	 * @param string $field1 the first field to get the information from
