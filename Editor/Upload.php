@@ -647,8 +647,17 @@ class Upload extends DataTables\Ext {
 					break;
 
 				default:
-					if ( is_callable($prop) && is_object($prop) ) { // is a closure
-						$q->set( $column, $prop( $db, $upload ) );
+					$val = $prop;
+
+					// Callable function - execute to get the value
+					if ( is_callable($prop) && is_object($prop) ) {
+						$val = $prop( $db, $upload );
+					}
+
+					if (is_string($val)) {
+						// Allow for replacement of __ID__, etc when the value is a string
+                        $pathFields[ $column ] = $val;
+						$q->set( $column, '-' ); // Use a temporary value (as above)
 					}
 					else {
 						$q->set( $column, $prop );
