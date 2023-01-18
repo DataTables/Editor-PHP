@@ -598,6 +598,7 @@ class Upload extends DataTables\Ext {
 	private function _dbExec ( $upload, $db )
 	{
 		$pathFields = array();
+		$insertedId = null;
 
 		// Insert the details requested, for the columns requested
 		$q = $db
@@ -654,13 +655,18 @@ class Upload extends DataTables\Ext {
 						$val = $prop( $db, $upload );
 					}
 
+					// If the primary key value was set - use that
+					if ( $column === $this->_dbPKey ) {
+						$insertedId = $val;
+					}
+
 					if (is_string($val)) {
 						// Allow for replacement of __ID__, etc when the value is a string
                         $pathFields[ $column ] = $val;
 						$q->set( $column, '-' ); // Use a temporary value (as above)
 					}
 					else {
-						$q->set( $column, $prop );
+						$q->set( $column, $val );
 					}
 
 					break;
@@ -668,7 +674,9 @@ class Upload extends DataTables\Ext {
 		}
 
 		$res = $q->exec();
-		$id  = $res->insertId();
+		$id = $insertedId !== null
+			? $insertedId
+			: $res->insertId();
 
 		// Update the newly inserted row with the path information. We have to
 		// use a second statement here as we don't know in advance what the
