@@ -691,6 +691,8 @@ class Editor extends Ext {
 	{
 		if ( $this->_debug ) {
 			$debugInfo = &$this->_debugInfo;
+
+			$debugInfo[] = 'Editor PHP libraries - version '. $this->version;
 			$debugVal = $this->_db->debug( function ( $mess ) use ( &$debugInfo ) {
 				$debugInfo[] = $mess;
 			} );
