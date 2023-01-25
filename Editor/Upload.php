@@ -128,6 +128,7 @@ class Upload extends DataTables\Ext {
 	private $_dbTable = null;
 	private $_dbPKey = null;
 	private $_dbFields = null;
+	private $_dbFormat = null;
 	private $_extns = null;
 	private $_extnError = null;
 	private $_error = null;
@@ -222,13 +223,17 @@ class Upload extends DataTables\Ext {
 	 *     defined by the constants of this class. The value can also be a
 	 *     string or a closure function if you wish to send custom information
 	 *     to the database.
+	 * @param callable Formatting function that can change the data obtained
+	 *     from the database. Only gets a single parameter passed in - the
+	 *     database row for the file that is read.
 	 * @return self Current instance, used for chaining
 	 */
-	public function db ( $table, $pkey, $fields )
+	public function db ( $table, $pkey, $fields, $format=null )
 	{
 		$this->_dbTable = $table;
 		$this->_dbPKey = $pkey;
 		$this->_dbFields = $fields;
+		$this->_dbFormat = $format;
 
 		return $this;
 	}
@@ -348,6 +353,10 @@ class Upload extends DataTables\Ext {
 		$out = array();
 
 		for ( $i=0, $ien=count($result) ; $i<$ien ; $i++ ) {
+			if ($this->_dbFormat) {
+				$this->_dbFormat( $result[$i] );
+			}
+
 			$out[ $result[$i][ $this->_dbPKey ] ] = $result[$i];
 		}
 
