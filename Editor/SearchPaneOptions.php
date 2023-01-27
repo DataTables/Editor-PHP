@@ -343,8 +343,8 @@ class SearchPaneOptions extends DataTables\Ext {
 			for ($i=0 ; $i<count($selected) ; $i++) {
 				$idx = array_search($selected[$i], $values);
 
-				if ($idx !== false) {
-					array_splice($http['searchPanes'][$field->name()], $idx, 1);
+				if ($idx === false) {
+					array_splice($http['searchPanes'][$field->name()], $i, 1);
 				}
 			}
 		}
@@ -444,6 +444,10 @@ class SearchPaneOptions extends DataTables\Ext {
 				$count = isset($entries[$value]) && isset($entries[$value]['count'])
 					? $entries[$value]['count']
 					: 0;
+
+				if (! $viewTotal) {
+					$total = $count;
+				}
 			}
 
 			$out[] = array(
