@@ -309,7 +309,7 @@ class SearchPaneOptions extends DataTables\Ext {
 			->where( $this->_where );
 
 		// If not cascading, then the total and count must be the same
-		if ($viewTotal || ($viewCount && ! $cascade)) {
+		if ($viewTotal) {
 			$q->get("COUNT(*) as total");
 		}
 
@@ -352,7 +352,7 @@ class SearchPaneOptions extends DataTables\Ext {
 		}
 
 		// Apply filters to cascade tables
-		if ($cascade) {
+		if ($viewCount || $cascade) {
 			$query = $db
 				->query('select')
 				->distinct(true)
@@ -425,6 +425,12 @@ class SearchPaneOptions extends DataTables\Ext {
 				$count = isset($entries[$value]) && isset($entries[$value]['count'])
 					? $entries[$value]['count']
 					: 0;
+
+				// For when viewCount is enabled and viewTotal is not
+				// the total needs to be the same as the count!
+				if ($total === null) {
+					$total = $count;
+				}
 			}
 
 			$out[] = array(
