@@ -322,6 +322,8 @@ class Editor extends Ext {
 	 */
 	public function field ( $_=null )
 	{
+		$args = func_get_args();
+
 		if ( is_string( $_ ) ) {
 			for ( $i=0, $ien=count($this->_fields) ; $i<$ien ; $i++ ) {
 				if ( $this->_fields[$i]->name() === $_ ) {
@@ -333,7 +335,7 @@ class Editor extends Ext {
 		}
 
 		if ( $_ !== null && !is_array($_) ) {
-			$_ = func_get_args();
+			$_ = $args;
 		}
 		return $this->_getSet( $this->_fields, $_, true );
 	}
@@ -351,8 +353,10 @@ class Editor extends Ext {
 	 */
 	public function fields ( $_=null )
 	{
+		$args = func_get_args();
+
 		if ( $_ !== null && !is_array($_) ) {
-			$_ = func_get_args();
+			$_ = $args;
 		}
 		return $this->_getSet( $this->_fields, $_, true );
 	}
@@ -404,8 +408,10 @@ class Editor extends Ext {
 	 */
 	public function join ( $_=null )
 	{
+		$args = func_get_args();
+
 		if ( $_ !== null && !is_array($_) ) {
-			$_ = func_get_args();
+			$_ = $args;
 		}
 		return $this->_getSet( $this->_join, $_, true );
 	}
@@ -742,8 +748,10 @@ class Editor extends Ext {
 	 */
 	public function readTable ( $_=null )
 	{
+		$args = func_get_args();
+
 		if ( $_ !== null && !is_array($_) ) {
-			$_ = func_get_args();
+			$_ = $args;
 		}
 		return $this->_getSet( $this->_readTableNames, $_, true );
 	}
@@ -764,8 +772,10 @@ class Editor extends Ext {
 	 */
 	public function table ( $_=null )
 	{
+		$args = func_get_args();
+
 		if ( $_ !== null && !is_array($_) ) {
-			$_ = func_get_args();
+			$_ = $args;
 		}
 		return $this->_getSet( $this->_table, $_, true );
 	}

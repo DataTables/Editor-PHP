@@ -169,8 +169,10 @@ class Join extends DataTables\Ext {
 	 */
 	public function field ( $_=null )
 	{
+		$args = func_get_args();
+
 		if ( $_ !== null && !is_array($_) ) {
-			$_ = func_get_args();
+			$_ = $args;
 		}
 		return $this->_getSet( $this->_fields, $_, true );
 	}
@@ -188,8 +190,10 @@ class Join extends DataTables\Ext {
 	 */
 	public function fields ( $_=null )
 	{
+		$args = func_get_args();
+
 		if ( $_ !== null && !is_array($_) ) {
-			$_ = func_get_args();
+			$_ = $args;
 		}
 		return $this->_getSet( $this->_fields, $_, true );
 	}

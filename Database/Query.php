@@ -320,11 +320,11 @@ abstract class Query {
 	 */
 	public function get ( $get )
 	{
+		$args = func_get_args();
+
 		if ( $get === null ) {
 			return $this;
 		}
-
-		$args = func_get_args();
 
 		for ( $i=0 ; $i<count($args) ; $i++ ) {
 			// If argument is an array then we loop over and add each using a
