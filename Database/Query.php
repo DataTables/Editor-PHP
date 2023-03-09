@@ -185,7 +185,11 @@ abstract class Query {
 	 *  @param string $db   Database name
 	 *  @return Query
 	 */
-	abstract public static function connect ( $user, $pass='', $host='', $port='', $db='', $dsn='' );
+	public static function connect ( $user, $pass='', $host='', $port='', $db='', $dsn='' ) {
+		// noop - PHP <7 can't have an abstract static without causing
+		// an error in strict mode. This should technically be an
+		// abstract method however.
+	}
 
 
 	/**
