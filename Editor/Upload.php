@@ -669,7 +669,7 @@ class Upload extends DataTables\Ext {
 						$insertedId = $val;
 					}
 
-					if (is_string($val)) {
+					if (is_string($val) && ! empty($val)) {
 						// Allow for replacement of __ID__, etc when the value is a string
                         $pathFields[ $column ] = $val;
 						$q->set( $column, '-' ); // Use a temporary value (as above)
