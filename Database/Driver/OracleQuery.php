@@ -122,9 +122,9 @@ class OracleQuery extends Query {
 		}
 		else if ( $this->_type === 'select' && $this->_oracle_offset !== null ) {
 			$sql = '
-				select *
-				from ('.$sql.')
-				where rownum > '.$this->_oracle_offset .' AND rownum <= '.($this->_oracle_offset+$this->_oracle_limit);
+				select * from (select rownum rnum, a.*
+				from ('.$sql.') a where rownum <= '.($this->_oracle_offset+$this->_oracle_limit).')
+				where rnum > '.$this->_oracle_offset;
 		}
 
 		$this->database()->debugInfo( $sql, $this->_bindings );
