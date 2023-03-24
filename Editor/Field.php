@@ -767,7 +767,11 @@ class Field extends DataTables\Ext {
 			return true;
 		}
 
-		$val = $this->_readProp( $this->name(), $data );
+		// Value could be from user data, or setValue might take priority
+		$val = $this->_setValue !== null ?
+			$this->_getAssignedValue( $this->_setValue ) :
+			$this->_readProp( $this->name(), $data );
+
 		$processData = $editor->inData();
 		$instances = array(
 			'action' => $processData['action'],
