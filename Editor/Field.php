@@ -114,7 +114,7 @@ class Field extends DataTables\Ext {
 	/** @var string */
 	private $_dbField = null;
 
-	/** @var boolean */
+	/** @var bool */
 	private $_get = true;
 
 	/** @var mixed */
@@ -168,7 +168,7 @@ class Field extends DataTables\Ext {
 	/** @var callable */
 	private $_xss = null;
 
-	/** @var boolean */
+	/** @var bool */
 	private $_xssFormat = true;
 
 
@@ -221,8 +221,8 @@ class Field extends DataTables\Ext {
 	 *
 	 * A field can be marked as write only when setting the get property to false
 	 * here.
-	 *  @param boolean $_ Value to set if using as a setter.
-	 *  @return boolean|self The get property if no parameter is given, or self
+	 *  @param bool $_ Value to set if using as a setter.
+	 *  @return bool|self The get property if no parameter is given, or self
 	 *    if used as a setter.
 	 */
 	public function get ( $_=null )
@@ -415,7 +415,7 @@ class Field extends DataTables\Ext {
 	 * during an create or edit action or to be set during both actions. This
 	 * provides the ability to have fields that are only set when a new row is
 	 * created (for example a "created" time stamp).
-	 *  @param string|boolean $_ Value to set when the method is being used as a
+	 *  @param string|bool $_ Value to set when the method is being used as a
 	 *    setter (leave as undefined to use as a getter). This can take the
 	 *    value of:
 	 *    
@@ -581,7 +581,7 @@ class Field extends DataTables\Ext {
 	 *  @param string $action Direction that the data is travelling  - 'get' is
 	 *    reading DB data, `create` and `edit` for writing to the DB
 	 *  @param array $data Data submitted from the client-side when setting.
-	 *  @return boolean true if the field should be used in the get / set.
+	 *  @return bool true if the field should be used in the get / set.
 	 *  @internal
 	 */
 	public function apply ( $action, $data=null )
@@ -649,7 +649,7 @@ class Field extends DataTables\Ext {
 	 * @param DataTables\DTRequest $http The http request sent to the server
 	 * @param DataTables\Field[] $fields All of the fields
 	 * @param any $leftJoin Info for a leftJoin if required
-	 * @return Promise<IOption[]> | boolean
+	 * @return Promise<IOption[]> | bool
 	 * @internal
 	 */
 	public function searchPaneOptionsExec ( $field, $editor, $http, $fields, $leftJoin)
@@ -674,7 +674,7 @@ class Field extends DataTables\Ext {
 	 * @param DataTables\DTRequest $http The http request sent to the server
 	 * @param DataTables\Field[] $fields All of the fields
 	 * @param any $leftJoin Info for a leftJoin if required
-	 * @return Promise<IOption[]> | boolean
+	 * @return Promise<IOption[]> | bool
 	 * @internal
 	 */
 	public function searchBuilderOptionsExec ( $field, $editor, $http, $fields, $leftJoin)
@@ -757,7 +757,7 @@ class Field extends DataTables\Ext {
 	 * @param array $data Data submitted from the client-side 
 	 * @param Editor $editor Editor instance
 	 * @param mixed $id Row id that is being validated
-	 * @return boolean|string `true` if valid, string with error message if not
+	 * @return bool|string `true` if valid, string with error message if not
 	 * @internal
 	 */
 	public function validate ( $data, $editor, $id=null )
@@ -931,7 +931,7 @@ class Field extends DataTables\Ext {
 	 *
 	 * @param  string $name  Javascript dotted object name to write to
 	 * @param  array  $data   Data source array to read from
-	 * @return boolean       `true` if present, `false` otherwise
+	 * @return bool       `true` if present, `false` otherwise
 	 * @private
 	 */
 	private function _inData ( $name, $data )

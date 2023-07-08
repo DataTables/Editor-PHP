@@ -57,9 +57,9 @@ class ValidateOptions extends DataTables\Ext {
     
     /**
      * Get / set the field empty option
-     * @param boolean $empty `false` if the field is not allowed to be
+     * @param bool $empty `false` if the field is not allowed to be
      *   empty. `true` if it can be.
-     * @return ValidateOptions|boolean Self if setting, current value if getting.
+     * @return ValidateOptions|bool Self if setting, current value if getting.
      */
     public function allowEmpty ( $empty=null ) {
         if ( $empty === null ) {
@@ -72,9 +72,9 @@ class ValidateOptions extends DataTables\Ext {
     
     /**
      * Get / set the field optional option
-     * @param boolean $optional `false` if the field does not need to be
+     * @param bool $optional `false` if the field does not need to be
      *   submitted. `true` if it must be.
-     * @return ValidateOptions|boolean Self if setting, current value if getting.
+     * @return ValidateOptions|bool Self if setting, current value if getting.
      */
     public function optional ( $optional=null ) {
         if ( $optional === null ) {

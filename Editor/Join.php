@@ -102,10 +102,10 @@ class Join extends DataTables\Ext {
 	/** @var string */
 	private $_name = null;
 
-	/** @var boolean */
+	/** @var bool */
 	private $_get = true;
 
-	/** @var boolean */
+	/** @var bool */
 	private $_set = true;
 
 	/** @var string */
@@ -114,7 +114,7 @@ class Join extends DataTables\Ext {
 	/** @var array */
 	private $_where = array();
 
-	/** @var boolean */
+	/** @var bool */
 	private $_whereSet = false;
 
 	/** @var array */
@@ -203,8 +203,8 @@ class Join extends DataTables\Ext {
 	 * Get / set get attribute.
 	 * 
 	 * When set to false no read operations will occur on the join tables.
-	 *  @param boolean $_ Value
-	 *  @return boolean|self Name
+	 *  @param bool $_ Value
+	 *  @return bool|self Name
 	 */
 	public function get ( $_=null )
 	{
@@ -347,8 +347,8 @@ class Join extends DataTables\Ext {
 	 * When set to false no write operations will occur on the join tables.
 	 * This can be useful when you want to display information which is joined,
 	 * but want to only perform write operations on the parent table.
-	 *  @param boolean $_ Value
-	 *  @return boolean|self Name
+	 *  @param bool $_ Value
+	 *  @return bool|self Name
 	 */
 	public function set ( $_=null )
 	{
@@ -456,8 +456,8 @@ class Join extends DataTables\Ext {
 	 *
 	 * This is default false (i.e. they are not included).
 	 *
-	 *  @param boolean $_ Include (`true`), or not (`false`)
-	 *  @return boolean Current value
+	 *  @param bool $_ Include (`true`), or not (`false`)
+	 *  @return bool Current value
 	 */
 	public function whereSet ( $_=null )
 	{

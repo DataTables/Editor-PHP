@@ -177,19 +177,19 @@ class Editor extends Ext {
 	/** @var string[] */
 	private $_readTableNames = array();
 
-	/** @var boolean */
+	/** @var bool */
 	private $_transaction = true;
 
 	/** @var array */
 	private $_where = array();
 
-	/** @var boolean */
+	/** @var bool */
 	private $_write = true;
 
 	/** @var array */
 	private $_leftJoin = array();
 
-	/** @var boolean - deprecated */
+	/** @var bool - deprecated */
 	private $_whereSet = false;
 
 	/** @var array */
@@ -198,7 +198,7 @@ class Editor extends Ext {
 	/** @var array */
 	private $_events = array();
 
-	/** @var boolean */
+	/** @var bool */
 	private $_debug = false;
 
 	/** @var array */
@@ -210,10 +210,10 @@ class Editor extends Ext {
 	/** @var callback */
 	private $_validator = array();
 
-	/** @var boolean Enable true / catch when processing */
+	/** @var bool Enable true / catch when processing */
 	private $_tryCatch = true;
 
-	/** @var boolean Enable / disable delete on left joined tables */
+	/** @var bool Enable / disable delete on left joined tables */
 	private $_leftJoinRemove = false;
 
 	/** @var string Action name allowing for configuration */
@@ -276,12 +276,12 @@ class Editor extends Ext {
 	 * This method can also be called with a string parameter, which will be
 	 * added to the debug information sent back to the client-side. This can
 	 * be useful when debugging event listeners, etc.
-	 * 
-	 *  @param boolean|mixed $_ Debug mode state. If not given, then used as a
+	 *
+	 *  @param bool|mixed $_ Debug mode state. If not given, then used as a
 	 *    getter. If given as anything other than a boolean, it will be added
 	 *    to the debug information sent back to the client.
-	 *  @param string [$path=null] Set an output path to log debug information
-	 *  @return boolean|self Debug mode state if no parameter is given, or
+	 *  @param string     [$path=null] Set an output path to log debug information
+	 *  @return bool|self Debug mode state if no parameter is given, or
 	 *    self if used as a setter or when adding a debug message.
 	 */
 	public function debug ( $_=null, $path=null )
@@ -422,10 +422,10 @@ class Editor extends Ext {
 	 * 
 	 * Basically the same as the {@see Editor->data()} method, but in this case we echo, or
 	 * return the JSON string of the data.
-	 *  @param boolean $print Echo the JSON string out (true, default) or return it
+	 *  @param bool $print Echo the JSON string out (true, default) or return it
 	 *    (false).
-	 *  @param int JSON encode option https://www.php.net/manual/en/json.constants.php
-	 *  @return string|self self if printing the JSON, or JSON representation of 
+	 *  @param int         JSON encode option https://www.php.net/manual/en/json.constants.php
+	 *  @return string|self self if printing the JSON, or JSON representation of
 	 *    the processed data if false is given as the first parameter.
 	 */
 	public function json ( $print=true, $options=0 )
@@ -548,8 +548,8 @@ class Editor extends Ext {
 	 * removed completely in v2. Use `ON DELETE CASCADE` in your database instead.
 	 * 
 	 *  @deprecated
-	 *  @param boolean $_ Value to set. If not given, then used as a getter.
-	 *  @return boolean|self Value if no parameter is given, or
+	 *  @param bool $_ Value to set. If not given, then used as a getter.
+	 *  @return bool|self Value if no parameter is given, or
 	 *    self if used as a setter.
 	 */
 	public function leftJoinRemove ( $_=null )
@@ -606,7 +606,7 @@ class Editor extends Ext {
 	 *
 	 * @param  string  $row   The row of data that the primary key value should
 	 *   be extracted from.
-	 * @param  boolean $flat  Flag to indicate if the given array is flat
+	 * @param  bool    $flat  Flag to indicate if the given array is flat
 	 *   (useful for `where` conditions) or nested for join tables.
 	 * @return string The created primary key value.
 	 * @throws \Exception If one of the values that the primary key is made up
@@ -649,8 +649,8 @@ class Editor extends Ext {
 	/**
 	 * Convert a primary key combined value to an array of field values.
 	 *
-	 * @param  string  $value The id that should be split apart
-	 * @param  boolean $flat  Flag to indicate if the returned array should be
+	 * @param  string   $value The id that should be split apart
+	 * @param  bool     $flat  Flag to indicate if the returned array should be
 	 *   flat (useful for `where` conditions) or nested for join tables.
 	 * @param  string[] $pkey The primary key name - will use the instance value
 	 *   if not given
@@ -789,9 +789,9 @@ class Editor extends Ext {
 	 * This can be optionally disabled using this method, if required by your
 	 * database configuration.
 	 *
-	 *  @param boolean $_ Enable (`true`) or disabled (`false`) transactions.
+	 *  @param bool $_ Enable (`true`) or disabled (`false`) transactions.
 	 *    If not given, then used as a getter.
-	 *  @return boolean|self Transactions enabled flag, or self if used as a
+	 *  @return bool|self Transactions enabled flag, or self if used as a
 	 *    setter.
 	 */
 	public function transaction ( $_=null )
@@ -804,8 +804,8 @@ class Editor extends Ext {
 	 * Enable / try catch when `process()` is called. Disabling this can be
 	 * useful for debugging, but is not recommended for production.
 	 *
-	 * @param  boolean $_ `true` to enable (default), otherwise false to disable
-	 * @return boolean|Editor Value if used as a getter, otherwise `$this` when
+	 * @param  bool $_ `true` to enable (default), otherwise false to disable
+	 * @return bool|Editor Value if used as a getter, otherwise `$this` when
 	 *   used as a setter.
 	 */
 	public function tryCatch ( $_=null )
@@ -828,7 +828,7 @@ class Editor extends Ext {
 	 *      condition. These elements are themselves arrays with two properties
 	 *      set; `name` and `status`.
 	 *  @param array $data The format data to check
-	 *  @return boolean `true` if the data is valid, `false` if not.
+	 *  @return bool `true` if the data is valid, `false` if not.
 	 */
 	public function validate ( &$errors, $data )
 	{
@@ -928,9 +928,9 @@ class Editor extends Ext {
 	/**
 	 * Get / set if the WHERE conditions should be included in the create and
 	 * edit actions.
-	 * 
-	 *  @param boolean $_ Include (`true`), or not (`false`)
-	 *  @return boolean Current value
+	 *
+	 *  @param bool $_ Include (`true`), or not (`false`)
+	 *  @return bool Current value
 	 *  @deprecated Note that `whereSet` is now deprecated and replaced with the
 	 *    ability to set values for columns on create and edit. The C# libraries
 	 *    do not support this option at all.
@@ -2556,7 +2556,7 @@ class Editor extends Ext {
 	 * Validate that all primary key fields have values for create.
 	 *
 	 * @param  array $row Row's data
-	 * @return boolean    `true` if valid, `false` otherwise
+	 * @return bool    `true` if valid, `false` otherwise
 	 */
 	private function _pkey_validate_insert ( $row )
 	{

@@ -274,7 +274,7 @@ abstract class Query {
 	/**
 	 * Set a distinct flag for a `select` query. Note that this has no effect on
 	 * any of the other query types.
-	 *  @param boolean $dis Optional
+	 *  @param bool $dis Optional
 	 *  @return Query
 	 */
 	public function distinct ( $dis )
@@ -559,7 +559,7 @@ abstract class Query {
 	 *    must be set, or as an array of key/value pairs to be set.
 	 *  @param string          $val When $set is given as a simple string, $set is the field
 	 *    name and this is the field's value.
-	 *  @param boolean         $bind Should the value be bound or not
+	 *  @param bool            $bind Should the value be bound or not
 	 *  @return self
 	 */
 	public function set ( $set, $val=null, $bind=true )
@@ -600,7 +600,7 @@ abstract class Query {
 	 *    values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
 	 *    on the value of `$op` which should be `=` or `!=`.
 	 *  @param string                   $op    Condition operator: <, >, = etc
-	 *  @param boolean                  $bind  Escape the value (true, default) or not (false).
+	 *  @param bool                     $bind  Escape the value (true, default) or not (false).
 	 *  @return self
 	 *
 	 *  @example
@@ -653,7 +653,7 @@ abstract class Query {
 	 *    values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
 	 *    on the value of `$op` which should be `=` or `!=`.
 	 *  @param string                   $op    Condition operator: <, >, = etc
-	 *  @param boolean                  $bind  Escape the value (true, default) or not (false).
+	 *  @param bool                     $bind  Escape the value (true, default) or not (false).
 	 *  @return self
 	 */
 	public function and_where ( $key, $value=null, $op="=", $bind=true )
@@ -675,7 +675,7 @@ abstract class Query {
 	 *    values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
 	 *    on the value of `$op` which should be `=` or `!=`.
 	 *  @param string                   $op    Condition operator: <, >, = etc
-	 *  @param boolean                  $bind  Escape the value (true, default) or not (false).
+	 *  @param bool                     $bind  Escape the value (true, default) or not (false).
 	 *  @return self
 	 */
 	public function or_where ( $key, $value=null, $op="=", $bind=true )
@@ -711,10 +711,10 @@ abstract class Query {
 	 * define if a grouping bracket should be opened or closed in the query.
 	 * This method is not prefer.
 	 *
-	 *  @param boolean|callable $inOut If callable it will create the group
+	 *  @param bool|callable $inOut If callable it will create the group
 	 *      automatically and pass the query into the called function. For
-	 *      legacy operations use `true` to open brackets, `false` to close. 
-	 *  @param string  $op    Conditional operator to use to join to the
+	 *      legacy operations use `true` to open brackets, `false` to close.
+	 *  @param string        $op    Conditional operator to use to join to the
 	 *      preceding condition. Default `AND`.
 	 *  @return self
 	 *
