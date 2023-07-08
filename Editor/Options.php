@@ -143,7 +143,7 @@ class Options extends DataTables\Ext {
 
 	/**
 	 * Set up a left join operation for the options
-	 * 
+	 *
 	 * @param string $table to get the information from
 	 * @param string $field1 the first field to get the information from
 	 * @param string $operator the operation to perform on the two fields
@@ -338,4 +338,3 @@ class Options extends DataTables\Ext {
 		return $out;
 	}
 }
-	

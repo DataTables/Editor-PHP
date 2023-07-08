@@ -181,7 +181,7 @@ class SearchPaneOptions extends DataTables\Ext {
 	/**
 	 * Get / set the array values used for a leftJoin condition if it is to be
 	 * applied to the query to get the options.
-	 * 
+	 *
 	 * @param string $table to get the information from
 	 * @param string $field1 the first field to get the information from
 	 * @param string $operator the operation to perform on the two fields
@@ -202,7 +202,7 @@ class SearchPaneOptions extends DataTables\Ext {
 
 	/**
 	 * Adds all of the where conditions to the desired query
-	 * 
+	 *
 	 * @param string $query the query being built
 	 * @return self
 	 */
@@ -394,7 +394,7 @@ class SearchPaneOptions extends DataTables\Ext {
 						for($j=0, $jen=count($http['searchPanes'][$fieldName]); $j < $jen ; $j++) {
 							$q->or_where(
 								$fieldOpt->dbField(),
-								isset($http['searchPanes_null'][$fieldName][$j]) 
+								isset($http['searchPanes_null'][$fieldName][$j])
 									? null
 									: $http['searchPanes'][$fieldName][$j],
 								'='
@@ -464,4 +464,3 @@ class SearchPaneOptions extends DataTables\Ext {
 		return $out;
 	}
 }
-	

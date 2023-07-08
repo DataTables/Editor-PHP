@@ -39,7 +39,7 @@ class ValidateOptions extends DataTables\Ext {
 
         return $this;
     }
-    
+
     /**
      * Get / set the error message to use if validation fails
      * @param string $msg Error message to use. If not given, the currently
@@ -54,7 +54,7 @@ class ValidateOptions extends DataTables\Ext {
         $this->_message = $msg;
         return $this;
     }
-    
+
     /**
      * Get / set the field empty option
      * @param boolean $empty `false` if the field is not allowed to be
@@ -69,7 +69,7 @@ class ValidateOptions extends DataTables\Ext {
         $this->_empty = $empty;
         return $this;
     }
-    
+
     /**
      * Get / set the field optional option
      * @param boolean $optional `false` if the field does not need to be

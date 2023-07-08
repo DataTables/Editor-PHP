@@ -16,7 +16,7 @@ if (!defined('DATATABLES')) exit();
 
 /**
  * Formatter methods for the DataTables Editor
- * 
+ *
  * All methods in this class are static with common inputs and returns.
  */
 class Format {
@@ -52,9 +52,9 @@ class Format {
 	 * Convert from SQL date / date time format to a format given by the options
 	 * parameter.
 	 *
-	 * Typical use of this method is to use it with the 
+	 * Typical use of this method is to use it with the
 	 * {@see Field::getFormatter()} and {@see Field::setFormatter()} methods of
-	 * {@see Field} where the parameters required for this method will be 
+	 * {@see Field} where the parameters required for this method will be
 	 * automatically satisfied.
 	 *   @param string $val Value to convert from MySQL date format
 	 *   @param string[] $data Data for the whole row / submitted data
@@ -82,9 +82,9 @@ class Format {
 	 * Convert from a format given by the options parameter to a format that
 	 * SQL servers will recognise as a date.
 	 *
-	 * Typical use of this method is to use it with the 
+	 * Typical use of this method is to use it with the
 	 * {@see Field::getFormatter()} and {@see Field::setFormatter()} methods of
-	 * {@see Field} where the parameters required for this method will be 
+	 * {@see Field} where the parameters required for this method will be
 	 * automatically satisfied.
 	 *   @param string $val Value to convert to SQL date format
 	 *   @param string[] $data Data for the whole row / submitted data
@@ -117,9 +117,9 @@ class Format {
 	/**
 	 * Convert from one date time format to another
 	 *
-	 * Typical use of this method is to use it with the 
+	 * Typical use of this method is to use it with the
 	 * {@see Field::getFormatter()} and {@see Field::setFormatter()} methods of
-	 * {@see Field} where the parameters required for this method will be 
+	 * {@see Field} where the parameters required for this method will be
 	 * automatically satisfied.
 	 *   @param string $val Value to convert
 	 *   @param string[] $data Data for the whole row / submitted data
@@ -343,4 +343,3 @@ class Format {
 		return self::toDecimalChar( $opts );
 	}
 }
-

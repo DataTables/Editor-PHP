@@ -22,10 +22,10 @@ use
  * DataTables Database connection object.
  *
  * Create a database connection which may then have queries performed upon it.
- * 
+ *
  * This is a database abstraction class that can be used on multiple different
  * databases. As a result of this, it might not be suitable to perform complex
- * queries through this interface or vendor specific queries, but everything 
+ * queries through this interface or vendor specific queries, but everything
  * required for basic database interaction is provided through the abstracted
  * methods.
  */
@@ -144,7 +144,7 @@ class Database {
 
 	/**
 	 * Get / set debug mode.
-	 * 
+	 *
 	 *  @param boolean $_ Debug mode state. If not given, then used as a getter.
 	 *  @return boolean|self Debug mode state if no parameter is given, or
 	 *    self if used as a setter.
@@ -470,4 +470,3 @@ class Database {
 		return $this;
 	}
 };
-

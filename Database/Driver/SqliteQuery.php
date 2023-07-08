@@ -58,7 +58,7 @@ class SqliteQuery extends Query {
 		} catch (\PDOException $e) {
 			// If we can't establish a DB connection then we return a DataTables
 			// error.
-			echo json_encode( array( 
+			echo json_encode( array(
 				"error" => "An error occurred while connecting to the database ".
 					"'{$db}'. The error reported by the server was: ".$e->getMessage()
 			) );
@@ -109,4 +109,3 @@ class SqliteQuery extends Query {
 		return new SqliteResult( $resource, $this->_stmt );
 	}
 }
-

@@ -70,4 +70,3 @@ class SqliteResult extends Result {
 		return $this->_dbh->lastInsertId();
 	}
 }
-

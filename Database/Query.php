@@ -26,7 +26,7 @@ use
 
 /**
  * Perform an individual query on the database.
- * 
+ *
  * The typical pattern for using this class is through the {@see
  * \DataTables\Database->query()} method (and it's 'select', etc short-cuts).
  * Typically it would not be initialised directly.
@@ -515,7 +515,7 @@ abstract class Query {
 	/**
 	 * Order by
 	 *  @param string|string[] $order Columns and direction to order by - can
-	 *    be specified as individual names, an array of names, a string of comma 
+	 *    be specified as individual names, an array of names, a string of comma
 	 *    separated names or any combination of those.
 	 *  @return self
 	 */
@@ -706,14 +706,14 @@ abstract class Query {
 	/**
 	 * Provide grouping for WHERE conditions. Use it with a callback function to
 	 * automatically group any conditions applied inside the method.
-	 * 
+	 *
 	 * For legacy reasons this method also provides the ability to explicitly
 	 * define if a grouping bracket should be opened or closed in the query.
 	 * This method is not prefer.
 	 *
 	 *  @param boolean|callable $inOut If callable it will create the group
 	 *      automatically and pass the query into the called function. For
-	 *      legacy operations use `true` to open brackets, `false` to close. 
+	 *      legacy operations use `true` to open brackets, `false` to close.
 	 *  @param string  $op    Conditional operator to use to join to the
 	 *      preceding condition. Default `AND`.
 	 *  @return self
@@ -744,7 +744,7 @@ abstract class Query {
 	/**
 	 * Provide a method that can be used to perform a `WHERE ... IN (...)` query
 	 * with bound values and parameters.
-	 * 
+	 *
 	 * Note this is only suitable for local values, not a sub-query. For that use
 	 * `->where()` with an unbound value.
 	 *
@@ -778,7 +778,7 @@ abstract class Query {
 			'operator' => $operator,
 			'group'    => null,
 			'field'    => $this->_protect_identifiers($field),
-			'query'    => $this->_protect_identifiers($field) .' IN ('.implode(', ', $binders).')' 
+			'query'    => $this->_protect_identifiers($field) .' IN ('.implode(', ', $binders).')'
 		);
 
 		return $this;
@@ -867,7 +867,7 @@ abstract class Query {
 
 	/**
 	 * Create the GROUP BY string
-	 * 
+	 *
 	 * @return string
 	 * @internal
 	 */
@@ -1009,7 +1009,7 @@ abstract class Query {
 	 */
 	protected function _delete()
 	{
-		$this->_prepare( 
+		$this->_prepare(
 			'DELETE FROM '
 			.$this->_build_table()
 			.$this->_build_where()
@@ -1043,7 +1043,7 @@ abstract class Query {
 	 */
 	protected function _insert()
 	{
-		$this->_prepare( 
+		$this->_prepare(
 			'INSERT INTO '
 				.$this->_build_table().' ('
 					.$this->_build_field()
@@ -1148,7 +1148,7 @@ abstract class Query {
 	 */
 	protected function _select()
 	{
-		$this->_prepare( 
+		$this->_prepare(
 			'SELECT '.($this->_distinct ? 'DISTINCT ' : '')
 			.$this->_build_field( true )
 			.'FROM '.$this->_build_table()
@@ -1173,7 +1173,7 @@ abstract class Query {
 			'SELECT COUNT('.$this->_build_field().') as '.$this->_protect_identifiers('cnt') :
 			'SELECT COUNT('.$this->_build_field().') '.$this->_protect_identifiers('cnt');
 
-		$this->_prepare( 
+		$this->_prepare(
 			$select
 			.' FROM '.$this->_build_table()
 			.$this->_build_join()
@@ -1191,7 +1191,7 @@ abstract class Query {
 	 */
 	protected function _update()
 	{
-		$this->_prepare( 
+		$this->_prepare(
 			'UPDATE '
 			.$this->_build_table()
 			.'SET '.$this->_build_set()
@@ -1291,5 +1291,3 @@ abstract class Query {
 		return array_keys($arr) !== range(0, count($arr) - 1);
 	}
 };
-
-

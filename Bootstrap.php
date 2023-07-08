@@ -51,4 +51,3 @@ spl_autoload_register( function ($class) {
 //   Database connection is globally available
 //
 $db = new Database( $sql_details );
-
