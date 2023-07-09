@@ -25,7 +25,7 @@ use
  *
  * Editor class instances are capable of servicing all of the requests that
  * DataTables and Editor will make from the client-side - specifically:
- * 
+ *
  * * Get data
  * * Create new record
  * * Edit existing record
@@ -40,12 +40,12 @@ use
  * the Editor class is used, and how to install Editor on your server, please
  * refer to the {@link https://editor.datatables.net/manual Editor manual}.
  *
- *  @example 
+ *  @example
  *    A very basic example of using Editor to create a table with four fields.
  *    This is all that is needed on the server-side to create a editable
  *    table - the {@see Editor->process()} method determines what action DataTables /
  *    Editor is requesting from the server-side and will correctly action it.
- *    
+ *
  *    ```php
  *      Editor::inst( $db, 'browsers' )
  *          ->fields(
@@ -81,7 +81,7 @@ class Editor extends Ext {
 
 	/**
 	 * Determine the request type from an HTTP request.
-	 * 
+	 *
 	 * @param array $http Typically $_POST, but can be any array used to carry
 	 *   an Editor payload
 	 * @param string $name The parameter name that the action should be read from.
@@ -240,8 +240,8 @@ class Editor extends Ext {
 
 	/**
 	 * Get the data constructed in this instance.
-	 * 
-	 * This will get the PHP array of data that has been constructed for the 
+	 *
+	 * This will get the PHP array of data that has been constructed for the
 	 * command that has been processed by this instance. Therefore only useful after
 	 * process has been called.
 	 *  @return array Processed data array.
@@ -272,7 +272,7 @@ class Editor extends Ext {
 	 * method enables that ability. Information about the queries used is
 	 * automatically added to the output data array / JSON under the property
 	 * name `debugSql`.
-	 * 
+	 *
 	 * This method can also be called with a string parameter, which will be
 	 * added to the debug information sent back to the client-side. This can
 	 * be useful when debugging event listeners, etc.
@@ -302,7 +302,7 @@ class Editor extends Ext {
 
 	/**
 	 * Get / set field instance.
-	 * 
+	 *
 	 * The list of fields designates which columns in the table that Editor will work
 	 * with (both get and set).
 	 *  @param Field|string $_... This parameter effects the return value of the
@@ -343,9 +343,9 @@ class Editor extends Ext {
 
 	/**
 	 * Get / set field instances.
-	 * 
+	 *
 	 * An alias of {@see field}, for convenience.
-	 *  @param Field $_... Instances of the {@see Field} class, given as a single 
+	 *  @param Field $_... Instances of the {@see Field} class, given as a single
 	 *    instance of {@see Field}, an array of {@see Field} instances, or multiple
 	 *    {@see Field} instance parameters for the function.
 	 *  @return Field[]|self Array of fields, or self if used as a setter.
@@ -367,7 +367,7 @@ class Editor extends Ext {
 	 *
 	 * Typically primary keys are numeric and this is not a valid ID value in an
 	 * HTML document - is also increases the likelihood of an ID clash if multiple
-	 * tables are used on a single page. As such, a prefix is assigned to the 
+	 * tables are used on a single page. As such, a prefix is assigned to the
 	 * primary key value for each row, and this is used as the DOM ID, so Editor
 	 * can track individual rows.
 	 *  @param string $_ Primary key's name. If not given, then used as a getter.
@@ -396,7 +396,7 @@ class Editor extends Ext {
 	 * Get / set join instances. Note that for the majority of use cases you
 	 * will want to use the `leftJoin()` method. It is significantly easier
 	 * to use if you are just doing a simple left join!
-	 * 
+	 *
 	 * The list of Join instances that Editor will join the parent table to
 	 * (i.e. the one that the {@see Editor->table()} and {@see Editor->fields}
 	 * methods refer to in this class instance).
@@ -419,7 +419,7 @@ class Editor extends Ext {
 
 	/**
 	 * Get the JSON for the data constructed in this instance.
-	 * 
+	 *
 	 * Basically the same as the {@see Editor->data()} method, but in this case we echo, or
 	 * return the JSON string of the data.
 	 *  @param bool $print Echo the JSON string out (true, default) or return it
@@ -506,11 +506,11 @@ class Editor extends Ext {
 	 * @param string $field2 Field from the child table to use as the join link
 	 * @return self Self for chaining.
 	 *
-	 * @example 
+	 * @example
 	 *    Simple join:
-	 *    
+	 *
 	 *    ```php
-	 *        ->field( 
+	 *        ->field(
 	 *          Field::inst( 'users.first_name as myField' ),
 	 *          Field::inst( 'users.last_name' ),
 	 *          Field::inst( 'users.dept_id' ),
@@ -522,7 +522,7 @@ class Editor extends Ext {
 	 *    ```</code>```
 	 *
 	 *    This is basically the same as the following SQL statement:
-	 * 
+	 *
 	 *    ```sql
 	 *      SELECT users.first_name, users.last_name, user.dept_id, dept.name
 	 *      FROM users
@@ -546,7 +546,7 @@ class Editor extends Ext {
 	 * Indicate if a remove should be performed on left joined tables when deleting
 	 * from the parent row. Note that this is disabled by default and will be
 	 * removed completely in v2. Use `ON DELETE CASCADE` in your database instead.
-	 * 
+	 *
 	 *  @deprecated
 	 *  @param bool $_ Value to set. If not given, then used as a getter.
 	 *  @return bool|self Value if no parameter is given, or
@@ -759,7 +759,7 @@ class Editor extends Ext {
 
 	/**
 	 * Get / set the table name.
-	 * 
+	 *
 	 * The table name designated which DB table Editor will use as its data
 	 * source for working with the database. Table names can be given with an
 	 * alias, which can be used to simplify larger table names. The field
@@ -881,9 +881,9 @@ class Editor extends Ext {
 
 	/**
 	 * Where condition to add to the query used to get data from the database.
-	 * 
+	 *
 	 * Can be used in two different ways:
-	 * 
+	 *
 	 * * Simple case: `where( field, value, operator )`
 	 * * Complex: `where( fn )`
 	 *
@@ -898,7 +898,7 @@ class Editor extends Ext {
 	 * using Editor removes the row from the where condition, the result is
 	 * undefined (since Editor expects the row to still be available, but the
 	 * condition removes it from the result set).
-	 * 
+	 *
 	 * @param string|callable $key   Single field name or a closure function
 	 * @param string          $value Single field value.
 	 * @param string          $op    Condition operator: <, >, = etc
@@ -1174,8 +1174,8 @@ class Editor extends Ext {
 			}
 		}
 
-		$searchPanes[ 'options' ] = $spOptions; 
-		$searchBuilder[ 'options' ] = $sbOptions; 
+		$searchPanes[ 'options' ] = $spOptions;
+		$searchBuilder[ 'options' ] = $sbOptions;
 
 		// Row based "joins"
 		for ( $i=0 ; $i<count($this->_join) ; $i++ ) {
@@ -1999,7 +1999,7 @@ class Editor extends Ext {
 						for($j=0 ; $j<count($http['searchPanes'][$field->name()]) ; $j++){
 							$q->or_where(
 								$field->dbField(),
-								isset($http['searchPanes_null'][$field->name()][$j]) 
+								isset($http['searchPanes_null'][$field->name()][$j])
 									? null
 									: $http['searchPanes'][$field->name()][$j],
 								'='
@@ -2494,7 +2494,7 @@ class Editor extends Ext {
 
 	/**
 	 * Trigger an event
-	 * 
+	 *
 	 * @private
 	 */
 	private function _trigger ( $eventName, &$arg1=null, &$arg2=null, &$arg3=null, &$arg4=null, &$arg5=null )
@@ -2601,4 +2601,3 @@ class Editor extends Ext {
 			$this->_table;
 	}
 }
-

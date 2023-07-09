@@ -74,4 +74,3 @@ class FirebirdResult extends Result {
 		return $rows[0][$this->_pkey];
 	}
 }
-

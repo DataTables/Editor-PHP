@@ -40,7 +40,7 @@ class Ext {
 	}
 
 	/**
-	 * Static method to instantiate a new instance of a class (shorthand of 
+	 * Static method to instantiate a new instance of a class (shorthand of
 	 * 'instantiate').
 	 *
 	 * This method performs exactly the same actions as the 'instantiate'
@@ -219,4 +219,3 @@ class Ext {
 		$inner[ $names[count($names)-1] ] = $value;
 	}
 }
-

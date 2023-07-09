@@ -25,9 +25,9 @@ use
  * The Join class can be used with {@see Editor->join()} to allow Editor to
  * obtain joined information from the database.
  *
- * For an overview of how Join tables work, please refer to the 
+ * For an overview of how Join tables work, please refer to the
  * {@link https://editor.datatables.net/manual/php/ Editor manual} as it is
- * useful to understand how this class represents the links between tables, 
+ * useful to understand how this class represents the links between tables,
  * before fully getting to grips with it's API.
  *
  *  @example
@@ -66,7 +66,7 @@ class Join extends DataTables\Ext {
 	/**
 	 * Join instance constructor.
 	 *  @param string $table Table name to get the joined data from.
-	 *  @param string $type Work with a single result ('object') or an array of 
+	 *  @param string $type Work with a single result ('object') or an array of
 	 *    results ('array') for the join.
 	 */
 	function __construct( $table=null, $type='object' )
@@ -133,12 +133,12 @@ class Join extends DataTables\Ext {
 	
 	/**
 	 * Get / set parent table alias.
-	 * 
+	 *
 	 * When working with a self referencing table (i.e. a column in the table contains
 	 * a primary key value from its own table) it can be useful to set an alias on the
 	 * parent table's name, allowing a self referencing Join. For example:
 	 *   ```
-	 *   SELECT p2.publisher 
+	 *   SELECT p2.publisher
 	 *   FROM   publisher as p2
 	 *   JOIN   publisher on (publisher.idPublisher = p2.idPublisher)
 	 *   ```
@@ -158,10 +158,10 @@ class Join extends DataTables\Ext {
 
 	/**
 	 * Get / set field instances.
-	 * 
+	 *
 	 * The list of fields designates which columns in the table that will be read
 	 * from the joined table.
-	 *  @param Field $_... Instances of the {@see Field} class, given as a single 
+	 *  @param Field $_... Instances of the {@see Field} class, given as a single
 	 *    instance of {@see Field}, an array of {@see Field} instances, or multiple
 	 *    {@see Field} instance parameters for the function.
 	 *  @return Field[]|self Array of fields, or self if used as a setter.
@@ -180,9 +180,9 @@ class Join extends DataTables\Ext {
 
 	/**
 	 * Get / set field instances.
-	 * 
+	 *
 	 * An alias of {@see field}, for convenience.
-	 *  @param Field $_... Instances of the {@see Field} class, given as a single 
+	 *  @param Field $_... Instances of the {@see Field} class, given as a single
 	 *    instance of {@see Field}, an array of {@see Field} instances, or multiple
 	 *    {@see Field} instance parameters for the function.
 	 *  @return Field[]|self Array of fields, or self if used as a setter.
@@ -201,7 +201,7 @@ class Join extends DataTables\Ext {
 
 	/**
 	 * Get / set get attribute.
-	 * 
+	 *
 	 * When set to false no read operations will occur on the join tables.
 	 *  @param bool $_ Value
 	 *  @return bool|self Name
@@ -278,13 +278,13 @@ class Join extends DataTables\Ext {
 	 * Create a join link between two tables. The order of the fields does not
 	 * matter, but each field must contain the table name as well as the field
 	 * name.
-	 * 
+	 *
 	 * This method can be called a maximum of two times for an Mjoin instance:
-	 * 
+	 *
 	 * * First time, creates a link between the Editor host table and a join
 	 *   table
 	 * * Second time creates the links required for a link table.
-	 * 
+	 *
 	 * Please refer to the Editor Mjoin documentation for further details:
 	 * https://editor.datatables.net/manual/php
      *
@@ -327,8 +327,8 @@ class Join extends DataTables\Ext {
 
 	/**
 	 * Get / set name.
-	 * 
-	 * The `name` of the Join is the JSON property key that is used when 
+	 *
+	 * The `name` of the Join is the JSON property key that is used when
 	 * 'getting' the data, and the HTTP property key (in a JSON style) when
 	 * 'setting' data. Typically the name of the db table will be used here,
 	 * but this method allows that to be overridden.
@@ -343,7 +343,7 @@ class Join extends DataTables\Ext {
 
 	/**
 	 * Get / set set attribute.
-	 * 
+	 *
 	 * When set to false no write operations will occur on the join tables.
 	 * This can be useful when you want to display information which is joined,
 	 * but want to only perform write operations on the parent table.
@@ -377,12 +377,12 @@ class Join extends DataTables\Ext {
 
 	/**
 	 * Get / set the join type.
-	 * 
+	 *
 	 * The join type allows the data that is returned from the join to be given
 	 * as an array (i.e. working with multiple possibly results for each record from
 	 * the parent table), or as an object (i.e. working which one and only one result
 	 * for each record form the parent table).
-	 *  @param string $_ Join type ('object') or an array of 
+	 *  @param string $_ Join type ('object') or an array of
 	 *    results ('array') for the join.
 	 *  @return String|self Join type, or self if used as a setter.
 	 */
@@ -414,9 +414,9 @@ class Join extends DataTables\Ext {
 	/**
 	 * Where condition to add to the query used to get data from the database.
 	 * Note that this is applied to the child table.
-	 * 
+	 *
 	 * Can be used in two different ways:
-	 * 
+	 *
 	 * * Simple case: `where( field, value, operator )`
 	 * * Complex: `where( fn )`
 	 *
@@ -449,7 +449,7 @@ class Join extends DataTables\Ext {
 	/**
 	 * Get / set if the WHERE conditions should be included in the create and
 	 * edit actions.
-	 * 
+	 *
 	 * This means that the fields which have been used as part of the 'get'
 	 * WHERE condition (using the `where()` method) will be set as the values
 	 * given.
@@ -553,7 +553,7 @@ class Join extends DataTables\Ext {
 
 			// Check that the joining field is available.  The joining key can
 			// come from the Editor instance's primary key, or any other field,
-			// including a nested value (from a left join). If the instance's 
+			// including a nested value (from a left join). If the instance's
 			// pkey, then we've got that in the DT_RowId parameter, so we can
 			// use that. Otherwise, the key must be in the field list.
 			if ( $this->_propExists( $dteTable.'.'.$joinField, $data[0] ) ) {
@@ -581,7 +581,7 @@ class Join extends DataTables\Ext {
 				$whereIn = array();
 
 				for ( $i=0 ; $i<count($data) ; $i++ ) {
-					$whereIn[] = $pkeyIsJoin ? 
+					$whereIn[] = $pkeyIsJoin ?
 						str_replace( $idPrefix, '', $data[$i]['DT_RowId'] ) :
 						$this->_readProp( $readField, $data[$i] );
 				}
@@ -620,7 +620,7 @@ class Join extends DataTables\Ext {
 
 			// Loop over the data and do a join based on the data available
 			for ( $i=0 ; $i<count($data) ; $i++ ) {
-				$rowPKey = $pkeyIsJoin ? 
+				$rowPKey = $pkeyIsJoin ?
 					str_replace( $idPrefix, '', $data[$i]['DT_RowId'] ) :
 					$this->_readProp( $readField, $data[$i] );
 
@@ -661,7 +661,7 @@ class Join extends DataTables\Ext {
 		// there we do nothing
 		if (
 			! $this->_set ||
-			! isset($data[$this->_name]) || 
+			! isset($data[$this->_name]) ||
 			! isset($data[$this->_name.'-many-count'])
 		) {
 			return;
@@ -866,7 +866,7 @@ class Join extends DataTables\Ext {
 				}
 			}
 
-			$stmt->exec(); 
+			$stmt->exec();
 		}
 	}
 

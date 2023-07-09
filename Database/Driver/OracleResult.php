@@ -79,4 +79,3 @@ class OracleResult extends Result {
 		return $this->_pkey_val;
 	}
 }
-

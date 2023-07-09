@@ -79,4 +79,3 @@ class Db2Result extends Result {
 		return $a;
 	}
 }
-

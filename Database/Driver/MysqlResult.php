@@ -70,4 +70,3 @@ class MysqlResult extends Result {
 		return $this->_dbh->lastInsertId();
 	}
 }
-

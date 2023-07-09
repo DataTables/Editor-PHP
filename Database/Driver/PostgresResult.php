@@ -72,4 +72,3 @@ class PostgresResult extends Result {
 		return $rows[0]['dt_pkey'];
 	}
 }
-
