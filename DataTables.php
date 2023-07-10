@@ -27,8 +27,7 @@ if ( version_compare( PHP_VERSION, "5.3.0", '<' ) ) {
 
 
 //
-// Load the DataTables bootstrap core file and let it register the required 
+// Load the DataTables bootstrap core file and let it register the required
 // handlers.
 //
 require( dirname(__FILE__).'/Bootstrap.php' );
-

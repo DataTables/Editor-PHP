@@ -181,7 +181,7 @@ class SearchBuilderOptions extends DataTables\Ext {
 	/**
 	 * Get / set the array values used for a leftJoin condition if it is to be
 	 * applied to the query to get the options.
-	 * 
+	 *
 	 * @param string $table to get the information from
 	 * @param string $field1 the first field to get the information from
 	 * @param string $operator the operation to perform on the two fields
@@ -202,7 +202,7 @@ class SearchBuilderOptions extends DataTables\Ext {
 
 	/**
 	 * Adds all of the where conditions to the desired query
-	 * 
+	 *
 	 * @param string $query the query being built
 	 * @return self
 	 */
@@ -332,4 +332,3 @@ class SearchBuilderOptions extends DataTables\Ext {
 		return $out;
 	}
 }
-	

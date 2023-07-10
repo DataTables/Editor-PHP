@@ -24,12 +24,12 @@ use DataTables\HtmLawed\Htmlaw;
 /**
  * Field definitions for the DataTables Editor.
  *
- * Each Database column that is used with Editor can be described with this 
+ * Each Database column that is used with Editor can be described with this
  * Field method (both for Editor and Join instances). It basically tells
  * Editor what table column to use, how to format the data and if you want
  * to read and/or write this column.
  *
- * Field instances are used with the {@see Editor->field()} and 
+ * Field instances are used with the {@see Editor->field()} and
  * {@see Join->field()} methods to describe what fields should be interacted
  * with by the editable table.
  *
@@ -94,7 +94,7 @@ class Field extends DataTables\Ext {
 	function __construct( $dbField=null, $name=null )
 	{
 		if ( $dbField !== null && $name === null ) {
-			// Allow just a single parameter to be passed - each can be 
+			// Allow just a single parameter to be passed - each can be
 			// overridden if needed later using the API.
 			$this->name( $dbField );
 			$this->dbField( $dbField );
@@ -114,7 +114,7 @@ class Field extends DataTables\Ext {
 	/** @var string */
 	private $_dbField = null;
 
-	/** @var boolean */
+	/** @var bool */
 	private $_get = true;
 
 	/** @var mixed */
@@ -168,7 +168,7 @@ class Field extends DataTables\Ext {
 	/** @var callable */
 	private $_xss = null;
 
-	/** @var boolean */
+	/** @var bool */
 	private $_xssFormat = true;
 
 
@@ -180,7 +180,7 @@ class Field extends DataTables\Ext {
 
 	/**
 	 * Get / set the DB field name.
-	 * 
+	 *
 	 * Note that when used as a setter, an alias can be given for the field
 	 * using the SQL `as` keyword - for example: `firstName as name`. In this
 	 * situation the dbField is set to the field name before the `as`, and the
@@ -221,8 +221,8 @@ class Field extends DataTables\Ext {
 	 *
 	 * A field can be marked as write only when setting the get property to false
 	 * here.
-	 *  @param boolean $_ Value to set if using as a setter.
-	 *  @return boolean|self The get property if no parameter is given, or self
+	 *  @param bool $_ Value to set if using as a setter.
+	 *  @return bool|self The get property if no parameter is given, or self
 	 *    if used as a setter.
 	 */
 	public function get ( $_=null )
@@ -263,7 +263,7 @@ class Field extends DataTables\Ext {
 	/**
 	 * Get / set a get value. If given, then this value is used to send to the
 	 * client-side, regardless of what value is held by the database.
-	 * 
+	 *
 	 * @param callable|string|number $_ Value to set, or no value to use as a
 	 *     getter
 	 * @return callable|string|self Value if used as a getter, or self if used
@@ -354,7 +354,7 @@ class Field extends DataTables\Ext {
 
 	/**
 	 * Get a list of values that can be used for the options list in SearchPanes
-	 * 
+	 *
 	 * @param SearchPaneOptions|callable $spInput SearchPaneOptions instance or a closure function if providing a method
 	 * @return self
 	 */
@@ -381,7 +381,7 @@ class Field extends DataTables\Ext {
 
 	/**
 	 * Get a list of values that can be used for the options list in SearchBuilder
-	 * 
+	 *
 	 * @param SearchBuilderOptions|callable $sbInput SearchBuilderOptions instance or a closure function if providing a method
 	 * @return self
 	 */
@@ -415,10 +415,10 @@ class Field extends DataTables\Ext {
 	 * during an create or edit action or to be set during both actions. This
 	 * provides the ability to have fields that are only set when a new row is
 	 * created (for example a "created" time stamp).
-	 *  @param string|boolean $_ Value to set when the method is being used as a
+	 *  @param string|bool $_ Value to set when the method is being used as a
 	 *    setter (leave as undefined to use as a getter). This can take the
 	 *    value of:
-	 *    
+	 *
 	 *    * `true`              - Same as `Field::SET_BOTH`
 	 *    * `false`             - Same as `Field::SET_NONE`
 	 *    * `Field::SET_BOTH`   - Set the database value on both create and edit commands
@@ -473,7 +473,7 @@ class Field extends DataTables\Ext {
 	/**
 	 * Get / set a set value. If given, then this value is used to write to the
 	 * database regardless of what data is sent from the client-side.
-	 * 
+	 *
 	 * @param callable|string|number $_ Value to set, or no value to use as a
 	 *     getter
 	 * @return callable|string|self Value if used as a getter, or self if used
@@ -506,11 +506,11 @@ class Field extends DataTables\Ext {
 	 * Multiple validation options can be applied to a field instance by calling
 	 * this method multiple times. For example, it would be possible to have a
 	 * 'required' validation and a 'maxLength' validation with multiple calls.
-	 * 
+	 *
 	 * Editor has a number of validation available with the {@see Validate} class
 	 * which can be used directly with this method.
 	 *  @param callable|string $_ Value to set if using as the validation method.
-	 *    Can be given as a closure function or a string with a reference to a 
+	 *    Can be given as a closure function or a string with a reference to a
 	 *    function that will be called with call_user_func().
 	 *  @param mixed $opts Variable that is passed through to the validation
 	 *    function - can be useful for passing through extra information such as
@@ -581,7 +581,7 @@ class Field extends DataTables\Ext {
 	 *  @param string $action Direction that the data is travelling  - 'get' is
 	 *    reading DB data, `create` and `edit` for writing to the DB
 	 *  @param array $data Data submitted from the client-side when setting.
-	 *  @return boolean true if the field should be used in the get / set.
+	 *  @return bool true if the field should be used in the get / set.
 	 *  @internal
 	 */
 	public function apply ( $action, $data=null )
@@ -643,13 +643,13 @@ class Field extends DataTables\Ext {
 	/**
 	 * Execute the spopts to get the list of options for SearchPanes to return
 	 * to the client-side
-	 * 
+	 *
 	 * @param DataTables\Field $field The field to retrieve the data from
 	 * @param DataTables\Editor $editor The editor instance
 	 * @param DataTables\DTRequest $http The http request sent to the server
 	 * @param DataTables\Field[] $fields All of the fields
 	 * @param any $leftJoin Info for a leftJoin if required
-	 * @return Promise<IOption[]> | boolean
+	 * @return Promise<IOption[]> | bool
 	 * @internal
 	 */
 	public function searchPaneOptionsExec ( $field, $editor, $http, $fields, $leftJoin)
@@ -668,13 +668,13 @@ class Field extends DataTables\Ext {
 	/**
 	 * Execute the spopts to get the list of options for SearchBuilder to return
 	 * to the client-side
-	 * 
+	 *
 	 * @param DataTables\Field $field The field to retrieve the data from
 	 * @param DataTables\Editor $editor The editor instance
 	 * @param DataTables\DTRequest $http The http request sent to the server
 	 * @param DataTables\Field[] $fields All of the fields
 	 * @param any $leftJoin Info for a leftJoin if required
-	 * @return Promise<IOption[]> | boolean
+	 * @return Promise<IOption[]> | bool
 	 * @internal
 	 */
 	public function searchBuilderOptionsExec ( $field, $editor, $http, $fields, $leftJoin)
@@ -754,10 +754,10 @@ class Field extends DataTables\Ext {
 	 * Called by the Editor / Join class instances - not expected for general
 	 * consumption - internal.
 	 *
-	 * @param array $data Data submitted from the client-side 
+	 * @param array $data Data submitted from the client-side
 	 * @param Editor $editor Editor instance
 	 * @param mixed $id Row id that is being validated
-	 * @return boolean|string `true` if valid, string with error message if not
+	 * @return bool|string `true` if valid, string with error message if not
 	 * @internal
 	 */
 	public function validate ( $data, $editor, $id=null )
@@ -931,7 +931,7 @@ class Field extends DataTables\Ext {
 	 *
 	 * @param  string $name  Javascript dotted object name to write to
 	 * @param  array  $data   Data source array to read from
-	 * @return boolean       `true` if present, `false` otherwise
+	 * @return bool       `true` if present, `false` otherwise
 	 * @private
 	 */
 	private function _inData ( $name, $data )
@@ -958,4 +958,3 @@ class Field extends DataTables\Ext {
 			false;
 	}
 }
-

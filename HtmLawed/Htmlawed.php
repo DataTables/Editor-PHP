@@ -36,20 +36,20 @@ class Htmlawed {
     public static function hl($t, $C=1, $S=array())
     {
       // Standard elements including deprecated.
-  
+
       $eleAr = array('a'=>1, 'abbr'=>1, 'acronym'=>1, 'address'=>1, 'applet'=>1, 'area'=>1, 'article'=>1, 'aside'=>1, 'audio'=>1, 'b'=>1, 'bdi'=>1, 'bdo'=>1, 'big'=>1, 'blockquote'=>1, 'br'=>1, 'button'=>1, 'canvas'=>1, 'caption'=>1, 'center'=>1, 'cite'=>1, 'code'=>1, 'col'=>1, 'colgroup'=>1, 'command'=>1, 'data'=>1, 'datalist'=>1, 'dd'=>1, 'del'=>1, 'details'=>1, 'dialog'=>1, 'dfn'=>1, 'dir'=>1, 'div'=>1, 'dl'=>1, 'dt'=>1, 'em'=>1, 'embed'=>1, 'fieldset'=>1, 'figcaption'=>1, 'figure'=>1, 'font'=>1, 'footer'=>1, 'form'=>1, 'h1'=>1, 'h2'=>1, 'h3'=>1, 'h4'=>1, 'h5'=>1, 'h6'=>1, 'header'=>1, 'hgroup'=>1, 'hr'=>1, 'i'=>1, 'iframe'=>1, 'img'=>1, 'input'=>1, 'ins'=>1, 'isindex'=>1, 'kbd'=>1, 'keygen'=>1, 'label'=>1, 'legend'=>1, 'li'=>1, 'link'=>1, 'main'=>1, 'map'=>1, 'mark'=>1, 'menu'=>1, 'meta'=>1, 'meter'=>1, 'nav'=>1, 'noscript'=>1, 'object'=>1, 'ol'=>1, 'optgroup'=>1, 'option'=>1, 'output'=>1, 'p'=>1, 'param'=>1, 'picture'=>1, 'pre'=>1, 'progress'=>1, 'q'=>1, 'rb'=>1, 'rbc'=>1, 'rp'=>1, 'rt'=>1, 'rtc'=>1, 'ruby'=>1, 's'=>1, 'samp'=>1, 'script'=>1, 'section'=>1, 'select'=>1, 'slot'=>1, 'small'=>1, 'source'=>1, 'span'=>1, 'strike'=>1, 'strong'=>1, 'style'=>1, 'sub'=>1, 'summary'=>1, 'sup'=>1, 'table'=>1, 'tbody'=>1, 'td'=>1, 'template'=>1, 'textarea'=>1, 'tfoot'=>1, 'th'=>1, 'thead'=>1, 'time'=>1, 'tr'=>1, 'track'=>1, 'tt'=>1, 'u'=>1, 'ul'=>1, 'var'=>1, 'video'=>1, 'wbr'=>1);
-  
+
       // Set $C array ($config), using default parameters as needed.
-  
+
       $C = is_array($C) ? $C : array();
       if (!empty($C['valid_xhtml'])) {
         $C['elements'] = empty($C['elements']) ? '*-acronym-big-center-dir-font-isindex-s-strike-tt' : $C['elements'];
         $C['make_tag_strict'] = isset($C['make_tag_strict']) ? $C['make_tag_strict'] : 2;
         $C['xml:lang'] = isset($C['xml:lang']) ? $C['xml:lang'] : 2;
       }
-  
+
       // -- Configure for elements.
-  
+
       if (!empty($C['safe'])) {
         unset($eleAr['applet'], $eleAr['audio'], $eleAr['canvas'], $eleAr['dialog'], $eleAr['embed'], $eleAr['iframe'], $eleAr['object'], $eleAr['script'], $eleAr['video']);
       }
@@ -88,9 +88,9 @@ class Htmlawed {
         }
       }
       $C['elements'] =& $eleAr;
-  
+
       // -- Configure for attributes.
-  
+
       $x = !empty($C['deny_attribute']) ? strtolower(preg_replace('"\s+-"', '/', trim($C['deny_attribute']))) : '';
       $x = str_replace(array(' ', "\t", "\r", "\n"), '', $x);
       $x =
@@ -104,9 +104,9 @@ class Htmlawed {
                  (!empty($C['safe']) ? preg_replace('`/on[^/]+`', '', $x) : $x)))
            : array_filter(explode(',', $x. (!empty($C['safe']) ? ',on*' : ''))));
       $C['deny_attribute'] = $x;
-  
+
       // -- Configure URL handling.
-  
+
       $x = (isset($C['schemes'][2]) && strpos($C['schemes'], ':')
             ? strtolower($C['schemes'])
             : 'href: aim, feed, file, ftp, gopher, http, https, irc, mailto, news, nntp, sftp, ssh, tel, telnet')
@@ -134,9 +134,9 @@ class Htmlawed {
       if (!isset($C['base_url']) || !preg_match('`^[a-zA-Z\d.+\-]+://[^/]+/(.+?/)?$`', $C['base_url'])) {
         $C['base_url'] = $C['abs_url'] = 0;
       }
-  
+
       // -- Configure other parameters.
-  
+
       $C['and_mark'] = empty($C['and_mark']) ? 0 : 1;
       $C['anti_link_spam'] =
         (isset($C['anti_link_spam'])
@@ -170,22 +170,22 @@ class Htmlawed {
       $C['tidy'] = empty($C['tidy']) ? 0 : $C['tidy'];
       $C['unique_ids'] = isset($C['unique_ids']) && (!preg_match('`\W`', $C['unique_ids'])) ? $C['unique_ids'] : 1;
       $C['xml:lang'] = isset($C['xml:lang']) ? $C['xml:lang'] : 0;
-  
+
       if (isset($GLOBALS['C'])) {
         $oldC = $GLOBALS['C'];
       }
       $GLOBALS['C'] = $C;
-  
+
       // Set $S array ($spec).
-  
+
       $S = is_array($S) ? $S : self::hl_spec($S);
       if (isset($GLOBALS['S'])) {
         $oldS = $GLOBALS['S'];
       }
       $GLOBALS['S'] = $S;
-  
+
       // Handle characters.
-  
+
       $t = preg_replace('`[\x00-\x08\x0b-\x0c\x0e-\x1f]`', '', $t); // Remove illegal
       if ($C['clean_ms_char']) { // Convert MS Windows CP-1252
         $x = array("\x7f"=>'', "\x80"=>'&#8364;', "\x81"=>'', "\x83"=>'&#402;', "\x85"=>'&#8230;', "\x86"=>'&#8224;', "\x87"=>'&#8225;', "\x88"=>'&#710;', "\x89"=>'&#8240;', "\x8a"=>'&#352;', "\x8b"=>'&#8249;', "\x8c"=>'&#338;', "\x8d"=>'', "\x8e"=>'&#381;', "\x8f"=>'', "\x90"=>'', "\x95"=>'&#8226;', "\x96"=>'&#8211;', "\x97"=>'&#8212;', "\x98"=>'&#732;', "\x99"=>'&#8482;', "\x9a"=>'&#353;', "\x9b"=>'&#8250;', "\x9c"=>'&#339;', "\x9d"=>'', "\x9e"=>'&#382;', "\x9f"=>'&#376;');
@@ -195,9 +195,9 @@ class Htmlawed {
                 : array("\x82"=>'\'', "\x84"=>'"', "\x91"=>'\'', "\x92"=>'\'', "\x93"=>'"', "\x94"=>'"'));
         $t = strtr($t, $x);
       }
-  
+
       // Handle CDATA, comments, and entities.
-  
+
       if ($C['cdata'] || $C['comment']) {
         $t = preg_replace_callback('`<!(?:(?:--.*?--)|(?:\[CDATA\[.*?\]\]))>`sm', 'DataTables\HtmLawed\Htmlawed::hl_commentCdata', $t);
       }
@@ -209,22 +209,22 @@ class Htmlawed {
       if ($C['unique_ids'] && !isset($GLOBALS['hl_Ids'])) {
         $GLOBALS['hl_Ids'] = array();
       }
-  
+
       if ($C['hook']) {
         $t = call_user_func($C['hook'], $t, $C, $S);
       }
-  
+
       // Handle remaining text.
-  
+
       $t = preg_replace_callback('`<(?:(?:\s|$)|(?:[^>]*(?:>|$)))|>`m', 'DataTables\HtmLawed\Htmlawed::hl_tag', $t);
       $t = $C['balance'] ? self::hl_balance($t, $C['keep_bad'], $C['parent']) : $t;
       $t = (($C['cdata'] || $C['comment']) && strpos($t, "\x01") !== false)
            ? str_replace(array("\x01", "\x02", "\x03", "\x04", "\x05"), array('', '', '&', '<', '>'), $t)
            : $t;
       $t = $C['tidy'] ? self::hl_tidy($t, $C['tidy'], $C['parent']) : $t;
-  
+
       // Cleanup.
-  
+
       if ($C['show_setting'] && preg_match('`^[a-z][a-z0-9_]*$`i', $C['show_setting'])) {
         $GLOBALS[$C['show_setting']] = array('config'=>$C, 'spec'=>$S, 'time'=>microtime(true), 'version'=>self::hl_version());
       }
@@ -237,7 +237,7 @@ class Htmlawed {
       }
       return $t;
     }
-  
+
     /**
      * Validate attribute value and possibly reset to a default.
      *
@@ -306,7 +306,7 @@ class Htmlawed {
       $out = implode($valSep == ',' ? ', ' : ' ', $out);
       return (isset($out[0]) ? $out : (isset($ruleAr['default']) ? $ruleAr['default'] : 0));
     }
-  
+
     /*
      * Enforce parent-child validity of elements and balance tags.
      *
@@ -319,25 +319,25 @@ class Htmlawed {
     public static function hl_balance($t, $act=1, $parentEle='div')
     {
       // Group elements in different ways.
-  
+
       $closingTagOmitableEleAr = array('caption'=>1, 'colgroup'=>1, 'dd'=>1, 'dt'=>1, 'li'=>1, 'optgroup'=>1, 'option'=>1, 'p'=>1, 'rp'=>1, 'rt'=>1, 'tbody'=>1, 'td'=>1, 'tfoot'=>1, 'th'=>1, 'thead'=>1, 'tr'=>1);
-  
+
       // -- Block, inline, etc.
-  
+
       $blockEleAr = array('a'=>1, 'address'=>1, 'article'=>1, 'aside'=>1, 'blockquote'=>1, 'center'=>1, 'del'=>1, 'details'=>1, 'dialog'=>1, 'dir'=>1, 'dl'=>1, 'div'=>1, 'fieldset'=>1, 'figure'=>1, 'footer'=>1, 'form'=>1, 'ins'=>1, 'h1'=>1, 'h2'=>1, 'h3'=>1, 'h4'=>1, 'h5'=>1, 'h6'=>1, 'header'=>1, 'hr'=>1, 'isindex'=>1, 'main'=>1, 'menu'=>1, 'nav'=>1, 'noscript'=>1, 'ol'=>1, 'p'=>1, 'pre'=>1, 'section'=>1, 'slot'=>1, 'style'=>1, 'table'=>1, 'template'=>1, 'ul'=>1);
       $inlineEleAr = array('#pcdata'=>1, 'a'=>1, 'abbr'=>1, 'acronym'=>1, 'applet'=>1, 'audio'=>1, 'b'=>1, 'bdi'=>1, 'bdo'=>1, 'big'=>1, 'br'=>1, 'button'=>1, 'canvas'=>1, 'cite'=>1, 'code'=>1, 'command'=>1, 'data'=>1, 'datalist'=>1, 'del'=>1, 'dfn'=>1, 'em'=>1, 'embed'=>1, 'figcaption'=>1, 'font'=>1, 'i'=>1, 'iframe'=>1, 'img'=>1, 'input'=>1, 'ins'=>1, 'kbd'=>1, 'label'=>1, 'link'=>1, 'map'=>1, 'mark'=>1, 'meta'=>1, 'meter'=>1, 'object'=>1, 'output'=>1, 'picture'=>1, 'progress'=>1, 'q'=>1, 'ruby'=>1, 's'=>1, 'samp'=>1, 'select'=>1, 'script'=>1, 'small'=>1, 'span'=>1, 'strike'=>1, 'strong'=>1, 'sub'=>1, 'summary'=>1, 'sup'=>1, 'textarea'=>1, 'time'=>1, 'tt'=>1, 'u'=>1, 'var'=>1, 'video'=>1, 'wbr'=>1);
       $otherEleAr = array('area'=>1, 'caption'=>1, 'col'=>1, 'colgroup'=>1, 'command'=>1, 'dd'=>1, 'dt'=>1, 'hgroup'=>1, 'keygen'=>1, 'legend'=>1, 'li'=>1, 'optgroup'=>1, 'option'=>1, 'param'=>1, 'rb'=>1, 'rbc'=>1, 'rp'=>1, 'rt'=>1, 'rtc'=>1, 'script'=>1, 'source'=>1, 'tbody'=>1, 'td'=>1, 'tfoot'=>1, 'thead'=>1, 'th'=>1, 'tr'=>1, 'track'=>1);
       $flowEleAr = $blockEleAr + $inlineEleAr;
-  
+
       // -- Type of child allowed.
-  
+
       $blockKidEleAr = array('blockquote'=>1, 'form'=>1, 'map'=>1, 'noscript'=>1);
       $flowKidEleAr = array('a'=>1, 'article'=>1, 'aside'=>1, 'audio'=>1, 'button'=>1, 'canvas'=>1, 'del'=>1, 'details'=>1, 'dialog'=>1, 'div'=>1, 'dd'=>1, 'fieldset'=>1, 'figure'=>1, 'footer'=>1, 'header'=>1, 'iframe'=>1, 'ins'=>1, 'li'=>1, 'main'=>1, 'menu'=>1, 'nav'=>1, 'noscript'=>1, 'object'=>1, 'section'=>1, 'slot'=>1, 'style'=>1, 'td'=>1, 'template'=>1, 'th'=>1, 'video'=>1); // Later context-wise dynamic move of ins & del to $inlineKidEleAr
       $inlineKidEleAr = array('abbr'=>1, 'acronym'=>1, 'address'=>1, 'b'=>1, 'bdi'=>1, 'bdo'=>1, 'big'=>1, 'caption'=>1, 'cite'=>1, 'code'=>1, 'data'=>1, 'datalist'=>1, 'dfn'=>1, 'dt'=>1, 'em'=>1, 'figcaption'=>1, 'font'=>1, 'h1'=>1, 'h2'=>1, 'h3'=>1, 'h4'=>1, 'h5'=>1, 'h6'=>1, 'hgroup'=>1, 'i'=>1, 'kbd'=>1, 'label'=>1, 'legend'=>1, 'mark'=>1, 'meter'=>1, 'output'=>1, 'p'=>1, 'picture'=>1, 'pre'=>1, 'progress'=>1, 'q'=>1, 'rb'=>1, 'rt'=>1, 's'=>1, 'samp'=>1, 'small'=>1, 'span'=>1, 'strike'=>1, 'strong'=>1, 'sub'=>1, 'summary'=>1, 'sup'=>1, 'time'=>1, 'tt'=>1, 'u'=>1, 'var'=>1);
       $noKidEleAr = array('area'=>1, 'br'=>1, 'col'=>1, 'command'=>1, 'embed'=>1, 'hr'=>1, 'img'=>1, 'input'=>1, 'isindex'=>1, 'keygen'=>1, 'link'=>1, 'meta'=>1, 'param'=>1, 'source'=>1, 'track'=>1, 'wbr'=>1);
-  
+
       // Special parent-child relations.
-  
+
       $invalidMomKidAr = array('a'=>array('a'=>1, 'address'=>1, 'button'=>1, 'details'=>1, 'embed'=>1, 'iframe'=>1, 'keygen'=>1, 'label'=>1, 'select'=>1, 'textarea'=>1), 'address'=>array('address'=>1, 'article'=>1, 'aside'=>1, 'footer'=>1, 'h1'=>1, 'h2'=>1, 'h3'=>1, 'h4'=>1, 'h5'=>1, 'h6'=>1, 'header'=>1, 'hgroup'=>1, 'keygen'=>1, 'nav'=>1, 'section'=>1), 'audio'=>array('audio'=>1, 'video'=>1), 'button'=>array('a'=>1, 'address'=>1, 'button'=>1, 'details'=>1, 'embed'=>1, 'iframe'=>1, 'keygen'=>1, 'label'=>1, 'select'=>1, 'textarea'=>1), 'dfn'=>array('dfn'=>1), 'fieldset'=>array('fieldset'=>1), 'footer'=>array('footer'=>1, 'header'=>1), 'form'=>array('form'=>1), 'header'=>array('footer'=>1, 'header'=>1), 'label'=>array('label'=>1), 'main'=>array('main'=>1), 'meter'=>array('meter'=>1), 'noscript'=>array('script'=>1), 'progress'=>array('progress'=>1), 'rb'=>array('ruby'=>1), 'rt'=>array('ruby'=>1), 'time'=>array('time'=>1), 'video'=>array('audio'=>1, 'video'=>1));
       $invalidKidEleAr = array('a'=>1, 'address'=>1, 'article'=>1, 'aside'=>1, 'audio'=>1, 'button'=>1, 'details'=>1, 'dfn'=>1, 'embed'=>1, 'fieldset'=>1, 'footer'=>1, 'form'=>1, 'h1'=>1, 'h2'=>1, 'h3'=>1, 'h4'=>1, 'h5'=>1, 'h6'=>1, 'header'=>1, 'hgroup'=>1, 'iframe'=>1, 'keygen'=>1, 'label'=>1, 'main'=>1, 'meter'=>1, 'nav'=>1, 'progress'=>1, 'ruby'=>1, 'script'=>1, 'section'=>1, 'select'=>1, 'textarea'=>1, 'time'=>1, 'video'=>1); // $invalidMomKidAr values
       $invalidMomEleAr = array_keys($invalidMomKidAr);
@@ -346,9 +346,9 @@ class Htmlawed {
         $validMomKidAr['ol'] = $validMomKidAr['ul'] = $validMomKidAr['menu'] += array('menu'=>1, 'ol'=>1, 'ul'=>1);
       }
       $otherValidMomKidAr = array('address'=>array('p'=>1), 'applet'=>array('param'=>1), 'audio'=>array('source'=>1, 'track'=>1), 'blockquote'=>array('script'=>1), 'details'=>array('summary'=>1), 'fieldset'=>array('legend'=>1, '#pcdata'=>1),  'figure'=>array('figcaption'=>1),'form'=>array('script'=>1), 'map'=>array('area'=>1), 'legend'=>array('h1'=>1, 'h2'=>1, 'h3'=>1, 'h4'=>1, 'h5'=>1, 'h6'=>1), 'object'=>array('param'=>1, 'embed'=>1), 'summary'=>array('h1'=>1, 'h2'=>1, 'h3'=>1, 'h4'=>1, 'h5'=>1, 'h6'=>1, 'hgroup'=>1), 'video'=>array('source'=>1, 'track'=>1));
-  
+
       // Valid elements for top-level parent.
-  
+
       $mom = ((isset($flowEleAr[$parentEle]) && $parentEle != '#pcdata')
               || isset($otherEleAr[$parentEle]))
              ? $parentEle
@@ -378,16 +378,16 @@ class Htmlawed {
       if (strpos($mom, '-')) { // Custom element
         $validInMomEleAr = array('*' => 1, '#pcdata' =>1);
       }
-  
+
       // Loop over elements.
-  
+
       $t = explode('<', $t);
       $validKidsOfMom = $openEleQueue = array(); // Queue of opened elements
       ob_start();
       for ($i=-1, $eleCount=count($t); ++$i<$eleCount;) {
-  
+
         // Check element validity as child. Same code as section: Finishing (below).
-  
+
         if ($queueLength = count($openEleQueue)) {
           $eleNow = array_pop($openEleQueue);
           $openEleQueue[] = $eleNow;
@@ -449,9 +449,9 @@ class Htmlawed {
             echo preg_replace('`\S`', '', $content);
           }
         } // End: Check element validity as child
-  
+
         // Get parts of element.
-  
+
         if (!preg_match('`^(/?)([a-z][^ >]*)([^>]*)>(.*)`sm', $t[$i], $m)) {
           $content = $t[$i];
           continue;
@@ -461,9 +461,9 @@ class Htmlawed {
         $attrs = null; // Attribute string
         $content = null; // Content
         list($all, $slash, $ele, $attrs, $content) = $m;
-  
+
          // Handle closing tag.
-  
+
         if ($slash) {
           if (isset($noKidEleAr[$ele]) || !in_array($ele, $openEleQueue)) { // Element empty type or unopened
             continue;
@@ -486,9 +486,9 @@ class Htmlawed {
           unset($ele);
           continue;
         }
-  
+
         // Handle opening tag.
-  
+
         if (isset($blockKidEleAr[$ele]) && strlen(trim($content))) { // $blockKidEleAr element needs $blockEleAr element
           $t[$i] = "{$ele}{$attrs}>";
           array_splice($t, $i+1, 0, 'div>'. $content);
@@ -577,9 +577,9 @@ class Htmlawed {
         unset($ele);
         continue;
       } // End of For: loop over elements
-  
+
       // Finishing. Same code as: 'Check element validity as child'.
-  
+
       if ($queueLength = count($openEleQueue)) {
         $eleNow = array_pop($openEleQueue);
         $openEleQueue[] = $eleNow;
@@ -642,7 +642,7 @@ class Htmlawed {
           echo preg_replace('`\S`', '', $content);
         }
       } // End: Finishing
-  
+
       while (!empty($openEleQueue) && ($ele = array_pop($openEleQueue))) {
         echo '</', $ele, '>';
       }
@@ -650,7 +650,7 @@ class Htmlawed {
       ob_end_clean();
       return $o;
     }
-  
+
     /**
      * Handle comment/CDATA section.
      *
@@ -683,7 +683,7 @@ class Htmlawed {
           array("\x03", "\x04", "\x05"),
           ($type == 'comment' ? "\x01\x02\x04!--$t--\x05\x02\x01" : "\x01\x01\x04$t\x05\x01\x01"));
     }
-  
+
     /**
      * Transform deprecated element, with any attribute, into a new element.
      *
@@ -747,7 +747,7 @@ class Htmlawed {
       }
       return '';
     }
-  
+
     /**
      * Handle entity.
      *
@@ -807,7 +807,7 @@ class Htmlawed {
            : 'x'. dechex($n))
         . ';';
     }
-  
+
     /**
      * Check regex pattern for PHP error.
      *
@@ -848,7 +848,7 @@ class Htmlawed {
       }
       return $out;
     }
-  
+
     /**
      * Parse $spec htmLawed argument as array.
      *
@@ -858,9 +858,9 @@ class Htmlawed {
     public static function hl_spec($t)
     {
       $out  = array();
-  
+
       // Hide special characters used for rules.
-  
+
       if (!function_exists('hl_aux1')) {
         function hl_aux1($x) {
           return
@@ -877,9 +877,9 @@ class Htmlawed {
           array("\t", "\r", "\n", ' '),
           '',
           preg_replace_callback('/"(?>(`.|[^"])*)"/sm', 'hl_aux1', trim($t)));
-  
+
       // Tag, attribute, and rule separators: semi-colon, comma, and slash respectively.
-  
+
       for ($i = count(($t = explode(';', $t))); --$i>=0;) {
         $ele = $t[$i];
         if (
@@ -929,7 +929,7 @@ class Htmlawed {
             unset($ruleAr[$attr]['nomatch']);
           }
         }
-  
+
         if (!count($ruleAr) && !count($denyAttrAr)) {
           continue;
         }
@@ -945,10 +945,10 @@ class Htmlawed {
           }
         }
       }
-  
+
       return $out;
     }
-  
+
     /**
      * Handle tag text with </> limiters, and attributes in opening tags.
      *
@@ -960,9 +960,9 @@ class Htmlawed {
     {
       $t = $t[0];
       global $C;
-  
+
       // Check if </> character not in tag.
-  
+
       if ($t == '< ') {
         return '&lt; ';
       }
@@ -972,9 +972,9 @@ class Htmlawed {
       if (!preg_match('`^<(/?)([a-zA-Z][^\s>]*)([^>]*?)\s?>$`m', $t, $m)) { // Get tag with element name and attributes
         return str_replace(array('<', '>'), array('&lt;', '&gt;'), $t);
       }
-  
+
       // Check if element not permitted. Custom element names have certain requirements.
-  
+
       $ele = strtolower($m[2]);
       static $invalidCustomEleAr = array('annotation-xml'=>1, 'color-profile'=>1, 'font-face'=>1, 'font-face-src'=>1, 'font-face-uri'=>1, 'font-face-format'=>1, 'font-face-name'=>1, 'missing-glyph'=>1);
       if (
@@ -993,13 +993,13 @@ class Htmlawed {
          ) {
         return (($C['keep_bad']%2) ? str_replace(array('<', '>'), array('&lt;', '&gt;'), $t) : '');
       }
-  
+
       // Attribute string.
-  
+
       $attrStr = str_replace(array("\n", "\r", "\t"), ' ', trim($m[3]));
-  
+
       // Transform deprecated element.
-  
+
       static $deprecatedEleAr = array('acronym'=>1, 'applet'=>1, 'big'=>1, 'center'=>1, 'dir'=>1, 'font'=>1, 'isindex'=>1, 's'=>1, 'strike'=>1, 'tt'=>1);
       if ($C['make_tag_strict'] && isset($deprecatedEleAr[$ele])) {
         $eleTransformed = self::hl_deprecatedElement($ele, $attrStr, $C['make_tag_strict']); // hl_deprecatedElement uses referencing
@@ -1007,9 +1007,9 @@ class Htmlawed {
           return (($C['keep_bad'] % 2) ? str_replace(array('<', '>'), array('&lt;', '&gt;'), $t) : '');
         }
       }
-  
+
       // Handle closing tag.
-  
+
       static $emptyEleAr = array('area'=>1, 'br'=>1, 'col'=>1, 'command'=>1, 'embed'=>1, 'hr'=>1, 'img'=>1, 'input'=>1, 'isindex'=>1, 'keygen'=>1, 'link'=>1, 'meta'=>1, 'param'=>1, 'source'=>1, 'track'=>1, 'wbr'=>1);
       if (!empty($m[1])) {
         return(
@@ -1021,56 +1021,56 @@ class Htmlawed {
              ? str_replace(array('<', '>'), array('&lt;', '&gt;'), $t)
              : ''));
       }
-  
+
       // Handle opening tag.
-  
+
       // -- Sets of possible attributes.
-  
+
       // .. Element-specific non-global.
-  
+
       static $attrEleAr = array('abbr'=>array('td'=>1, 'th'=>1), 'accept'=>array('form'=>1, 'input'=>1), 'accept-charset'=>array('form'=>1), 'action'=>array('form'=>1), 'align'=>array('applet'=>1, 'caption'=>1, 'col'=>1, 'colgroup'=>1, 'div'=>1, 'embed'=>1, 'h1'=>1, 'h2'=>1, 'h3'=>1, 'h4'=>1, 'h5'=>1, 'h6'=>1, 'hr'=>1, 'iframe'=>1, 'img'=>1, 'input'=>1, 'legend'=>1, 'object'=>1, 'p'=>1, 'table'=>1, 'tbody'=>1, 'td'=>1, 'tfoot'=>1, 'th'=>1, 'thead'=>1, 'tr'=>1), 'allowfullscreen'=>array('iframe'=>1), 'alt'=>array('applet'=>1, 'area'=>1, 'img'=>1, 'input'=>1), 'archive'=>array('applet'=>1, 'object'=>1), 'async'=>array('script'=>1), 'autocomplete'=>array('form'=>1, 'input'=>1), 'autofocus'=>array('button'=>1, 'input'=>1, 'keygen'=>1, 'select'=>1, 'textarea'=>1), 'autoplay'=>array('audio'=>1, 'video'=>1), 'axis'=>array('td'=>1, 'th'=>1), 'bgcolor'=>array('embed'=>1, 'table'=>1, 'td'=>1, 'th'=>1, 'tr'=>1), 'border'=>array('img'=>1, 'object'=>1, 'table'=>1), 'bordercolor'=>array('table'=>1, 'td'=>1, 'tr'=>1), 'cellpadding'=>array('table'=>1), 'cellspacing'=>array('table'=>1), 'challenge'=>array('keygen'=>1), 'char'=>array('col'=>1, 'colgroup'=>1, 'tbody'=>1, 'td'=>1, 'tfoot'=>1, 'th'=>1, 'thead'=>1, 'tr'=>1), 'charoff'=>array('col'=>1, 'colgroup'=>1, 'tbody'=>1, 'td'=>1, 'tfoot'=>1, 'th'=>1, 'thead'=>1, 'tr'=>1), 'charset'=>array('a'=>1, 'script'=>1), 'checked'=>array('command'=>1, 'input'=>1), 'cite'=>array('blockquote'=>1, 'del'=>1, 'ins'=>1, 'q'=>1), 'classid'=>array('object'=>1), 'clear'=>array('br'=>1), 'code'=>array('applet'=>1), 'codebase'=>array('applet'=>1, 'object'=>1), 'codetype'=>array('object'=>1), 'color'=>array('font'=>1), 'cols'=>array('textarea'=>1), 'colspan'=>array('td'=>1, 'th'=>1), 'compact'=>array('dir'=>1, 'dl'=>1, 'menu'=>1, 'ol'=>1, 'ul'=>1), 'content'=>array('meta'=>1), 'controls'=>array('audio'=>1, 'video'=>1), 'coords'=>array('a'=>1, 'area'=>1), 'crossorigin'=>array('img'=>1), 'data'=>array('object'=>1), 'datetime'=>array('del'=>1, 'ins'=>1, 'time'=>1), 'declare'=>array('object'=>1), 'default'=>array('track'=>1), 'defer'=>array('script'=>1), 'dirname'=>array('input'=>1, 'textarea'=>1), 'disabled'=>array('button'=>1, 'command'=>1, 'fieldset'=>1, 'input'=>1, 'keygen'=>1, 'optgroup'=>1, 'option'=>1, 'select'=>1, 'textarea'=>1), 'download'=>array('a'=>1), 'enctype'=>array('form'=>1), 'face'=>array('font'=>1), 'flashvars'=>array('embed'=>1), 'for'=>array('label'=>1, 'output'=>1), 'form'=>array('button'=>1, 'fieldset'=>1, 'input'=>1, 'keygen'=>1, 'label'=>1, 'object'=>1, 'output'=>1, 'select'=>1, 'textarea'=>1), 'formaction'=>array('button'=>1, 'input'=>1), 'formenctype'=>array('button'=>1, 'input'=>1), 'formmethod'=>array('button'=>1, 'input'=>1), 'formnovalidate'=>array('button'=>1, 'input'=>1), 'formtarget'=>array('button'=>1, 'input'=>1), 'frame'=>array('table'=>1), 'frameborder'=>array('iframe'=>1), 'headers'=>array('td'=>1, 'th'=>1), 'height'=>array('applet'=>1, 'canvas'=>1, 'embed'=>1, 'iframe'=>1, 'img'=>1, 'input'=>1, 'object'=>1, 'td'=>1, 'th'=>1, 'video'=>1), 'high'=>array('meter'=>1), 'href'=>array('a'=>1, 'area'=>1, 'link'=>1), 'hreflang'=>array('a'=>1, 'area'=>1, 'link'=>1), 'hspace'=>array('applet'=>1, 'embed'=>1, 'img'=>1, 'object'=>1), 'icon'=>array('command'=>1), 'ismap'=>array('img'=>1, 'input'=>1), 'keyparams'=>array('keygen'=>1), 'keytype'=>array('keygen'=>1), 'kind'=>array('track'=>1), 'label'=>array('command'=>1, 'menu'=>1, 'option'=>1, 'optgroup'=>1, 'track'=>1), 'language'=>array('script'=>1), 'list'=>array('input'=>1), 'longdesc'=>array('img'=>1, 'iframe'=>1), 'loop'=>array('audio'=>1, 'video'=>1), 'low'=>array('meter'=>1), 'marginheight'=>array('iframe'=>1), 'marginwidth'=>array('iframe'=>1), 'max'=>array('input'=>1, 'meter'=>1, 'progress'=>1), 'maxlength'=>array('input'=>1, 'textarea'=>1), 'media'=>array('a'=>1, 'area'=>1, 'link'=>1, 'source'=>1, 'style'=>1), 'mediagroup'=>array('audio'=>1, 'video'=>1), 'method'=>array('form'=>1), 'min'=>array('input'=>1, 'meter'=>1), 'model'=>array('embed'=>1), 'multiple'=>array('input'=>1, 'select'=>1), 'muted'=>array('audio'=>1, 'video'=>1), 'name'=>array('a'=>1, 'applet'=>1, 'button'=>1, 'embed'=>1, 'fieldset'=>1, 'form'=>1, 'iframe'=>1, 'img'=>1, 'input'=>1, 'keygen'=>1, 'map'=>1, 'object'=>1, 'output'=>1, 'param'=>1, 'select'=>1, 'slot'=>1, 'textarea'=>1), 'nohref'=>array('area'=>1), 'noshade'=>array('hr'=>1), 'novalidate'=>array('form'=>1), 'nowrap'=>array('td'=>1, 'th'=>1), 'object'=>array('applet'=>1), 'open'=>array('details'=>1, 'dialog'=>1), 'optimum'=>array('meter'=>1), 'pattern'=>array('input'=>1), 'ping'=>array('a'=>1, 'area'=>1), 'placeholder'=>array('input'=>1, 'textarea'=>1), 'pluginspage'=>array('embed'=>1), 'pluginurl'=>array('embed'=>1), 'poster'=>array('video'=>1), 'pqg'=>array('keygen'=>1), 'preload'=>array('audio'=>1, 'video'=>1), 'prompt'=>array('isindex'=>1), 'pubdate'=>array('time'=>1), 'radiogroup'=>array('command'=>1), 'readonly'=>array('input'=>1, 'textarea'=>1), 'rel'=>array('a'=>1, 'area'=>1, 'link'=>1), 'required'=>array('input'=>1, 'select'=>1, 'textarea'=>1), 'rev'=>array('a'=>1), 'reversed'=>array('ol'=>1), 'rows'=>array('textarea'=>1), 'rowspan'=>array('td'=>1, 'th'=>1), 'rules'=>array('table'=>1), 'sandbox'=>array('iframe'=>1), 'scope'=>array('td'=>1, 'th'=>1), 'scoped'=>array('style'=>1), 'scrolling'=>array('iframe'=>1), 'seamless'=>array('iframe'=>1), 'selected'=>array('option'=>1), 'shape'=>array('a'=>1, 'area'=>1), 'size'=>array('font'=>1, 'hr'=>1, 'input'=>1, 'select'=>1), 'sizes'=>array('link'=>1), 'span'=>array('col'=>1, 'colgroup'=>1), 'src'=>array('audio'=>1, 'embed'=>1, 'iframe'=>1, 'img'=>1, 'input'=>1, 'script'=>1, 'source'=>1, 'track'=>1, 'video'=>1), 'srcdoc'=>array('iframe'=>1), 'srclang'=>array('track'=>1), 'srcset'=>array('img'=>1), 'standby'=>array('object'=>1), 'start'=>array('ol'=>1), 'step'=>array('input'=>1), 'summary'=>array('table'=>1), 'target'=>array('a'=>1, 'area'=>1, 'form'=>1), 'type'=>array('a'=>1, 'area'=>1, 'button'=>1, 'command'=>1, 'embed'=>1, 'input'=>1, 'li'=>1, 'link'=>1, 'menu'=>1, 'object'=>1, 'ol'=>1, 'param'=>1, 'script'=>1, 'source'=>1, 'style'=>1, 'ul'=>1), 'typemustmatch'=>array('object'=>1), 'usemap'=>array('img'=>1, 'input'=>1, 'object'=>1), 'valign'=>array('col'=>1, 'colgroup'=>1, 'tbody'=>1, 'td'=>1, 'tfoot'=>1, 'th'=>1, 'thead'=>1, 'tr'=>1), 'value'=>array('button'=>1, 'data'=>1, 'input'=>1, 'li'=>1, 'meter'=>1, 'option'=>1, 'param'=>1, 'progress'=>1), 'valuetype'=>array('param'=>1), 'vspace'=>array('applet'=>1, 'embed'=>1, 'img'=>1, 'object'=>1), 'width'=>array('applet'=>1, 'canvas'=>1, 'col'=>1, 'colgroup'=>1, 'embed'=>1, 'hr'=>1, 'iframe'=>1, 'img'=>1, 'input'=>1, 'object'=>1, 'pre'=>1, 'table'=>1, 'td'=>1, 'th'=>1, 'video'=>1), 'wmode'=>array('embed'=>1), 'wrap'=>array('textarea'=>1));
-  
+
       // .. Empty.
-  
+
       static $emptyAttrAr = array('allowfullscreen'=>1, 'checkbox'=>1, 'checked'=>1, 'command'=>1, 'compact'=>1, 'declare'=>1, 'defer'=>1, 'default'=>1, 'disabled'=>1, 'hidden'=>1, 'inert'=>1, 'ismap'=>1, 'itemscope'=>1, 'multiple'=>1, 'nohref'=>1, 'noresize'=>1, 'noshade'=>1, 'nowrap'=>1, 'open'=>1, 'radio'=>1, 'readonly'=>1, 'required'=>1, 'reversed'=>1, 'selected'=>1);
-  
+
       // .. Global.
-  
+
       static $globalAttrAr = array(
-  
+
          // .... General.
-  
+
         'accesskey'=>1, 'autocapitalize'=>1, 'autofocus'=>1, 'class'=>1, 'contenteditable'=>1, 'contextmenu'=>1, 'dir'=>1, 'draggable'=>1, 'dropzone'=>1, 'enterkeyhint'=>1, 'hidden'=>1, 'id'=>1, 'inert'=>1, 'inputmode'=>1, 'is'=>1, 'itemid'=>1, 'itemprop'=>1, 'itemref'=>1, 'itemscope'=>1, 'itemtype'=>1, 'lang'=>1, 'nonce'=>1, 'role'=>1, 'slot'=>1, 'spellcheck'=>1, 'style'=>1, 'tabindex'=>1, 'title'=>1, 'translate'=>1, 'xmlns'=>1, 'xml:base'=>1, 'xml:lang'=>1, 'xml:space'=>1,
-  
+
         // .... Event.
-  
+
         'onabort'=>1, 'onauxclick'=>1, 'onblur'=>1, 'oncancel'=>1, 'oncanplay'=>1, 'oncanplaythrough'=>1, 'onchange'=>1, 'onclick'=>1, 'onclose'=>1, 'oncontextlost'=>1, 'oncontextmenu'=>1, 'oncontextrestored'=>1, 'oncopy'=>1, 'oncuechange'=>1, 'oncut'=>1, 'ondblclick'=>1, 'ondrag'=>1, 'ondragend'=>1, 'ondragenter'=>1, 'ondragleave'=>1, 'ondragover'=>1, 'ondragstart'=>1, 'ondrop'=>1, 'ondurationchange'=>1, 'onemptied'=>1, 'onended'=>1, 'onerror'=>1, 'onfocus'=>1, 'onformchange'=>1, 'onformdata'=>1, 'onforminput'=>1, 'ongotpointercapture'=>1, 'oninput'=>1, 'oninvalid'=>1, 'onkeydown'=>1, 'onkeypress'=>1, 'onkeyup'=>1, 'onload'=>1, 'onloadeddata'=>1, 'onloadedmetadata'=>1, 'onloadend'=>1, 'onloadstart'=>1, 'onlostpointercapture'=>1, 'onmousedown'=>1, 'onmouseenter'=>1, 'onmouseleave'=>1, 'onmousemove'=>1, 'onmouseout'=>1, 'onmouseover'=>1, 'onmouseup'=>1, 'onmousewheel'=>1, 'onpaste'=>1, 'onpause'=>1, 'onplay'=>1, 'onplaying'=>1, 'onpointercancel'=>1, 'onpointerdown'=>1, 'onpointerenter'=>1, 'onpointerleave'=>1, 'onpointermove'=>1, 'onpointerout'=>1, 'onpointerover'=>1, 'onpointerup'=>1, 'onprogress'=>1, 'onratechange'=>1, 'onreadystatechange'=>1, 'onreset'=>1, 'onresize'=>1, 'onscroll'=>1, 'onsearch'=>1, 'onsecuritypolicyviolation'=>1, 'onseeked'=>1, 'onseeking'=>1, 'onselect'=>1, 'onshow'=>1, 'onslotchange'=>1, 'onstalled'=>1, 'onsubmit'=>1, 'onsuspend'=>1, 'ontimeupdate'=>1, 'ontoggle'=>1, 'ontouchcancel'=>1, 'ontouchend'=>1, 'ontouchmove'=>1, 'ontouchstart'=>1, 'onvolumechange'=>1, 'onwaiting'=>1, 'onwheel'=>1,
-  
+
         // .... Aria.
-  
+
         'aria-activedescendant'=>1, 'aria-atomic'=>1, 'aria-autocomplete'=>1, 'aria-braillelabel'=>1, 'aria-brailleroledescription'=>1, 'aria-busy'=>1, 'aria-checked'=>1, 'aria-colcount'=>1, 'aria-colindex'=>1, 'aria-colindextext'=>1, 'aria-colspan'=>1, 'aria-controls'=>1, 'aria-current'=>1, 'aria-describedby'=>1, 'aria-description'=>1, 'aria-details'=>1, 'aria-disabled'=>1, 'aria-dropeffect'=>1, 'aria-errormessage'=>1, 'aria-expanded'=>1, 'aria-flowto'=>1, 'aria-grabbed'=>1, 'aria-haspopup'=>1, 'aria-hidden'=>1, 'aria-invalid'=>1, 'aria-keyshortcuts'=>1, 'aria-label'=>1, 'aria-labelledby'=>1, 'aria-level'=>1, 'aria-live'=>1, 'aria-multiline'=>1, 'aria-multiselectable'=>1, 'aria-orientation'=>1, 'aria-owns'=>1, 'aria-placeholder'=>1, 'aria-posinset'=>1, 'aria-pressed'=>1, 'aria-readonly'=>1, 'aria-relevant'=>1, 'aria-required'=>1, 'aria-roledescription'=>1, 'aria-rowcount'=>1, 'aria-rowindex'=>1, 'aria-rowindextext'=>1, 'aria-rowspan'=>1, 'aria-selected'=>1, 'aria-setsize'=>1, 'aria-sort'=>1, 'aria-valuemax'=>1, 'aria-valuemin'=>1, 'aria-valuenow'=>1, 'aria-valuetext'=>1);
-  
+
       static $urlAttrAr = array('action'=>1, 'archive'=>1, 'cite'=>1, 'classid'=>1, 'codebase'=>1, 'data'=>1, 'href'=>1, 'itemtype'=>1, 'longdesc'=>1, 'model'=>1, 'pluginspage'=>1, 'pluginurl'=>1, 'poster'=>1, 'src'=>1, 'srcset'=>1, 'usemap'=>1); // Excludes style and on*
-  
+
       // .. Deprecated.
-  
+
       $alterDeprecAttr = 0;
       if ($C['no_deprecated_attr']) {
         static $deprecAttrEleAr = array('align'=>array('caption'=>1, 'div'=>1, 'h1'=>1, 'h2'=>1, 'h3'=>1, 'h4'=>1, 'h5'=>1, 'h6'=>1, 'hr'=>1, 'img'=>1, 'input'=>1, 'legend'=>1, 'object'=>1, 'p'=>1, 'table'=>1), 'bgcolor'=>array('table'=>1, 'td'=>1, 'th'=>1, 'tr'=>1), 'border'=>array('object'=>1), 'bordercolor'=>array('table'=>1, 'td'=>1, 'tr'=>1), 'cellspacing'=>array('table'=>1), 'clear'=>array('br'=>1), 'compact'=>array('dl'=>1, 'ol'=>1, 'ul'=>1), 'height'=>array('td'=>1, 'th'=>1), 'hspace'=>array('img'=>1, 'object'=>1), 'language'=>array('script'=>1), 'name'=>array('a'=>1, 'form'=>1, 'iframe'=>1, 'img'=>1, 'map'=>1), 'noshade'=>array('hr'=>1), 'nowrap'=>array('td'=>1, 'th'=>1), 'size'=>array('hr'=>1), 'vspace'=>array('img'=>1, 'object'=>1), 'width'=>array('hr'=>1, 'pre'=>1, 'table'=>1, 'td'=>1, 'th'=>1));
         static $deprecAttrPossibleEleAr = array('a'=>1, 'br'=>1, 'caption'=>1, 'div'=>1, 'dl'=>1, 'form'=>1, 'h1'=>1, 'h2'=>1, 'h3'=>1, 'h4'=>1, 'h5'=>1, 'h6'=>1, 'hr'=>1, 'iframe'=>1, 'img'=>1, 'input'=>1, 'legend'=>1, 'map'=>1, 'object'=>1, 'ol'=>1, 'p'=>1, 'pre'=>1, 'script'=>1, 'table'=>1, 'td'=>1, 'th'=>1, 'tr'=>1, 'ul'=>1);
         $alterDeprecAttr = isset($deprecAttrPossibleEleAr[$ele]) ? 1 : 0;
       }
-  
+
       // -- Standard attribute values that may need lowercasing.
-  
+
       if ($C['lc_std_val']) {
         static $lCaseStdAttrValAr = array('all'=>1, 'auto'=>1, 'baseline'=>1, 'bottom'=>1, 'button'=>1, 'captions'=>1, 'center'=>1, 'chapters'=>1, 'char'=>1, 'checkbox'=>1, 'circle'=>1, 'col'=>1, 'colgroup'=>1, 'color'=>1, 'cols'=>1, 'data'=>1, 'date'=>1, 'datetime'=>1, 'datetime-local'=>1, 'default'=>1, 'descriptions'=>1, 'email'=>1, 'file'=>1, 'get'=>1, 'groups'=>1, 'hidden'=>1, 'image'=>1, 'justify'=>1, 'left'=>1, 'ltr'=>1, 'metadata'=>1, 'middle'=>1, 'month'=>1, 'none'=>1, 'number'=>1, 'object'=>1, 'password'=>1, 'poly'=>1, 'post'=>1, 'preserve'=>1, 'radio'=>1, 'range'=>1, 'rect'=>1, 'ref'=>1, 'reset'=>1, 'right'=>1, 'row'=>1, 'rowgroup'=>1, 'rows'=>1, 'rtl'=>1, 'search'=>1, 'submit'=>1, 'subtitles'=>1, 'tel'=>1, 'text'=>1, 'time'=>1, 'top'=>1, 'url'=>1, 'week'=>1);
         static $lCaseStdAttrValPossibleEleAr = array('a'=>1, 'area'=>1, 'bdo'=>1, 'button'=>1, 'col'=>1, 'fieldset'=>1, 'form'=>1, 'img'=>1, 'input'=>1, 'object'=>1, 'ol'=>1, 'optgroup'=>1, 'option'=>1, 'param'=>1, 'script'=>1, 'select'=>1, 'table'=>1, 'td'=>1, 'textarea'=>1, 'tfoot'=>1, 'th'=>1, 'thead'=>1, 'tr'=>1, 'track'=>1, 'xml:space'=>1);
         $lCaseStdAttrVal = isset($lCaseStdAttrValPossibleEleAr[$ele]) ? 1 : 0;
       }
-  
+
       // -- Get attribute name-value pairs.
-  
+
       if (strpos($attrStr, "\x01") !== false) { // Remove CDATA/comment
         $attrStr = preg_replace('`\x01[^\x01]*\x01`', '', $attrStr);
       }
@@ -1117,55 +1117,55 @@ class Htmlawed {
       if ($state == 1) {
         $attrAr[$attr] = '';
       }
-  
+
       // -- Clean attributes.
-  
+
       global $S;
       $eleSpec = isset($S[$ele]) ? $S[$ele] : array();
       $filtAttrAr = array(); // Finalized attributes
       $deniedAttrAr = $C['deny_attribute'];
-  
+
       foreach ($attrAr as $attr=>$v) {
-  
+
         // .. Check if attribute is permitted.
-  
+
         if (
-  
+
            // .... Valid attribute.
-  
+
           ((isset($attrEleAr[$attr][$ele])
             || isset($globalAttrAr[$attr])
             || preg_match('`data-((?!xml)[^:]+$)`', $attr)
             || (strpos($ele, '-')
                 && strpos($attr, 'data-xml') !== 0))
-  
+
            // .... No denial through $spec.
-  
+
            && (empty($eleSpec)
                || (!isset($eleSpec['deny'])
                    || (!isset($eleSpec['deny']['*'])
                        && !isset($eleSpec['deny'][$attr])
                        && !isset($eleSpec['deny'][preg_replace('`^(on|aria|data).+`', '\\1', $attr). '*']))))
-  
+
            // .... No denial through $config.
-  
+
            && (empty($deniedAttrAr)
                || (isset($deniedAttrAr['*'])
                    ? (isset($deniedAttrAr["-$attr"])
                       || isset($deniedAttrAr['-'. preg_replace('`^(on|aria|data)..+`', '\\1', $attr). '*']))
                    : (!isset($deniedAttrAr[$attr])
                       && !isset($deniedAttrAr[preg_replace('`^(on|aria|data).+`', '\\1', $attr). '*'])))))
-  
+
           // .... Permit if permission through $spec.
-  
+
           || (!empty($eleSpec)
               && (isset($eleSpec[$attr])
                   || (isset($globalAttrAr[$attr])
                       && isset($eleSpec[preg_replace('`^(on|aria|data).+`', '\\1', $attr). '*']))))
           ) {
-  
+
           // .. Attribute with no value or standard value.
-  
+
           if (isset($emptyAttrAr[$attr])) {
             $v = $attr;
           } elseif (
@@ -1175,9 +1175,9 @@ class Htmlawed {
             ) {
             $v = (isset($lCaseStdAttrValAr[($vNew = strtolower($v))])) ? $vNew : $v;
           }
-  
+
           // .. URLs and CSS expressions in style attribute.
-  
+
           if ($attr == 'style' && !$C['style_pass']) {
             if (false !== strpos($v, '&#')) { // Change any entity to character
               static $entityAr = array('&#32;'=>' ', '&#x20;'=>' ', '&#58;'=>':', '&#x3a;'=>':', '&#34;'=>'"', '&#x22;'=>'"', '&#40;'=>'(', '&#x28;'=>'(', '&#41;'=>')', '&#x29;'=>')', '&#42;'=>'*', '&#x2a;'=>'*', '&#47;'=>'/', '&#x2f;'=>'/', '&#92;'=>'\\', '&#x5c;'=>'\\', '&#101;'=>'e', '&#69;'=>'e', '&#x45;'=>'e', '&#x65;'=>'e', '&#105;'=>'i', '&#73;'=>'i', '&#x49;'=>'i', '&#x69;'=>'i', '&#108;'=>'l', '&#76;'=>'l', '&#x4c;'=>'l', '&#x6c;'=>'l', '&#110;'=>'n', '&#78;'=>'n', '&#x4e;'=>'n', '&#x6e;'=>'n', '&#111;'=>'o', '&#79;'=>'o', '&#x4f;'=>'o', '&#x6f;'=>'o', '&#112;'=>'p', '&#80;'=>'p', '&#x50;'=>'p', '&#x70;'=>'p', '&#114;'=>'r', '&#82;'=>'r', '&#x52;'=>'r', '&#x72;'=>'r', '&#115;'=>'s', '&#83;'=>'s', '&#x53;'=>'s', '&#x73;'=>'s', '&#117;'=>'u', '&#85;'=>'u', '&#x55;'=>'u', '&#x75;'=>'u', '&#120;'=>'x', '&#88;'=>'x', '&#x58;'=>'x', '&#x78;'=>'x', '&#39;'=>"'", '&#x27;'=>"'");
@@ -1191,9 +1191,9 @@ class Htmlawed {
             $v = !$C['css_expression']
                  ? preg_replace('`expression`i', ' ', preg_replace('`\\\\\S|(/|(%2f))(\*|(%2a))`i', ' ', $v))
                  : $v;
-  
+
           // .. URLs in other attributes.
-  
+
           } elseif (isset($urlAttrAr[$attr]) || (isset($globalAttrAr[$attr]) && strpos($attr, 'on') === 0)) {
             $v =
               str_replace("­", ' ',
@@ -1223,9 +1223,9 @@ class Htmlawed {
             } else {
               $v = self::hl_url($v, $attr);
             }
-  
+
             // Anti-spam measure.
-  
+
             if ($attr == 'href') {
               if ($C['anti_mail_spam'] && strpos($v, 'mailto:') === 0) {
                 $v = str_replace('@', htmlspecialchars($C['anti_mail_spam']), $v);
@@ -1251,27 +1251,27 @@ class Htmlawed {
               }
             }
           }
-  
+
           // .. Check attribute value against any $spec rule.
-  
+
           if (isset($eleSpec[$attr])
               && is_array($eleSpec[$attr])
               && ($v = self::hl_attributeValue($attr, $v, $eleSpec[$attr], $ele)) === 0) {
             continue;
           }
-  
+
           $filtAttrAr[$attr] = str_replace('"', '&quot;', $v);
         }
       }
-  
+
       // -- Add nofollow.
-  
+
       if (isset($addNofollow)) {
         $filtAttrAr['rel'] = isset($filtAttrAr['rel']) ? $filtAttrAr['rel']. ' nofollow' : 'nofollow';
       }
-  
+
       // -- Add required attributes.
-  
+
       static $requiredAttrAr = array('area'=>array('alt'=>'area'), 'bdo'=>array('dir'=>'ltr'), 'command'=>array('label'=>''), 'form'=>array('action'=>''), 'img'=>array('src'=>'', 'alt'=>'image'), 'map'=>array('name'=>''), 'optgroup'=>array('label'=>''), 'param'=>array('name'=>''), 'style'=>array('scoped'=>''), 'textarea'=>array('rows'=>'10', 'cols'=>'50'));
       if (isset($requiredAttrAr[$ele])) {
         foreach ($requiredAttrAr[$ele] as $k=>$v) {
@@ -1280,9 +1280,9 @@ class Htmlawed {
           }
         }
       }
-  
+
       // -- Transform deprecated attributes into CSS declarations in style attribute.
-  
+
       if ($alterDeprecAttr) {
         $css = array();
         foreach ($filtAttrAr as $name=>$val) {
@@ -1360,9 +1360,9 @@ class Htmlawed {
             : $css. ';';
         }
       }
-  
+
       // -- Enforce unique id attribute values.
-  
+
       if ($C['unique_ids'] && isset($filtAttrAr['id'])) {
         if (preg_match('`\s`', ($id = $filtAttrAr['id'])) || (isset($GLOBALS['hl_Ids'][$id]) && $C['unique_ids'] == 1)) {
           unset($filtAttrAr['id']);
@@ -1373,27 +1373,27 @@ class Htmlawed {
           $GLOBALS['hl_Ids'][($filtAttrAr['id'] = $id)] = 1;
         }
       }
-  
+
       // -- Handle lang attributes.
-  
+
       if ($C['xml:lang'] && isset($filtAttrAr['lang'])) {
         $filtAttrAr['xml:lang'] = isset($filtAttrAr['xml:lang']) ? $filtAttrAr['xml:lang'] : $filtAttrAr['lang'];
         if ($C['xml:lang'] == 2) {
           unset($filtAttrAr['lang']);
         }
       }
-  
+
       // -- If transformed element, modify style attribute.
-  
+
       if (!empty($eleTransformed)) {
         $filtAttrAr['style'] =
           isset($filtAttrAr['style'])
           ? rtrim($filtAttrAr['style'], ' ;'). '; '. $eleTransformed
           : $eleTransformed;
       }
-  
+
       // -- Return opening tag with attributes.
-  
+
       if (empty($C['hook_tag'])) {
         $attrStr = '';
         foreach ($filtAttrAr as $k=>$v) {
@@ -1404,7 +1404,7 @@ class Htmlawed {
         return call_user_func($C['hook_tag'], $ele, $filtAttrAr);
       }
     }
-  
+
     /**
      * Tidy/beautify HTM by adding newline and other spaces (padding),
      * or compact by removing unnecessary spaces.
@@ -1419,9 +1419,9 @@ class Htmlawed {
       if (strpos(' pre,script,textarea', "$parentEle,")) {
         return $t;
       }
-  
+
       // Hide CDATA/comment.
-  
+
       if (!function_exists('hl_aux2')) {
         function hl_aux2($x) {
           return
@@ -1441,7 +1441,7 @@ class Htmlawed {
             array('`(<(!\[CDATA\[))(.+?)(\]\]>)`sm', '`(<(!--))(.+?)(-->)`sm', '`(<(pre|script|textarea)[^>]*?>)(.+?)(</\2>)`sm'),
             'hl_aux2',
             $t));
-  
+
       if (($format = strtolower($format)) == -1) {
         return
           str_replace(array("\x01", "\x02", "\x03", "\x04", "\x05", "\x07"), array('<', '>', "\n", "\r", "\t", ' '), $t);
@@ -1452,14 +1452,14 @@ class Htmlawed {
         ? str_repeat($padChar, intval($m[0]))
         : str_repeat($padChar, ($padChar == "\t" ? 1 : 2));
       $leadN = preg_match('`[ts]([1-9])`', $format, $m) ? intval($m[1]) : 0;
-  
+
       // Group elements by line-break requirement.
-  
+
       $postCloseEleAr = array('br'=>1); // After closing
       $preEleAr = array('button'=>1, 'command'=>1, 'input'=>1, 'option'=>1, 'param'=>1, 'track'=>1); // Before opening or closing
       $preOpenPostCloseEleAr = array('audio'=>1, 'canvas'=>1, 'caption'=>1, 'dd'=>1, 'dt'=>1, 'figcaption'=>1, 'h1'=>1, 'h2'=>1, 'h3'=>1, 'h4'=>1, 'h5'=>1, 'h6'=>1, 'isindex'=>1, 'label'=>1, 'legend'=>1, 'li'=>1, 'object'=>1, 'p'=>1, 'pre'=>1, 'style'=>1, 'summary'=>1, 'td'=>1, 'textarea'=>1, 'th'=>1, 'video'=>1); // Before opening and after closing
       $prePostEleAr = array('address'=>1, 'article'=>1, 'aside'=>1, 'blockquote'=>1, 'center'=>1, 'colgroup'=>1, 'datalist'=>1, 'details'=>1, 'dialog'=>1, 'dir'=>1, 'div'=>1, 'dl'=>1, 'fieldset'=>1, 'figure'=>1, 'footer'=>1, 'form'=>1, 'header'=>1, 'hgroup'=>1, 'hr'=>1, 'iframe'=>1, 'main'=>1, 'map'=>1, 'menu'=>1, 'nav'=>1, 'noscript'=>1, 'ol'=>1, 'optgroup'=>1, 'picture'=>1, 'rbc'=>1, 'rtc'=>1, 'ruby'=>1, 'script'=>1, 'section'=>1, 'select'=>1, 'table'=>1, 'tbody'=>1, 'template'=>1, 'tfoot'=>1, 'thead'=>1, 'tr'=>1, 'ul'=>1); // Before and after opening and closing
-  
+
       $doPad = 1;
       $t = explode('<', $t);
       while ($doPad) {
@@ -1517,7 +1517,7 @@ class Htmlawed {
       }
       return str_replace(array("\x01", "\x02", "\x03", "\x04", "\x05", "\x07"), array('<', '>', "\n", "\r", "\t", ' '), $t);
     }
-  
+
     /**
      * Handle URL to convert to relative/absolute type,
      * block scheme, or add anti-spam text.
@@ -1574,7 +1574,7 @@ class Htmlawed {
       }
       return "{$preUrl}{$url}{$postUrl}";
     }
-  
+
     /**
      * Report version.
      *
