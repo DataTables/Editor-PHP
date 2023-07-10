@@ -65,7 +65,7 @@ class PostgresQuery extends Query {
 		} catch (\PDOException $e) {
 			// If we can't establish a DB connection then we return a DataTables
 			// error.
-			echo json_encode( array( 
+			echo json_encode( array(
 				"error" => "An error occurred while connecting to the database ".
 					"'{$db}'. The error reported by the server was: ".$e->getMessage()
 			) );
@@ -93,15 +93,15 @@ class PostgresQuery extends Query {
 			$table = explode( ' as ', $this->_table[0] );
 
 			// Get the pkey field name
-			$pkRes = $resource->prepare( 
+			$pkRes = $resource->prepare(
 				"SELECT
-					pg_attribute.attname, 
-					format_type(pg_attribute.atttypid, pg_attribute.atttypmod) 
-				FROM pg_index, pg_class, pg_attribute 
-				WHERE 
+					pg_attribute.attname,
+					format_type(pg_attribute.atttypid, pg_attribute.atttypmod)
+				FROM pg_index, pg_class, pg_attribute
+				WHERE
 					pg_class.oid = '{$table[0]}'::regclass AND
 					indrelid = pg_class.oid AND
-					pg_attribute.attrelid = pg_class.oid AND 
+					pg_attribute.attrelid = pg_class.oid AND
 					pg_attribute.attnum = any(pg_index.indkey)
 					AND indisprimary"
 			);
@@ -143,4 +143,3 @@ class PostgresQuery extends Query {
 		return new PostgresResult( $resource, $this->_stmt );
 	}
 }
-

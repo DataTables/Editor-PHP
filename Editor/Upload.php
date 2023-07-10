@@ -36,8 +36,8 @@ use DataTables;
  *
  * Both methods are optional - you can store the file on the server using the
  * {@see Upload->db()} method only if you want to store the file in the database, or if
- * you don't want to store relational data on the database us only 
- * {@see Upload->action()}. However,  the majority of the time it is best to use 
+ * you don't want to store relational data on the database us only
+ * {@see Upload->action()}. However,  the majority of the time it is best to use
  * both - store information about the file on the database for fast retrieval (using a
  * {@see Editor->leftJoin()} for example) and the file on the file system for direct
  * web access.
@@ -106,7 +106,7 @@ class Upload extends DataTables\Ext {
 	/** Database value option (`Db()`) - Full system path to the file */
 	const DB_SYSTEM_PATH  = 'editor-systemPath';
 
-	/** Database value option (`Db()`) - HTTP path to the file. This is derived 
+	/** Database value option (`Db()`) - HTTP path to the file. This is derived
 	 * from the system path by removing `$_SERVER['DOCUMENT_ROOT']`. If your
 	 * images live outside of the document root a custom value would be to be
 	 * used.
@@ -172,7 +172,7 @@ class Upload extends DataTables\Ext {
 	 *   with the uploaded file is transferred to this function. That will
 	 *   typically involve writing it to the file system so it can be used
 	 *   later.
-	 * 
+	 *
 	 * @param  string|callable $action Action to take - see description above.
 	 * @return self Current instance, used for chaining
 	 */
@@ -381,7 +381,7 @@ class Upload extends DataTables\Ext {
 
 	/**
 	 * Get the set error message
-	 * 
+	 *
 	 * @return string Class error
 	 * @internal
 	 */
@@ -406,7 +406,7 @@ class Upload extends DataTables\Ext {
 		// Validation - PHP standard validation
 		if ( $upload['error'] !== UPLOAD_ERR_OK ) {
 			if ( $upload['error'] === UPLOAD_ERR_INI_SIZE ) {
-				$this->_error = "File exceeds maximum file upload size"; 
+				$this->_error = "File exceeds maximum file upload size";
 			}
 			else {
 				$this->_error = "There was an error uploading the file (".$upload['error'].")";
@@ -648,7 +648,7 @@ class Upload extends DataTables\Ext {
 
 				case self::DB_SYSTEM_PATH:
 					$pathFields[ $column ] = self::DB_SYSTEM_PATH;
-					$q->set( $column, '-' ); // Use a temporary value to avoid cases 
+					$q->set( $column, '-' ); // Use a temporary value to avoid cases
 					break;                   // where the db will reject empty values
 
 				case self::DB_WEB_PATH:
@@ -732,4 +732,3 @@ class Upload extends DataTables\Ext {
 		return $to;
 	}
 }
-

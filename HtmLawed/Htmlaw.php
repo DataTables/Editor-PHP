@@ -3,9 +3,9 @@
  * HtmLawed is used here to provide protection against XSS attacks with Editor
  * input - see the `Field->xss()` method. The Vanilla forums wrapper is used
  * to provide sensible defaults and a clean interface for HtmLawed.
- * 
+ *
  * Changes:
- * 
+ *
  *  * Add `DataTables/HtmLawed` namespace to this and htmLawed - this is to ensure
  *    that if htmLawed is included by any other aspect of the site it will not
  *    result in a conflict.
@@ -16,7 +16,7 @@
  *  * Update all `htmLawed::` references to `\DataTables\HtmLawed\HtmLawed::` in
  *    the htmLawed file (to allow callbacks to operate correctly)
  *  * Updated Vanilla wrapper to operate on PHP 5.3
- * 
+ *
  * HtmLawed:
  *   http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/
  *   Copyright: Santosh Patnaik

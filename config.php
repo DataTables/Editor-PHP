@@ -21,10 +21,9 @@ $sql_details = array(
 
 
 // This is included for the development and deploy environment used on the DataTables
-// server. You can delete this block - it just includes my own user/pass without making 
+// server. You can delete this block - it just includes my own user/pass without making
 // them public!
 if ( is_file($_SERVER['DOCUMENT_ROOT']."/datatables/pdo.php") ) {
 	include( $_SERVER['DOCUMENT_ROOT']."/datatables/pdo.php" );
 }
 // /End development include
-

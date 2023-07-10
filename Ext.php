@@ -40,7 +40,7 @@ class Ext {
 	}
 
 	/**
-	 * Static method to instantiate a new instance of a class (shorthand of 
+	 * Static method to instantiate a new instance of a class (shorthand of
 	 * 'instantiate').
 	 *
 	 * This method performs exactly the same actions as the 'instantiate'
@@ -66,7 +66,7 @@ class Ext {
 	 *  @param mixed &$prop The property to set
 	 *  @param mixed $val The value to set - if given as null, then we assume
 	 *    that the function is being used as a getter.
-	 *  @param boolean $array Treat the target property as an array or not
+	 *  @param bool  $array Treat the target property as an array or not
 	 *    (default false). If used as an array, then values passed in are added
 	 *    to the $prop array.
 	 *  @return self|mixed Class instance if setting (allowing chaining), or
@@ -99,7 +99,7 @@ class Ext {
 	 * a valid value)
 	 * @param  string $name  Javascript dotted object name to write to
 	 * @param  array  $data  Data source array to read from
-	 * @return boolean       true if present, false otherwise
+	 * @return bool       true if present, false otherwise
 	 * @private
 	 */
 	protected function _propExists ( $name, $data )
@@ -219,4 +219,3 @@ class Ext {
 		$inner[ $names[count($names)-1] ] = $value;
 	}
 }
-

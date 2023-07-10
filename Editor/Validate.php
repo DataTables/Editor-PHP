@@ -126,7 +126,7 @@ class Validate {
 				return 'This field is required';
 			}
 
-			return call_user_func_array( 
+			return call_user_func_array(
 				__NAMESPACE__.'\Validate::'.str_replace( '_required', '', $name ),
 				$arguments
 			);
@@ -160,7 +160,7 @@ class Validate {
 
 		// Merge into a single array - first array gets priority if there is a
 		// key clash, so user first, then function commands and finally the
-		// global options 
+		// global options
 		$cfg = $userOpts + $fnOpts + $cfg;
 
 		return $cfg;
@@ -300,13 +300,13 @@ class Validate {
 	 * Required field - there must be a value and it must be a non-empty value
 	 *
 	 * This is a helper short-cut method which is the same as:
-	 * 
+	 *
 	 * ```
 	 * Validate::basic( $val, $data, array(
 	 *   "required" => true
 	 * );
 	 * ```
-	 * 
+	 *
 	 *  @param string $val The value to check for validity
 	 *  @param string[] $data The full data set submitted
 	 *  @param array $opts Validation options. No additional options are
@@ -334,7 +334,7 @@ class Validate {
 	 * Optional field, but if given there must be a non-empty value
 	 *
 	 * This is a helper short-cut method which is the same as:
-	 * 
+	 *
 	 * ```
 	 * Validate::basic( $val, $data, array(
 	 *   "empty" => false
@@ -984,7 +984,7 @@ class Validate {
 
 			return $res->count() === 0 ?
 				true :
-				$opts->message(); 
+				$opts->message();
 		};
 	}
 
@@ -1393,4 +1393,3 @@ class Validate {
 		return Validate::dbValues( $opts, $column, $table, $db, $values );
 	}
 }
-
