@@ -1,7 +1,8 @@
 <?php
 
-// Ensure Editor is loadable.
-if (!class_exists('\DataTables\Editor')) {
+// ensure DataTables.php was included
+// this file must not be included when installed using composer
+if (!defined('DATATABLES')) {
 	exit(1);
 }
 
