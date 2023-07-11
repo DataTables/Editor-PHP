@@ -246,12 +246,12 @@ class Htmlawed {
     /**
      * Validate attribute value and possibly reset to a default.
      *
-     * @param  string  $attr   Attribute name.
-     * @param  string  $value  Attribute value.
-     * @param  array   $ruleAr Array of rules derived from $spec.
-     * @param  string  $ele    Element.
-     * @return mixed           0 if invalid $value,
-     *                         or string with validated or default value.
+     * @param  string $attr   Attribute name.
+     * @param  string $value  Attribute value.
+     * @param  array  $ruleAr Array of rules derived from $spec.
+     * @param  string $ele    Element.
+     * @return mixed  0 if invalid $value,
+     *                or string with validated or default value.
      */
     public static function hl_attributeValue($attr, $value, $ruleAr, $ele)
     {
@@ -670,7 +670,7 @@ class Htmlawed {
      * Filter/sanitize as per $config and disguise special characters.
      *
      * @param  array  $t Array result of preg_replace, with potential comment/CDATA.
-     * @return string    Sanitized comment/CDATA with hidden special characters.
+     * @return string Sanitized comment/CDATA with hidden special characters.
      */
     public static function hl_commentCdata($t)
     {
@@ -705,7 +705,7 @@ class Htmlawed {
      * @param  string $ele     Deprecated element.
      * @param  string $attrStr Attribute string of element.
      * @param  int    $act     No transformation if 2.
-     * @return mixed           New attribute string (may be empty) or 0.
+     * @return mixed  New attribute string (may be empty) or 0.
      */
     public static function hl_deprecatedElement(&$ele, &$attrStr, $act = 1)
     {
@@ -768,7 +768,7 @@ class Htmlawed {
      * As needed, convert to named/hexadecimal form, or neutralize '&' as '&amp;'.
      *
      * @param  array  $t Array result of preg_replace, with potential entity.
-     * @return string    Neutralized or converted entity.
+     * @return string Neutralized or converted entity.
      */
     public static function hl_entity($t)
     {
@@ -826,7 +826,7 @@ class Htmlawed {
      * Check regex pattern for PHP error.
      *
      * @param  string $t Pattern including limiters/modifiers.
-     * @return int       0 or 1 if pattern is invalid or valid, respectively.
+     * @return int    0 or 1 if pattern is invalid or valid, respectively.
      */
     public static function hl_regex($t)
     {
@@ -867,7 +867,7 @@ class Htmlawed {
      * Parse $spec htmLawed argument as array.
      *
      * @param  string $t Value of $spec.
-     * @return array     Multidimensional array of form: tag -> attribute -> rule.
+     * @return array  Multidimensional array of form: tag -> attribute -> rule.
      */
     public static function hl_spec($t)
     {
@@ -971,9 +971,9 @@ class Htmlawed {
     /**
      * Handle tag text with </> limiters, and attributes in opening tags.
      *
-     * @param  array   $t Array from preg_replace call.
-     * @return string     Tag with any attribute,
-     *                    or text with </> neutralized into entities, or empty.
+     * @param  array  $t Array from preg_replace call.
+     * @return string Tag with any attribute,
+     *                or text with </> neutralized into entities, or empty.
      */
     public static function hl_tag($t)
     {
@@ -1440,7 +1440,7 @@ class Htmlawed {
      * @param  string $t         HTM.
      * @param  mixed  $format    -1 (compact) or string (type of padding).
      * @param  string $parentEle Parent element of $t.
-     * @return mixed             Transformed attribute string (may be empty) or 0.
+     * @return mixed  Transformed attribute string (may be empty) or 0.
      */
     public static function hl_tidy($t, $format, $parentEle)
     {
@@ -1554,7 +1554,7 @@ class Htmlawed {
      *
      * @param  mixed  $url  URL string, or array with URL value (if $attr is null).
      * @param  mixed  $attr Attribute name string, or null (if $url is array).
-     * @return string       With URL after any conversion/obfuscation.
+     * @return string With URL after any conversion/obfuscation.
      */
     public static function hl_url($url, $attr = null)
     {

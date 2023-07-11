@@ -82,10 +82,10 @@ class Field extends DataTables\Ext {
 
     /**
      * Field instance constructor.
-     *  @param string $dbField Name of the database column
-     *  @param string $name Name to use in the JSON output from Editor and the
-     *    HTTP submit from the client-side when editing. If not given then the
-     *    $dbField name is used.
+     * @param string $dbField Name of the database column
+     * @param string $name    Name to use in the JSON output from Editor and the
+     *                        HTTP submit from the client-side when editing. If not given then the
+     *                        $dbField name is used.
      */
     function __construct($dbField = null, $name = null)
     {
@@ -188,9 +188,9 @@ class Field extends DataTables\Ext {
      *    Field::inst( 'firstName as name' );
      *    Field::inst( 'firstName', 'name' );
      *
-     *  @param string $_ Value to set if using as a setter.
-     *  @return string|self The name of the db field if no parameter is given,
-     *    or self if used as a setter.
+     * @param  string      $_ Value to set if using as a setter.
+     * @return string|self The name of the db field if no parameter is given,
+     *                     or self if used as a setter.
      */
     public function dbField ($_ = null)
     {
@@ -217,9 +217,9 @@ class Field extends DataTables\Ext {
      *
      * A field can be marked as write only when setting the get property to false
      * here.
-     *  @param bool $_ Value to set if using as a setter.
-     *  @return bool|self The get property if no parameter is given, or self
-     *    if used as a setter.
+     * @param  bool      $_ Value to set if using as a setter.
+     * @return bool|self The get property if no parameter is given, or self
+     *                   if used as a setter.
      */
     public function get ($_ = null)
     {
@@ -237,15 +237,15 @@ class Field extends DataTables\Ext {
      *
      * Editor has a number of formatters available with the {@see Format} class
      * which can be used directly with this method.
-     *  @param callable|string $_ Value to set if using as a setter. Can be given as
-     *    a closure function or a string with a reference to a function that will
-     *    be called with call_user_func().
-     *  @param mixed $opts Variable that is passed through to the get formatting
-     *    function - can be useful for passing through extra information such as
-     *    date formatting string, or a required flag. The actual options available
-     *    depend upon the formatter used.
-     *  @return callable|string|self The get formatter if no parameter is given, or
-     *    self if used as a setter.
+     * @param  callable|string      $_    Value to set if using as a setter. Can be given as
+     *                                    a closure function or a string with a reference to a function that will
+     *                                    be called with call_user_func().
+     * @param  mixed                $opts Variable that is passed through to the get formatting
+     *                                    function - can be useful for passing through extra information such as
+     *                                    date formatting string, or a required flag. The actual options available
+     *                                    depend upon the formatter used.
+     * @return callable|string|self The get formatter if no parameter is given, or
+     *                              self if used as a setter.
      */
     public function getFormatter ($_ = null, $opts = null)
     {
@@ -260,10 +260,10 @@ class Field extends DataTables\Ext {
      * Get / set a get value. If given, then this value is used to send to the
      * client-side, regardless of what value is held by the database.
      *
-     * @param callable|string|number $_ Value to set, or no value to use as a
-     *     getter
-     * @return callable|string|self Value if used as a getter, or self if used
-     *     as a setter.
+     * @param  callable|string|number $_ Value to set, or no value to use as a
+     *                                   getter
+     * @return callable|string|self   Value if used as a getter, or self if used
+     *                                as a setter.
      */
     public function getValue ($_ = null)
     {
@@ -278,9 +278,9 @@ class Field extends DataTables\Ext {
      * less confusing(!), but it is possible to set a different name for the data
      * which is used in the JSON returned to DataTables in a 'get' operation and
      * the field name used in a 'set' operation.
-     *  @param string $_ Value to set if using as a setter.
-     *  @return string|self The name property if no parameter is given, or self
-     *    if used as a setter.
+     * @param  string      $_ Value to set if using as a setter.
+     * @return string|self The name property if no parameter is given, or self
+     *                     if used as a setter.
      */
     public function name ($_ = null)
     {
@@ -296,17 +296,17 @@ class Field extends DataTables\Ext {
      * data, including pairs that require joins and where conditions, use a
      * closure to provide a query
      *
-     * @param  string|callable $table Database table name to use to get the
-     *     paired data from, or a closure function if providing a method
-     * @param  string          $value Table column name that contains the pair's
-     *     value. Not used if the first parameter is given as a closure
-     * @param  string          $label Table column name that contains the pair's
-     *     label. Not used if the first parameter is given as a closure
+     * @param  string|callable $table     Database table name to use to get the
+     *                                    paired data from, or a closure function if providing a method
+     * @param  string          $value     Table column name that contains the pair's
+     *                                    value. Not used if the first parameter is given as a closure
+     * @param  string          $label     Table column name that contains the pair's
+     *                                    label. Not used if the first parameter is given as a closure
      * @param  callable        $condition Function that will add `where`
-     *     conditions to the query
-     * @param  callable        $format Function will render each label
-     * @param  string          $order SQL ordering
-     * @return Field                  Self for chaining
+     *                                    conditions to the query
+     * @param  callable        $format    Function will render each label
+     * @param  string          $order     SQL ordering
+     * @return Field           Self for chaining
      */
     public function options ($table = null, $value = null, $label = null, $condition = null, $format = null, $order = null)
     {
@@ -351,7 +351,7 @@ class Field extends DataTables\Ext {
     /**
      * Get a list of values that can be used for the options list in SearchPanes
      *
-     * @param SearchPaneOptions|callable $spInput SearchPaneOptions instance or a closure function if providing a method
+     * @param  SearchPaneOptions|callable $spInput SearchPaneOptions instance or a closure function if providing a method
      * @return self
      */
     public function searchPaneOptions ($spInput = null)
@@ -378,7 +378,7 @@ class Field extends DataTables\Ext {
     /**
      * Get a list of values that can be used for the options list in SearchBuilder
      *
-     * @param SearchBuilderOptions|callable $sbInput SearchBuilderOptions instance or a closure function if providing a method
+     * @param  SearchBuilderOptions|callable $sbInput SearchBuilderOptions instance or a closure function if providing a method
      * @return self
      */
     public function searchBuilderOptions ($sbInput = null)
@@ -411,9 +411,9 @@ class Field extends DataTables\Ext {
      * during an create or edit action or to be set during both actions. This
      * provides the ability to have fields that are only set when a new row is
      * created (for example a "created" time stamp).
-     *  @param string|bool $_ Value to set when the method is being used as a
-     *    setter (leave as undefined to use as a getter). This can take the
-     *    value of:
+     * @param string|bool $_ Value to set when the method is being used as a
+     *                       setter (leave as undefined to use as a getter). This can take the
+     *                       value of:
      *
      *    * `true`              - Same as `Field::SET_BOTH`
      *    * `false`             - Same as `Field::SET_NONE`
@@ -421,8 +421,8 @@ class Field extends DataTables\Ext {
      *    * `Field::SET_NONE`   - Never set the database value
      *    * `Field::SET_CREATE` - Set the database value only on create
      *    * `Field::SET_EDIT`   - Set the database value only on edit
-     *  @return string|self The set property if no parameter is given, or self
-     *    if used as a setter.
+     * @return string|self The set property if no parameter is given, or self
+     *                     if used as a setter.
      */
     public function set ($_ = null)
     {
@@ -447,15 +447,15 @@ class Field extends DataTables\Ext {
      *
      * Editor has a number of formatters available with the {@see Format} class
      * which can be used directly with this method.
-     *  @param callable|string $_ Value to set if using as a setter. Can be given as
-     *    a closure function or a string with a reference to a function that will
-     *    be called with call_user_func().
-     *  @param mixed $opts Variable that is passed through to the get formatting
-     *    function - can be useful for passing through extra information such as
-     *    date formatting string, or a required flag. The actual options available
-     *    depend upon the formatter used.
-     *  @return callable|string|self The set formatter if no parameter is given, or
-     *    self if used as a setter.
+     * @param  callable|string      $_    Value to set if using as a setter. Can be given as
+     *                                    a closure function or a string with a reference to a function that will
+     *                                    be called with call_user_func().
+     * @param  mixed                $opts Variable that is passed through to the get formatting
+     *                                    function - can be useful for passing through extra information such as
+     *                                    date formatting string, or a required flag. The actual options available
+     *                                    depend upon the formatter used.
+     * @return callable|string|self The set formatter if no parameter is given, or
+     *                              self if used as a setter.
      */
     public function setFormatter ($_ = null, $opts = null)
     {
@@ -470,10 +470,10 @@ class Field extends DataTables\Ext {
      * Get / set a set value. If given, then this value is used to write to the
      * database regardless of what data is sent from the client-side.
      *
-     * @param callable|string|number $_ Value to set, or no value to use as a
-     *     getter
-     * @return callable|string|self Value if used as a getter, or self if used
-     *     as a setter.
+     * @param  callable|string|number $_ Value to set, or no value to use as a
+     *                                   getter
+     * @return callable|string|self   Value if used as a getter, or self if used
+     *                                as a setter.
      */
     public function setValue ($_ = null)
     {
@@ -483,9 +483,9 @@ class Field extends DataTables\Ext {
 
     /**
      * Get / set the upload class for this field.
-     * @param  Upload $_ Upload class if used as a setter
+     * @param  Upload      $_ Upload class if used as a setter
      * @return Upload|self Value if used as a getter, or self if used
-     *     as a setter.
+     *                     as a setter.
      */
     public function upload ($_ = null)
     {
@@ -505,15 +505,15 @@ class Field extends DataTables\Ext {
      *
      * Editor has a number of validation available with the {@see Validate} class
      * which can be used directly with this method.
-     *  @param callable|string $_ Value to set if using as the validation method.
-     *    Can be given as a closure function or a string with a reference to a
-     *    function that will be called with call_user_func().
-     *  @param mixed $opts Variable that is passed through to the validation
-     *    function - can be useful for passing through extra information such as
-     *    date formatting string, or a required flag. The actual options available
-     *    depend upon the validation function used.
-     *  @return callable|string|self The validation method if no parameter is given,
-     *    or self if used as a setter.
+     * @param  callable|string      $_    Value to set if using as the validation method.
+     *                                    Can be given as a closure function or a string with a reference to a
+     *                                    function that will be called with call_user_func().
+     * @param  mixed                $opts Variable that is passed through to the validation
+     *                                    function - can be useful for passing through extra information such as
+     *                                    date formatting string, or a required flag. The actual options available
+     *                                    depend upon the validation function used.
+     * @return callable|string|self The validation method if no parameter is given,
+     *                              or self if used as a setter.
      */
     public function validator ($_ = null, $opts = null)
     {
@@ -547,8 +547,8 @@ class Field extends DataTables\Ext {
      * function. This is _not_ recommended.
      *
      * @param  callable|false $xssFormatter XSS cleaner function, use `false` or
-     *   `null` to disable XSS cleaning.
-     * @return Field                        Self for chaining.
+     *                                      `null` to disable XSS cleaning.
+     * @return Field          Self for chaining.
      */
     public function xss ($xssFormatter)
     {
@@ -574,11 +574,11 @@ class Field extends DataTables\Ext {
      *
      * Called by the Editor / Join class instances - not expected for general
      * consumption - internal.
-     *  @param string $action Direction that the data is travelling  - 'get' is
-     *    reading DB data, `create` and `edit` for writing to the DB
-     *  @param array $data Data submitted from the client-side when setting.
-     *  @return bool true if the field should be used in the get / set.
-     *  @internal
+     * @param  string $action Direction that the data is travelling  - 'get' is
+     *                        reading DB data, `create` and `edit` for writing to the DB
+     * @param  array  $data   Data submitted from the client-side when setting.
+     * @return bool   true if the field should be used in the get / set.
+     * @internal
      */
     public function apply ($action, $data = null)
     {
@@ -620,7 +620,7 @@ class Field extends DataTables\Ext {
      * side
      *
      * @param  \DataTables\Database $db Database instance
-     * @return Array        Array of value / label options for the list
+     * @return Array                Array of value / label options for the list
      * @internal
      */
     public function optionsExec ($db)
@@ -640,11 +640,11 @@ class Field extends DataTables\Ext {
      * Execute the spopts to get the list of options for SearchPanes to return
      * to the client-side
      *
-     * @param Editor\Field $field The field to retrieve the data from
-     * @param Editor $editor The editor instance
-     * @param array $http The http request sent to the server
-     * @param Editor\Field[] $fields All of the fields
-     * @param array $leftJoin Info for a leftJoin if required
+     * @param  Editor\Field   $field    The field to retrieve the data from
+     * @param  Editor         $editor   The editor instance
+     * @param  array          $http     The http request sent to the server
+     * @param  Editor\Field[] $fields   All of the fields
+     * @param  array          $leftJoin Info for a leftJoin if required
      * @return array | bool
      * @internal
      */
@@ -665,11 +665,11 @@ class Field extends DataTables\Ext {
      * Execute the spopts to get the list of options for SearchBuilder to return
      * to the client-side
      *
-     * @param DataTables\Field $field The field to retrieve the data from
-     * @param DataTables\Editor $editor The editor instance
-     * @param DataTables\DTRequest $http The http request sent to the server
-     * @param DataTables\Field[] $fields All of the fields
-     * @param any $leftJoin Info for a leftJoin if required
+     * @param  DataTables\Field          $field    The field to retrieve the data from
+     * @param  DataTables\Editor         $editor   The editor instance
+     * @param  DataTables\DTRequest      $http     The http request sent to the server
+     * @param  DataTables\Field[]        $fields   All of the fields
+     * @param  any                       $leftJoin Info for a leftJoin if required
      * @return Promise<IOption[]> | bool
      * @internal
      */
@@ -694,12 +694,12 @@ class Field extends DataTables\Ext {
      *
      * Called by the Editor / Join class instances - not expected for general
      * consumption - internal.
-     *  @param string $direction Direction that the data is travelling  - 'get' is
-     *    reading data, and 'set' is writing it to the DB.
-     *  @param array $data Data submitted from the client-side when setting or the
-     *    data for the row when getting data from the DB.
-     *  @return string Value for the field
-     *  @internal
+     * @param  string $direction Direction that the data is travelling  - 'get' is
+     *                           reading data, and 'set' is writing it to the DB.
+     * @param  array  $data      Data submitted from the client-side when setting or the
+     *                           data for the row when getting data from the DB.
+     * @return string Value for the field
+     * @internal
      */
     public function val ($direction, $data)
     {
@@ -756,9 +756,9 @@ class Field extends DataTables\Ext {
      * Called by the Editor / Join class instances - not expected for general
      * consumption - internal.
      *
-     * @param array $data Data submitted from the client-side
-     * @param Editor $editor Editor instance
-     * @param mixed $id Row id that is being validated
+     * @param  array       $data   Data submitted from the client-side
+     * @param  Editor      $editor Editor instance
+     * @param  mixed       $id     Row id that is being validated
      * @return bool|string `true` if valid, string with error message if not
      * @internal
      */
@@ -828,8 +828,8 @@ class Field extends DataTables\Ext {
     /**
      * Write the value for this field to the output array for a read operation
      *
-     * @param  array $out     Row output data (to the JSON)
-     * @param  mixed $srcData Row input data (raw, from the database)
+     * @param array $out     Row output data (to the JSON)
+     * @param mixed $srcData Row input data (raw, from the database)
      * @internal
      */
     public function write(&$out, $srcData)
@@ -841,7 +841,7 @@ class Field extends DataTables\Ext {
     /**
      * Perform XSS prevention on an input.
      *
-     * @param  mixed $val Value to be escaped
+     * @param  mixed  $val Value to be escaped
      * @return string Safe value
      */
     public function xssSafety ($val) {
@@ -878,7 +878,7 @@ class Field extends DataTables\Ext {
      * @param  mixed    $data      Full row data
      * @param  callable $formatter Formatting function to be called
      * @param  array    $opts      Array of options to be passed to the formatter
-     * @return mixed               Formatted value
+     * @return mixed    Formatted value
      */
     private function _format($val, $data, $formatter, $opts)
     {
@@ -917,7 +917,7 @@ class Field extends DataTables\Ext {
      * function or not
      *
      * @param  mixed $val Value to be evaluated
-     * @return mixed      Value assigned, or returned from the function
+     * @return mixed Value assigned, or returned from the function
      */
     private function _getAssignedValue ($val)
     {
@@ -931,9 +931,9 @@ class Field extends DataTables\Ext {
      * the same as the `_readProp()` method, but in this case a binary value
      * is required to indicate if the value is present or not.
      *
-     * @param  string $name  Javascript dotted object name to write to
-     * @param  array  $data   Data source array to read from
-     * @return bool       `true` if present, `false` otherwise
+     * @param  string $name Javascript dotted object name to write to
+     * @param  array  $data Data source array to read from
+     * @return bool   `true` if present, `false` otherwise
      * @private
      */
     private function _inData ($name, $data)

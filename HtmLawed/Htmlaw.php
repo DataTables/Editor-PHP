@@ -60,10 +60,10 @@ class Htmlaw {
     /**
      * Filters a string of html with the htmLawed library.
      *
-     * @param string $html The text to filter.
-     * @param array|null $config Config settings for the array.
-     * @param string|array|null $spec A specification to further limit the allowed attribute values in the html.
-     * @return string Returns the filtered html.
+     * @param  string            $html   The text to filter.
+     * @param  array|null        $config Config settings for the array.
+     * @param  string|array|null $spec   A specification to further limit the allowed attribute values in the html.
+     * @return string            Returns the filtered html.
      * @see http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/htmLawed_README.htm
      */
     public static function filter($html, array $config = null, $spec = null) {
@@ -86,7 +86,7 @@ class Htmlaw {
     /**
      * Filter a string of html so that it can be put into an rss feed.
      *
-     * @param string $html The html text to fitlter.
+     * @param  string $html The html text to fitlter.
      * @return string Returns the filtered html.
      * @see Htmlawed::filter().
      */

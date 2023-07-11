@@ -142,7 +142,7 @@ class Upload extends DataTables\Ext {
     /**
      * Upload instance constructor
      * @param string|callable $action Action to take on upload - this is applied
-     *     directly to {@see Upload->action()}.
+     *                                directly to {@see Upload->action()}.
      */
     function __construct($action = null)
     {
@@ -172,7 +172,7 @@ class Upload extends DataTables\Ext {
      *   later.
      *
      * @param  string|callable $action Action to take - see description above.
-     * @return self Current instance, used for chaining
+     * @return self            Current instance, used for chaining
      */
     public function action ($action)
     {
@@ -190,10 +190,10 @@ class Upload extends DataTables\Ext {
      * on the file extension.
      *
      * @param  string[] $extn  List of file extensions that are allowable for
-     *     the upload
-     * @param  string $error Error message if a file is uploaded that doesn't
-     *     match the valid list of extensions.
-     * @return self Current instance, used for chaining
+     *                         the upload
+     * @param  string   $error Error message if a file is uploaded that doesn't
+     *                         match the valid list of extensions.
+     * @return self     Current instance, used for chaining
      * @deprecated Use Validate::fileExtensions
      */
     public function allowedExtensions ($extn, $error = "This file type cannot be uploaded")
@@ -211,20 +211,20 @@ class Upload extends DataTables\Ext {
      * you wish to store relational information about your file on the database
      * (this is generally recommended).
      *
-     * @param  string $table  The name of the table where the file information
-     *     should be stored
-     * @param  string $pkey   Primary key column name. The `Upload` class
-     *     requires that the database table have a single primary key so each
-     *     row can be uniquely identified.
-     * @param  array $fields A list of the fields to be written to on upload.
-     *     The property names are the database columns and the values can be
-     *     defined by the constants of this class. The value can also be a
-     *     string or a closure function if you wish to send custom information
-     *     to the database.
-     * @param callable $format Formatting function that can change the data obtained
-     *     from the database. Only gets a single parameter passed in - the
-     *     database row for the file that is read.
-     * @return self Current instance, used for chaining
+     * @param  string   $table  The name of the table where the file information
+     *                          should be stored
+     * @param  string   $pkey   Primary key column name. The `Upload` class
+     *                          requires that the database table have a single primary key so each
+     *                          row can be uniquely identified.
+     * @param  array    $fields A list of the fields to be written to on upload.
+     *                          The property names are the database columns and the values can be
+     *                          defined by the constants of this class. The value can also be a
+     *                          string or a closure function if you wish to send custom information
+     *                          to the database.
+     * @param  callable $format Formatting function that can change the data obtained
+     *                          from the database. Only gets a single parameter passed in - the
+     *                          database row for the file that is read.
+     * @return self     Current instance, used for chaining
      */
     public function db ($table, $pkey, $fields, $format = null)
     {
@@ -242,11 +242,11 @@ class Upload extends DataTables\Ext {
      * a reference in a source table.
      *
      * @param  callable $callback Function that will be executed on clean. It is
-     *     given an array of information from the database about the orphaned
-     *     rows, and can return true to indicate that the rows should be
-     *     removed from the database. Any other return value (including none)
-     *     will result in the records being retained.
-     * @return self Current instance, used for chaining
+     *                            given an array of information from the database about the orphaned
+     *                            rows, and can return true to indicate that the rows should be
+     *                            removed from the database. Any other return value (including none)
+     *                            will result in the records being retained.
+     * @return self     Current instance, used for chaining
      */
     public function dbClean($tableField, $callback = null)
     {
@@ -280,9 +280,9 @@ class Upload extends DataTables\Ext {
      * sequence when a file has been uploaded.
      *
      * @param  callable $fn Validation function. A PHP `$_FILES` parameter is
-     *     passed in for the uploaded file and the return is either a string
-     *     (validation failed and error message), or `null` (validation passed).
-     * @return self Current instance, used for chaining
+     *                      passed in for the uploaded file and the return is either a string
+     *                      (validation failed and error message), or `null` (validation passed).
+     * @return self     Current instance, used for chaining
      */
     public function validator ($fn)
     {
@@ -299,7 +299,7 @@ class Upload extends DataTables\Ext {
      * conditions can be added. Multiple calls to this method can be made.
      *
      * @param  callable $fn Where function.
-     * @return self Current instance, used for chaining
+     * @return self     Current instance, used for chaining
      */
     public function where ($fn)
     {
@@ -316,9 +316,9 @@ class Upload extends DataTables\Ext {
     /**
      * Get database information data from the table
      *
-     * @param \DataTables\Database $db  Database
-     * @param number[]             $ids Limit to a specific set of ids
-     * @return array Database information
+     * @param  \DataTables\Database $db  Database
+     * @param  number[]             $ids Limit to a specific set of ids
+     * @return array                Database information
      * @internal
      */
     public function data ($db, $ids = null)
@@ -364,8 +364,8 @@ class Upload extends DataTables\Ext {
 
     /**
      * Clean the database
-     * @param  \DataTables\Editor $editor Calling Editor instance
-     * @param  Field $field   Host field
+     * @param \DataTables\Editor $editor Calling Editor instance
+     * @param Field              $field  Host field
      * @internal
      */
     public function dbCleanExec ($editor, $field)
@@ -393,7 +393,7 @@ class Upload extends DataTables\Ext {
      * Execute an upload
      *
      * @param  \DataTables\Editor $editor Calling Editor instance
-     * @return int Primary key value
+     * @return int                Primary key value
      * @internal
      */
     public function exec ($editor)
@@ -524,9 +524,9 @@ class Upload extends DataTables\Ext {
      * orphaned rows and then calling the callback function. The callback can
      * then instruct the rows to be removed through the return value.
      *
-     * @param  \DataTables\Database $db Database instance
-     * @param  string $editorTable Editor Editor instance table name
-     * @param  string $fieldName   Host field's name
+     * @param \DataTables\Database $db          Database instance
+     * @param string               $editorTable Editor Editor instance table name
+     * @param string               $fieldName   Host field's name
      */
     private function _dbClean ($db, $editorTable, $fieldName)
     {
@@ -600,7 +600,7 @@ class Upload extends DataTables\Ext {
      *
      * @param  array                $upload $_FILES['upload']
      * @param  \DataTables\Database $db     Database instance
-     * @return int Primary key value for the newly uploaded file
+     * @return int                  Primary key value for the newly uploaded file
      */
     private function _dbExec ($upload, $db)
     {
@@ -715,7 +715,7 @@ class Upload extends DataTables\Ext {
      * Apply macros to a user specified path
      *
      * @param  string $name File path
-     * @param  int $id Primary key value for the file
+     * @param  int    $id   Primary key value for the file
      * @return string Resolved path
      */
     private function _path ($name, $id)

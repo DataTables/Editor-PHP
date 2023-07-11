@@ -33,17 +33,17 @@ class Database {
 
     /**
      * Database instance constructor.
-     *  @param array<string, string|\PDO> $opts Array of connection parameters for the database:
-     *    ```php
-     *      array(
-     *          "user" => "", // User name
-     *          "pass" => "", // Password
-     *          "host" => "", // Host name
-     *          "port" => "", // Port
-     *          "db"   => "", // Database name
-     *          "type" => ""  // Datable type: "Mysql", "Postgres" or "Sqlite"
-     *      )
-     *    ```
+     * @param array<string, string|\PDO> $opts Array of connection parameters for the database:
+     *                                         ```php
+     *                                         array(
+     *                                         "user" => "", // User name
+     *                                         "pass" => "", // Password
+     *                                         "host" => "", // Host name
+     *                                         "port" => "", // Port
+     *                                         "db"   => "", // Database name
+     *                                         "type" => ""  // Datable type: "Mysql", "Postgres" or "Sqlite"
+     *                                         )
+     *                                         ```
      */
     function __construct($opts)
     {
@@ -87,10 +87,10 @@ class Database {
      * Determine if there is any data in the table that matches the query
      * condition
      *
-     * @param string|string[] $table Table name(s) to act upon.
-     * @param array $where Where condition for what to select - see {@see
-     *   Query->where()}.
-     * @return bool Boolean flag - true if there were rows
+     * @param  string|string[] $table Table name(s) to act upon.
+     * @param  array           $where Where condition for what to select - see {@see
+     *                                Query->where()}.
+     * @return bool            Boolean flag - true if there were rows
      */
     public function any($table, $where = null)
     {
@@ -109,7 +109,7 @@ class Database {
      * Commit a database transaction.
      *
      * Use with {@see Database->transaction()} and {@see Database->rollback()}.
-     *  @return self
+     * @return self
      */
     public function commit ()
     {
@@ -120,11 +120,11 @@ class Database {
 
     /**
      * Get a count from a table.
-     *  @param string|string[] $table Table name(s) to act upon.
-     *  @param string $field Primary key field name
-     *  @param array $where Where condition for what to select - see {@see
-     *    Query->where()}.
-     *  @return Number
+     * @param  string|string[] $table Table name(s) to act upon.
+     * @param  string          $field Primary key field name
+     * @param  array           $where Where condition for what to select - see {@see
+     *                                Query->where()}.
+     * @return Number
      */
     public function count ($table, $field = "id", $where = null)
     {
@@ -142,9 +142,9 @@ class Database {
     /**
      * Get / set debug mode.
      *
-     *  @param bool $_ Debug mode state. If not given, then used as a getter.
-     *  @return bool|self Debug mode state if no parameter is given, or
-     *    self if used as a setter.
+     * @param  bool      $_ Debug mode state. If not given, then used as a getter.
+     * @return bool|self Debug mode state if no parameter is given, or
+     *                   self if used as a setter.
      */
     public function debug ($set = null)
     {
@@ -167,10 +167,10 @@ class Database {
      *
      * This is a short cut method that creates an update query and then uses
      * the query('delete'), table, where and exec methods of the query.
-     *  @param string|string[] $table Table name(s) to act upon.
-     *  @param array $where Where condition for what to delete - see {@see
-     *    Query->where()}.
-     *  @return Result
+     * @param  string|string[] $table Table name(s) to act upon.
+     * @param  array           $where Where condition for what to delete - see {@see
+     *                                Query->where()}.
+     * @return Result
      */
     public function delete ($table, $where = null)
     {
@@ -186,14 +186,14 @@ class Database {
      *
      * This is a short cut method that creates an update query and then uses
      * the query('insert'), table, set and exec methods of the query.
-     *  @param string|string[] $table Table name(s) to act upon.
-     *  @param array $set Field names and values to set - see {@see
-     *    Query->set()}.
-     *  @param  array $pkey Primary key column names (this is an array for
-     *    forwards compt, although only the first item in the array is actually
-     *    used). This doesn't need to be set, but it must be if you want to use
-     *    the `Result->insertId()` method.
-     *  @return Result
+     * @param  string|string[] $table Table name(s) to act upon.
+     * @param  array           $set   Field names and values to set - see {@see
+     *                                Query->set()}.
+     * @param  array           $pkey  Primary key column names (this is an array for
+     *                                forwards compt, although only the first item in the array is actually
+     *                                used). This doesn't need to be set, but it must be if you want to use
+     *                                the `Result->insertId()` method.
+     * @return Result
      */
     public function insert ($table, $set, $pkey = '')
     {
@@ -208,16 +208,16 @@ class Database {
     /**
      * Update or Insert data. When doing an insert, the where condition is
      * added as a set field
-     *  @param string|string[] $table Table name(s) to act upon.
-     *  @param array $set Field names and values to set - see {@see
-     *    Query->set()}.
-     *  @param array $where Where condition for what to update - see {@see
-     *    Query->where()}.
-     *  @param  array $pkey Primary key column names (this is an array for
-     *    forwards compt, although only the first item in the array is actually
-     *    used). This doesn't need to be set, but it must be if you want to use
-     *    the `Result->insertId()` method. Only used if an insert is performed.
-     *  @return Result
+     * @param  string|string[] $table Table name(s) to act upon.
+     * @param  array           $set   Field names and values to set - see {@see
+     *                                Query->set()}.
+     * @param  array           $where Where condition for what to update - see {@see
+     *                                Query->where()}.
+     * @param  array           $pkey  Primary key column names (this is an array for
+     *                                forwards compt, although only the first item in the array is actually
+     *                                used). This doesn't need to be set, but it must be if you want to use
+     *                                the `Result->insertId()` method. Only used if an insert is performed.
+     * @return Result
      */
     public function push ($table, $set, $where = null, $pkey = '')
     {
@@ -247,9 +247,9 @@ class Database {
 
     /**
      * Create a query object to build a database query.
-     *  @param string $type Query type - select, insert, update or delete.
-     *  @param string|string[] $table Table name(s) to act upon.
-     *  @return Query
+     * @param  string          $type  Query type - select, insert, update or delete.
+     * @param  string|string[] $table Table name(s) to act upon.
+     * @return Query
      */
     public function query ($type, $table = null)
     {
@@ -259,9 +259,9 @@ class Database {
 
     /**
      * Quote a string for a quote. Note you should generally use a bind!
-     *  @param string $val Value to quote
-     *  @param string $type Value type
-     *  @return string
+     * @param  string $val  Value to quote
+     * @param  string $type Value type
+     * @return string
      */
     public function quote ($val, $type = \PDO::PARAM_STR)
     {
@@ -276,7 +276,7 @@ class Database {
      * wish to bind parameters using the query `bind` method to ensure data is
      * properly escaped.
      *
-     *  @return Result
+     * @return Result
      *
      *  @example
      *    Safely escape user input
@@ -307,7 +307,7 @@ class Database {
      * Rollback the database state to the start of the transaction.
      *
      * Use with {@see Database->transaction()} and {@see Database->commit()}.
-     *  @return self
+     * @return self
      */
     public function rollback ()
     {
@@ -321,14 +321,14 @@ class Database {
      *
      * This is a short cut method that creates an update query and then uses
      * the query('select'), table, get, where and exec methods of the query.
-     *  @param string|string[] $table Table name(s) to act upon.
-     *  @param array $field Fields to get from the table(s) - see {@see
-     *    Query->get()}.
-     *  @param array $where Where condition for what to select - see {@see
-     *    Query->where()}.
-     *  @param array $orderBy Order condition - see {@see
-     *    Query->order()}.
-     *  @return Result
+     * @param  string|string[] $table   Table name(s) to act upon.
+     * @param  array           $field   Fields to get from the table(s) - see {@see
+     *                                  Query->get()}.
+     * @param  array           $where   Where condition for what to select - see {@see
+     *                                  Query->where()}.
+     * @param  array           $orderBy Order condition - see {@see
+     *                                  Query->order()}.
+     * @return Result
      */
     public function select ($table, $field = "*", $where = null, $orderBy = null)
     {
@@ -347,14 +347,14 @@ class Database {
      * This is a short cut method that creates an update query and then uses the
      * query('select'), distinct ,table, get, where and exec methods of the
      * query.
-     *  @param string|string[] $table Table name(s) to act upon.
-     *  @param array $field Fields to get from the table(s) - see {@see
-     *    Query->get()}.
-     *  @param array $where Where condition for what to select - see {@see
-     *    Query->where()}.
-     *  @param array $orderBy Order condition - see {@see
-     *    Query->order()}.
-     *  @return Result
+     * @param  string|string[] $table   Table name(s) to act upon.
+     * @param  array           $field   Fields to get from the table(s) - see {@see
+     *                                  Query->get()}.
+     * @param  array           $where   Where condition for what to select - see {@see
+     *                                  Query->where()}.
+     * @param  array           $orderBy Order condition - see {@see
+     *                                  Query->order()}.
+     * @return Result
      */
     public function selectDistinct ($table, $field = "*", $where = null, $orderBy = null)
     {
@@ -374,8 +374,8 @@ class Database {
      *
      * This method will execute the given SQL immediately. Use the `raw()`
      * method if you need the ability to add bound parameters.
-     *  @param string $sql SQL string to execute (only if _type is 'raw').
-     *  @return Result
+     * @param  string $sql SQL string to execute (only if _type is 'raw').
+     * @return Result
      *
      *  @example
      *    Basic select
@@ -402,7 +402,7 @@ class Database {
      * Start a new database transaction.
      *
      * Use with {@see Database->commit()} and {@see Database->rollback()}.
-     *  @return self
+     * @return self
      */
     public function transaction ()
     {
@@ -425,12 +425,12 @@ class Database {
      *
      * This is a short cut method that creates an update query and then uses
      * the query('update'), table, set, where and exec methods of the query.
-     *  @param string|string[] $table Table name(s) to act upon.
-     *  @param array $set Field names and values to set - see {@see
-     *    Query->set()}.
-     *  @param array $where Where condition for what to update - see {@see
-     *    Query->where()}.
-     *  @return Result
+     * @param  string|string[] $table Table name(s) to act upon.
+     * @param  array           $set   Field names and values to set - see {@see
+     *                                Query->set()}.
+     * @param  array           $where Where condition for what to update - see {@see
+     *                                Query->where()}.
+     * @return Result
      */
     public function update ($table, $set = null, $where = null)
     {
@@ -449,9 +449,9 @@ class Database {
     /**
      * Get debug query information.
      *
-     *  @return array Information about the queries used. When this method is
-     *    called it will reset the query cache.
-     *  @internal
+     * @return array Information about the queries used. When this method is
+     *               called it will reset the query cache.
+     * @internal
      */
     public function debugInfo ($query = null, $bindings = null)
     {

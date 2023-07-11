@@ -110,7 +110,6 @@ return (new PhpCsFixer\Config())
         'no_useless_concat_operator' => false,
         'operator_linebreak' => false,
         'ordered_imports' => false,
-        'phpdoc_align' => false,
         'phpdoc_annotation_without_dot' => false,
         'phpdoc_indent' => false,
         'phpdoc_no_alias_tag' => false,

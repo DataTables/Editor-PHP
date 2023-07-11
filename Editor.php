@@ -79,12 +79,12 @@ class Editor extends Ext {
     /**
      * Determine the request type from an HTTP request.
      *
-     * @param array $http Typically $_POST, but can be any array used to carry
-     *   an Editor payload
-     * @param string $name The parameter name that the action should be read from.
+     * @param  array  $http Typically $_POST, but can be any array used to carry
+     *                      an Editor payload
+     * @param  string $name The parameter name that the action should be read from.
      * @return string `Editor::ACTION_READ`, `Editor::ACTION_CREATE`,
-     *   `Editor::ACTION_EDIT` or `Editor::ACTION_DELETE` indicating the request
-     *   type.
+     *                `Editor::ACTION_EDIT` or `Editor::ACTION_DELETE` indicating the request
+     *                type.
      */
     static public function action ($http, $name = 'action')
     {
@@ -117,12 +117,12 @@ class Editor extends Ext {
 
     /**
      * Constructor.
-     *  @param Database $db An instance of the DataTables Database class that we can
-     *    use for the DB connection. Can be given here or with the 'db' method.
-     *  @param string|array $table The table name in the database to read and write
-     *    information from and to. Can be given here or with the 'table' method.
-     *  @param string|array $pkey Primary key column name in the table given in
-     *    the $table parameter. Can be given here or with the 'pkey' method.
+     * @param Database     $db    An instance of the DataTables Database class that we can
+     *                            use for the DB connection. Can be given here or with the 'db' method.
+     * @param string|array $table The table name in the database to read and write
+     *                            information from and to. Can be given here or with the 'table' method.
+     * @param string|array $pkey  Primary key column name in the table given in
+     *                            the $table parameter. Can be given here or with the 'pkey' method.
      */
     function __construct($db = null, $table = null, $pkey = null)
     {
@@ -226,8 +226,8 @@ class Editor extends Ext {
      * Get / set the action name to read in HTTP parameters. This can be useful
      * to set if you are using a framework that uses the default name of `action`
      * for something else (e.g. WordPress).
-     *  @param string $_ Value to set. If not given, then used as a getter.
-     *  @return string|self Value, or self if used as a setter.
+     * @param  string      $_ Value to set. If not given, then used as a getter.
+     * @return string|self Value, or self if used as a setter.
      */
     public function actionName ($_ = null)
     {
@@ -241,7 +241,7 @@ class Editor extends Ext {
      * This will get the PHP array of data that has been constructed for the
      * command that has been processed by this instance. Therefore only useful after
      * process has been called.
-     *  @return array Processed data array.
+     * @return array Processed data array.
      */
     public function data ()
     {
@@ -251,10 +251,10 @@ class Editor extends Ext {
 
     /**
      * Get / set the DB connection instance
-     *  @param Database $_ DataTable's Database class instance to use for database
-     *    connectivity. If not given, then used as a getter.
-     *  @return Database|self The Database connection instance if no parameter
-     *    is given, or self if used as a setter.
+     * @param  Database      $_ DataTable's Database class instance to use for database
+     *                          connectivity. If not given, then used as a getter.
+     * @return Database|self The Database connection instance if no parameter
+     *                       is given, or self if used as a setter.
      */
     public function db ($_ = null)
     {
@@ -274,12 +274,12 @@ class Editor extends Ext {
      * added to the debug information sent back to the client-side. This can
      * be useful when debugging event listeners, etc.
      *
-     *  @param bool|mixed $_    Debug mode state. If not given, then used as a
-     *    getter. If given as anything other than a boolean, it will be added
-     *    to the debug information sent back to the client.
-     *  @param string     $path Set an output path to log debug information
-     *  @return bool|self Debug mode state if no parameter is given, or
-     *    self if used as a setter or when adding a debug message.
+     * @param  bool|mixed $_    Debug mode state. If not given, then used as a
+     *                          getter. If given as anything other than a boolean, it will be added
+     *                          to the debug information sent back to the client.
+     * @param  string     $path Set an output path to log debug information
+     * @return bool|self  Debug mode state if no parameter is given, or
+     *                    self if used as a setter or when adding a debug message.
      */
     public function debug ($_ = null, $path = null)
     {
@@ -302,8 +302,8 @@ class Editor extends Ext {
      *
      * The list of fields designates which columns in the table that Editor will work
      * with (both get and set).
-     *  @param Field|string $_... This parameter effects the return value of the
-     *      function:
+     * @param Field|string $_... This parameter effects the return value of the
+     *                           function:
      *
      *      * `null` - Get an array of all fields assigned to the instance
      * 	    * `string` - Get a specific field instance whose 'name' matches the
@@ -312,10 +312,10 @@ class Editor extends Ext {
      *           can be as many fields as required (i.e. multiple arguments)
      *      * `array` - An array of {@see Field} instances to add to the list
      *        of fields.
-     *  @return Field|Field[]|Editor The selected field, an array of fields, or
-     *      the Editor instance for chaining, depending on the input parameter.
-     *  @throws \Exception Unkown field error
-     *  @see {@see Field} for field documentation.
+     * @return Field|Field[]|Editor The selected field, an array of fields, or
+     *                              the Editor instance for chaining, depending on the input parameter.
+     * @throws \Exception           Unkown field error
+     * @see {@see Field} for field documentation.
      */
     public function field ($_ = null)
     {
@@ -342,11 +342,11 @@ class Editor extends Ext {
      * Get / set field instances.
      *
      * An alias of {@see field}, for convenience.
-     *  @param Field|Field[] $_... Instances of the {@see Field} class, given as a single
-     *    instance of {@see Field}, an array of {@see Field} instances, or multiple
-     *    {@see Field} instance parameters for the function.
-     *  @return Field[]|self Array of fields, or self if used as a setter.
-     *  @see {@see Field} for field documentation.
+     * @param  Field|Field[] $_... Instances of the {@see Field} class, given as a single
+     *                             instance of {@see Field}, an array of {@see Field} instances, or multiple
+     *                             {@see Field} instance parameters for the function.
+     * @return Field[]|self  Array of fields, or self if used as a setter.
+     * @see {@see Field} for field documentation.
      */
     public function fields ($_ = null)
     {
@@ -367,9 +367,9 @@ class Editor extends Ext {
      * tables are used on a single page. As such, a prefix is assigned to the
      * primary key value for each row, and this is used as the DOM ID, so Editor
      * can track individual rows.
-     *  @param string $_ Primary key's name. If not given, then used as a getter.
-     *  @return string|self Primary key value if no parameter is given, or
-     *    self if used as a setter.
+     * @param  string      $_ Primary key's name. If not given, then used as a getter.
+     * @return string|self Primary key value if no parameter is given, or
+     *                     self if used as a setter.
      */
     public function idPrefix ($_ = null)
     {
@@ -382,7 +382,7 @@ class Editor extends Ext {
      * useful once the `process()` method has been called, and is available for
      * use in validation and formatter methods.
      *
-     *   @return array Data given to `process()`.
+     * @return array Data given to `process()`.
      */
     public function inData ()
     {
@@ -398,10 +398,10 @@ class Editor extends Ext {
      * (i.e. the one that the {@see Editor->table()} and {@see Editor->fields}
      * methods refer to in this class instance).
      *
-     *  @param Join $_,... Instances of the {@see Join} class, given as a
-     *    single instance of {@see Join}, an array of {@see Join} instances,
-     *    or multiple {@see Join} instance parameters for the function.
-     *  @return Join[]|self Array of joins, or self if used as a setter.
+     * @param  Join        $_,... Instances of the {@see Join} class, given as a
+     *                            single instance of {@see Join}, an array of {@see Join} instances,
+     *                            or multiple {@see Join} instance parameters for the function.
+     * @return Join[]|self Array of joins, or self if used as a setter.
      */
     public function join ($_ = null)
     {
@@ -419,11 +419,11 @@ class Editor extends Ext {
      *
      * Basically the same as the {@see Editor->data()} method, but in this case we echo, or
      * return the JSON string of the data.
-     *  @param bool $print  Echo the JSON string out (true, default) or return it
-     *    (false).
-     *  @param int $options JSON encode option https://www.php.net/manual/en/json.constants.php
-     *  @return string|self self if printing the JSON, or JSON representation of
-     *    the processed data if false is given as the first parameter.
+     * @param  bool        $print   Echo the JSON string out (true, default) or return it
+     *                              (false).
+     * @param  int         $options JSON encode option https://www.php.net/manual/en/json.constants.php
+     * @return string|self self if printing the JSON, or JSON representation of
+     *                     the processed data if false is given as the first parameter.
      */
     public function json ($print = true, $options = 0)
     {
@@ -450,9 +450,9 @@ class Editor extends Ext {
      * This is basically the same as {@see Editor->json()} but wraps the return in a
      * JSONP callback.
      *
-     * @param string $callback The callback function name to use. If not given
-     *    or `null`, then `$_GET['callback']` is used (the jQuery default).
-     * @return self Self for chaining.
+     * @param  string     $callback The callback function name to use. If not given
+     *                              or `null`, then `$_GET['callback']` is used (the jQuery default).
+     * @return self       Self for chaining.
      * @throws \Exception JSONP function name validation
      */
     public function jsonp ($callback = null)
@@ -497,11 +497,11 @@ class Editor extends Ext {
      * options, the table name must also be given. For example the field
      * `first_name` in the table `users` would be given as `users.first_name`.
      *
-     * @param string $table Table name to do a join onto
-     * @param string $field1 Field from the parent table to use as the join link
-     * @param string $operator Join condition (`=`, '<`, etc)
-     * @param string $field2 Field from the child table to use as the join link
-     * @return self Self for chaining.
+     * @param  string $table    Table name to do a join onto
+     * @param  string $field1   Field from the parent table to use as the join link
+     * @param  string $operator Join condition (`=`, '<`, etc)
+     * @param  string $field2   Field from the child table to use as the join link
+     * @return self   Self for chaining.
      *
      * @example
      *    Simple join:
@@ -545,9 +545,9 @@ class Editor extends Ext {
      * removed completely in v2. Use `ON DELETE CASCADE` in your database instead.
      *
      *  @deprecated
-     *  @param bool $_ Value to set. If not given, then used as a getter.
-     *  @return bool|self Value if no parameter is given, or
-     *    self if used as a setter.
+     * @param  bool      $_ Value to set. If not given, then used as a getter.
+     * @return bool|self Value if no parameter is given, or
+     *                   self if used as a setter.
      */
     public function leftJoinRemove ($_ = null)
     {
@@ -559,10 +559,10 @@ class Editor extends Ext {
      * Add an event listener. The `Editor` class will trigger an number of
      * events that some action can be taken on.
      *
-     * @param  string $name     Event name
+     * @param  string   $name     Event name
      * @param  callable $callback Callback function to execute when the event
-     *     occurs
-     * @return self Self for chaining.
+     *                            occurs
+     * @return self     Self for chaining.
      */
     public function on ($name, $callback)
     {
@@ -582,11 +582,11 @@ class Editor extends Ext {
      * The primary key must be known to Editor so it will know which rows are being
      * edited / deleted upon those actions. The default value is ['id'].
      *
-     *  @param string|string[] $_ Primary key's name. If not given, then used as a
-     *    getter. An array of column names can be given to allow composite keys to
-     *    be used.
-     *  @return string[]|self Primary key value if no parameter is given, or
-     *    self if used as a setter.
+     * @param  string|string[] $_ Primary key's name. If not given, then used as a
+     *                            getter. An array of column names can be given to allow composite keys to
+     *                            be used.
+     * @return string[]|self   Primary key value if no parameter is given, or
+     *                         self if used as a setter.
      */
     public function pkey ($_ = null)
     {
@@ -601,13 +601,13 @@ class Editor extends Ext {
     /**
      * Convert a primary key array of field values to a combined value.
      *
-     * @param  array  $row   The row of data that the primary key value should
-     *   be extracted from.
-     * @param  bool    $flat  Flag to indicate if the given array is flat
-     *   (useful for `where` conditions) or nested for join tables.
-     * @return string The created primary key value.
+     * @param  array      $row  The row of data that the primary key value should
+     *                          be extracted from.
+     * @param  bool       $flat Flag to indicate if the given array is flat
+     *                          (useful for `where` conditions) or nested for join tables.
+     * @return string     The created primary key value.
      * @throws \Exception If one of the values that the primary key is made up
-     *    of cannot be found in the data set given, an Exception will be thrown.
+     *                    of cannot be found in the data set given, an Exception will be thrown.
      */
     public function pkeyToValue ($row, $flat = false)
     {
@@ -646,15 +646,15 @@ class Editor extends Ext {
     /**
      * Convert a primary key combined value to an array of field values.
      *
-     * @param  string   $value The id that should be split apart
-     * @param  bool     $flat  Flag to indicate if the returned array should be
-     *   flat (useful for `where` conditions) or nested for join tables.
-     * @param  string[] $pkey The primary key name - will use the instance value
-     *   if not given
-     * @return array          Array of field values that the id was made up of.
+     * @param  string     $value The id that should be split apart
+     * @param  bool       $flat  Flag to indicate if the returned array should be
+     *                           flat (useful for `where` conditions) or nested for join tables.
+     * @param  string[]   $pkey  The primary key name - will use the instance value
+     *                           if not given
+     * @return array      Array of field values that the id was made up of.
      * @throws \Exception If the primary key value does not match the expected
-     *   length based on the primary key configuration, an exception will be
-     *   thrown.
+     *                    length based on the primary key configuration, an exception will be
+     *                    thrown.
      */
     public function pkeyToArray ($value, $flat = false, $pkey = null)
     {
@@ -686,9 +686,9 @@ class Editor extends Ext {
     /**
      * Process a request from the Editor client-side to get / set data.
      *
-     *  @param array $data Typically $_POST or $_GET as required by what is sent
-     *  by Editor
-     *  @return self
+     * @param  array $data Typically $_POST or $_GET as required by what is sent
+     *                     by Editor
+     * @return self
      */
     public function process ($data)
     {
@@ -739,9 +739,9 @@ class Editor extends Ext {
      * a useful distinction to allow a read from a VIEW (which could make use of a
      * complex SELECT) while writing to a different table.
      *
-     *  @param string|array $_,... Read table names given as a single string, an array
-     *    of strings or multiple string parameters for the function.
-     *  @return string[]|self Array of read tables names, or self if used as a setter.
+     * @param  string|array  $_,... Read table names given as a single string, an array
+     *                              of strings or multiple string parameters for the function.
+     * @return string[]|self Array of read tables names, or self if used as a setter.
      */
     public function readTable ($_ = null)
     {
@@ -763,9 +763,9 @@ class Editor extends Ext {
      * names would also need to reflect the alias, just like an SQL query. For
      * example: `users as a`.
      *
-     *  @param string|array $_,... Table names given as a single string, an array of
-     *    strings or multiple string parameters for the function.
-     *  @return string[]|self Array of tables names, or self if used as a setter.
+     * @param  string|array  $_,... Table names given as a single string, an array of
+     *                              strings or multiple string parameters for the function.
+     * @return string[]|self Array of tables names, or self if used as a setter.
      */
     public function table ($_ = null)
     {
@@ -786,10 +786,10 @@ class Editor extends Ext {
      * This can be optionally disabled using this method, if required by your
      * database configuration.
      *
-     *  @param bool $_ Enable (`true`) or disabled (`false`) transactions.
-     *    If not given, then used as a getter.
-     *  @return bool|self Transactions enabled flag, or self if used as a
-     *    setter.
+     * @param  bool      $_ Enable (`true`) or disabled (`false`) transactions.
+     *                      If not given, then used as a getter.
+     * @return bool|self Transactions enabled flag, or self if used as a
+     *                   setter.
      */
     public function transaction ($_ = null)
     {
@@ -801,9 +801,9 @@ class Editor extends Ext {
      * Enable / try catch when `process()` is called. Disabling this can be
      * useful for debugging, but is not recommended for production.
      *
-     * @param  bool $_ `true` to enable (default), otherwise false to disable
+     * @param  bool        $_ `true` to enable (default), otherwise false to disable
      * @return bool|Editor Value if used as a getter, otherwise `$this` when
-     *   used as a setter.
+     *                     used as a setter.
      */
     public function tryCatch ($_ = null)
     {
@@ -820,12 +820,12 @@ class Editor extends Ext {
      * Any formatting required by `setFormatter` is performed after the data
      * from the client has been validated.
      *
-     *  @param array $errors Output array to which field error information will
-     *      be written. Each element in the array represents a field in an error
-     *      condition. These elements are themselves arrays with two properties
-     *      set; `name` and `status`.
-     *  @param array $data The format data to check
-     *  @return bool `true` if the data is valid, `false` if not.
+     * @param  array $errors Output array to which field error information will
+     *                       be written. Each element in the array represents a field in an error
+     *                       condition. These elements are themselves arrays with two properties
+     *                       set; `name` and `status`.
+     * @param  array $data   The format data to check
+     * @return bool  `true` if the data is valid, `false` if not.
      */
     public function validate (&$errors, $data)
     {
@@ -866,11 +866,11 @@ class Editor extends Ext {
      * and remove actions performed from the client-side. Multiple validators
      * can be added.
      *
-     * @param  callable $_ Function to execute when validating the input data.
-     *   It is passed three parameters: 1. The editor instance, 2. The action
-     *   and 3. The values.
+     * @param  callable        $_ Function to execute when validating the input data.
+     *                            It is passed three parameters: 1. The editor instance, 2. The action
+     *                            and 3. The values.
      * @return Editor|callable Editor instance if called as a setter, or the
-     *   validator function if not.
+     *                         validator function if not.
      */
     public function validator ($_ = null)
     {
@@ -898,10 +898,10 @@ class Editor extends Ext {
      * undefined (since Editor expects the row to still be available, but the
      * condition removes it from the result set).
      *
-     * @param string|callable $key   Single field name or a closure function
-     * @param string          $value Single field value.
-     * @param string          $op    Condition operator: <, >, = etc
-     * @return string[]|self Where condition array, or self if used as a setter.
+     * @param  string|callable $key   Single field name or a closure function
+     * @param  string          $value Single field value.
+     * @param  string          $op    Condition operator: <, >, = etc
+     * @return string[]|self   Where condition array, or self if used as a setter.
      */
     public function where ($key = null, $value = null, $op = '=')
     {
@@ -928,11 +928,11 @@ class Editor extends Ext {
      * Get / set if the WHERE conditions should be included in the create and
      * edit actions.
      *
-     *  @param bool $_ Include (`true`), or not (`false`)
-     *  @return bool Current value
-     *  @deprecated Note that `whereSet` is now deprecated and replaced with the
-     *    ability to set values for columns on create and edit. The C# libraries
-     *    do not support this option at all.
+     * @param  bool $_ Include (`true`), or not (`false`)
+     * @return bool Current value
+     * @deprecated Note that `whereSet` is now deprecated and replaced with the
+     *              ability to set values for columns on create and edit. The C# libraries
+     *              do not support this option at all.
      */
     public function whereSet ($_ = null)
     {
@@ -952,8 +952,8 @@ class Editor extends Ext {
     /**
      * Process a request from the Editor client-side to get / set data.
      *
-     *  @param array $data Data to process
-     *  @private
+     * @param array $data Data to process
+     * @private
      */
     private function _process($data)
     {
@@ -1080,15 +1080,15 @@ class Editor extends Ext {
      * result of an sAjaxSource request, such that DataTables can display the information
      * from the DB in the table.
      *
-     *  @param integer|string $id Primary key value to get an individual row
-     *    (after create or update operations). Gets the full set if not given.
-     *    If a compound key is being used, this should be the string
-     *    representation of it (i.e. joined together) rather than an array form.
-     *  @param array $http HTTP parameters from GET or POST request (so we can service
-     *    server-side processing requests from DataTables).
-     *  @return array DataTables get information
-     *  @throws \Exception Error on SQL execution
-     *  @private
+     * @param  integer|string $id   Primary key value to get an individual row
+     *                              (after create or update operations). Gets the full set if not given.
+     *                              If a compound key is being used, this should be the string
+     *                              representation of it (i.e. joined together) rather than an array form.
+     * @param  array          $http HTTP parameters from GET or POST request (so we can service
+     *                              server-side processing requests from DataTables).
+     * @return array          DataTables get information
+     * @throws \Exception     Error on SQL execution
+     * @private
      */
     private function _get($id = null, $http = null)
     {
@@ -1288,9 +1288,9 @@ class Editor extends Ext {
 
     /**
      * Update a row in the database
-     *  @param string $id The DOM ID for the row that is being edited.
-     *  @return array Row's data
-     *  @private
+     * @param  string $id The DOM ID for the row that is being edited.
+     * @return array  Row's data
+     * @private
      */
     private function _update($id, $values)
     {
@@ -1400,9 +1400,9 @@ class Editor extends Ext {
 
     /**
      * File upload
-     *  @param array $data Upload data
-     *  @throws \Exception File upload name error
-     *  @private
+     * @param  array      $data Upload data
+     * @throws \Exception File upload name error
+     * @private
      */
     private function _upload($data)
     {
@@ -1470,10 +1470,10 @@ class Editor extends Ext {
      * Get information about the files that are detailed in the database for
      * the fields which have an upload method defined on them.
      *
-     * @param  string  $limitTable Limit the data gathering to a single
-     *     table only
-     * @param number[] $id Limit to a specific set of ids
-     * @return array File information
+     * @param  string   $limitTable Limit the data gathering to a single
+     *                              table only
+     * @param  number[] $id         Limit to a specific set of ids
+     * @return array    File information
      * @private
      */
     private function _fileData ($limitTable = null, $ids = null, $data = null)
@@ -1506,10 +1506,10 @@ class Editor extends Ext {
 
     /**
      * Common file get method for any array of fields
-     * @param  array &$files File output array
-     * @param  Field[] $fields Fields to get file information about
-     * @param  string  $limitTable Limit the data gathering to a single table
-     *     only
+     * @param array   &$files     File output array
+     * @param Field[] $fields     Fields to get file information about
+     * @param string  $limitTable Limit the data gathering to a single table
+     *                            only
      * @private
      */
     private function _fileDataFields (&$files, $fields, $limitTable, $idsIn = null, $data = null)
@@ -1604,10 +1604,10 @@ class Editor extends Ext {
      * When server-side processing is being used, modify the query with // the
      * required extra conditions
      *
-     *  @param \DataTables\Database\Query $query Query instance to apply the SSP commands to
-     *  @param array $http Parameters from HTTP request
-     *  @return array Server-side processing information array
-     *  @private
+     * @param  \DataTables\Database\Query $query Query instance to apply the SSP commands to
+     * @param  array                      $http  Parameters from HTTP request
+     * @return array                      Server-side processing information array
+     * @private
      */
     private function _ssp_query ($query, $http)
     {
@@ -1652,11 +1652,11 @@ class Editor extends Ext {
     /**
      * Convert a column index to a database field name - used for server-side
      * processing requests.
-     *  @param array $http HTTP variables (i.e. GET or POST)
-     *  @param int $index Index in the DataTables' submitted data
-     *  @returns string DB field name
-     *  @throws \Exception Unknown fields
-     *  @private Note that it is actually public for PHP 5.3 - thread 39810
+     * @param  array      $http  HTTP variables (i.e. GET or POST)
+     * @param  int        $index Index in the DataTables' submitted data
+     * @returns string DB field name
+     * @throws \Exception Unknown fields
+     * @private Note that it is actually public for PHP 5.3 - thread 39810
      */
     public function _ssp_field($http, $index)
     {
@@ -1678,9 +1678,9 @@ class Editor extends Ext {
 
     /**
      * Sorting requirements to a server-side processing query.
-     *  @param \DataTables\Database\Query $query Query instance to apply sorting to
-     *  @param array $http HTTP variables (i.e. GET or POST)
-     *  @private
+     * @param \DataTables\Database\Query $query Query instance to apply sorting to
+     * @param array                      $http  HTTP variables (i.e. GET or POST)
+     * @private
      */
     private function _ssp_sort ($query, $http)
     {
@@ -1925,9 +1925,9 @@ class Editor extends Ext {
     /**
      * Add DataTables' 'where' condition to a server-side processing query. This
      * works for both global and individual column filtering.
-     *  @param \DataTables\Database\Query $query Query instance to apply the WHERE conditions to
-     *  @param array $http HTTP variables (i.e. GET or POST)
-     *  @private
+     * @param \DataTables\Database\Query $query Query instance to apply the WHERE conditions to
+     * @param array                      $http  HTTP variables (i.e. GET or POST)
+     * @private
      */
     private function _ssp_filter ($query, $http)
     {
@@ -2052,9 +2052,9 @@ class Editor extends Ext {
 
     /**
      * Add a limit / offset to a server-side processing query
-     *  @param \DataTables\Database\Query $query Query instance to apply the offset / limit to
-     *  @param array $http HTTP variables (i.e. GET or POST)
-     *  @private
+     * @param \DataTables\Database\Query $query Query instance to apply the offset / limit to
+     * @param array                      $http  HTTP variables (i.e. GET or POST)
+     * @private
      */
     private function _ssp_limit ($query, $http)
     {
@@ -2072,8 +2072,8 @@ class Editor extends Ext {
 
     /**
      * Add local WHERE condition to query
-     *  @param \DataTables\Database\Query $query Query instance to apply the WHERE conditions to
-     *  @private
+     * @param \DataTables\Database\Query $query Query instance to apply the WHERE conditions to
+     * @private
      */
     private function _get_where ($query)
     {
@@ -2095,10 +2095,10 @@ class Editor extends Ext {
     /**
      * Get a field instance from a known field name
      *
-     *  @param string $name Field name
-     *  @param string $type Matching name type
-     *  @return Field Field instance
-     *  @private
+     * @param  string $name Field name
+     * @param  string $type Matching name type
+     * @return Field  Field instance
+     * @private
      */
     private function _find_field ($name, $type)
     {
@@ -2120,14 +2120,14 @@ class Editor extends Ext {
     /**
      * Insert or update a row for all main tables and left joined tables.
      *
-     *  @param int|string $id ID to use to condition the update. If null is
-     *      given, the first query performed is an insert and the inserted id
-     *      used as the value should there be any subsequent tables to operate
-     *      on. Mote that for compound keys, this should be the "joined" value
-     *      (i.e. a single string rather than an array).
-     *  @return \DataTables\Database\Result Result from the query or null if no
-     *      query performed.
-     *  @private
+     * @param  int|string                  $id ID to use to condition the update. If null is
+     *                                         given, the first query performed is an insert and the inserted id
+     *                                         used as the value should there be any subsequent tables to operate
+     *                                         on. Mote that for compound keys, this should be the "joined" value
+     *                                         (i.e. a single string rather than an array).
+     * @return \DataTables\Database\Result Result from the query or null if no
+     *                                     query performed.
+     * @private
      */
     private function _insert_or_update ($id, $values)
     {
@@ -2212,12 +2212,12 @@ class Editor extends Ext {
      * table, based on the names of fields and use only the appropriate data for
      * this table. Therefore the full submitted data set can be passed in.
      *
-     *  @param string $table Database table name to use (can include an alias)
-     *  @param array $where Update condition
-     *  @return \DataTables\Database\Result Result from the query or null if no query
-     *      performed.
-     *  @throws \Exception Where set error
-     *  @private
+     * @param  string                      $table Database table name to use (can include an alias)
+     * @param  array                       $where Update condition
+     * @return \DataTables\Database\Result Result from the query or null if no query
+     *                                     performed.
+     * @throws \Exception                  Where set error
+     * @private
      */
     private function _insert_or_update_table ($table, $values, $where = null)
     {
@@ -2306,10 +2306,10 @@ class Editor extends Ext {
      * Delete one or more rows from the database for an individual table
      *
      * @param string $table Database table name to use
-     * @param array $ids Array of ids to remove
-     * @param string $pkey Database column name to match the ids on for the
-     *   delete condition. If not given the instance's base primary key is
-     *   used.
+     * @param array  $ids   Array of ids to remove
+     * @param string $pkey  Database column name to match the ids on for the
+     *                      delete condition. If not given the instance's base primary key is
+     *                      used.
      * @private
      */
     private function _remove_table ($table, $ids, $pkey = null)
@@ -2423,10 +2423,10 @@ class Editor extends Ext {
     /**
      * Get one side or the other of an aliased SQL field name.
      *
-     *  @param string $name SQL field
-     *  @param string $type Which part to get: `alias` (default) or `orig`.
-     *  @returns string Alias
-     *  @private
+     * @param string $name SQL field
+     * @param string $type Which part to get: `alias` (default) or `orig`.
+     * @returns string Alias
+     * @private
      */
     private function _alias ($name, $type = 'alias')
     {
@@ -2452,11 +2452,11 @@ class Editor extends Ext {
      * Get part of an SQL field definition regardless of how deeply defined it
      * is
      *
-     *  @param string $name SQL field
-     *  @param string $type Which part to get: `table` (default) or `db` or
-     *      `column`
-     *  @return string Part name
-     *  @private
+     * @param  string $name SQL field
+     * @param  string $type Which part to get: `table` (default) or `db` or
+     *                      `column`
+     * @return string Part name
+     * @private
      */
     private function _part ($name, $type = 'table')
     {
@@ -2531,7 +2531,7 @@ class Editor extends Ext {
      *
      * @param  string $pkeyVal Old primary key value to merge into
      * @param  array  $row     Data source for update
-     * @return string          Merged value
+     * @return string Merged value
      */
     private function _pkey_submit_merge ($pkeyVal, $row)
     {
@@ -2555,7 +2555,7 @@ class Editor extends Ext {
      * Validate that all primary key fields have values for create.
      *
      * @param  array $row Row's data
-     * @return bool    `true` if valid, `false` otherwise
+     * @return bool  `true` if valid, `false` otherwise
      */
     private function _pkey_validate_insert ($row)
     {

@@ -43,9 +43,9 @@ abstract class Query {
      *
      * Note that typically instances of this class will be automatically created
      * through the {@see \DataTables\Database->query()} method.
-     *  @param Database        $db    Database instance
-     *  @param string          $type  Query type - 'select', 'insert', 'update' or 'delete'
-     *  @param string|string[] $table Tables to operate on - see {@see Query->table()}.
+     * @param Database        $db    Database instance
+     * @param string          $type  Query type - 'select', 'insert', 'update' or 'delete'
+     * @param string|string[] $table Tables to operate on - see {@see Query->table()}.
      */
     public function __construct($dbHost, $type, $table = null)
     {
@@ -167,7 +167,7 @@ abstract class Query {
 
     /**
      * Commit a transaction.
-     *  @param \PDO $dbh The Database handle (typically a PDO object, but not always).
+     * @param \PDO $dbh The Database handle (typically a PDO object, but not always).
      */
     public static function commit ($dbh)
     {
@@ -176,11 +176,11 @@ abstract class Query {
 
     /**
      * Database connection - override by the database driver.
-     *  @param string|array $user User name or all parameters in an array
-     *  @param string $pass Password
-     *  @param string $host Host name
-     *  @param string $db   Database name
-     *  @return Query
+     * @param  string|array $user User name or all parameters in an array
+     * @param  string       $pass Password
+     * @param  string       $host Host name
+     * @param  string       $db   Database name
+     * @return Query
      */
     public static function connect ($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '') {
         // noop - PHP <7 can't have an abstract static without causing
@@ -191,7 +191,7 @@ abstract class Query {
 
     /**
      * Start a database transaction
-     *  @param \PDO $dbh The Database handle (typically a PDO object, but not always).
+     * @param \PDO $dbh The Database handle (typically a PDO object, but not always).
      */
     public static function transaction ($dbh)
     {
@@ -201,7 +201,7 @@ abstract class Query {
 
     /**
      * Rollback the database state to the start of the transaction.
-     *  @param \PDO $dbh The Database handle (typically a PDO object, but not always).
+     * @param \PDO $dbh The Database handle (typically a PDO object, but not always).
      */
     public static function rollback ($dbh)
     {
@@ -211,9 +211,9 @@ abstract class Query {
 
     /**
      * Common helper for the drivers to handle a PDO DSN postfix
-     *  @param string $dsn DSN postfix to use
-     *  @return Query
-     *  @internal
+     * @param  string $dsn DSN postfix to use
+     * @return Query
+     * @internal
      */
     static function dsnPostfix ($dsn)
     {
@@ -242,8 +242,8 @@ abstract class Query {
      *
      * @param  string $name  Parameter name. This should include a leading colon
      * @param  string $value Value to bind
-     * @param  mixed $type  Data type. See the PHP PDO documentation:
-     *   http://php.net/manual/en/pdo.constants.php
+     * @param  mixed  $type  Data type. See the PHP PDO documentation:
+     *                       http://php.net/manual/en/pdo.constants.php
      * @return Query
      */
     public function bind ($name, $value, $type = null)
@@ -271,8 +271,8 @@ abstract class Query {
     /**
      * Set a distinct flag for a `select` query. Note that this has no effect on
      * any of the other query types.
-     *  @param bool $dis Optional
-     *  @return Query
+     * @param  bool  $dis Optional
+     * @return Query
      */
     public function distinct ($dis)
     {
@@ -283,8 +283,8 @@ abstract class Query {
 
     /**
      * Execute the query.
-     *  @param string $sql SQL string to execute (only if _type is 'raw').
-     *  @return Result
+     * @param  string $sql SQL string to execute (only if _type is 'raw').
+     * @return Result
      */
     public function exec ($sql = null)
     {
@@ -315,9 +315,9 @@ abstract class Query {
 
     /**
      * Get fields.
-     *  @param string|string[] $get,... Fields to get - can be specified as
-     *    individual fields or an array of fields.
-     *  @return self
+     * @param  string|string[] $get,... Fields to get - can be specified as
+     *                                  individual fields or an array of fields.
+     * @return self
      */
     public function get ($get)
     {
@@ -355,10 +355,10 @@ abstract class Query {
 
     /**
      * Perform a JOIN operation
-     *  @param string $table     Table name to do the JOIN on
-     *  @param string $condition JOIN condition
-     *  @param string $type      JOIN type
-     *  @return self
+     * @param  string $table     Table name to do the JOIN on
+     * @param  string $condition JOIN condition
+     * @param  string $type      JOIN type
+     * @return self
      */
     public function join ($table, $condition, $type = '', $bind = true)
     {
@@ -423,8 +423,8 @@ abstract class Query {
 
     /**
      * Limit the result set to a certain size.
-     *  @param int $lim The number of records to limit the result to.
-     *  @return self
+     * @param  int  $lim The number of records to limit the result to.
+     * @return self
      */
     public function limit ($lim)
     {
@@ -435,7 +435,7 @@ abstract class Query {
 
     /**
      * Group the results by the values in a field
-     * @param string $group_by The field of which the values are to be grouped
+     * @param  string $group_by The field of which the values are to be grouped
      * @return self
      */
     public function group_by ($group_by)
@@ -449,7 +449,7 @@ abstract class Query {
     /**
      * Get / set the primary key column name(s) so they can be easily returned
      * after an insert.
-     * @param  string[] $pkey Primary keys
+     * @param  string[]       $pkey Primary keys
      * @return Query|string[]
      */
     public function pkey ($pkey = null)
@@ -466,10 +466,10 @@ abstract class Query {
 
     /**
      * Set table(s) to perform the query on.
-     *  @param string|string[] $table,... Table(s) to use - can be specified as
-     *    individual names, an array of names, a string of comma separated
-     *    names or any combination of those.
-     *  @return self
+     * @param  string|string[] $table,... Table(s) to use - can be specified as
+     *                                    individual names, an array of names, a string of comma separated
+     *                                    names or any combination of those.
+     * @return self
      */
     public function table ($table)
     {
@@ -498,8 +498,8 @@ abstract class Query {
 
     /**
      * Offset the return set by a given number of records (useful for paging).
-     *  @param int $off The number of records to offset the result by.
-     *  @return self
+     * @param  int  $off The number of records to offset the result by.
+     * @return self
      */
     public function offset ($off)
     {
@@ -511,10 +511,10 @@ abstract class Query {
 
     /**
      * Order by
-     *  @param string|string[] $order Columns and direction to order by - can
-     *    be specified as individual names, an array of names, a string of comma
-     *    separated names or any combination of those.
-     *  @return self
+     * @param  string|string[] $order Columns and direction to order by - can
+     *                                be specified as individual names, an array of names, a string of comma
+     *                                separated names or any combination of those.
+     * @return self
      */
     public function order ($order)
     {
@@ -552,12 +552,12 @@ abstract class Query {
      *
      * Can be used in two different ways, as set( field, value ) or as an array of
      * fields to set: set( array( 'fieldName' => 'value', ...) );
-     *  @param string|string[] $set Can be given as a single string, when then $val
-     *    must be set, or as an array of key/value pairs to be set.
-     *  @param string          $val When $set is given as a simple string, $set is the field
-     *    name and this is the field's value.
-     *  @param bool            $bind Should the value be bound or not
-     *  @return self
+     * @param  string|string[] $set  Can be given as a single string, when then $val
+     *                               must be set, or as an array of key/value pairs to be set.
+     * @param  string          $val  When $set is given as a simple string, $set is the field
+     *                               name and this is the field's value.
+     * @param  bool            $bind Should the value be bound or not
+     * @return self
      */
     public function set ($set, $val = null, $bind = true)
     {
@@ -589,16 +589,16 @@ abstract class Query {
      *
      * Can be used in two different ways, as where( field, value ) or as an array of
      * conditions to use: where( array('fieldName', ...), array('value', ...) );
-     *  @param string|string[]|callable $key   Single field name, or an array of field names.
-     *    If given as a function (i.e. a closure), the function is called, passing the
-     *    query itself in as the only parameter, so the function can add extra conditions
-     *    with parentheses around the additional parameters.
-     *  @param string|string[]          $value Single field value, or an array of
-     *    values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
-     *    on the value of `$op` which should be `=` or `!=`.
-     *  @param string                   $op    Condition operator: <, >, = etc
-     *  @param bool                     $bind  Escape the value (true, default) or not (false).
-     *  @return self
+     * @param  string|string[]|callable $key   Single field name, or an array of field names.
+     *                                         If given as a function (i.e. a closure), the function is called, passing the
+     *                                         query itself in as the only parameter, so the function can add extra conditions
+     *                                         with parentheses around the additional parameters.
+     * @param  string|string[]          $value Single field value, or an array of
+     *                                         values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
+     *                                         on the value of `$op` which should be `=` or `!=`.
+     * @param  string                   $op    Condition operator: <, >, = etc
+     * @param  bool                     $bind  Escape the value (true, default) or not (false).
+     * @return self
      *
      *  @example
      *     The following will produce
@@ -642,16 +642,16 @@ abstract class Query {
      *
      * Can be used in two different ways, as where( field, value ) or as an array of
      * conditions to use: where( array('fieldName', ...), array('value', ...) );
-     *  @param string|string[]|callable $key   Single field name, or an array of field names.
-     *    If given as a function (i.e. a closure), the function is called, passing the
-     *    query itself in as the only parameter, so the function can add extra conditions
-     *    with parentheses around the additional parameters.
-     *  @param string|string[]          $value Single field value, or an array of
-     *    values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
-     *    on the value of `$op` which should be `=` or `!=`.
-     *  @param string                   $op    Condition operator: <, >, = etc
-     *  @param bool                     $bind  Escape the value (true, default) or not (false).
-     *  @return self
+     * @param  string|string[]|callable $key   Single field name, or an array of field names.
+     *                                         If given as a function (i.e. a closure), the function is called, passing the
+     *                                         query itself in as the only parameter, so the function can add extra conditions
+     *                                         with parentheses around the additional parameters.
+     * @param  string|string[]          $value Single field value, or an array of
+     *                                         values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
+     *                                         on the value of `$op` which should be `=` or `!=`.
+     * @param  string                   $op    Condition operator: <, >, = etc
+     * @param  bool                     $bind  Escape the value (true, default) or not (false).
+     * @return self
      */
     public function and_where ($key, $value = null, $op = "=", $bind = true)
     {
@@ -664,16 +664,16 @@ abstract class Query {
      *
      * Can be used in two different ways, as where( field, value ) or as an array of
      * conditions to use: where( array('fieldName', ...), array('value', ...) );
-     *  @param string|string[]|callable $key   Single field name, or an array of field names.
-     *    If given as a function (i.e. a closure), the function is called, passing the
-     *    query itself in as the only parameter, so the function can add extra conditions
-     *    with parentheses around the additional parameters.
-     *  @param string|string[]          $value Single field value, or an array of
-     *    values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
-     *    on the value of `$op` which should be `=` or `!=`.
-     *  @param string                   $op    Condition operator: <, >, = etc
-     *  @param bool                     $bind  Escape the value (true, default) or not (false).
-     *  @return self
+     * @param  string|string[]|callable $key   Single field name, or an array of field names.
+     *                                         If given as a function (i.e. a closure), the function is called, passing the
+     *                                         query itself in as the only parameter, so the function can add extra conditions
+     *                                         with parentheses around the additional parameters.
+     * @param  string|string[]          $value Single field value, or an array of
+     *                                         values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
+     *                                         on the value of `$op` which should be `=` or `!=`.
+     * @param  string                   $op    Condition operator: <, >, = etc
+     * @param  bool                     $bind  Escape the value (true, default) or not (false).
+     * @return self
      */
     public function or_where ($key, $value = null, $op = "=", $bind = true)
     {
@@ -708,12 +708,12 @@ abstract class Query {
      * define if a grouping bracket should be opened or closed in the query.
      * This method is not prefer.
      *
-     *  @param bool|callable $inOut If callable it will create the group
-     *      automatically and pass the query into the called function. For
-     *      legacy operations use `true` to open brackets, `false` to close.
-     *  @param string        $op    Conditional operator to use to join to the
-     *      preceding condition. Default `AND`.
-     *  @return self
+     * @param  bool|callable $inOut If callable it will create the group
+     *                              automatically and pass the query into the called function. For
+     *                              legacy operations use `true` to open brackets, `false` to close.
+     * @param  string        $op    Conditional operator to use to join to the
+     *                              preceding condition. Default `AND`.
+     * @return self
      *
      *  @example
      *     ```php
@@ -745,11 +745,11 @@ abstract class Query {
      * Note this is only suitable for local values, not a sub-query. For that use
      * `->where()` with an unbound value.
      *
-     *  @param string $field    Field name
-     *  @param array  $arr      Values
-     *  @param string $operator Conditional operator to use to join to the
-     *      preceding condition. Default `AND`.
-     *  @return self
+     * @param  string $field    Field name
+     * @param  array  $arr      Values
+     * @param  string $operator Conditional operator to use to join to the
+     *                          preceding condition. Default `AND`.
+     * @return self
      */
     public function where_in ($field, $arr, $operator = "AND")
     {
@@ -789,7 +789,7 @@ abstract class Query {
 
     /**
      * Create a comma separated field list
-     * @param bool $addAlias Flag to add an alias
+     * @param  bool   $addAlias Flag to add an alias
      * @return string
      * @internal
      */
@@ -830,8 +830,8 @@ abstract class Query {
 
     /**
      * Create a JOIN statement list
-     *  @return string
-     *  @internal
+     * @return string
+     * @internal
      */
     protected function _build_join()
     {
@@ -842,8 +842,8 @@ abstract class Query {
      * Create the LIMIT / OFFSET string
      *
      * MySQL and Postgres style - anything else can have the driver override
-     *  @return string
-     *  @internal
+     * @return string
+     * @internal
      */
     protected function _build_limit()
     {
@@ -881,8 +881,8 @@ abstract class Query {
 
     /**
      * Create the ORDER BY string
-     *  @return string
-     *  @internal
+     * @return string
+     * @internal
      */
     protected function _build_order()
     {
@@ -894,8 +894,8 @@ abstract class Query {
 
     /**
      * Create a set list
-     *  @return string
-     *  @internal
+     * @return string
+     * @internal
      */
     protected function _build_set()
     {
@@ -917,8 +917,8 @@ abstract class Query {
 
     /**
      * Create the TABLE list
-     *  @return string
-     *  @internal
+     * @return string
+     * @internal
      */
     protected function _build_table()
     {
@@ -941,8 +941,8 @@ abstract class Query {
 
     /**
      * Create a bind field value list
-     *  @return string
-     *  @internal
+     * @return string
+     * @internal
      */
     protected function _build_value()
     {
@@ -957,8 +957,8 @@ abstract class Query {
 
     /**
      * Create the WHERE statement
-     *  @return string
-     *  @internal
+     * @return string
+     * @internal
      */
     protected function _build_where()
     {
@@ -1001,8 +1001,8 @@ abstract class Query {
 
     /**
      * Create a DELETE statement
-     *  @return Result
-     *  @internal
+     * @return Result
+     * @internal
      */
     protected function _delete()
     {
@@ -1028,15 +1028,15 @@ abstract class Query {
 
     /**
      * Execute the query. Provided by the driver
-     *  @return Result
-     *  @internal
+     * @return Result
+     * @internal
      */
     abstract protected function _exec();
 
     /**
      * Create an INSERT statement
-     *  @return Result
-     *  @internal
+     * @return Result
+     * @internal
      */
     protected function _insert()
     {
@@ -1056,14 +1056,14 @@ abstract class Query {
     /**
      * Prepare the SQL query by populating the bound variables.
      * Provided by the driver
-     *  @return void
-     *  @internal
+     * @return void
+     * @internal
      */
     abstract protected function _prepare($sql);
 
     /**
      * Protect field names
-     * @param string $identifier String to be protected
+     * @param  string $identifier String to be protected
      * @return string
      * @internal
      */
@@ -1109,8 +1109,8 @@ abstract class Query {
 
     /**
      * Passed in SQL statement
-     *  @return Result
-     *  @internal
+     * @return Result
+     * @internal
      */
     protected function _raw($sql)
     {
@@ -1123,7 +1123,7 @@ abstract class Query {
      * The characters that can be used for the PDO bindValue name are quite
      * limited (`[a-zA-Z0-9_]+`). We need to abstract this out to allow slightly
      * more complex expressions including dots for easy aliasing
-     * @param string $name Field name
+     * @param  string $name Field name
      * @return string
      * @internal
      */
@@ -1140,8 +1140,8 @@ abstract class Query {
 
     /**
      * Create a SELECT statement
-     *  @return Result
-     *  @internal
+     * @return Result
+     * @internal
      */
     protected function _select()
     {
@@ -1161,8 +1161,8 @@ abstract class Query {
 
     /**
      * Create a SELECT COUNT statement
-     *  @return Result
-     *  @internal
+     * @return Result
+     * @internal
      */
     protected function _count()
     {
@@ -1183,8 +1183,8 @@ abstract class Query {
 
     /**
      * Create an UPDATE statement
-     *  @return Result
-     *  @internal
+     * @return Result
+     * @internal
      */
     protected function _update()
     {
@@ -1202,10 +1202,10 @@ abstract class Query {
      * Add an individual where condition to the query.
      * @internal
      * @param string|array $where
-     * @param null $value
-     * @param string $type
-     * @param string $op
-     * @param bool $bind
+     * @param null         $value
+     * @param string       $type
+     * @param string       $op
+     * @param bool         $bind
      */
     protected function _where ($where, $value = null, $type = 'AND ', $op = "=", $bind = true)
     {
@@ -1265,8 +1265,8 @@ abstract class Query {
 
     /**
      * Add parentheses to a where condition
-     *  @return string
-     *  @internal
+     * @return string
+     * @internal
      */
     protected function _where_group ($inOut, $op)
     {
