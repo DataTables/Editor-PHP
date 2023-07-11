@@ -7,6 +7,7 @@
  *  @author    SpryMedia
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
 
@@ -17,20 +18,20 @@ use DataTables\Database\Result;
 
 /**
  * Sqlite driver for DataTables Database Result class
+ *
  *  @internal
  */
-class SqliteResult extends Result {
+class SqliteResult extends Result
+{
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
 	 */
 
-	function __construct( $dbh, $stmt )
+	function __construct($dbh, $stmt)
 	{
 		$this->_dbh = $dbh;
 		$this->_stmt = $stmt;
 	}
-
-
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private properties
@@ -38,8 +39,6 @@ class SqliteResult extends Result {
 
 	private $_stmt;
 	private $_dbh;
-
-
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -50,18 +49,15 @@ class SqliteResult extends Result {
 		return count($this->fetchAll());
 	}
 
-
-	public function fetch ( $fetchType=\PDO::FETCH_ASSOC )
+	public function fetch ($fetchType = \PDO::FETCH_ASSOC)
 	{
-		return $this->_stmt->fetch( $fetchType );
+		return $this->_stmt->fetch($fetchType);
 	}
 
-
-	public function fetchAll ( $fetchType=\PDO::FETCH_ASSOC )
+	public function fetchAll ($fetchType = \PDO::FETCH_ASSOC)
 	{
-		return $this->_stmt->fetchAll( $fetchType );
+		return $this->_stmt->fetchAll($fetchType);
 	}
-
 
 	public function insertId ()
 	{

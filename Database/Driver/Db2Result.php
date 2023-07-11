@@ -6,6 +6,7 @@
  *  @author    SpryMedia
  *  @copyright 2013 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
 
@@ -16,20 +17,20 @@ use DataTables\Database\Result;
 
 /**
  * SQL Server driver for DataTables Database Result class
+ *
  *  @internal
  */
-class Db2Result extends Result {
+class Db2Result extends Result
+{
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
 	 */
 
-	function __construct( $dbh, $stmt )
+	function __construct($dbh, $stmt)
 	{
 		$this->_dbh = $dbh;
 		$this->_stmt = $stmt;
 	}
-
-
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private properties
@@ -38,8 +39,6 @@ class Db2Result extends Result {
 	private $_stmt;
 	private $_dbh;
 	private $_allRows = null;
-
-
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -51,14 +50,12 @@ class Db2Result extends Result {
 		return count($all);
 	}
 
-
-	public function fetch ( $fetchType=\PDO::FETCH_ASSOC )
+	public function fetch ($fetchType = \PDO::FETCH_ASSOC)
 	{
-		return db2_fetch_assoc( $this->_stmt );
+		return db2_fetch_assoc($this->_stmt);
 	}
 
-
-	public function fetchAll ( $fetchType=\PDO::FETCH_ASSOC )
+	public function fetchAll ($fetchType = \PDO::FETCH_ASSOC)
 	{
 		$all = $this->_fetchAll();
 		return $all;
@@ -66,12 +63,13 @@ class Db2Result extends Result {
 
 	public function insertId ()
 	{
-		return db2_last_insert_id( $this->_dbh );
+		return db2_last_insert_id($this->_dbh);
 	}
 
-	private function _fetchAll () {
+	private function _fetchAll ()
+	{
 		$a = array();
-		while ( $row = db2_fetch_assoc( $this->_stmt ) ) {
+		while ($row = db2_fetch_assoc($this->_stmt)) {
 			$a[] = $row;
 		}
 		return $a;

@@ -7,6 +7,7 @@
  *  @author    SpryMedia
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
 
@@ -18,9 +19,11 @@ use DataTables\Database\Driver\FirebirdResult;
 
 /**
  * Firebird driver for DataTables Database Query class
+ *
  *  @internal
  */
-class FirebirdQuery extends Query {
+class FirebirdQuery extends Query
+{
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private properties
 	 */
@@ -38,23 +41,23 @@ class FirebirdQuery extends Query {
 	 * Public methods
 	 */
 
-	static function connect( $user, $pass='', $host='', $port='', $db='', $dsn='' )
+	static function connect($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '')
 	{
-		if ( is_array( $user ) ) {
+		if (is_array($user)) {
 			$opts = $user;
 			$user = $opts['user'];
 			$pass = $opts['pass'];
 			$port = $opts['port'];
 			$host = $opts['host'];
-			$db   = $opts['db'];
-			$dsn  = isset( $opts['dsn'] ) ? $opts['dsn'] : '';
-			$pdoAttr = isset( $opts['pdoAttr'] ) ? $opts['pdoAttr'] : array();
+			$db = $opts['db'];
+			$dsn = isset($opts['dsn']) ? $opts['dsn'] : '';
+			$pdoAttr = isset($opts['pdoAttr']) ? $opts['pdoAttr'] : array();
 		}
 
-		if ( $host !== "" ) {
+		if ($host !== '') {
 			$host = "{$host}";
 
-			if ( $port !== "" ) {
+			if ($port !== '') {
 				$host .= "/{$port}";
 			}
 
@@ -62,10 +65,10 @@ class FirebirdQuery extends Query {
 		}
 
 		try {
-			$pdoAttr[ PDO::ATTR_ERRMODE ] = PDO::ERRMODE_EXCEPTION;
+			$pdoAttr[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 
 			$pdo = @new PDO(
-				"firebird:{$host}dbname={$db}".self::dsnPostfix( $dsn ),
+				"firebird:{$host}dbname={$db}" . self::dsnPostfix($dsn),
 				$user,
 				$pass,
 				$pdoAttr
@@ -73,39 +76,37 @@ class FirebirdQuery extends Query {
 		} catch (\PDOException $e) {
 			// If we can't establish a DB connection then we return a DataTables
 			// error.
-			echo json_encode( array(
-				"error" => "An error occurred while connecting to the database ".
-					"'{$db}'. The error reported by the server was: ".$e->getMessage()
-			) );
+			echo json_encode(array(
+				'error' => 'An error occurred while connecting to the database ' .
+					"'{$db}'. The error reported by the server was: " . $e->getMessage()
+			));
 			exit(1);
 		}
 
 		return $pdo;
 	}
 
-
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Protected methods
 	 */
 
-	protected function _prepare( $sql )
+	protected function _prepare($sql)
 	{
-		$this->database()->debugInfo( $sql, $this->_bindings );
+		$this->database()->debugInfo($sql, $this->_bindings);
 
 		$resource = $this->database()->resource();
 		$pkey = $this->pkey();
 
 		// If insert, add the pkey column
-		if ( $this->_type === 'insert' && $pkey ) {
+		if ($this->_type === 'insert' && $pkey) {
 			$this->_pkeyInsertedTo = (is_array($pkey) ? $pkey[0] : $pkey);
-			$sql .= ' RETURNING "'.$this->_pkeyInsertedTo.'"';
+			$sql .= ' RETURNING "' . $this->_pkeyInsertedTo . '"';
 		}
 
-		$this->_stmt = $resource->prepare( $sql );
+		$this->_stmt = $resource->prepare($sql);
 
 		// bind values
-		for ( $i=0 ; $i<count($this->_bindings) ; $i++ ) {
+		for ($i = 0; $i < count($this->_bindings); $i++) {
 			$binding = $this->_bindings[$i];
 
 			$this->_stmt->bindValue(
@@ -116,17 +117,15 @@ class FirebirdQuery extends Query {
 		}
 	}
 
-
 	protected function _exec()
 	{
 		try {
 			$this->_stmt->execute();
-		}
-		catch (\PDOException $e) {
+		} catch (\PDOException $e) {
 			throw new \Exception('An SQL error occurred: ' . $e->getMessage(), 0, $e);
 		}
 
 		$resource = $this->database()->resource();
-		return new FirebirdResult( $resource, $this->_stmt, $this->_pkeyInsertedTo );
+		return new FirebirdResult($resource, $this->_stmt, $this->_pkeyInsertedTo);
 	}
 }

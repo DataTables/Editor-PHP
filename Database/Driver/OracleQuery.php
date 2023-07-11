@@ -8,6 +8,7 @@
  *  @author    SpryMedia
  *  @copyright 2014 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
 
@@ -19,9 +20,11 @@ use DataTables\Database\Driver\OracleResult;
 
 /**
  * Oracle driver for DataTables Database Query class
+ *
  *  @internal
  */
-class OracleQuery extends Query {
+class OracleQuery extends Query
+{
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private properties
 	 */
@@ -29,108 +32,103 @@ class OracleQuery extends Query {
 
 	private $_editor_pkey_value;
 
-	protected $_identifier_limiter = array( '"', '"' );
+	protected $_identifier_limiter = array('"', '"');
 
 	protected $_field_quote = '"';
 
 	protected $_supportsAsAlias = false;
 
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
 	 */
 
-	static function connect( $user, $pass='', $host='', $port='', $db='', $dsn='' )
+	static function connect($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '')
 	{
-		if ( is_array( $user ) ) {
+		if (is_array($user)) {
 			$opts = $user;
 			$user = $opts['user'];
 			$pass = $opts['pass'];
 			$port = $opts['port'];
 			$host = $opts['host'];
-			$db   = $opts['db'];
-			$dsn  = isset( $opts['dsn'] ) ? $opts['dsn'] : '';
+			$db = $opts['db'];
+			$dsn = isset($opts['dsn']) ? $opts['dsn'] : '';
 		}
 
-		if ( $port !== "" ) {
+		if ($port !== '') {
 			$port = ":{$port}";
 		}
 
-		if ( ! is_callable( 'oci_connect' ) ) {
-			echo json_encode( array(
-				"error" => "oci methods are not available in this PHP install to connect to Oracle"
-			) );
+		if (!is_callable('oci_connect')) {
+			echo json_encode(array(
+				'error' => 'oci methods are not available in this PHP install to connect to Oracle'
+			));
 			exit(1);
 		}
 
-		$conn = @oci_connect($user, $pass, $host.$port.'/'.$db, 'utf8');
+		$conn = @oci_connect($user, $pass, $host . $port . '/' . $db, 'utf8');
 
-		if ( ! $conn ) {
+		if (!$conn) {
 			// If we can't establish a DB connection then we return a DataTables
 			// error.
 			$e = oci_error();
 
-			echo json_encode( array(
-				"error" => "An error occurred while connecting to the database ".
-					"'{$db}'. The error reported by the server was: ".$e['message']
-			) );
+			echo json_encode(array(
+				'error' => 'An error occurred while connecting to the database ' .
+					"'{$db}'. The error reported by the server was: " . $e['message']
+			));
 			exit(1);
 		}
 
 		// Use ISO date and time styles
-		$stmt = oci_parse($conn,  "ALTER SESSION SET NLS_DATE_FORMAT='YYYY-MM-DD HH24:MI:SS'" );
-		$res = oci_execute( $stmt );
+		$stmt = oci_parse($conn, "ALTER SESSION SET NLS_DATE_FORMAT='YYYY-MM-DD HH24:MI:SS'");
+		$res = oci_execute($stmt);
 
-		$stmt = oci_parse($conn,  "ALTER SESSION SET NLS_TIMESTAMP_FORMAT = 'YYYY-MM-DD HH24:MI:SS'" );
-		$res = oci_execute( $stmt );
+		$stmt = oci_parse($conn, "ALTER SESSION SET NLS_TIMESTAMP_FORMAT = 'YYYY-MM-DD HH24:MI:SS'");
+		$res = oci_execute($stmt);
 
 		return $conn;
 	}
 
-
-	public static function transaction ( $conn )
+	public static function transaction ($conn)
 	{
 		// no op
 	}
 
-	public static function commit ( $conn )
+	public static function commit ($conn)
 	{
-		oci_commit( $conn );
+		oci_commit($conn);
 	}
 
-	public static function rollback ( $conn )
+	public static function rollback ($conn)
 	{
-		oci_rollback( $conn );
+		oci_rollback($conn);
 	}
-
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Protected methods
 	 */
 
-	protected function _prepare( $sql )
+	protected function _prepare($sql)
 	{
-
 		$resource = $this->database()->resource();
 		$pkey = $this->pkey();
 
 		// If insert, add the pkey column
-		if ( $this->_type === 'insert' && $pkey ) {
-			$sql .= ' RETURNING '.$this->_protect_identifiers(is_array($pkey) ? $pkey[0] : $pkey).' INTO :editor_pkey_value';
-		}
-		else if ( $this->_type === 'select' && $this->_oracle_offset !== null ) {
+		if ($this->_type === 'insert' && $pkey) {
+			$sql .= ' RETURNING ' . $this->_protect_identifiers(is_array($pkey) ? $pkey[0] : $pkey) . ' INTO :editor_pkey_value';
+		} else if ($this->_type === 'select' && $this->_oracle_offset !== null) {
 			$sql = '
 				select * from (select rownum rnum, a.*
-				from ('.$sql.') a where rownum <= '.($this->_oracle_offset+$this->_oracle_limit).')
-				where rnum > '.$this->_oracle_offset;
+				from (' . $sql . ') a where rownum <= ' . ($this->_oracle_offset + $this->_oracle_limit) . ')
+				where rnum > ' . $this->_oracle_offset;
 		}
 
-		$this->database()->debugInfo( $sql, $this->_bindings );
+		$this->database()->debugInfo($sql, $this->_bindings);
 
-		$this->_stmt = oci_parse( $resource, $sql );
+		$this->_stmt = oci_parse($resource, $sql);
 
 		// If insert, add a binding for the returned id
-		if ( $this->_type === 'insert' && $pkey ) {
+		if ($this->_type === 'insert' && $pkey) {
 			oci_bind_by_name(
 				$this->_stmt,
 				':editor_pkey_value',
@@ -140,7 +138,7 @@ class OracleQuery extends Query {
 		}
 
 		// Bind values
-		for ( $i=0 ; $i<count($this->_bindings) ; $i++ ) {
+		for ($i = 0; $i < count($this->_bindings); $i++) {
 			$binding = $this->_bindings[$i];
 
 			oci_bind_by_name(
@@ -151,40 +149,36 @@ class OracleQuery extends Query {
 		}
 	}
 
-
 	protected function _exec()
 	{
-		$res = @oci_execute( $this->_stmt, OCI_NO_AUTO_COMMIT );
+		$res = @oci_execute($this->_stmt, OCI_NO_AUTO_COMMIT);
 
-		if ( ! $res ) {
-			$e = oci_error( $this->_stmt );
-			throw new \Exception( "Oracle SQL error: ".$e['message'] );
+		if (!$res) {
+			$e = oci_error($this->_stmt);
+			throw new \Exception('Oracle SQL error: ' . $e['message']);
 		}
 
 		$resource = $this->database()->resource();
-		return new OracleResult( $resource, $this->_stmt, $this->_editor_pkey_value );
+		return new OracleResult($resource, $this->_stmt, $this->_editor_pkey_value);
 	}
-
 
 	protected function _build_table()
 	{
 		$out = array();
 
-		for ( $i=0, $ien=count($this->_table) ; $i<$ien ; $i++ ) {
+		for ($i = 0, $ien = count($this->_table); $i < $ien; $i++) {
 			$t = $this->_table[$i];
 
-			if ( strpos($t, ' as ') ) {
-				$a = explode( ' as ', $t );
-				$out[] = $this->_protect_identifiers($a[0]).' '.$this->_protect_identifiers($a[1]);
-			}
-			else {
+			if (strpos($t, ' as ')) {
+				$a = explode(' as ', $t);
+				$out[] = $this->_protect_identifiers($a[0]) . ' ' . $this->_protect_identifiers($a[1]);
+			} else {
 				$out[] = $t;
 			}
 		}
 
-		return ' '.implode(', ', $out).' ';
+		return ' ' . implode(', ', $out) . ' ';
 	}
-
 
 	private $_oracle_offset = null;
 	private $_oracle_limit = null;

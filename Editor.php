@@ -5,9 +5,12 @@
  * PHP libraries for DataTables and DataTables Editor, utilising PHP 5.3+.
  *
  *  @author    SpryMedia
+ *
  *  @version   __VERSION__
+ *
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
 
@@ -55,7 +58,8 @@ use DataTables\Editor\Field;
  *          ->json();
  *    ```
  */
-class Editor extends Ext {
+class Editor extends Ext
+{
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Statics
 	 */
@@ -75,41 +79,36 @@ class Editor extends Ext {
 	/** Request type - upload */
 	const ACTION_UPLOAD = 'upload';
 
-
 	/**
 	 * Determine the request type from an HTTP request.
 	 *
-	 * @param array $http Typically $_POST, but can be any array used to carry
-	 *   an Editor payload
+	 * @param array  $http Typically $_POST, but can be any array used to carry
+	 *                     an Editor payload
 	 * @param string $name The parameter name that the action should be read from.
+	 *
 	 * @return string `Editor::ACTION_READ`, `Editor::ACTION_CREATE`,
-	 *   `Editor::ACTION_EDIT` or `Editor::ACTION_DELETE` indicating the request
-	 *   type.
+	 *                `Editor::ACTION_EDIT` or `Editor::ACTION_DELETE` indicating the request
+	 *                type.
 	 */
-	static public function action ( $http, $name='action' )
+	static public function action ($http, $name = 'action')
 	{
-		if ( ! isset( $http[$name] ) ) {
+		if (!isset($http[$name])) {
 			return self::ACTION_READ;
 		}
 
-		switch ( $http[$name] ) {
+		switch ($http[$name]) {
 			case 'create':
 				return self::ACTION_CREATE;
-
 			case 'edit':
 				return self::ACTION_EDIT;
-
 			case 'remove':
 				return self::ACTION_DELETE;
-
 			case 'upload':
 				return self::ACTION_UPLOAD;
-
 			default:
-				throw new \Exception("Unknown Editor action: ".$http['action']);
+				throw new \Exception('Unknown Editor action: ' . $http['action']);
 		}
 	}
-
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
@@ -117,22 +116,22 @@ class Editor extends Ext {
 
 	/**
 	 * Constructor.
-	 *  @param Database $db An instance of the DataTables Database class that we can
-	 *    use for the DB connection. Can be given here or with the 'db' method.
-	 *  @param string|array $table The table name in the database to read and write
-	 *    information from and to. Can be given here or with the 'table' method.
-	 *  @param string|array $pkey Primary key column name in the table given in
-	 *    the $table parameter. Can be given here or with the 'pkey' method.
+	 *
+	 * @param Database     $db    An instance of the DataTables Database class that we can
+	 *                            use for the DB connection. Can be given here or with the 'db' method.
+	 * @param string|array $table The table name in the database to read and write
+	 *                            information from and to. Can be given here or with the 'table' method.
+	 * @param string|array $pkey  Primary key column name in the table given in
+	 *                            the $table parameter. Can be given here or with the 'pkey' method.
 	 */
-	function __construct( $db=null, $table=null, $pkey=null )
+	function __construct($db = null, $table = null, $pkey = null)
 	{
 		// Set constructor parameters using the API - note that the get/set will
 		// ignore null values if they are used (i.e. not passed in)
-		$this->db( $db );
-		$this->table( $table );
-		$this->pkey( $pkey );
+		$this->db($db);
+		$this->table($table);
+		$this->pkey($pkey);
 	}
-
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public properties
@@ -140,8 +139,6 @@ class Editor extends Ext {
 
 	/** @var string */
 	public $version = '2.2.1';
-
-
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private properties
@@ -216,8 +213,6 @@ class Editor extends Ext {
 	/** @var string Action name allowing for configuration */
 	private $_actionName = 'action';
 
-
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
 	 */
@@ -226,14 +221,15 @@ class Editor extends Ext {
 	 * Get / set the action name to read in HTTP parameters. This can be useful
 	 * to set if you are using a framework that uses the default name of `action`
 	 * for something else (e.g. WordPress).
-	 *  @param string $_ Value to set. If not given, then used as a getter.
-	 *  @return string|self Value, or self if used as a setter.
+	 *
+	 * @param string $_ Value to set. If not given, then used as a getter.
+	 *
+	 * @return string|self Value, or self if used as a setter.
 	 */
-	public function actionName ( $_=null )
+	public function actionName ($_ = null)
 	{
-		return $this->_getSet( $this->_actionName, $_ );
+		return $this->_getSet($this->_actionName, $_);
 	}
-
 
 	/**
 	 * Get the data constructed in this instance.
@@ -241,26 +237,27 @@ class Editor extends Ext {
 	 * This will get the PHP array of data that has been constructed for the
 	 * command that has been processed by this instance. Therefore only useful after
 	 * process has been called.
-	 *  @return array Processed data array.
+	 *
+	 * @return array Processed data array.
 	 */
 	public function data ()
 	{
 		return $this->_out;
 	}
 
-
 	/**
 	 * Get / set the DB connection instance
-	 *  @param Database $_ DataTable's Database class instance to use for database
-	 *    connectivity. If not given, then used as a getter.
-	 *  @return Database|self The Database connection instance if no parameter
-	 *    is given, or self if used as a setter.
+	 *
+	 * @param Database $_ DataTable's Database class instance to use for database
+	 *                    connectivity. If not given, then used as a getter.
+	 *
+	 * @return Database|self The Database connection instance if no parameter
+	 *                       is given, or self if used as a setter.
 	 */
-	public function db ( $_=null )
+	public function db ($_ = null)
 	{
-		return $this->_getSet( $this->_db, $_ );
+		return $this->_getSet($this->_db, $_);
 	}
-
 
 	/**
 	 * Get / set debug mode and set a debug message.
@@ -274,36 +271,37 @@ class Editor extends Ext {
 	 * added to the debug information sent back to the client-side. This can
 	 * be useful when debugging event listeners, etc.
 	 *
-	 *  @param bool|mixed $_    Debug mode state. If not given, then used as a
-	 *    getter. If given as anything other than a boolean, it will be added
-	 *    to the debug information sent back to the client.
-	 *  @param string     $path Set an output path to log debug information
-	 *  @return bool|self Debug mode state if no parameter is given, or
-	 *    self if used as a setter or when adding a debug message.
+	 * @param bool|mixed $_    Debug mode state. If not given, then used as a
+	 *                         getter. If given as anything other than a boolean, it will be added
+	 *                         to the debug information sent back to the client.
+	 * @param string     $path Set an output path to log debug information
+	 *
+	 * @return bool|self Debug mode state if no parameter is given, or
+	 *                   self if used as a setter or when adding a debug message.
 	 */
-	public function debug ( $_=null, $path=null )
+	public function debug ($_ = null, $path = null)
 	{
-		if ( ! is_bool( $_ ) ) {
+		if (!is_bool($_)) {
 			$this->_debugInfo[] = $_;
 
 			return $this;
 		}
 
-		if ( $path ) {
+		if ($path) {
 			$this->_debugLog = $path;
 		}
 
-		return $this->_getSet( $this->_debug, $_ );
+		return $this->_getSet($this->_debug, $_);
 	}
-
 
 	/**
 	 * Get / set field instance.
 	 *
 	 * The list of fields designates which columns in the table that Editor will work
 	 * with (both get and set).
-	 *  @param Field|string $_... This parameter effects the return value of the
-	 *      function:
+	 *
+	 * @param Field|string $_... This parameter effects the return value of the
+	 *                           function:
 	 *
 	 *      * `null` - Get an array of all fields assigned to the instance
 	 * 	    * `string` - Get a specific field instance whose 'name' matches the
@@ -312,52 +310,56 @@ class Editor extends Ext {
 	 *           can be as many fields as required (i.e. multiple arguments)
 	 *      * `array` - An array of {@see Field} instances to add to the list
 	 *        of fields.
-	 *  @return Field|Field[]|Editor The selected field, an array of fields, or
-	 *      the Editor instance for chaining, depending on the input parameter.
-	 *  @throws \Exception Unkown field error
-	 *  @see {@see Field} for field documentation.
+	 *
+	 * @return Field|Field[]|Editor The selected field, an array of fields, or
+	 *                              the Editor instance for chaining, depending on the input parameter.
+	 *
+	 * @throws \Exception Unkown field error
+	 *
+	 * @see {@see Field} for field documentation.
 	 */
-	public function field ( $_=null )
+	public function field ($_ = null)
 	{
 		$args = func_get_args();
 
-		if ( is_string( $_ ) ) {
-			for ( $i=0, $ien=count($this->_fields) ; $i<$ien ; $i++ ) {
-				if ( $this->_fields[$i]->name() === $_ ) {
+		if (is_string($_)) {
+			for ($i = 0, $ien = count($this->_fields); $i < $ien; $i++) {
+				if ($this->_fields[$i]->name() === $_) {
 					return $this->_fields[$i];
 				}
 			}
 
-			throw new \Exception('Unknown field: '.$_);
+			throw new \Exception('Unknown field: ' . $_);
 		}
 
-		if ( $_ !== null && !is_array($_) ) {
+		if ($_ !== null && !is_array($_)) {
 			$_ = $args;
 		}
-		return $this->_getSet( $this->_fields, $_, true );
+		return $this->_getSet($this->_fields, $_, true);
 	}
-
 
 	/**
 	 * Get / set field instances.
 	 *
 	 * An alias of {@see field}, for convenience.
-	 *  @param Field|Field[] $_... Instances of the {@see Field} class, given as a single
-	 *    instance of {@see Field}, an array of {@see Field} instances, or multiple
-	 *    {@see Field} instance parameters for the function.
-	 *  @return Field[]|self Array of fields, or self if used as a setter.
-	 *  @see {@see Field} for field documentation.
+	 *
+	 * @param Field|Field[] $_... Instances of the {@see Field} class, given as a single
+	 *                            instance of {@see Field}, an array of {@see Field} instances, or multiple
+	 *                            {@see Field} instance parameters for the function.
+	 *
+	 * @return Field[]|self Array of fields, or self if used as a setter.
+	 *
+	 * @see {@see Field} for field documentation.
 	 */
-	public function fields ( $_=null )
+	public function fields ($_ = null)
 	{
 		$args = func_get_args();
 
-		if ( $_ !== null && !is_array($_) ) {
+		if ($_ !== null && !is_array($_)) {
 			$_ = $args;
 		}
-		return $this->_getSet( $this->_fields, $_, true );
+		return $this->_getSet($this->_fields, $_, true);
 	}
-
 
 	/**
 	 * Get / set the DOM prefix.
@@ -367,22 +369,23 @@ class Editor extends Ext {
 	 * tables are used on a single page. As such, a prefix is assigned to the
 	 * primary key value for each row, and this is used as the DOM ID, so Editor
 	 * can track individual rows.
-	 *  @param string $_ Primary key's name. If not given, then used as a getter.
-	 *  @return string|self Primary key value if no parameter is given, or
-	 *    self if used as a setter.
+	 *
+	 * @param string $_ Primary key's name. If not given, then used as a getter.
+	 *
+	 * @return string|self Primary key value if no parameter is given, or
+	 *                     self if used as a setter.
 	 */
-	public function idPrefix ( $_=null )
+	public function idPrefix ($_ = null)
 	{
-		return $this->_getSet( $this->_idPrefix, $_ );
+		return $this->_getSet($this->_idPrefix, $_);
 	}
-
 
 	/**
 	 * Get the data that is being processed by the Editor instance. This is only
 	 * useful once the `process()` method has been called, and is available for
 	 * use in validation and formatter methods.
 	 *
-	 *   @return array Data given to `process()`.
+	 * @return array Data given to `process()`.
 	 */
 	public function inData ()
 	{
@@ -398,52 +401,52 @@ class Editor extends Ext {
 	 * (i.e. the one that the {@see Editor->table()} and {@see Editor->fields}
 	 * methods refer to in this class instance).
 	 *
-	 *  @param Join $_,... Instances of the {@see Join} class, given as a
-	 *    single instance of {@see Join}, an array of {@see Join} instances,
-	 *    or multiple {@see Join} instance parameters for the function.
-	 *  @return Join[]|self Array of joins, or self if used as a setter.
+	 * @param Join $_,... Instances of the {@see Join} class, given as a
+	 *                    single instance of {@see Join}, an array of {@see Join} instances,
+	 *                    or multiple {@see Join} instance parameters for the function.
+	 *
+	 * @return Join[]|self Array of joins, or self if used as a setter.
 	 */
-	public function join ( $_=null )
+	public function join ($_ = null)
 	{
 		$args = func_get_args();
 
-		if ( $_ !== null && !is_array($_) ) {
+		if ($_ !== null && !is_array($_)) {
 			$_ = $args;
 		}
-		return $this->_getSet( $this->_join, $_, true );
+		return $this->_getSet($this->_join, $_, true);
 	}
-
 
 	/**
 	 * Get the JSON for the data constructed in this instance.
 	 *
 	 * Basically the same as the {@see Editor->data()} method, but in this case we echo, or
 	 * return the JSON string of the data.
-	 *  @param bool $print  Echo the JSON string out (true, default) or return it
-	 *    (false).
-	 *  @param int $options JSON encode option https://www.php.net/manual/en/json.constants.php
-	 *  @return string|self self if printing the JSON, or JSON representation of
-	 *    the processed data if false is given as the first parameter.
+	 *
+	 * @param bool $print   Echo the JSON string out (true, default) or return it
+	 *                      (false).
+	 * @param int  $options JSON encode option https://www.php.net/manual/en/json.constants.php
+	 *
+	 * @return string|self self if printing the JSON, or JSON representation of
+	 *                     the processed data if false is given as the first parameter.
 	 */
-	public function json ( $print=true, $options=0 )
+	public function json ($print = true, $options = 0)
 	{
-		if ( $print ) {
-			$json = json_encode( $this->_out, $options );
+		if ($print) {
+			$json = json_encode($this->_out, $options);
 
-			if ( $json !== false ) {
+			if ($json !== false) {
 				echo $json;
-			}
-			else {
-				echo json_encode( array(
-					"error" => "JSON encoding error: ".json_last_error_msg()
-				) );
+			} else {
+				echo json_encode(array(
+					'error' => 'JSON encoding error: ' . json_last_error_msg()
+				));
 			}
 
 			return $this;
 		}
-		return json_encode( $this->_out );
+		return json_encode($this->_out);
 	}
-
 
 	/**
 	 * Echo out JSONP for the data constructed and processed in this instance.
@@ -451,24 +454,25 @@ class Editor extends Ext {
 	 * JSONP callback.
 	 *
 	 * @param string $callback The callback function name to use. If not given
-	 *    or `null`, then `$_GET['callback']` is used (the jQuery default).
+	 *                         or `null`, then `$_GET['callback']` is used (the jQuery default).
+	 *
 	 * @return self Self for chaining.
+	 *
 	 * @throws \Exception JSONP function name validation
 	 */
-	public function jsonp ( $callback=null )
+	public function jsonp ($callback = null)
 	{
-		if ( ! $callback ) {
+		if (!$callback) {
 			$callback = $_GET['callback'];
 		}
 
-		if ( preg_match('/[^a-zA-Z0-9_]/', $callback) ) {
-			throw new \Exception("Invalid JSONP callback function name");
+		if (preg_match('/[^a-zA-Z0-9_]/', $callback)) {
+			throw new \Exception('Invalid JSONP callback function name');
 		}
 
-		echo $callback.'('.json_encode( $this->_out ).');';
+		echo $callback . '(' . json_encode($this->_out) . ');';
 		return $this;
 	}
-
 
 	/**
 	 * Add a left join condition to the Editor instance, allowing it to operate
@@ -497,10 +501,11 @@ class Editor extends Ext {
 	 * options, the table name must also be given. For example the field
 	 * `first_name` in the table `users` would be given as `users.first_name`.
 	 *
-	 * @param string $table Table name to do a join onto
-	 * @param string $field1 Field from the parent table to use as the join link
+	 * @param string $table    Table name to do a join onto
+	 * @param string $field1   Field from the parent table to use as the join link
 	 * @param string $operator Join condition (`=`, '<`, etc)
-	 * @param string $field2 Field from the child table to use as the join link
+	 * @param string $field2   Field from the child table to use as the join link
+	 *
 	 * @return self Self for chaining.
 	 *
 	 * @example
@@ -526,18 +531,17 @@ class Editor extends Ext {
 	 *      LEFT JOIN dept ON users.dept_id = dept.id
 	 *    ```
 	 */
-	public function leftJoin ( $table, $field1, $operator = null, $field2 = null )
+	public function leftJoin ($table, $field1, $operator = null, $field2 = null)
 	{
 		$this->_leftJoin[] = array(
-			"table"    => $table,
-			"field1"   => $field1,
-			"field2"   => $field2,
-			"operator" => $operator
+			'table' => $table,
+			'field1' => $field1,
+			'field2' => $field2,
+			'operator' => $operator
 		);
 
 		return $this;
 	}
-
 
 	/**
 	 * Indicate if a remove should be performed on left joined tables when deleting
@@ -545,36 +549,37 @@ class Editor extends Ext {
 	 * removed completely in v2. Use `ON DELETE CASCADE` in your database instead.
 	 *
 	 *  @deprecated
-	 *  @param bool $_ Value to set. If not given, then used as a getter.
-	 *  @return bool|self Value if no parameter is given, or
-	 *    self if used as a setter.
+	 *
+	 * @param bool $_ Value to set. If not given, then used as a getter.
+	 *
+	 * @return bool|self Value if no parameter is given, or
+	 *                   self if used as a setter.
 	 */
-	public function leftJoinRemove ( $_=null )
+	public function leftJoinRemove ($_ = null)
 	{
-		return $this->_getSet( $this->_leftJoinRemove, $_ );
+		return $this->_getSet($this->_leftJoinRemove, $_);
 	}
-
 
 	/**
 	 * Add an event listener. The `Editor` class will trigger an number of
 	 * events that some action can be taken on.
 	 *
-	 * @param  string $name     Event name
-	 * @param  callable $callback Callback function to execute when the event
-	 *     occurs
+	 * @param string   $name     Event name
+	 * @param callable $callback Callback function to execute when the event
+	 *                           occurs
+	 *
 	 * @return self Self for chaining.
 	 */
-	public function on ( $name, $callback )
+	public function on ($name, $callback)
 	{
-		if ( ! isset( $this->_events[ $name ] ) ) {
-			$this->_events[ $name ] = array();
+		if (!isset($this->_events[$name])) {
+			$this->_events[$name] = array();
 		}
 
-		$this->_events[ $name ][] = $callback;
+		$this->_events[$name][] = $callback;
 
 		return $this;
 	}
-
 
 	/**
 	 * Get / set the primary key.
@@ -582,156 +587,153 @@ class Editor extends Ext {
 	 * The primary key must be known to Editor so it will know which rows are being
 	 * edited / deleted upon those actions. The default value is ['id'].
 	 *
-	 *  @param string|string[] $_ Primary key's name. If not given, then used as a
-	 *    getter. An array of column names can be given to allow composite keys to
-	 *    be used.
-	 *  @return string[]|self Primary key value if no parameter is given, or
-	 *    self if used as a setter.
+	 * @param string|string[] $_ Primary key's name. If not given, then used as a
+	 *                           getter. An array of column names can be given to allow composite keys to
+	 *                           be used.
+	 *
+	 * @return string[]|self Primary key value if no parameter is given, or
+	 *                       self if used as a setter.
 	 */
-	public function pkey ( $_=null )
+	public function pkey ($_ = null)
 	{
-		if ( is_string( $_ ) ) {
-			$this->_pkey = array( $_ );
+		if (is_string($_)) {
+			$this->_pkey = array($_);
 			return $this;
 		}
-		return $this->_getSet( $this->_pkey, $_ );
+		return $this->_getSet($this->_pkey, $_);
 	}
-
 
 	/**
 	 * Convert a primary key array of field values to a combined value.
 	 *
-	 * @param  array  $row   The row of data that the primary key value should
-	 *   be extracted from.
-	 * @param  bool    $flat  Flag to indicate if the given array is flat
-	 *   (useful for `where` conditions) or nested for join tables.
+	 * @param array $row  The row of data that the primary key value should
+	 *                    be extracted from.
+	 * @param bool  $flat Flag to indicate if the given array is flat
+	 *                    (useful for `where` conditions) or nested for join tables.
+	 *
 	 * @return string The created primary key value.
+	 *
 	 * @throws \Exception If one of the values that the primary key is made up
-	 *    of cannot be found in the data set given, an Exception will be thrown.
+	 *                    of cannot be found in the data set given, an Exception will be thrown.
 	 */
-	public function pkeyToValue ( $row, $flat=false )
+	public function pkeyToValue ($row, $flat = false)
 	{
 		$pkey = $this->_pkey;
 		$id = array();
 
-		for ( $i=0, $ien=count($pkey) ; $i<$ien ; $i++ ) {
-			$column = $pkey[ $i ];
+		for ($i = 0, $ien = count($pkey); $i < $ien; $i++) {
+			$column = $pkey[$i];
 
-			if ( $flat ) {
-				if ( isset( $row[ $column ] ) ) {
-					if ( $row[ $column ] === null ) {
-						throw new \Exception("Primary key value is null.", 1);
+			if ($flat) {
+				if (isset($row[$column])) {
+					if ($row[$column] === null) {
+						throw new \Exception('Primary key value is null.', 1);
 					}
-					$val = $row[ $column ];
-				}
-				else {
+					$val = $row[$column];
+				} else {
 					$val = null;
 				}
-			}
-			else {
-				$val = $this->_readProp( $column, $row );
+			} else {
+				$val = $this->_readProp($column, $row);
 			}
 
-			if ( $val === null ) {
-				throw new \Exception("Primary key element is not available in data set.", 1);
+			if ($val === null) {
+				throw new \Exception('Primary key element is not available in data set.', 1);
 			}
 
 			$id[] = $val;
 		}
 
-		return implode( $this->_pkey_separator(), $id );
+		return implode($this->_pkey_separator(), $id);
 	}
-
 
 	/**
 	 * Convert a primary key combined value to an array of field values.
 	 *
-	 * @param  string   $value The id that should be split apart
-	 * @param  bool     $flat  Flag to indicate if the returned array should be
-	 *   flat (useful for `where` conditions) or nested for join tables.
-	 * @param  string[] $pkey The primary key name - will use the instance value
-	 *   if not given
-	 * @return array          Array of field values that the id was made up of.
+	 * @param string   $value The id that should be split apart
+	 * @param bool     $flat  Flag to indicate if the returned array should be
+	 *                        flat (useful for `where` conditions) or nested for join tables.
+	 * @param string[] $pkey  The primary key name - will use the instance value
+	 *                        if not given
+	 *
+	 * @return array Array of field values that the id was made up of.
+	 *
 	 * @throws \Exception If the primary key value does not match the expected
-	 *   length based on the primary key configuration, an exception will be
-	 *   thrown.
+	 *                    length based on the primary key configuration, an exception will be
+	 *                    thrown.
 	 */
-	public function pkeyToArray ( $value, $flat=false, $pkey=null )
+	public function pkeyToArray ($value, $flat = false, $pkey = null)
 	{
 		$arr = array();
-		$value = str_replace( $this->idPrefix(), '', $value );
-		$idParts = explode( $this->_pkey_separator(), $value );
+		$value = str_replace($this->idPrefix(), '', $value);
+		$idParts = explode($this->_pkey_separator(), $value);
 
-		if ( $pkey === null ) {
+		if ($pkey === null) {
 			$pkey = $this->_pkey;
 		}
 
-		if ( count($pkey) !== count($idParts) ) {
+		if (count($pkey) !== count($idParts)) {
 			throw new \Exception("Primary key data doesn't match submitted data", 1);
 		}
 
-		for ( $i=0, $ien=count($idParts) ; $i<$ien ; $i++ ) {
-			if ( $flat ) {
-				$arr[ $pkey[$i] ] = $idParts[$i];
-			}
-			else {
-				$this->_writeProp( $arr, $pkey[$i], $idParts[$i] );
+		for ($i = 0, $ien = count($idParts); $i < $ien; $i++) {
+			if ($flat) {
+				$arr[$pkey[$i]] = $idParts[$i];
+			} else {
+				$this->_writeProp($arr, $pkey[$i], $idParts[$i]);
 			}
 		}
 
 		return $arr;
 	}
 
-
 	/**
 	 * Process a request from the Editor client-side to get / set data.
 	 *
-	 *  @param array $data Typically $_POST or $_GET as required by what is sent
-	 *  by Editor
-	 *  @return self
+	 * @param array $data Typically $_POST or $_GET as required by what is sent
+	 *                    by Editor
+	 *
+	 * @return self
 	 */
-	public function process ( $data )
+	public function process ($data)
 	{
-		if ( $this->_debug ) {
+		if ($this->_debug) {
 			$debugInfo = &$this->_debugInfo;
 
-			$debugInfo[] = 'Editor PHP libraries - version '. $this->version;
-			$debugVal = $this->_db->debug( function ( $mess ) use ( &$debugInfo ) {
+			$debugInfo[] = 'Editor PHP libraries - version ' . $this->version;
+			$debugVal = $this->_db->debug(function ($mess) use (&$debugInfo) {
 				$debugInfo[] = $mess;
-			} );
+			});
 		}
 
-		if ( $this->_tryCatch ) {
+		if ($this->_tryCatch) {
 			try {
-				$this->_process( $data );
-			}
-			catch (\Exception $e) {
+				$this->_process($data);
+			} catch (\Exception $e) {
 				// Error feedback
 				$this->_out['error'] = $e->getMessage();
 
-				if ( $this->_transaction ) {
+				if ($this->_transaction) {
 					$this->_db->rollback();
 				}
 			}
-		}
-		else {
-			$this->_process( $data );
+		} else {
+			$this->_process($data);
 		}
 
-		if ( $this->_debug ) {
+		if ($this->_debug) {
 			$this->_out['debug'] = $this->_debugInfo;
 
 			// Save to a log file
-			if ( $this->_debugLog ) {
-				file_put_contents( $this->_debugLog, json_encode( $this->_debugInfo )."\n", FILE_APPEND );
+			if ($this->_debugLog) {
+				file_put_contents($this->_debugLog, json_encode($this->_debugInfo) . "\n", FILE_APPEND);
 			}
 
-			$this->_db->debug( false );
+			$this->_db->debug(false);
 		}
 
 		return $this;
 	}
-
 
 	/**
 	 * The CRUD read table name. If this method is used, Editor will create from the
@@ -739,20 +741,20 @@ class Editor extends Ext {
 	 * a useful distinction to allow a read from a VIEW (which could make use of a
 	 * complex SELECT) while writing to a different table.
 	 *
-	 *  @param string|array $_,... Read table names given as a single string, an array
-	 *    of strings or multiple string parameters for the function.
-	 *  @return string[]|self Array of read tables names, or self if used as a setter.
+	 * @param string|array $_,... Read table names given as a single string, an array
+	 *                            of strings or multiple string parameters for the function.
+	 *
+	 * @return string[]|self Array of read tables names, or self if used as a setter.
 	 */
-	public function readTable ( $_=null )
+	public function readTable ($_ = null)
 	{
 		$args = func_get_args();
 
-		if ( $_ !== null && !is_array($_) ) {
+		if ($_ !== null && !is_array($_)) {
 			$_ = $args;
 		}
-		return $this->_getSet( $this->_readTableNames, $_, true );
+		return $this->_getSet($this->_readTableNames, $_, true);
 	}
-
 
 	/**
 	 * Get / set the table name.
@@ -763,20 +765,20 @@ class Editor extends Ext {
 	 * names would also need to reflect the alias, just like an SQL query. For
 	 * example: `users as a`.
 	 *
-	 *  @param string|array $_,... Table names given as a single string, an array of
-	 *    strings or multiple string parameters for the function.
-	 *  @return string[]|self Array of tables names, or self if used as a setter.
+	 * @param string|array $_,... Table names given as a single string, an array of
+	 *                            strings or multiple string parameters for the function.
+	 *
+	 * @return string[]|self Array of tables names, or self if used as a setter.
 	 */
-	public function table ( $_=null )
+	public function table ($_ = null)
 	{
 		$args = func_get_args();
 
-		if ( $_ !== null && !is_array($_) ) {
+		if ($_ !== null && !is_array($_)) {
 			$_ = $args;
 		}
-		return $this->_getSet( $this->_table, $_, true );
+		return $this->_getSet($this->_table, $_, true);
 	}
-
 
 	/**
 	 * Get / set transaction support.
@@ -786,30 +788,30 @@ class Editor extends Ext {
 	 * This can be optionally disabled using this method, if required by your
 	 * database configuration.
 	 *
-	 *  @param bool $_ Enable (`true`) or disabled (`false`) transactions.
-	 *    If not given, then used as a getter.
-	 *  @return bool|self Transactions enabled flag, or self if used as a
-	 *    setter.
+	 * @param bool $_ Enable (`true`) or disabled (`false`) transactions.
+	 *                If not given, then used as a getter.
+	 *
+	 * @return bool|self Transactions enabled flag, or self if used as a
+	 *                   setter.
 	 */
-	public function transaction ( $_=null )
+	public function transaction ($_ = null)
 	{
-		return $this->_getSet( $this->_transaction, $_ );
+		return $this->_getSet($this->_transaction, $_);
 	}
-
 
 	/**
 	 * Enable / try catch when `process()` is called. Disabling this can be
 	 * useful for debugging, but is not recommended for production.
 	 *
-	 * @param  bool $_ `true` to enable (default), otherwise false to disable
+	 * @param bool $_ `true` to enable (default), otherwise false to disable
+	 *
 	 * @return bool|Editor Value if used as a getter, otherwise `$this` when
-	 *   used as a setter.
+	 *                     used as a setter.
 	 */
-	public function tryCatch ( $_=null )
+	public function tryCatch ($_ = null)
 	{
-		return $this->_getSet( $this->_tryCatch, $_ );
+		return $this->_getSet($this->_tryCatch, $_);
 	}
-
 
 	/**
 	 * Perform validation on a data set.
@@ -820,61 +822,63 @@ class Editor extends Ext {
 	 * Any formatting required by `setFormatter` is performed after the data
 	 * from the client has been validated.
 	 *
-	 *  @param array $errors Output array to which field error information will
-	 *      be written. Each element in the array represents a field in an error
-	 *      condition. These elements are themselves arrays with two properties
-	 *      set; `name` and `status`.
-	 *  @param array $data The format data to check
-	 *  @return bool `true` if the data is valid, `false` if not.
+	 * @param array $errors Output array to which field error information will
+	 *                      be written. Each element in the array represents a field in an error
+	 *                      condition. These elements are themselves arrays with two properties
+	 *                      set; `name` and `status`.
+	 * @param array $data   The format data to check
+	 *
+	 * @return bool `true` if the data is valid, `false` if not.
 	 */
-	public function validate ( &$errors, $data )
+	public function validate (&$errors, $data)
 	{
 		// Validation is only performed on create and edit
-		if ( $data[$this->_actionName] != "create" && $data[$this->_actionName] != "edit" ) {
+		if ($data[$this->_actionName] != 'create' && $data[$this->_actionName] != 'edit') {
 			return true;
 		}
 
-		foreach( $data['data'] as $id => $values ) {
-			for ( $i=0 ; $i<count($this->_fields) ; $i++ ) {
+		foreach ($data['data'] as $id => $values) {
+			for ($i = 0; $i < count($this->_fields); $i++) {
 				$field = $this->_fields[$i];
-				$validation = $field->validate( $values, $this,
-					str_replace( $this->idPrefix(), '', $id )
+				$validation = $field->validate(
+					$values,
+					$this,
+					str_replace($this->idPrefix(), '', $id)
 				);
 
-				if ( $validation !== true ) {
+				if ($validation !== true) {
 					$errors[] = array(
-						"name" => $field->name(),
-						"status" => $validation
+						'name' => $field->name(),
+						'status' => $validation
 					);
 				}
 			}
 
 			// MJoin validation
-			for ( $i=0 ; $i<count($this->_join) ; $i++ ) {
-				$this->_join[$i]->validate( $errors, $this, $values, $data[$this->_actionName] );
+			for ($i = 0; $i < count($this->_join); $i++) {
+				$this->_join[$i]->validate($errors, $this, $values, $data[$this->_actionName]);
 			}
 		}
 
-		return count( $errors ) > 0 ? false : true;
+		return count($errors) > 0 ? false : true;
 	}
-
 
 	/**
 	 * Get / set a global validator that will be triggered for the create, edit
 	 * and remove actions performed from the client-side. Multiple validators
 	 * can be added.
 	 *
-	 * @param  callable $_ Function to execute when validating the input data.
-	 *   It is passed three parameters: 1. The editor instance, 2. The action
-	 *   and 3. The values.
+	 * @param callable $_ Function to execute when validating the input data.
+	 *                    It is passed three parameters: 1. The editor instance, 2. The action
+	 *                    and 3. The values.
+	 *
 	 * @return Editor|callable Editor instance if called as a setter, or the
-	 *   validator function if not.
+	 *                         validator function if not.
 	 */
-	public function validator ( $_=null )
+	public function validator ($_ = null)
 	{
-		return $this->_getSet( $this->_validator, $_, true );
+		return $this->_getSet($this->_validator, $_, true);
 	}
-
 
 	/**
 	 * Where condition to add to the query used to get data from the database.
@@ -899,49 +903,49 @@ class Editor extends Ext {
 	 * @param string|callable $key   Single field name or a closure function
 	 * @param string          $value Single field value.
 	 * @param string          $op    Condition operator: <, >, = etc
+	 *
 	 * @return string[]|self Where condition array, or self if used as a setter.
 	 */
-	public function where ( $key=null, $value=null, $op='=' )
+	public function where ($key = null, $value = null, $op = '=')
 	{
-		if ( $key === null ) {
+		if ($key === null) {
 			return $this->_where;
 		}
 
-		if ( is_callable($key) && is_object($key) ) {
+		if (is_callable($key) && is_object($key)) {
 			$this->_where[] = $key;
-		}
-		else {
+		} else {
 			$this->_where[] = array(
-				"key"   => $key,
-				"value" => $value,
-				"op"    => $op
+				'key' => $key,
+				'value' => $value,
+				'op' => $op
 			);
 		}
 
 		return $this;
 	}
 
-
 	/**
 	 * Get / set if the WHERE conditions should be included in the create and
 	 * edit actions.
 	 *
-	 *  @param bool $_ Include (`true`), or not (`false`)
-	 *  @return bool Current value
-	 *  @deprecated Note that `whereSet` is now deprecated and replaced with the
-	 *    ability to set values for columns on create and edit. The C# libraries
-	 *    do not support this option at all.
+	 * @param bool $_ Include (`true`), or not (`false`)
+	 *
+	 * @return bool Current value
+	 *
+	 * @deprecated Note that `whereSet` is now deprecated and replaced with the
+	 *              ability to set values for columns on create and edit. The C# libraries
+	 *              do not support this option at all.
 	 */
-	public function whereSet ( $_=null )
+	public function whereSet ($_ = null)
 	{
-		return $this->_getSet( $this->_whereSet, $_ );
+		return $this->_getSet($this->_whereSet, $_);
 	}
 
-	public function write ($_writeVal=null){
+	public function write ($_writeVal = null)
+	{
 		return $this->_getSet($this->_write, $_writeVal);
 	}
-
-
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private methods
@@ -950,17 +954,18 @@ class Editor extends Ext {
 	/**
 	 * Process a request from the Editor client-side to get / set data.
 	 *
-	 *  @param array $data Data to process
-	 *  @private
+	 * @param array $data Data to process
+	 *
+	 * @private
 	 */
-	private function _process( $data )
+	private function _process($data)
 	{
 		$this->_out = array(
-			"fieldErrors" => array(),
-			"error" => "",
-			"data" => array(),
-			"ipOpts" => array(),
-			"cancelled" => array()
+			'fieldErrors' => array(),
+			'error' => '',
+			'data' => array(),
+			'ipOpts' => array(),
+			'cancelled' => array()
 		);
 
 		$action = Editor::action($data);
@@ -969,23 +974,23 @@ class Editor extends Ext {
 		$validators = $this->_validator;
 
 		// Sanity check that data isn't getting truncated as that can lead to data corruption
-		if ( $data && count($data, COUNT_RECURSIVE) >= ini_get('max_input_vars') ) {
+		if ($data && count($data, COUNT_RECURSIVE) >= ini_get('max_input_vars')) {
 			$this->_out['error'] = 'Too many rows edited at the same time (tech info: max_input_vars exceeded).';
 		}
 
-		if ( ! $this->_out['error'] ) {
-			if ( $this->_transaction ) {
+		if (!$this->_out['error']) {
+			if ($this->_transaction) {
 				$this->_db->transaction();
 			}
 
 			$this->_prepJoin();
 
-			if ( $validators ) {
-				for ( $i=0 ; $i<count($validators) ; $i++ ) {
+			if ($validators) {
+				for ($i = 0; $i < count($validators); $i++) {
 					$validator = $validators[$i];
-					$ret = $validator( $this, $action, $data );
+					$ret = $validator($this, $action, $data);
 
-					if ( is_string($ret) ) {
+					if (is_string($ret)) {
 						$this->_out['error'] = $ret;
 						break;
 					}
@@ -993,38 +998,34 @@ class Editor extends Ext {
 			}
 		}
 
-		if ( ! $this->_out['error'] ) {
-			if ( $action === Editor::ACTION_READ ) {
+		if (!$this->_out['error']) {
+			if ($action === Editor::ACTION_READ) {
 				/* Get data */
-				$this->_out = array_merge( $this->_out, $this->_get( null, $data ) );
-			}
-			else if ( $action === Editor::ACTION_UPLOAD && $this->_write === true ) {
+				$this->_out = array_merge($this->_out, $this->_get(null, $data));
+			} else if ($action === Editor::ACTION_UPLOAD && $this->_write === true) {
 				/* File upload */
-				$this->_upload( $data );
-			}
-			else if ( $action === Editor::ACTION_DELETE && $this->_write === true) {
+				$this->_upload($data);
+			} else if ($action === Editor::ACTION_DELETE && $this->_write === true) {
 				/* Remove rows */
-				$this->_remove( $data );
+				$this->_remove($data);
 				$this->_fileClean();
-			}
-			else if (($action === Editor::ACTION_CREATE || $action === Editor::ACTION_EDIT ) && $this->_write === true ) {
+			} else if (($action === Editor::ACTION_CREATE || $action === Editor::ACTION_EDIT) && $this->_write === true) {
 				/* Create or edit row */
 				// Pre events so they can occur before the validation
 				foreach ($data['data'] as $idSrc => &$values) {
 					$cancel = null;
 
-					if ( $action === Editor::ACTION_CREATE ) {
-						$cancel = $this->_trigger( 'preCreate', $values );
-					}
-					else {
-						$id = str_replace( $this->_idPrefix, '', $idSrc );
-						$cancel = $this->_trigger( 'preEdit', $id, $values );
+					if ($action === Editor::ACTION_CREATE) {
+						$cancel = $this->_trigger('preCreate', $values);
+					} else {
+						$id = str_replace($this->_idPrefix, '', $idSrc);
+						$cancel = $this->_trigger('preEdit', $id, $values);
 					}
 
 					// One of the event handlers returned false - don't continue
-					if ( $cancel === false ) {
+					if ($cancel === false) {
 						// Remove the data from the data set so it won't be processed
-						unset( $data['data'][$idSrc] );
+						unset($data['data'][$idSrc]);
 
 						// Tell the client-side we aren't updating this row
 						$this->_out['cancelled'][] = $idSrc;
@@ -1032,15 +1033,15 @@ class Editor extends Ext {
 				}
 
 				// Validation
-				$valid = $this->validate( $this->_out['fieldErrors'], $data );
+				$valid = $this->validate($this->_out['fieldErrors'], $data);
 
-				if ( $valid ) {
+				if ($valid) {
 					foreach ($data['data'] as $id => &$values) {
 						$d = $action === Editor::ACTION_CREATE ?
-							$this->_insert( $values ) :
-							$this->_update( $id, $values );
+							$this->_insert($values) :
+							$this->_update($id, $values);
 
-						if ( $d !== null ) {
+						if ($d !== null) {
 							$this->_out['data'][] = $d;
 						}
 					}
@@ -1050,48 +1051,50 @@ class Editor extends Ext {
 			}
 		}
 
-		if ( $this->_transaction ) {
+		if ($this->_transaction) {
 			$this->_db->commit();
 		}
 
 		// Tidy up the reply
-		if ( count( $this->_out['fieldErrors'] ) === 0 ) {
-			unset( $this->_out['fieldErrors'] );
+		if (count($this->_out['fieldErrors']) === 0) {
+			unset($this->_out['fieldErrors']);
 		}
 
-		if ( $this->_out['error'] === '' ) {
-			unset( $this->_out['error'] );
+		if ($this->_out['error'] === '') {
+			unset($this->_out['error']);
 		}
 
-		if ( count( $this->_out['ipOpts'] ) === 0 ) {
-			unset( $this->_out['ipOpts'] );
+		if (count($this->_out['ipOpts']) === 0) {
+			unset($this->_out['ipOpts']);
 		}
 
-		if ( count( $this->_out['cancelled'] ) === 0 ) {
-			unset( $this->_out['cancelled'] );
+		if (count($this->_out['cancelled']) === 0) {
+			unset($this->_out['cancelled']);
 		}
 	}
-
 
 	/**
 	 * Get an array of objects from the database to be given to DataTables as a
 	 * result of an sAjaxSource request, such that DataTables can display the information
 	 * from the DB in the table.
 	 *
-	 *  @param integer|string $id Primary key value to get an individual row
-	 *    (after create or update operations). Gets the full set if not given.
-	 *    If a compound key is being used, this should be the string
-	 *    representation of it (i.e. joined together) rather than an array form.
-	 *  @param array $http HTTP parameters from GET or POST request (so we can service
-	 *    server-side processing requests from DataTables).
-	 *  @return array DataTables get information
-	 *  @throws \Exception Error on SQL execution
-	 *  @private
+	 * @param integer|string $id   Primary key value to get an individual row
+	 *                             (after create or update operations). Gets the full set if not given.
+	 *                             If a compound key is being used, this should be the string
+	 *                             representation of it (i.e. joined together) rather than an array form.
+	 * @param array          $http HTTP parameters from GET or POST request (so we can service
+	 *                             server-side processing requests from DataTables).
+	 *
+	 * @return array DataTables get information
+	 *
+	 * @throws \Exception Error on SQL execution
+	 *
+	 * @private
 	 */
-	private function _get( $id=null, $http=null )
+	private function _get($id = null, $http = null)
 	{
-		$cancel = $this->_trigger( 'preGet', $id );
-		if ( $cancel === false ) {
+		$cancel = $this->_trigger('preGet', $id);
+		if ($cancel === false) {
 			return array();
 		}
 
@@ -1100,42 +1103,42 @@ class Editor extends Ext {
 
 		$query = $this->_db
 			->query('select')
-			->table( $this->_read_table() )
-			->get( $this->_pkey );
+			->table($this->_read_table())
+			->get($this->_pkey);
 
 		// Add all fields that we need to get from the database
 		foreach ($this->_fields as $field) {
 			// Don't reselect a pkey column if it was already added
-			if ( in_array( $field->dbField(), $this->_pkey ) ) {
+			if (in_array($field->dbField(), $this->_pkey)) {
 				continue;
 			}
 
-			if ( $field->apply('get') && $field->getValue() === null ) {
-				$query->get( $field->dbField() );
+			if ($field->apply('get') && $field->getValue() === null) {
+				$query->get($field->dbField());
 			}
 		}
 
-		$this->_get_where( $query );
+		$this->_get_where($query);
 		$query->left_join($this->_leftJoin);
-		$ssp = $this->_ssp_query( $query, $http );
+		$ssp = $this->_ssp_query($query, $http);
 
-		if ( $id !== null ) {
-			$query->where( $this->pkeyToArray( $id, true ) );
+		if ($id !== null) {
+			$query->where($this->pkeyToArray($id, true));
 		}
 
 		$res = $query->exec();
-		if ( ! $res ) {
+		if (!$res) {
 			throw new \Exception('Error executing SQL for data get. Enable SQL debug using `->debug(true)`');
 		}
 
 		$out = array();
-		while ( $row=$res->fetch() ) {
+		while ($row = $res->fetch()) {
 			$inner = array();
-			$inner['DT_RowId'] = $this->_idPrefix . $this->pkeyToValue( $row, true );
+			$inner['DT_RowId'] = $this->_idPrefix . $this->pkeyToValue($row, true);
 
 			foreach ($this->_fields as $field) {
-				if ( $field->apply('get') ) {
-					$field->write( $inner, $row );
+				if ($field->apply('get')) {
+					$field->write($inner, $row);
 				}
 			}
 
@@ -1148,99 +1151,95 @@ class Editor extends Ext {
 		$sbOptions = array();
 		$searchPanes = array();
 
-		if ( $id === null ) {
+		if ($id === null) {
 			foreach ($this->_fields as $field) {
-				$opts = $field->optionsExec( $this->_db );
+				$opts = $field->optionsExec($this->_db);
 
-				if ( $opts !== false ) {
-					$options[ $field->name() ] = $opts;
+				if ($opts !== false) {
+					$options[$field->name()] = $opts;
 				}
 
 				// SearchPanes options
-				$spOpts = $field->searchPaneOptionsExec( $field, $this, $http, $this->_fields, $this->_leftJoin);
+				$spOpts = $field->searchPaneOptionsExec($field, $this, $http, $this->_fields, $this->_leftJoin);
 
-				if ( $spOpts !== false ) {
-					$spOptions[ $field->name() ] = $spOpts;
+				if ($spOpts !== false) {
+					$spOptions[$field->name()] = $spOpts;
 				}
 
 				$sbOpts = $field->searchBuilderOptionsExec($field, $this, $http, $this->_fields, $this->_leftJoin);
 
-				if ( $sbOpts !== false) {
-					$sbOptions[ $field->name() ] = $sbOpts;
+				if ($sbOpts !== false) {
+					$sbOptions[$field->name()] = $sbOpts;
 				}
 			}
 		}
 
-		$searchPanes[ 'options' ] = $spOptions;
-		$searchBuilder[ 'options' ] = $sbOptions;
+		$searchPanes['options'] = $spOptions;
+		$searchBuilder['options'] = $sbOptions;
 
 		// Row based "joins"
-		for ( $i=0 ; $i<count($this->_join) ; $i++ ) {
-			$this->_join[$i]->data( $this, $out, $options );
+		for ($i = 0; $i < count($this->_join); $i++) {
+			$this->_join[$i]->data($this, $out, $options);
 		}
 
-		$this->_trigger( 'postGet', $out, $id );
+		$this->_trigger('postGet', $out, $id);
 
 		if (count($searchPanes['options']) > 0 && count($searchBuilder['options']) > 0) {
 			return array_merge(
 				array(
-					'data'    => $out,
+					'data' => $out,
 					'options' => $options,
-					'files'   => $this->_fileData( null, null, $out ),
+					'files' => $this->_fileData(null, null, $out),
 					'searchBuilder' => $searchBuilder,
 					'searchPanes' => $searchPanes
 				),
 				$ssp
 			);
-		}
-		else if (count($searchBuilder['options']) > 0) {
+		} else if (count($searchBuilder['options']) > 0) {
 			return array_merge(
 				array(
-					'data'    => $out,
+					'data' => $out,
 					'options' => $options,
-					'files'   => $this->_fileData( null, null, $out ),
+					'files' => $this->_fileData(null, null, $out),
 					'searchBuilder' => $searchBuilder
 				),
 				$ssp
 			);
-		}
-		else if (count($searchPanes['options']) > 0) {
+		} else if (count($searchPanes['options']) > 0) {
 			return array_merge(
 				array(
-					'data'    => $out,
+					'data' => $out,
 					'options' => $options,
-					'files'   => $this->_fileData( null, null, $out ),
+					'files' => $this->_fileData(null, null, $out),
 					'searchPanes' => $searchPanes
 				),
 				$ssp
 			);
-		}
-		else {
+		} else {
 			return array_merge(
 				array(
-					'data'    => $out,
+					'data' => $out,
 					'options' => $options,
-					'files'   => $this->_fileData( null, null, $out )
+					'files' => $this->_fileData(null, null, $out)
 				),
 				$ssp
 			);
 		}
-
 	}
-
 
 	/**
 	 * Insert a new row in the database
+	 *
 	 *  @private
 	 */
-	private function _insert( $values )
+	private function _insert($values)
 	{
 		// Get values to generate the id, including from setValue, not just the
 		// submitted values
 		$all = array();
 		foreach ($this->_fields as $field) {
 			if ($field->apply('set', $values)) {
-				$this->_writeProp($all, $field->name(), $field->val( 'set', $values ));
+				$this->_writeProp($all, $field->name(), $field->val('set', $values));
 			}
 		}
 
@@ -1248,127 +1247,127 @@ class Editor extends Ext {
 		// submitted. This is required because there is no reliable way in MySQL
 		// to return the newly inserted row, so we can't know any newly
 		// generated values.
-		$this->_pkey_validate_insert( $all );
+		$this->_pkey_validate_insert($all);
 
-		$this->_trigger( 'validatedCreate', $values );
+		$this->_trigger('validatedCreate', $values);
 
 		// Insert the new row
-		$id = $this->_insert_or_update( null, $values );
+		$id = $this->_insert_or_update(null, $values);
 
-		if ( $id === null ) {
+		if ($id === null) {
 			return null;
 		}
 
 		// Was the primary key altered as part of the edit, if so use the
 		// submitted values
-		$id = count( $this->_pkey ) > 1 ?
-			$this->pkeyToValue( $all ) :
-			$this->_pkey_submit_merge( $id, $all );
+		$id = count($this->_pkey) > 1 ?
+			$this->pkeyToValue($all) :
+			$this->_pkey_submit_merge($id, $all);
 
 		// Join tables
-		for ( $i=0 ; $i<count($this->_join) ; $i++ ) {
-			$this->_join[$i]->create( $this, $id, $values );
+		for ($i = 0; $i < count($this->_join); $i++) {
+			$this->_join[$i]->create($this, $id, $values);
 		}
 
-		$this->_trigger( 'writeCreate', $id, $values );
+		$this->_trigger('writeCreate', $id, $values);
 
 		// Full data set for the created row
-		$row = $this->_get( $id );
-		$row = count( $row['data'] ) > 0 ?
+		$row = $this->_get($id);
+		$row = count($row['data']) > 0 ?
 			$row['data'][0] :
 			null;
 
-		$this->_trigger( 'postCreate', $id, $values, $row );
+		$this->_trigger('postCreate', $id, $values, $row);
 
 		return $row;
 	}
 
-
 	/**
 	 * Update a row in the database
-	 *  @param string $id The DOM ID for the row that is being edited.
-	 *  @return array Row's data
-	 *  @private
+	 *
+	 * @param string $id The DOM ID for the row that is being edited.
+	 *
+	 * @return array Row's data
+	 *
+	 * @private
 	 */
-	private function _update( $id, $values )
+	private function _update($id, $values)
 	{
-		$id = str_replace( $this->_idPrefix, '', $id );
+		$id = str_replace($this->_idPrefix, '', $id);
 
-		$this->_trigger( 'validatedEdit', $id, $values );
+		$this->_trigger('validatedEdit', $id, $values);
 
 		// Update or insert the rows for the parent table and the left joined
 		// tables
-		$this->_insert_or_update( $id, $values );
+		$this->_insert_or_update($id, $values);
 
 		// And the join tables
-		for ( $i=0 ; $i<count($this->_join) ; $i++ ) {
-			$this->_join[$i]->update( $this, $id, $values );
+		for ($i = 0; $i < count($this->_join); $i++) {
+			$this->_join[$i]->update($this, $id, $values);
 		}
 
 		// Was the primary key altered as part of the edit, if so use the
 		// submitted values
-		$getId = $this->_pkey_submit_merge( $id, $values );
+		$getId = $this->_pkey_submit_merge($id, $values);
 
-		$this->_trigger( 'writeEdit', $id, $values );
+		$this->_trigger('writeEdit', $id, $values);
 
 		// Full data set for the modified row
-		$row = $this->_get( $getId );
-		$row = count( $row['data'] ) > 0 ?
+		$row = $this->_get($getId);
+		$row = count($row['data']) > 0 ?
 			$row['data'][0] :
 			null;
 
-		$this->_trigger( 'postEdit', $id, $values, $row );
+		$this->_trigger('postEdit', $id, $values, $row);
 
 		return $row;
 	}
 
-
 	/**
 	 * Delete one or more rows from the database
+	 *
 	 *  @private
 	 */
-	private function _remove( $data )
+	private function _remove($data)
 	{
 		$ids = array();
 
 		// Get the ids to delete from the data source
 		foreach ($data['data'] as $idSrc => $rowData) {
 			// Strip the ID prefix that the client-side sends back
-			$id = str_replace( $this->_idPrefix, "", $idSrc );
+			$id = str_replace($this->_idPrefix, '', $idSrc);
 
-			$res = $this->_trigger( 'preRemove', $id, $rowData );
+			$res = $this->_trigger('preRemove', $id, $rowData);
 
 			// Allow the event to be cancelled and inform the client-side
-			if ( $res === false ) {
+			if ($res === false) {
 				$this->_out['cancelled'][] = $idSrc;
-			}
-			else {
+			} else {
 				$ids[] = $id;
 			}
 		}
 
-		if ( count( $ids ) === 0 ) {
+		if (count($ids) === 0) {
 			return;
 		}
 
 		// Row based joins - remove first as the host row will be removed which
-        // is a dependency
-		for ( $i=0 ; $i<count($this->_join) ; $i++ ) {
-			$this->_join[$i]->remove( $this, $ids );
+		// is a dependency
+		for ($i = 0; $i < count($this->_join); $i++) {
+			$this->_join[$i]->remove($this, $ids);
 		}
 
 		// Remove from the left join tables
-		if ( $this->_leftJoinRemove ) {
-			for ( $i=0, $ien=count($this->_leftJoin) ; $i<$ien ; $i++ ) {
+		if ($this->_leftJoinRemove) {
+			for ($i = 0, $ien = count($this->_leftJoin); $i < $ien; $i++) {
 				$join = $this->_leftJoin[$i];
-				$table = $this->_alias( $join['table'], 'orig' );
+				$table = $this->_alias($join['table'], 'orig');
 
 				// which side of the join refers to the parent table?
-				if ( strpos( $join['field1'], $join['table'] ) === 0 ) {
+				if (strpos($join['field1'], $join['table']) === 0) {
 					$parentLink = $join['field2'];
 					$childLink = $join['field1'];
-				}
-				else {
+				} else {
 					$parentLink = $join['field1'];
 					$childLink = $join['field2'];
 				}
@@ -1377,152 +1376,154 @@ class Editor extends Ext {
 				// to - otherwise we'd be deleting random data! Note that this
 				// won't work with compound keys since the parent link would be
 				// over multiple fields.
-				if ( $parentLink === $this->_pkey[0] && count($this->_pkey) === 1 ) {
-					$this->_remove_table( $join['table'], $ids, array($childLink) );
+				if ($parentLink === $this->_pkey[0] && count($this->_pkey) === 1) {
+					$this->_remove_table($join['table'], $ids, array($childLink));
 				}
 			}
 		}
 
 		// Remove from the primary tables
-		for ( $i=0, $ien=count($this->_table) ; $i<$ien ; $i++ ) {
-			$this->_remove_table( $this->_table[$i], $ids );
+		for ($i = 0, $ien = count($this->_table); $i < $ien; $i++) {
+			$this->_remove_table($this->_table[$i], $ids);
 		}
 
 		foreach ($data['data'] as $idSrc => $rowData) {
-			$id = str_replace( $this->_idPrefix, "", $idSrc );
+			$id = str_replace($this->_idPrefix, '', $idSrc);
 
-			$this->_trigger( 'postRemove', $id, $rowData );
+			$this->_trigger('postRemove', $id, $rowData);
 		}
 	}
 
-
 	/**
 	 * File upload
-	 *  @param array $data Upload data
-	 *  @throws \Exception File upload name error
-	 *  @private
+	 *
+	 * @param array $data Upload data
+	 *
+	 * @throws \Exception File upload name error
+	 *
+	 * @private
 	 */
-	private function _upload( $data )
+	private function _upload($data)
 	{
 		// Search for upload field in local fields
-		$field = $this->_find_field( $data['uploadField'], 'name' );
+		$field = $this->_find_field($data['uploadField'], 'name');
 		$fieldName = '';
 
-		if ( ! $field ) {
+		if (!$field) {
 			// Perhaps it is in a join instance
-			for ( $i=0 ; $i<count($this->_join) ; $i++ ) {
+			for ($i = 0; $i < count($this->_join); $i++) {
 				$join = $this->_join[$i];
 				$fields = $join->fields();
 
-				for ( $j=0, $jen=count($fields) ; $j<$jen ; $j++ ) {
-					$joinField = $fields[ $j ];
-					$name = $join->name().'[].'.$joinField->name();
+				for ($j = 0, $jen = count($fields); $j < $jen; $j++) {
+					$joinField = $fields[$j];
+					$name = $join->name() . '[].' . $joinField->name();
 
-					if ( $name === $data['uploadField'] ) {
+					if ($name === $data['uploadField']) {
 						$field = $joinField;
 						$fieldName = $name;
 					}
 				}
 			}
-		}
-		else {
+		} else {
 			$fieldName = $field->name();
 		}
 
-		if ( ! $field ) {
-			throw new \Exception("Unknown upload field name submitted");
+		if (!$field) {
+			throw new \Exception('Unknown upload field name submitted');
 		}
 
-		$res = $this->_trigger( 'preUpload', $data );
+		$res = $this->_trigger('preUpload', $data);
 
 		// Allow the event to be cancelled and inform the client-side
-		if ( $res === false ) {
+		if ($res === false) {
 			return;
 		}
 
 		$upload = $field->upload();
-		if ( ! $upload ) {
-			throw new \Exception("File uploaded to a field that does not have upload options configured");
+		if (!$upload) {
+			throw new \Exception('File uploaded to a field that does not have upload options configured');
 		}
 
-		$res = $upload->exec( $this );
+		$res = $upload->exec($this);
 
-		if ( $res === false ) {
+		if ($res === false) {
 			$this->_out['fieldErrors'][] = array(
-				"name"   => $fieldName,      // field name can be just the field's
-				"status" => $upload->error() // name or a join combination
+				'name' => $fieldName,      // field name can be just the field's
+				'status' => $upload->error() // name or a join combination
 			);
-		}
-		else {
-			$files = $this->_fileData( $upload->table(), array($res) );
+		} else {
+			$files = $this->_fileData($upload->table(), array($res));
 
 			$this->_out['files'] = $files;
 			$this->_out['upload']['id'] = $res;
 
-			$this->_trigger( 'postUpload', $res, $files, $data );
+			$this->_trigger('postUpload', $res, $files, $data);
 		}
 	}
-
 
 	/**
 	 * Get information about the files that are detailed in the database for
 	 * the fields which have an upload method defined on them.
 	 *
-	 * @param  string  $limitTable Limit the data gathering to a single
-	 *     table only
-	 * @param number[] $id Limit to a specific set of ids
+	 * @param string   $limitTable Limit the data gathering to a single
+	 *                             table only
+	 * @param number[] $id         Limit to a specific set of ids
+	 *
 	 * @return array File information
+	 *
 	 * @private
 	 */
-	private function _fileData ( $limitTable=null, $ids=null, $data=null )
+	private function _fileData ($limitTable = null, $ids = null, $data = null)
 	{
 		$files = array();
 
 		// The fields in this instance
-		$this->_fileDataFields( $files, $this->_fields, $limitTable, $ids, $data );
+		$this->_fileDataFields($files, $this->_fields, $limitTable, $ids, $data);
 
 		// From joined tables
-		for ( $i=0 ; $i<count($this->_join) ; $i++ ) {
+		for ($i = 0; $i < count($this->_join); $i++) {
 			$joinData = null;
 
 			// If we have data from the get, it is nested from the join, so we need to
 			// un-nest it (i.e. get the array of joined data for each row)
-			if ( $data ) {
+			if ($data) {
 				$joinData = array();
 
-				for ( $j=0, $jen=count($data) ; $j<$jen ; $j++ ) {
-					$joinData = array_merge( $joinData, $data[$j][$this->_join[$i]->name()] );
+				for ($j = 0, $jen = count($data); $j < $jen; $j++) {
+					$joinData = array_merge($joinData, $data[$j][$this->_join[$i]->name()]);
 				}
 			}
 
-			$this->_fileDataFields( $files, $this->_join[$i]->fields(), $limitTable, $ids, $joinData );
+			$this->_fileDataFields($files, $this->_join[$i]->fields(), $limitTable, $ids, $joinData);
 		}
 
 		return $files;
 	}
 
-
 	/**
 	 * Common file get method for any array of fields
-	 * @param  array &$files File output array
-	 * @param  Field[] $fields Fields to get file information about
-	 * @param  string  $limitTable Limit the data gathering to a single table
-	 *     only
+	 *
+	 * @param array   &$files     File output array
+	 * @param Field[] $fields     Fields to get file information about
+	 * @param string  $limitTable Limit the data gathering to a single table
+	 *                            only
+	 *
 	 * @private
 	 */
-	private function _fileDataFields ( &$files, $fields, $limitTable, $idsIn=null, $data=null )
+	private function _fileDataFields (&$files, $fields, $limitTable, $idsIn = null, $data = null)
 	{
 		foreach ($fields as $field) {
 			$upload = $field->upload();
 
-			if ( $upload ) {
+			if ($upload) {
 				$table = $upload->table();
 
-				if ( ! $table ) {
+				if (!$table) {
 					continue;
 				}
 
-				if ( $limitTable !== null && $table !== $limitTable ) {
+				if ($limitTable !== null && $table !== $limitTable) {
 					continue;
 				}
 
@@ -1530,36 +1531,34 @@ class Editor extends Ext {
 				// in return (security and performance)
 				$ids = $idsIn;
 
-				if ( $ids === null ) {
+				if ($ids === null) {
 					$ids = array();
 				}
 
-				if ( $data !== null ) {
-					for ( $i=0, $ien=count($data); $i<$ien ; $i++ ) {
-						$val = $field->val( 'set', $data[$i] );
+				if ($data !== null) {
+					for ($i = 0, $ien = count($data); $i < $ien; $i++) {
+						$val = $field->val('set', $data[$i]);
 
-						if ( $val && ! in_array($val, $ids) ) {
+						if ($val && !in_array($val, $ids)) {
 							$ids[] = $val;
 						}
 					}
 
-					if ( count($ids) === 0 ) {
+					if (count($ids) === 0) {
 						// If no data to fetch for this field, so don't bother
 						continue;
-					}
-					else if ( count($ids) > 1000 ) {
+					} else if (count($ids) > 1000) {
 						// Don't use `where_in` for really large data sets
 						$ids = array();
 					}
 				}
 
-				$fileData = $upload->data( $this->_db, $ids );
+				$fileData = $upload->data($this->_db, $ids);
 
-				if ( $fileData !== null ) {
-					if ( isset($files[$table]) ) {
+				if ($fileData !== null) {
+					if (isset($files[$table])) {
 						$files[$table] = $files[$table] + $fileData;
-					}
-					else {
+					} else {
 						$files[$table] = $fileData;
 					}
 				}
@@ -1574,25 +1573,24 @@ class Editor extends Ext {
 	 */
 	private function _fileClean ()
 	{
-		foreach ( $this->_fields as $field ) {
+		foreach ($this->_fields as $field) {
 			$upload = $field->upload();
 
-			if ( $upload ) {
-				$upload->dbCleanExec( $this, $field );
+			if ($upload) {
+				$upload->dbCleanExec($this, $field);
 			}
 		}
 
-		for ( $i=0 ; $i<count($this->_join) ; $i++ ) {
-			foreach ( $this->_join[$i]->fields() as $field ) {
+		for ($i = 0; $i < count($this->_join); $i++) {
+			foreach ($this->_join[$i]->fields() as $field) {
 				$upload = $field->upload();
 
-				if ( $upload ) {
-					$upload->dbCleanExec( $this, $field );
+				if ($upload) {
+					$upload->dbCleanExec($this, $field);
 				}
 			}
 		}
 	}
-
 
 	/*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
 	 * Server-side processing methods
@@ -1600,315 +1598,303 @@ class Editor extends Ext {
 
 	/**
 	 * When server-side processing is being used, modify the query with // the
-     * required extra conditions
+	 * required extra conditions
 	 *
-	 *  @param \DataTables\Database\Query $query Query instance to apply the SSP commands to
-	 *  @param array $http Parameters from HTTP request
-	 *  @return array Server-side processing information array
-	 *  @private
+	 * @param \DataTables\Database\Query $query Query instance to apply the SSP commands to
+	 * @param array                      $http  Parameters from HTTP request
+	 *
+	 * @return array Server-side processing information array
+	 *
+	 * @private
 	 */
-	private function _ssp_query ( $query, $http )
+	private function _ssp_query ($query, $http)
 	{
-		if ( ! isset( $http['draw'] ) ) {
+		if (!isset($http['draw'])) {
 			return array();
 		}
 
 		// Add the server-side processing conditions
-		$this->_ssp_limit( $query, $http );
-		$this->_ssp_sort( $query, $http );
-		$this->_ssp_filter( $query, $http );
+		$this->_ssp_limit($query, $http);
+		$this->_ssp_sort($query, $http);
+		$this->_ssp_filter($query, $http);
 
 		// Get the number of rows in the result set
 		$ssp_set_count = $this->_db
 			->query('count')
-			->table( $this->_read_table() )
-			->get( $this->_pkey[0] );
-		$this->_get_where( $ssp_set_count );
-		$this->_ssp_filter( $ssp_set_count, $http );
+			->table($this->_read_table())
+			->get($this->_pkey[0]);
+		$this->_get_where($ssp_set_count);
+		$this->_ssp_filter($ssp_set_count, $http);
 		$ssp_set_count->left_join($this->_leftJoin);
 		$ssp_set_count = $ssp_set_count->exec()->fetch();
 
 		// Get the number of rows in the full set
 		$ssp_full_count = $this->_db
 			->query('count')
-			->table( $this->_read_table() )
-			->get( $this->_pkey[0] );
-		$this->_get_where( $ssp_full_count );
-		if ( count( $this->_where ) ) { // only needed if there is a where condition
+			->table($this->_read_table())
+			->get($this->_pkey[0]);
+		$this->_get_where($ssp_full_count);
+		if (count($this->_where)) { // only needed if there is a where condition
 			$ssp_full_count->left_join($this->_leftJoin);
 		}
 		$ssp_full_count = $ssp_full_count->exec()->fetch();
 
-        return array(
-            "draw" => intval( $http['draw'] ),
-            "recordsTotal" => $ssp_full_count['cnt'],
-            "recordsFiltered" => $ssp_set_count['cnt']
-        );
+		return array(
+			'draw' => intval($http['draw']),
+			'recordsTotal' => $ssp_full_count['cnt'],
+			'recordsFiltered' => $ssp_set_count['cnt']
+		);
 	}
-
 
 	/**
 	 * Convert a column index to a database field name - used for server-side
 	 * processing requests.
-	 *  @param array $http HTTP variables (i.e. GET or POST)
-	 *  @param int $index Index in the DataTables' submitted data
-	 *  @returns string DB field name
-	 *  @throws \Exception Unknown fields
-	 *  @private Note that it is actually public for PHP 5.3 - thread 39810
+	 *
+	 * @param array $http  HTTP variables (i.e. GET or POST)
+	 * @param int   $index Index in the DataTables' submitted data
+	 *
+	 * @returns string DB field name
+	 *
+	 * @throws \Exception Unknown fields
+	 *
+	 * @private Note that it is actually public for PHP 5.3 - thread 39810
 	 */
-	public function _ssp_field( $http, $index )
+	public function _ssp_field($http, $index)
 	{
 		$name = $http['columns'][$index]['data'];
-		$field = $this->_find_field( $name, 'name' );
+		$field = $this->_find_field($name, 'name');
 
-		if ( ! $field ) {
+		if (!$field) {
 			// Is it the primary key?
-			if ( $name === 'DT_RowId' ) {
+			if ($name === 'DT_RowId') {
 				return $this->_pkey[0];
 			}
 
-			throw new \Exception('Unknown field: '.$name .' (index '.$index.')');
+			throw new \Exception('Unknown field: ' . $name . ' (index ' . $index . ')');
 		}
 
 		return $field->dbField();
 	}
 
-
 	/**
 	 * Sorting requirements to a server-side processing query.
-	 *  @param \DataTables\Database\Query $query Query instance to apply sorting to
-	 *  @param array $http HTTP variables (i.e. GET or POST)
-	 *  @private
+	 *
+	 * @param \DataTables\Database\Query $query Query instance to apply sorting to
+	 * @param array                      $http  HTTP variables (i.e. GET or POST)
+	 *
+	 * @private
 	 */
-	private function _ssp_sort ( $query, $http )
+	private function _ssp_sort ($query, $http)
 	{
-		if ( isset( $http['order'] ) ) {
-			for ( $i=0 ; $i<count($http['order']) ; $i++ ) {
+		if (isset($http['order'])) {
+			for ($i = 0; $i < count($http['order']); $i++) {
 				$order = $http['order'][$i];
 
 				$query->order(
-					$this->_ssp_field( $http, $order['column'] ) .' '.
-					($order['dir']==='asc' ? 'asc' : 'desc')
+					$this->_ssp_field($http, $order['column']) . ' ' .
+					($order['dir'] === 'asc' ? 'asc' : 'desc')
 				);
 			}
 		}
 	}
 
-	private function _constructSearchBuilderConditions($query, $data) {
+	private function _constructSearchBuilderConditions($query, $data)
+	{
 		$first = true;
 
-		if(!isset($data['criteria'])) {
+		if (!isset($data['criteria'])) {
 			return;
 		}
 		// Iterate over every group or criteria in the current group
-		foreach($data['criteria'] as $crit) {
+		foreach ($data['criteria'] as $crit) {
 			// If criteria is defined then this must be a group
-			if(isset($crit['criteria'])) {
+			if (isset($crit['criteria'])) {
 				// Check if this is the first, or if it is and logic
-				if($data['logic'] === 'AND' || $first) {
+				if ($data['logic'] === 'AND' || $first) {
 					// Call the function for the next group
-					$query->where_group(function($q) use ($crit) {
+					$query->where_group(function ($q) use ($crit) {
 						$this->_constructSearchBuilderConditions($q, $crit);
 					});
 					// Set first to false so that in future only the logic is checked
 					$first = false;
-				}
-				else {
+				} else {
 					$query->where_group(function ($q) use ($crit) {
 						$this->_constructSearchBuilderConditions($q, $crit);
 					}, 'OR');
 				}
-			}
-			else if (isset($crit['condition']) && (isset($crit['value1']) || $crit['condition'] === 'null' || $crit['condition'] === '!null')) {
+			} else if (isset($crit['condition']) && (isset($crit['value1']) || $crit['condition'] === 'null' || $crit['condition'] === '!null')) {
 				// Sometimes the structure of the object that is passed across is named in a strange way.
 				// This conditional assignment solves that issue
 				$val1 = isset($crit['value1']) ? $crit['value1'] : '';
 				$val2 = isset($crit['value2']) ? $crit['value2'] : '';
 
-				if(strlen($val1) === 0 && $crit['condition'] !== 'null' && $crit['condition'] !== '!null') {
+				if (strlen($val1) === 0 && $crit['condition'] !== 'null' && $crit['condition'] !== '!null') {
 					continue;
 				}
-				if(strlen($val2) === 0 && ($crit['condition'] === 'between' || $crit['condition'] === '!between')) {
+				if (strlen($val2) === 0 && ($crit['condition'] === 'between' || $crit['condition'] === '!between')) {
 					continue;
 				}
 
 				// Switch on the condition that has been passed in
-				switch($crit['condition']) {
+				switch ($crit['condition']) {
 					case '=':
 						// Check if this is the first, or if it is and logic
-						if($data['logic'] === 'AND' || $first) {
+						if ($data['logic'] === 'AND' || $first) {
 							// Call the where function for this condition
 							$query->where($crit['origData'], $val1, '=');
 							// Set first to false so that in future only the logic is checked
 							$first = false;
-						}
-						else {
+						} else {
 							// Call the or_where function - has to be or logic in this block
 							$query->or_where($crit['origData'], $val1, '=');
 						}
 						break;
 					case '!=':
-						if($data['logic'] === 'AND' || $first) {
+						if ($data['logic'] === 'AND' || $first) {
 							$query->where($crit['origData'], $val1, '<>');
 							$first = false;
-						}
-						else {
+						} else {
 							$query->or_where($crit['origData'], $val1, '<>');
 						}
 						break;
 					case 'contains':
-						if($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], '%'.$val1.'%', 'LIKE');
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], '%' . $val1 . '%', 'LIKE');
 							$first = false;
-						}
-						else {
-							$query->or_where($crit['origData'], '%'.$val1.'%', 'LIKE');
+						} else {
+							$query->or_where($crit['origData'], '%' . $val1 . '%', 'LIKE');
 						}
 						break;
 					case '!contains':
-						if($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], '%'.$val1.'%', 'NOT LIKE');
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], '%' . $val1 . '%', 'NOT LIKE');
 							$first = false;
-						}
-						else {
-							$query->or_where($crit['origData'], '%'.$val1.'%', 'NOT LIKE');
+						} else {
+							$query->or_where($crit['origData'], '%' . $val1 . '%', 'NOT LIKE');
 						}
 						break;
 					case 'starts':
-						if($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], $val1.'%', 'LIKE');
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1 . '%', 'LIKE');
 							$first = false;
-						}
-						else {
-							$query->or_where($crit['origData'], $val1.'%', 'LIKE');
+						} else {
+							$query->or_where($crit['origData'], $val1 . '%', 'LIKE');
 						}
 						break;
 					case '!starts':
-						if($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], $val1.'%', 'NOT LIKE');
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1 . '%', 'NOT LIKE');
 							$first = false;
-						}
-						else {
-							$query->or_where($crit['origData'], $val1.'%', 'NOT LIKE');
+						} else {
+							$query->or_where($crit['origData'], $val1 . '%', 'NOT LIKE');
 						}
 						break;
 					case 'ends':
-						if($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], '%'.$val1, 'LIKE');
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], '%' . $val1, 'LIKE');
 							$first = false;
-						}
-						else {
-							$query->or_where($crit['origData'], '%'.$val1, 'LIKE');
+						} else {
+							$query->or_where($crit['origData'], '%' . $val1, 'LIKE');
 						}
 						break;
 					case '!ends':
-						if($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], '%'.$val1, 'NOT LIKE');
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], '%' . $val1, 'NOT LIKE');
 							$first = false;
-						}
-						else {
-							$query->or_where($crit['origData'], '%'.$val1, 'NOT LIKE');
+						} else {
+							$query->or_where($crit['origData'], '%' . $val1, 'NOT LIKE');
 						}
 						break;
 					case '<':
-						if($data['logic'] === 'AND' || $first) {
+						if ($data['logic'] === 'AND' || $first) {
 							$query->where($crit['origData'], $val1, '<');
 							$first = false;
-						}
-						else {
+						} else {
 							$query->or_where($crit['origData'], $val1, '<');
 						}
 						break;
 					case '<=':
-						if($data['logic'] === 'AND' || $first) {
+						if ($data['logic'] === 'AND' || $first) {
 							$query->where($crit['origData'], $val1, '<=');
 							$first = false;
-						}
-						else {
+						} else {
 							$query->or_where($crit['origData'], $val1, '<=');
 						}
 						break;
 					case '>=':
-						if($data['logic'] === 'AND' || $first) {
+						if ($data['logic'] === 'AND' || $first) {
 							$query->where($crit['origData'], $val1, '>=');
 							$first = false;
-						}
-						else {
+						} else {
 							$query->or_where($crit['origData'], $val1, '>=');
 						}
 						break;
 					case '>':
-						if($data['logic'] === 'AND' || $first) {
+						if ($data['logic'] === 'AND' || $first) {
 							$query->where($crit['origData'], $val1, '>');
 							$first = false;
-						}
-						else {
+						} else {
 							$query->or_where($crit['origData'], $val1, '>');
 						}
 						break;
 					case 'between':
-						if($data['logic'] === 'AND' || $first) {
-							$query->where_group(function($q) use ($crit, $val1, $val2) {
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where_group(function ($q) use ($crit, $val1, $val2) {
 								$q
 									->where($crit['origData'], is_numeric($val1) ? intval($val1) : $val1, '>=')
 									->where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '<=');
 							});
 							$first = false;
-						}
-						else {
+						} else {
 							$query
 								->or_where($crit['origData'], is_numeric($val1) ? intval($val1) : $val1, '>=')
 								->where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '<=');
 						}
 						break;
 					case '!between':
-						if($data['logic'] === 'AND' || $first) {
-							$query->where_group(function($q) use ($crit, $val1, $val2) {
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where_group(function ($q) use ($crit, $val1, $val2) {
 								$q->where($crit['origData'], is_numeric($val1) ? intval($val1) : $val1, '<')->or_where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '>');
 							});
 							$first = false;
-						}
-						else {
+						} else {
 							$query->or_where($crit['origData'], is_numeric($val1) ? intval($val1) : $val1, '<')->or_where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '>');
 						}
 						break;
 					case 'null':
-						if($data['logic'] === 'AND' || $first) {
+						if ($data['logic'] === 'AND' || $first) {
 							$query->where_group(function ($q) use ($crit) {
-								$q->where($crit['origData'], null, "=");
+								$q->where($crit['origData'], null, '=');
 								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
-									$q->or_where($crit['origData'], "", "=");
+									$q->or_where($crit['origData'], '', '=');
 								}
 							});
 							$first = false;
-						}
-						else {
+						} else {
 							$query->where_group(function ($q) use ($crit) {
-								$q->where($crit['origData'], null, "=");
+								$q->where($crit['origData'], null, '=');
 								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
-									$q->or_where($crit['origData'], "", "=");
+									$q->or_where($crit['origData'], '', '=');
 								}
 							}, 'OR');
 						}
 						break;
 					case '!null':
-						if($data['logic'] === 'AND' || $first) {
+						if ($data['logic'] === 'AND' || $first) {
 							$query->where_group(function ($q) use ($crit) {
-								$q->where($crit['origData'], null, "!=");
+								$q->where($crit['origData'], null, '!=');
 								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
-									$q->where($crit['origData'], "", "!=");
+									$q->where($crit['origData'], '', '!=');
 								}
 							});
 							$first = false;
-						}
-						else {
+						} else {
 							$query->where_group(function ($q) use ($crit) {
-								$q->where($crit['origData'], null, "!=");
+								$q->where($crit['origData'], null, '!=');
 								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
-									$q->where($crit['origData'], "", "!=");
+									$q->where($crit['origData'], '', '!=');
 								}
 							}, 'OR');
-
 						}
 						break;
 					default:
@@ -1919,33 +1905,34 @@ class Editor extends Ext {
 		return $query;
 	}
 
-
 	/**
 	 * Add DataTables' 'where' condition to a server-side processing query. This
 	 * works for both global and individual column filtering.
-	 *  @param \DataTables\Database\Query $query Query instance to apply the WHERE conditions to
-	 *  @param array $http HTTP variables (i.e. GET or POST)
-	 *  @private
+	 *
+	 * @param \DataTables\Database\Query $query Query instance to apply the WHERE conditions to
+	 * @param array                      $http  HTTP variables (i.e. GET or POST)
+	 *
+	 * @private
 	 */
-	private function _ssp_filter ( $query, $http )
+	private function _ssp_filter ($query, $http)
 	{
 		// Global filter
 		$fields = $this->_fields;
 
 		// Global search, add a ( ... or ... ) set of filters for each column
 		// in the table (not the fields, just the columns submitted)
-		if ( $http['search']['value'] ) {
-			$query->where( function ($q) use ($http) {
-				for ( $i=0 ; $i<count($http['columns']) ; $i++ ) {
-					if ( $http['columns'][$i]['searchable'] == 'true' ) {
-						$fieldName = $this->_ssp_field( $http, $i );
+		if ($http['search']['value']) {
+			$query->where(function ($q) use ($http) {
+				for ($i = 0; $i < count($http['columns']); $i++) {
+					if ($http['columns'][$i]['searchable'] == 'true') {
+						$fieldName = $this->_ssp_field($http, $i);
 
-						if ( $fieldName ) {
-							$q->or_where( $fieldName, '%'.$http['search']['value'].'%', 'like' );
+						if ($fieldName) {
+							$q->or_where($fieldName, '%' . $http['search']['value'] . '%', 'like');
 						}
 					}
 				}
-			} );
+			});
 		}
 
 		/*
@@ -1961,13 +1948,13 @@ class Editor extends Ext {
 		}
 		*/
 
-		if( isset($http['searchPanes']) ) {
+		if (isset($http['searchPanes'])) {
 			// Set the database from editor
 			$db = $this->_db;
 			// For every selection in every column
 			foreach ($this->_fields as $field) {
-				if( isset($http['searchPanes'][$field->name()])){
-					for($i = 0; $i < count($http['searchPanes'][$field->name()]); $i++) {
+				if (isset($http['searchPanes'][$field->name()])) {
+					for ($i = 0; $i < count($http['searchPanes'][$field->name()]); $i++) {
 						// Check the number of rows...
 						$q = $db
 							->query('select')
@@ -1983,15 +1970,14 @@ class Editor extends Ext {
 							->fetchAll();
 
 						// ... If there are none then don't bother with this selection
-						if($r[0]['cnt'] == 0) {
+						if ($r[0]['cnt'] == 0) {
 							array_splice($http['searchPanes'][$field->name()], $i, 1);
 							$i--;
 						}
 					}
 
-					$query->where( function ($q) use ($field, $http) {
-
-						for($j=0 ; $j<count($http['searchPanes'][$field->name()]) ; $j++){
+					$query->where(function ($q) use ($field, $http) {
+						for ($j = 0; $j < count($http['searchPanes'][$field->name()]); $j++) {
 							$q->or_where(
 								$field->dbField(),
 								isset($http['searchPanes_null'][$field->name()][$j])
@@ -2005,8 +1991,8 @@ class Editor extends Ext {
 			}
 		}
 
-		if(isset($http['searchBuilder']) && $http['searchBuilder'] !== 'false') {
-			$query->where_group(function($q) use ($http) {
+		if (isset($http['searchBuilder']) && $http['searchBuilder'] !== 'false') {
+			$query->where_group(function ($q) use ($http) {
 				$this->_constructSearchBuilderConditions($q, $http['searchBuilder']);
 			});
 		}
@@ -2035,34 +2021,32 @@ class Editor extends Ext {
 		// }
 
 		// Column filters
-		for ( $i=0, $ien=count($http['columns']) ; $i<$ien ; $i++ ) {
+		for ($i = 0, $ien = count($http['columns']); $i < $ien; $i++) {
 			$column = $http['columns'][$i];
 			$search = $column['search']['value'];
 
-			if ( $search !== '' && $column['searchable'] == 'true' ) {
-				$query->where( $this->_ssp_field( $http, $i ), '%'.$search.'%', 'like' );
+			if ($search !== '' && $column['searchable'] == 'true') {
+				$query->where($this->_ssp_field($http, $i), '%' . $search . '%', 'like');
 			}
 		}
-
-
 	}
-
 
 	/**
 	 * Add a limit / offset to a server-side processing query
-	 *  @param \DataTables\Database\Query $query Query instance to apply the offset / limit to
-	 *  @param array $http HTTP variables (i.e. GET or POST)
-	 *  @private
+	 *
+	 * @param \DataTables\Database\Query $query Query instance to apply the offset / limit to
+	 * @param array                      $http  HTTP variables (i.e. GET or POST)
+	 *
+	 * @private
 	 */
-	private function _ssp_limit ( $query, $http )
+	private function _ssp_limit ($query, $http)
 	{
-		if ( $http['length'] != -1 ) { // -1 is 'show all' in DataTables
+		if ($http['length'] != -1) { // -1 is 'show all' in DataTables
 			$query
-				->offset( $http['start'] )
-				->limit( $http['length'] );
+				->offset($http['start'])
+				->limit($http['length']);
 		}
 	}
-
 
 	/*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
 	 * Internal helper methods
@@ -2070,16 +2054,17 @@ class Editor extends Ext {
 
 	/**
 	 * Add local WHERE condition to query
-	 *  @param \DataTables\Database\Query $query Query instance to apply the WHERE conditions to
-	 *  @private
+	 *
+	 * @param \DataTables\Database\Query $query Query instance to apply the WHERE conditions to
+	 *
+	 * @private
 	 */
-	private function _get_where ( $query )
+	private function _get_where ($query)
 	{
-		for ( $i=0 ; $i<count($this->_where) ; $i++ ) {
-			if ( is_callable( $this->_where[$i] ) ) {
-				$this->_where[$i]( $query );
-			}
-			else {
+		for ($i = 0; $i < count($this->_where); $i++) {
+			if (is_callable($this->_where[$i])) {
+				$this->_where[$i]($query);
+			} else {
 				$query->where(
 					$this->_where[$i]['key'],
 					$this->_where[$i]['value'],
@@ -2089,24 +2074,24 @@ class Editor extends Ext {
 		}
 	}
 
-
 	/**
 	 * Get a field instance from a known field name
 	 *
-	 *  @param string $name Field name
-	 *  @param string $type Matching name type
-	 *  @return Field Field instance
-	 *  @private
+	 * @param string $name Field name
+	 * @param string $type Matching name type
+	 *
+	 * @return Field Field instance
+	 *
+	 * @private
 	 */
-	private function _find_field ( $name, $type )
+	private function _find_field ($name, $type)
 	{
-		for ( $i=0, $ien=count($this->_fields) ; $i<$ien ; $i++ ) {
-			$field = $this->_fields[ $i ];
+		for ($i = 0, $ien = count($this->_fields); $i < $ien; $i++) {
+			$field = $this->_fields[$i];
 
-			if ( $type === 'name' && $field->name() === $name ) {
+			if ($type === 'name' && $field->name() === $name) {
 				return $field;
-			}
-			else if ( $type === 'db' && $field->dbField() === $name ) {
+			} else if ($type === 'db' && $field->dbField() === $name) {
 				return $field;
 			}
 		}
@@ -2114,74 +2099,73 @@ class Editor extends Ext {
 		return null;
 	}
 
-
 	/**
 	 * Insert or update a row for all main tables and left joined tables.
 	 *
-	 *  @param int|string $id ID to use to condition the update. If null is
-	 *      given, the first query performed is an insert and the inserted id
-	 *      used as the value should there be any subsequent tables to operate
-	 *      on. Mote that for compound keys, this should be the "joined" value
-	 *      (i.e. a single string rather than an array).
-	 *  @return \DataTables\Database\Result Result from the query or null if no
-	 *      query performed.
-	 *  @private
+	 * @param int|string $id ID to use to condition the update. If null is
+	 *                       given, the first query performed is an insert and the inserted id
+	 *                       used as the value should there be any subsequent tables to operate
+	 *                       on. Mote that for compound keys, this should be the "joined" value
+	 *                       (i.e. a single string rather than an array).
+	 *
+	 * @return \DataTables\Database\Result Result from the query or null if no
+	 *                                     query performed.
+	 *
+	 * @private
 	 */
-	private function _insert_or_update ( $id, $values )
+	private function _insert_or_update ($id, $values)
 	{
 		// Loop over all tables in _table, doing the insert or update as needed
-		for ( $i=0, $ien=count( $this->_table ) ; $i<$ien ; $i++ ) {
+		for ($i = 0, $ien = count($this->_table); $i < $ien; $i++) {
 			$res = $this->_insert_or_update_table(
 				$this->_table[$i],
 				$values,
 				$id !== null ?
-					$this->pkeyToArray( $id, true ) :
+					$this->pkeyToArray($id, true) :
 					null
 			);
 
 			// If we don't have an id yet, then the first insert will return
 			// the id we want
-			if ( $res !== null && $id === null ) {
+			if ($res !== null && $id === null) {
 				$id = $res->insertId();
 			}
 		}
 
 		// And for the left join tables as well
-		for ( $i=0, $ien=count( $this->_leftJoin ) ; $i<$ien ; $i++ ) {
+		for ($i = 0, $ien = count($this->_leftJoin); $i < $ien; $i++) {
 			$join = $this->_leftJoin[$i];
 
 			// which side of the join refers to the parent table?
-			$joinTable = $this->_alias( $join['table'], 'alias' );
-			$tablePart = $this->_part( $join['field1'] );
+			$joinTable = $this->_alias($join['table'], 'alias');
+			$tablePart = $this->_part($join['field1']);
 
-			if ( $this->_part( $join['field1'], 'db' ) ) {
-				$tablePart = $this->_part( $join['field1'], 'db' ).'.'.$tablePart;
+			if ($this->_part($join['field1'], 'db')) {
+				$tablePart = $this->_part($join['field1'], 'db') . '.' . $tablePart;
 			}
 
-			if ( $tablePart === $joinTable ) {
+			if ($tablePart === $joinTable) {
 				$parentLink = $join['field2'];
 				$childLink = $join['field1'];
-			}
-			else {
+			} else {
 				$parentLink = $join['field1'];
 				$childLink = $join['field2'];
 			}
 
-			if ( $parentLink === $this->_pkey[0] && count($this->_pkey) === 1 ) {
+			if ($parentLink === $this->_pkey[0] && count($this->_pkey) === 1) {
 				$whereVal = $id;
-			}
-			else {
+			} else {
 				// We need submitted information about the joined data to be
 				// submitted as well as the new value. We first check if the
 				// host field was submitted
-				$field = $this->_find_field( $parentLink, 'db' );
+				$field = $this->_find_field($parentLink, 'db');
 
-				if ( ! $field || ! $field->apply( 'set', $values ) ) {
+				if (!$field || !$field->apply('set', $values)) {
 					// If not, then check if the child id was submitted
-					$field = $this->_find_field( $childLink, 'db' );
+					$field = $this->_find_field($childLink, 'db');
 
 					// No data available, so we can't do anything
-					if ( ! $field || ! $field->apply( 'set', $values ) ) {
+					if (!$field || !$field->apply('set', $values)) {
 						continue;
 					}
 				}
@@ -2189,18 +2173,17 @@ class Editor extends Ext {
 				$whereVal = $field->val('set', $values);
 			}
 
-			$whereName = $this->_part( $childLink, 'field' );
+			$whereName = $this->_part($childLink, 'field');
 
 			$this->_insert_or_update_table(
 				$join['table'],
 				$values,
-				array( $whereName => $whereVal )
+				array($whereName => $whereVal)
 			);
 		}
 
 		return $id;
 	}
-
 
 	/**
 	 * Insert or update a row in a single database table, based on the data
@@ -2210,69 +2193,71 @@ class Editor extends Ext {
 	 * table, based on the names of fields and use only the appropriate data for
 	 * this table. Therefore the full submitted data set can be passed in.
 	 *
-	 *  @param string $table Database table name to use (can include an alias)
-	 *  @param array $where Update condition
-	 *  @return \DataTables\Database\Result Result from the query or null if no query
-	 *      performed.
-	 *  @throws \Exception Where set error
-	 *  @private
+	 * @param string $table Database table name to use (can include an alias)
+	 * @param array  $where Update condition
+	 *
+	 * @return \DataTables\Database\Result Result from the query or null if no query
+	 *                                     performed.
+	 *
+	 * @throws \Exception Where set error
+	 *
+	 * @private
 	 */
-	private function _insert_or_update_table ( $table, $values, $where=null )
+	private function _insert_or_update_table ($table, $values, $where = null)
 	{
 		$set = array();
 		$action = ($where === null) ? 'create' : 'edit';
-		$tableAlias = $this->_alias( $table, 'alias' );
+		$tableAlias = $this->_alias($table, 'alias');
 
-		for ( $i=0 ; $i<count($this->_fields) ; $i++ ) {
+		for ($i = 0; $i < count($this->_fields); $i++) {
 			$field = $this->_fields[$i];
-			$tablePart = $this->_part( $field->dbField() );
+			$tablePart = $this->_part($field->dbField());
 
-			if ( $this->_part( $field->dbField(), 'db' ) ) {
-				$tablePart = $this->_part( $field->dbField(), 'db' ).'.'.$tablePart;
+			if ($this->_part($field->dbField(), 'db')) {
+				$tablePart = $this->_part($field->dbField(), 'db') . '.' . $tablePart;
 			}
 
 			// Does this field apply to this table (only check when a join is
 			// being used)
-			if ( count($this->_leftJoin) && $tablePart !== $tableAlias ) {
+			if (count($this->_leftJoin) && $tablePart !== $tableAlias) {
 				continue;
 			}
 
 			// Check if this field should be set, based on options and
 			// submitted data
-			if ( ! $field->apply( $action, $values ) ) {
+			if (!$field->apply($action, $values)) {
 				continue;
 			}
 
 			// Some db's (specifically postgres) don't like having the table
 			// name prefixing the column name. Todo: it might be nicer to have
 			// the db layer abstract this out?
-			$fieldPart = $this->_part( $field->dbField(), 'field' );
-			$set[ $fieldPart ] = $field->val( 'set', $values );
+			$fieldPart = $this->_part($field->dbField(), 'field');
+			$set[$fieldPart] = $field->val('set', $values);
 		}
 
 		// Add where fields if setting where values and required for this
 		// table
 		// Note that `whereSet` is now deprecated
-		if ( $this->_whereSet ) {
-			for ( $j=0, $jen=count($this->_where) ; $j<$jen ; $j++ ) {
+		if ($this->_whereSet) {
+			for ($j = 0, $jen = count($this->_where); $j < $jen; $j++) {
 				$cond = $this->_where[$j];
 
-				if ( ! is_callable( $cond ) ) {
+				if (!is_callable($cond)) {
 					// Make sure the value wasn't in the submitted data set,
 					// otherwise we would be overwriting it
-					if ( ! isset( $set[ $cond['key'] ] ) )
-					{
-						$whereTablePart = $this->_part( $cond['key'], 'table' );
+					if (!isset($set[$cond['key']])) {
+						$whereTablePart = $this->_part($cond['key'], 'table');
 
 						// No table part on the where condition to match against
 						// or table operating on matches table part from cond.
-						if ( ! $whereTablePart || $tableAlias == $whereTablePart ) {
-							$set[ $cond['key'] ] = $cond['value'];
+						if (!$whereTablePart || $tableAlias == $whereTablePart) {
+							$set[$cond['key']] = $cond['value'];
 						}
-					}
-					else {
-						throw new \Exception( 'Where condition used as a setter, '.
-							'but value submitted for field: '.$cond['key']
+					} else {
+						throw new \Exception(
+							'Where condition used as a setter, ' .
+							'but value submitted for field: ' . $cond['key']
 						);
 					}
 				}
@@ -2280,38 +2265,37 @@ class Editor extends Ext {
 		}
 
 		// If nothing to do, then do nothing!
-		if ( ! count( $set ) ) {
+		if (!count($set)) {
 			return null;
 		}
 
 		// Use pkey only for the host table
-		$pkey = in_array( $table, $this->_table ) !== false ?
+		$pkey = in_array($table, $this->_table) !== false ?
 			$this->_pkey :
 			'';
 
 		// Insert or update
-		if ( $action === 'create' ) {
-			return $this->_db->insert( $table, $set, $pkey );
-		}
-		else {
-			return $this->_db->push( $table, $set, $where, $pkey );
+		if ($action === 'create') {
+			return $this->_db->insert($table, $set, $pkey);
+		} else {
+			return $this->_db->push($table, $set, $where, $pkey);
 		}
 	}
-
 
 	/**
 	 * Delete one or more rows from the database for an individual table
 	 *
 	 * @param string $table Database table name to use
-	 * @param array $ids Array of ids to remove
-	 * @param string $pkey Database column name to match the ids on for the
-	 *   delete condition. If not given the instance's base primary key is
-	 *   used.
+	 * @param array  $ids   Array of ids to remove
+	 * @param string $pkey  Database column name to match the ids on for the
+	 *                      delete condition. If not given the instance's base primary key is
+	 *                      used.
+	 *
 	 * @private
 	 */
-	private function _remove_table ( $table, $ids, $pkey=null )
+	private function _remove_table ($table, $ids, $pkey = null)
 	{
-		if ( $pkey === null ) {
+		if ($pkey === null) {
 			$pkey = $this->_pkey;
 		}
 
@@ -2320,7 +2304,7 @@ class Editor extends Ext {
 
 		// If using an alias we need to replace the alias'ed table name in our pkey
 		// with the real table name
-		for ($i=0 ; $i<count($pkey) ; $i++) {
+		for ($i = 0; $i < count($pkey); $i++) {
 			$a = explode('.', $pkey[$i]);
 
 			if (count($a) > 1 && $a[0] === $tableAlias) {
@@ -2334,48 +2318,45 @@ class Editor extends Ext {
 
 		foreach ($this->_fields as $field) {
 			$fieldName = $field->dbField();
-			$fieldDots = substr_count( $fieldName, '.' );
+			$fieldDots = substr_count($fieldName, '.');
 
-			if ( $fieldDots === 0 ) {
+			if ($fieldDots === 0) {
 				$count++;
-			}
-			else if ( $fieldDots === 1 ) {
+			} else if ($fieldDots === 1) {
 				if (
 					$field->set() !== Field::SET_NONE &&
-					$this->_part( $fieldName, 'table' ) === $tableAlias
+					$this->_part($fieldName, 'table') === $tableAlias
 				) {
 					$count++;
 				}
-			}
-			else {
+			} else {
 				// db link
 				// note that if the table name for the constructor uses a db part, we need to also have
 				// the fields using the db name as Editor doesn't do any conflict resolution.
-				$dbTable = $this->_part( $fieldName, 'db' ) .'.'. $this->_part( $fieldName, 'table' );
+				$dbTable = $this->_part($fieldName, 'db') . '.' . $this->_part($fieldName, 'table');
 
-				if ( $field->set() !== Field::SET_NONE && $dbTable === $table ) {
+				if ($field->set() !== Field::SET_NONE && $dbTable === $table) {
 					$count++;
 				}
 			}
 		}
 
-		if ( $count > 0 ) {
+		if ($count > 0) {
 			$q = $this->_db
-				->query( 'delete' )
-				->table( $tableOrig );
+				->query('delete')
+				->table($tableOrig);
 
-			for ( $i=0, $ien=count($ids) ; $i<$ien ; $i++ ) {
-				$cond = $this->pkeyToArray( $ids[$i], true, $pkey );
+			for ($i = 0, $ien = count($ids); $i < $ien; $i++) {
+				$cond = $this->pkeyToArray($ids[$i], true, $pkey);
 
-				$q->or_where( function ($q2) use ($cond) {
-					$q2->where( $cond );
-				} );
+				$q->or_where(function ($q2) use ($cond) {
+					$q2->where($cond);
+				});
 			}
 
 			$q->exec();
 		}
 	}
-
 
 	/**
 	 * Check the validity of the set options if  we are doing a join, since
@@ -2386,55 +2367,57 @@ class Editor extends Ext {
 	 */
 	private function _prepJoin ()
 	{
-		if ( count( $this->_leftJoin ) === 0 ) {
+		if (count($this->_leftJoin) === 0) {
 			return;
 		}
 
 		// Check if the primary key has a table identifier - if not - add one
-		for ( $i=0, $ien=count($this->_pkey) ; $i<$ien ; $i++ ) {
+		for ($i = 0, $ien = count($this->_pkey); $i < $ien; $i++) {
 			$val = $this->_pkey[$i];
 
-			if ( strpos( $val, '.' ) === false ) {
-				$this->_pkey[$i] = $this->_alias( $this->_table[0], 'alias' ).'.'.$val;
+			if (strpos($val, '.') === false) {
+				$this->_pkey[$i] = $this->_alias($this->_table[0], 'alias') . '.' . $val;
 			}
 		}
 
 		// Check that all fields have a table selector, otherwise, we'd need to
 		// know the structure of the tables, to know which fields belong in
 		// which. This extra requirement on the fields removes that
-		for ( $i=0, $ien=count($this->_fields) ; $i<$ien ; $i++ ) {
+		for ($i = 0, $ien = count($this->_fields); $i < $ien; $i++) {
 			$field = $this->_fields[$i];
 			$name = $field->dbField();
 
-			if ( strpos( $name, '.' ) === false ) {
-				throw new \Exception( 'Table part of the field "'.$name.'" was not found. '.
-					'In Editor instances that use a join, all fields must have the '.
+			if (strpos($name, '.') === false) {
+				throw new \Exception(
+					'Table part of the field "' . $name . '" was not found. ' .
+					'In Editor instances that use a join, all fields must have the ' .
 					'database table set explicitly.'
 				);
 			}
 		}
 	}
 
-
 	/**
 	 * Get one side or the other of an aliased SQL field name.
 	 *
-	 *  @param string $name SQL field
-	 *  @param string $type Which part to get: `alias` (default) or `orig`.
-	 *  @returns string Alias
-	 *  @private
+	 * @param string $name SQL field
+	 * @param string $type Which part to get: `alias` (default) or `orig`.
+	 *
+	 * @returns string Alias
+	 *
+	 * @private
 	 */
-	private function _alias ( $name, $type='alias' )
+	private function _alias ($name, $type = 'alias')
 	{
-		if ( stripos( $name, ' as ' ) !== false ) {
-			$a = preg_split( '/ as /i', $name );
+		if (stripos($name, ' as ') !== false) {
+			$a = preg_split('/ as /i', $name);
 			return $type === 'alias' ?
 				$a[1] :
 				$a[0];
 		}
 
-		if ( stripos( $name, ' ' ) !== false ) {
-			$a = preg_split( '/ /i', $name );
+		if (stripos($name, ' ') !== false) {
+			$a = preg_split('/ /i', $name);
 			return $type === 'alias' ?
 				$a[1] :
 				$a[0];
@@ -2443,77 +2426,74 @@ class Editor extends Ext {
 		return $name;
 	}
 
-
 	/**
 	 * Get part of an SQL field definition regardless of how deeply defined it
 	 * is
 	 *
-	 *  @param string $name SQL field
-	 *  @param string $type Which part to get: `table` (default) or `db` or
-	 *      `column`
-	 *  @return string Part name
-	 *  @private
+	 * @param string $name SQL field
+	 * @param string $type Which part to get: `table` (default) or `db` or
+	 *                     `column`
+	 *
+	 * @return string Part name
+	 *
+	 * @private
 	 */
-	private function _part ( $name, $type='table' )
+	private function _part ($name, $type = 'table')
 	{
 		$db = null;
 		$table = null;
 		$column = null;
 
-		if ( strpos( $name, '.' ) !== false ) {
-			$a = explode( '.', $name );
+		if (strpos($name, '.') !== false) {
+			$a = explode('.', $name);
 
-			if ( count($a) === 3 ) {
+			if (count($a) === 3) {
 				$db = $a[0];
 				$table = $a[1];
 				$column = $a[2];
-			}
-			else if ( count($a) === 2 ) {
+			} else if (count($a) === 2) {
 				$table = $a[0];
 				$column = $a[1];
 			}
-		}
-		else {
+		} else {
 			$column = $name;
 		}
 
-		if ( $type === 'db' ) {
+		if ($type === 'db') {
 			return $db;
-		}
-		else if ( $type === 'table' ) {
+		} else if ($type === 'table') {
 			return $table;
 		}
 		return $column;
 	}
-
 
 	/**
 	 * Trigger an event
 	 *
 	 * @private
 	 */
-	private function _trigger ( $eventName, &$arg1=null, &$arg2=null, &$arg3=null, &$arg4=null, &$arg5=null )
+	private function _trigger ($eventName, &$arg1 = null, &$arg2 = null, &$arg3 = null, &$arg4 = null, &$arg5 = null)
 	{
 		$out = null;
 		$argc = func_num_args();
-		$args = array( $this );
+		$args = array($this);
 
 		// Hack to enable pass by reference with a "variable" number of parameters
-		for ( $i=1 ; $i<$argc ; $i++ ) {
-			$name = 'arg'.$i;
+		for ($i = 1; $i < $argc; $i++) {
+			$name = 'arg' . $i;
 			$args[] = &$$name;
 		}
 
-		if ( ! isset( $this->_events[ $eventName ] ) ) {
+		if (!isset($this->_events[$eventName])) {
 			return;
 		}
 
-		$events = $this->_events[ $eventName ];
+		$events = $this->_events[$eventName];
 
-		for ( $i=0, $ien=count($events) ; $i<$ien ; $i++ ) {
-			$res = call_user_func_array( $events[$i], $args );
+		for ($i = 0, $ien = count($events); $i < $ien; $i++) {
+			$res = call_user_func_array($events[$i], $args);
 
-			if ( $res !== null ) {
+			if ($res !== null) {
 				$out = $res;
 			}
 		}
@@ -2521,61 +2501,62 @@ class Editor extends Ext {
 		return $out;
 	}
 
-
 	/**
 	 * Merge a primary key value with an updated data source.
 	 *
-	 * @param  string $pkeyVal Old primary key value to merge into
-	 * @param  array  $row     Data source for update
-	 * @return string          Merged value
+	 * @param string $pkeyVal Old primary key value to merge into
+	 * @param array  $row     Data source for update
+	 *
+	 * @return string Merged value
 	 */
-	private function _pkey_submit_merge ( $pkeyVal, $row )
+	private function _pkey_submit_merge ($pkeyVal, $row)
 	{
 		$pkey = $this->_pkey;
-		$arr = $this->pkeyToArray( $pkeyVal, true );
+		$arr = $this->pkeyToArray($pkeyVal, true);
 
-		for ( $i=0, $ien=count($pkey) ; $i<$ien ; $i++ ) {
-			$column = $pkey[ $i ];
-			$field = $this->_find_field( $column, 'db' );
+		for ($i = 0, $ien = count($pkey); $i < $ien; $i++) {
+			$column = $pkey[$i];
+			$field = $this->_find_field($column, 'db');
 
-			if ( $field && $field->apply( 'edit', $row ) ) {
-				$arr[ $column ] = $field->val( 'set', $row );
+			if ($field && $field->apply('edit', $row)) {
+				$arr[$column] = $field->val('set', $row);
 			}
 		}
 
-		return $this->pkeyToValue( $arr, true );
+		return $this->pkeyToValue($arr, true);
 	}
-
 
 	/**
 	 * Validate that all primary key fields have values for create.
 	 *
-	 * @param  array $row Row's data
-	 * @return bool    `true` if valid, `false` otherwise
+	 * @param array $row Row's data
+	 *
+	 * @return bool `true` if valid, `false` otherwise
 	 */
-	private function _pkey_validate_insert ( $row )
+	private function _pkey_validate_insert ($row)
 	{
 		$pkey = $this->_pkey;
 
-		if ( count( $pkey ) === 1 ) {
+		if (count($pkey) === 1) {
 			return true;
 		}
 
-		for ( $i=0, $ien=count($pkey) ; $i<$ien ; $i++ ) {
-			$column = $pkey[ $i ];
-			$field = $this->_find_field( $column, 'db' );
+		for ($i = 0, $ien = count($pkey); $i < $ien; $i++) {
+			$column = $pkey[$i];
+			$field = $this->_find_field($column, 'db');
 
-			if ( ! $field || ! $field->apply("create", $row) ) {
-				throw new \Exception( "When inserting into a compound key table, ".
-					"all fields that are part of the compound key must be ".
-					"submitted with a specific value.", 1
+			if (!$field || !$field->apply('create', $row)) {
+				throw new \Exception(
+					'When inserting into a compound key table, ' .
+					'all fields that are part of the compound key must be ' .
+					'submitted with a specific value.',
+					1
 				);
 			}
 		}
 
 		return true;
 	}
-
 
 	/**
 	 * Create the separator value for a compound primary key.
@@ -2586,7 +2567,7 @@ class Editor extends Ext {
 	{
 		$str = implode(',', $this->_pkey);
 
-		return hash( 'crc32', $str );
+		return hash('crc32', $str);
 	}
 
 	private function _read_table ()

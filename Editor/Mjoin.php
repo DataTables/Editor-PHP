@@ -7,6 +7,7 @@
  *  @author    SpryMedia
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
 
@@ -24,8 +25,8 @@ use DataTables\Editor\Join;
  */
 class Mjoin extends Join
 {
-	function __construct( $table=null )
+	function __construct($table = null)
 	{
-		parent::__construct( $table, 'array' );
+		parent::__construct($table, 'array');
 	}
 }

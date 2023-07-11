@@ -7,6 +7,7 @@
  *  @author    SpryMedia
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
 
@@ -28,37 +29,41 @@ namespace DataTables\Database;
  * additional methods, but this is discouraged to ensure that the API is the
  * same for all database types.
  */
-abstract class Result {
+abstract class Result
+{
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
 	 */
 
 	/**
 	 * Count the number of rows in the result set.
-	 *  @return int
+	 *
+	 * @return int
 	 */
 	abstract public function count ();
 
-
 	/**
 	 * Get the next row in a result set
-	 *  @param int $fetchType PDO row fetch style - PDO::FETCH_ASSOC is the default
-	 *  @return array
+	 *
+	 * @param int $fetchType PDO row fetch style - PDO::FETCH_ASSOC is the default
+	 *
+	 * @return array
 	 */
-	abstract public function fetch ( $fetchType=\PDO::FETCH_ASSOC );
-
+	abstract public function fetch ($fetchType = \PDO::FETCH_ASSOC);
 
 	/**
 	 * Get all rows in the result set
-	 *  @param int $fetchType PDO row fetch style - PDO::FETCH_ASSOC is the default
-	 *  @return array
+	 *
+	 * @param int $fetchType PDO row fetch style - PDO::FETCH_ASSOC is the default
+	 *
+	 * @return array
 	 */
-	abstract public function fetchAll ( $fetchType=\PDO::FETCH_ASSOC );
-
+	abstract public function fetchAll ($fetchType = \PDO::FETCH_ASSOC);
 
 	/**
 	 * After an INSERT query, get the ID that was inserted.
-	 *  @return int
+	 *
+	 * @return int
 	 */
 	abstract public function insertId ();
 };

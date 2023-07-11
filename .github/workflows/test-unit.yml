@@ -20,8 +20,8 @@ jobs:
 #        php: ['7.4', '8.0', '8.1']
 #        type: ['Phpunit']
         include:
-#          - php: 'latest'
-#            type: 'CodingStyle'
+          - php: 'latest'
+            type: 'CodingStyle'
           - php: 'latest'
             type: 'StaticAnalysis'
     steps:

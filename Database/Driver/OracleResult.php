@@ -5,6 +5,7 @@
  *  @author    SpryMedia
  *  @copyright 2014 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
 
@@ -15,21 +16,21 @@ use DataTables\Database\Result;
 
 /**
  * MySQL driver for DataTables Database Result class
+ *
  *  @internal
  */
-class OracleResult extends Result {
+class OracleResult extends Result
+{
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
 	 */
 
-	function __construct( $dbh, $stmt, $pkey_val )
+	function __construct($dbh, $stmt, $pkey_val)
 	{
 		$this->_dbh = $dbh;
 		$this->_stmt = $stmt;
 		$this->_pkey_val = $pkey_val;
 	}
-
-
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private properties
@@ -40,8 +41,6 @@ class OracleResult extends Result {
 	private $_rows = null;
 	private $_pkey_val;
 
-
-
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
 	 */
@@ -51,26 +50,23 @@ class OracleResult extends Result {
 		return count($this->fetchAll());
 	}
 
-
-	public function fetch ( $fetchType=\PDO::FETCH_ASSOC /* irrelevant for oci8 */ )
+	public function fetch ($fetchType = \PDO::FETCH_ASSOC /* irrelevant for oci8 */)
 	{
-		return oci_fetch_assoc( $this->_stmt );
+		return oci_fetch_assoc($this->_stmt);
 	}
 
-
-	public function fetchAll ( $fetchType=\PDO::FETCH_ASSOC /* irrelevant for oci8 */ )
+	public function fetchAll ($fetchType = \PDO::FETCH_ASSOC /* irrelevant for oci8 */)
 	{
-		if ( ! $this->_rows ) {
+		if (!$this->_rows) {
 			$out = array();
 
-			oci_fetch_all( $this->_stmt, $out, 0, -1, OCI_FETCHSTATEMENT_BY_ROW + OCI_ASSOC );
+			oci_fetch_all($this->_stmt, $out, 0, -1, OCI_FETCHSTATEMENT_BY_ROW + OCI_ASSOC);
 
 			$this->_rows = $out;
 		}
 
 		return $this->_rows;
 	}
-
 
 	public function insertId ()
 	{
