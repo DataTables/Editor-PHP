@@ -316,7 +316,7 @@ class Field extends DataTables\Ext
 			// Options class
 			$this->_optsFn = null;
 			$this->_opts = $table;
-		} else if (is_callable($table) && is_object($table)) {
+		} elseif (is_callable($table) && is_object($table)) {
 			// Function
 			$this->_opts = null;
 			$this->_optsFn = $table;
@@ -361,7 +361,7 @@ class Field extends DataTables\Ext
 			// Options class
 			$this->_spoptsFn = null;
 			$this->_spopts = $spInput;
-		} else if (is_callable($spInput) && is_object($spInput)) {
+		} elseif (is_callable($spInput) && is_object($spInput)) {
 			// Function
 			$this->_spopts = null;
 			$this->_spoptsFn = $spInput;
@@ -388,7 +388,7 @@ class Field extends DataTables\Ext
 			// Options class
 			$this->_sboptsFn = null;
 			$this->_sbopts = $sbInput;
-		} else if (is_callable($sbInput) && is_object($sbInput)) {
+		} elseif (is_callable($sbInput) && is_object($sbInput)) {
 			// Function
 			$this->_sbopts = null;
 			$this->_sboptsFn = $sbInput;
@@ -423,7 +423,7 @@ class Field extends DataTables\Ext
 	{
 		if ($_ === true) {
 			$_ = Field::SET_BOTH;
-		} else if ($_ === false) {
+		} elseif ($_ === false) {
 			$_ = Field::SET_NONE;
 		}
 
@@ -590,7 +590,7 @@ class Field extends DataTables\Ext
 				($this->_set === Field::SET_NONE || $this->_set === Field::SET_EDIT)
 			) {
 				return false;
-			} else if ($action === 'edit' &&
+			} elseif ($action === 'edit' &&
 				($this->_set === Field::SET_NONE || $this->_set === Field::SET_CREATE)
 			) {
 				return false;
@@ -625,7 +625,7 @@ class Field extends DataTables\Ext
 			$fn = $this->_optsFn;
 
 			return $fn($db);
-		} else if ($this->_opts) {
+		} elseif ($this->_opts) {
 			return $this->_opts->exec($db);
 		}
 
@@ -652,7 +652,7 @@ class Field extends DataTables\Ext
 			$fn = $this->_spoptsFn;
 
 			return $fn($editor->db(), $editor);
-		} else if ($this->_spopts) {
+		} elseif ($this->_spopts) {
 			return $this->_spopts->exec($field, $editor, $http, $fields, $leftJoin);
 		}
 
@@ -679,7 +679,7 @@ class Field extends DataTables\Ext
 			$fn = $this->_sboptsFn;
 
 			return $fn($editor->db(), $editor);
-		} else if ($this->_sbopts) {
+		} elseif ($this->_sbopts) {
 			return $this->_sbopts->exec($field, $editor, $http, $fields, $leftJoin);
 		}
 

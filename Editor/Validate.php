@@ -179,7 +179,7 @@ class Validate
 		if (!$optional && $val === null) {
 			// Value must be given
 			return false;
-		} else if ($empty === false && $val === '') {
+		} elseif ($empty === false && $val === '') {
 			// Value must not be empty
 			return false;
 		}
@@ -187,7 +187,7 @@ class Validate
 		// Validation passed states
 		if ($optional && $val === null) {
 			return true;
-		} else if ($empty === true && $val === '') {
+		} elseif ($empty === true && $val === '') {
 			return true;
 		}
 

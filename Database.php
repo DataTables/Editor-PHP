@@ -153,7 +153,7 @@ class Database
 	{
 		if ($set === null) {
 			return $this->_debugCallback ? true : false;
-		} else if ($set === false) {
+		} elseif ($set === false) {
 			$this->_debugCallback = null;
 		} else {
 			$this->_debugCallback = $set;

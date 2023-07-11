@@ -210,7 +210,7 @@ class Ext
 
 			if (!isset($inner[$loopName])) {
 				$inner[$loopName] = array();
-			} else if (!is_array($inner[$loopName])) {
+			} elseif (!is_array($inner[$loopName])) {
 				throw new \Exception(
 					'A property with the name `' . $name . '` already exists. This ' .
 					'can occur if you have properties which share a prefix - ' .

@@ -131,7 +131,7 @@ class Options extends DataTables\Ext
 	{
 		if ($_ === null) {
 			return $this;
-		} else if (is_string($_)) {
+		} elseif (is_string($_)) {
 			$this->_label = array($_);
 		} else {
 			$this->_label = $_;

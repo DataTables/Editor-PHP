@@ -103,7 +103,7 @@ class SearchBuilderOptions extends DataTables\Ext
 	{
 		if ($_ === null) {
 			return $this;
-		} else if (is_string($_)) {
+		} elseif (is_string($_)) {
 			$this->_label = array($_);
 		} else {
 			$this->_label = $_;
@@ -256,7 +256,7 @@ class SearchBuilderOptions extends DataTables\Ext
 		// This is not taking a value from the SearchBuilderOptions instance as the table should be defined in value/label. This throws up errors if not.
 		if ($this->_table !== null) {
 			$table = $this->_table;
-		} else if (count($readTable) > 0) {
+		} elseif (count($readTable) > 0) {
 			$table = $readTable;
 		} else {
 			$table = $editor->table();

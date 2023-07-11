@@ -570,9 +570,9 @@ class Join extends DataTables\Ext
 			// use that. Otherwise, the key must be in the field list.
 			if ($this->_propExists($dteTable . '.' . $joinField, $data[0])) {
 				$readField = $dteTable . '.' . $joinField;
-			} else if ($this->_propExists($joinField, $data[0])) {
+			} elseif ($this->_propExists($joinField, $data[0])) {
 				$readField = $joinField;
-			} else if (!$pkeyIsJoin) {
+			} elseif (!$pkeyIsJoin) {
 				echo json_encode(array(
 					'sError' => "Join was performed on the field '{$joinField}' which was not "
 						. 'included in the Editor field list. The join field must be included '
@@ -925,9 +925,9 @@ class Join extends DataTables\Ext
 				// Discover the name of the link table
 				if ($f1[0] !== $editorTable && $f1[0] !== $joinTable) {
 					$this->_join['table'] = $f1[0];
-				} else if ($f2[0] !== $editorTable && $f2[0] !== $joinTable) {
+				} elseif ($f2[0] !== $editorTable && $f2[0] !== $joinTable) {
 					$this->_join['table'] = $f2[0];
-				} else if ($f3[0] !== $editorTable && $f3[0] !== $joinTable) {
+				} elseif ($f3[0] !== $editorTable && $f3[0] !== $joinTable) {
 					$this->_join['table'] = $f3[0];
 				} else {
 					$this->_join['table'] = $f4[0];

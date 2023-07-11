@@ -554,7 +554,7 @@ class Upload extends DataTables\Ext
 		if (count($a) === 1) {
 			$table = $editorTable;
 			$field = $a[0];
-		} else if (count($a) === 2) {
+		} elseif (count($a) === 2) {
 			$table = $a[0];
 			$field = $a[1];
 		} else {

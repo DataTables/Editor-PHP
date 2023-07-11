@@ -316,15 +316,15 @@ abstract class Query
 
 		if ($type === 'select') {
 			return $this->_select();
-		} else if ($type === 'insert') {
+		} elseif ($type === 'insert') {
 			return $this->_insert();
-		} else if ($type === 'update') {
+		} elseif ($type === 'update') {
 			return $this->_update();
-		} else if ($type === 'delete') {
+		} elseif ($type === 'delete') {
 			return $this->_delete();
-		} else if ($type === 'count') {
+		} elseif ($type === 'count') {
 			return $this->_count();
-		} else if ($type === 'raw') {
+		} elseif ($type === 'raw') {
 			return $this->_raw($sql);
 		}
 
@@ -354,7 +354,7 @@ abstract class Query
 				for ($j = 0; $j < count($args[$i]); $j++) {
 					$this->get($args[$i][$j]);
 				}
-			} else if (strpos($args[$i], ',') !== false && strpos($args[$i], '(') === false) {
+			} elseif (strpos($args[$i], ',') !== false && strpos($args[$i], '(') === false) {
 				// Comma delimited set of fields - legacy. Recommended that fields be split into
 				// an array on input
 				$a = explode(',', $args[$i]);
@@ -640,11 +640,11 @@ abstract class Query
 	{
 		if ($key === null) {
 			return $this;
-		} else if (is_callable($key) && is_object($key)) { // is a closure
+		} elseif (is_callable($key) && is_object($key)) { // is a closure
 			$this->_where_group(true, 'AND');
 			$key($this);
 			$this->_where_group(false, 'OR');
-		} else if (!is_array($key) && is_array($value)) {
+		} elseif (!is_array($key) && is_array($value)) {
 			for ($i = 0; $i < count($value); $i++) {
 				$this->where($key, $value[$i], $op, $bind);
 			}
@@ -701,7 +701,7 @@ abstract class Query
 	{
 		if ($key === null) {
 			return $this;
-		} else if (is_callable($key) && is_object($key)) {
+		} elseif (is_callable($key) && is_object($key)) {
 			$this->_where_group(true, 'OR');
 			$key($this);
 			$this->_where_group(false, 'OR');
@@ -835,7 +835,7 @@ abstract class Query
 					$a[] = $this->_protect_identifiers($field) . $asAlias .
 						$this->_field_quote . $this->_escape_field($field) . $this->_field_quote;
 				}
-			} else if ($addAlias && strpos($field, '(') !== false && !strpos($field, ' as ')) {
+			} elseif ($addAlias && strpos($field, '(') !== false && !strpos($field, ' as ')) {
 				$a[] = $this->_protect_identifiers($field) . $asAlias .
 					$this->_field_quote . $this->_escape_field($field) . $this->_field_quote;
 			} else {
@@ -1004,7 +1004,7 @@ abstract class Query
 		for ($i = 0; $i < count($this->_where); $i++) {
 			if ($i === 0) {
 				// Nothing (simplifies the logic!)
-			} else if ($this->_where[$i]['group'] === ')') {
+			} elseif ($this->_where[$i]['group'] === ')') {
 				// If a group has been used but no conditions were added inside
 				// of, we don't want to end up with `()` in the SQL as that is
 				// invalid, so add a 1.
@@ -1012,7 +1012,7 @@ abstract class Query
 					$condition .= '1=1';
 				}
 				// else nothing
-			} else if ($this->_where[$i - 1]['group'] === '(') {
+			} elseif ($this->_where[$i - 1]['group'] === '(') {
 				// Nothing
 			} else {
 				$condition .= $this->_where[$i]['operator'] . ' ';
@@ -1264,7 +1264,7 @@ abstract class Query
 	{
 		if ($where === null) {
 			return;
-		} else if (!is_array($where)) {
+		} elseif (!is_array($where)) {
 			$where = array($where => $value);
 		}
 
@@ -1281,7 +1281,7 @@ abstract class Query
 						' IS NULL' :
 						' IS NOT NULL')
 				);
-			} else if ($bind) {
+			} elseif ($bind) {
 				// Binding condition (i.e. escape data)
 				if ($this->_dbHost->type() === 'Postgres' && $op === 'like') {
 					// Postgres specific a it needs a case for string searching non-text data

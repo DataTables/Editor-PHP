@@ -1012,14 +1012,14 @@ class Editor extends Ext
 			if ($action === Editor::ACTION_READ) {
 				/* Get data */
 				$this->_out = array_merge($this->_out, $this->_get(null, $data));
-			} else if ($action === Editor::ACTION_UPLOAD && $this->_write === true) {
+			} elseif ($action === Editor::ACTION_UPLOAD && $this->_write === true) {
 				/* File upload */
 				$this->_upload($data);
-			} else if ($action === Editor::ACTION_DELETE && $this->_write === true) {
+			} elseif ($action === Editor::ACTION_DELETE && $this->_write === true) {
 				/* Remove rows */
 				$this->_remove($data);
 				$this->_fileClean();
-			} else if (($action === Editor::ACTION_CREATE || $action === Editor::ACTION_EDIT) && $this->_write === true) {
+			} elseif (($action === Editor::ACTION_CREATE || $action === Editor::ACTION_EDIT) && $this->_write === true) {
 				/* Create or edit row */
 				// Pre events so they can occur before the validation
 				foreach ($data['data'] as $idSrc => &$values) {
@@ -1205,7 +1205,7 @@ class Editor extends Ext
 				),
 				$ssp
 			);
-		} else if (count($searchBuilder['options']) > 0) {
+		} elseif (count($searchBuilder['options']) > 0) {
 			return array_merge(
 				array(
 					'data' => $out,
@@ -1215,7 +1215,7 @@ class Editor extends Ext
 				),
 				$ssp
 			);
-		} else if (count($searchPanes['options']) > 0) {
+		} elseif (count($searchPanes['options']) > 0) {
 			return array_merge(
 				array(
 					'data' => $out,
@@ -1557,7 +1557,7 @@ class Editor extends Ext
 					if (count($ids) === 0) {
 						// If no data to fetch for this field, so don't bother
 						continue;
-					} else if (count($ids) > 1000) {
+					} elseif (count($ids) > 1000) {
 						// Don't use `where_in` for really large data sets
 						$ids = array();
 					}
@@ -1732,7 +1732,7 @@ class Editor extends Ext
 						$this->_constructSearchBuilderConditions($q, $crit);
 					}, 'OR');
 				}
-			} else if (isset($crit['condition']) && (isset($crit['value1']) || $crit['condition'] === 'null' || $crit['condition'] === '!null')) {
+			} elseif (isset($crit['condition']) && (isset($crit['value1']) || $crit['condition'] === 'null' || $crit['condition'] === '!null')) {
 				// Sometimes the structure of the object that is passed across is named in a strange way.
 				// This conditional assignment solves that issue
 				$val1 = isset($crit['value1']) ? $crit['value1'] : '';
@@ -2118,7 +2118,7 @@ class Editor extends Ext
 
 			if ($type === 'name' && $field->name() === $name) {
 				return $field;
-			} else if ($type === 'db' && $field->dbField() === $name) {
+			} elseif ($type === 'db' && $field->dbField() === $name) {
 				return $field;
 			}
 		}
@@ -2349,7 +2349,7 @@ class Editor extends Ext
 
 			if ($fieldDots === 0) {
 				$count++;
-			} else if ($fieldDots === 1) {
+			} elseif ($fieldDots === 1) {
 				if (
 					$field->set() !== Field::SET_NONE &&
 					$this->_part($fieldName, 'table') === $tableAlias
@@ -2480,7 +2480,7 @@ class Editor extends Ext
 				$db = $a[0];
 				$table = $a[1];
 				$column = $a[2];
-			} else if (count($a) === 2) {
+			} elseif (count($a) === 2) {
 				$table = $a[0];
 				$column = $a[1];
 			}
@@ -2490,7 +2490,7 @@ class Editor extends Ext
 
 		if ($type === 'db') {
 			return $db;
-		} else if ($type === 'table') {
+		} elseif ($type === 'table') {
 			return $table;
 		}
 

@@ -85,7 +85,6 @@ return $config
 		'class_definition' => false,
 		'constant_case' => false,
 		'dir_constant' => false,
-		'elseif' => false,
 		'explicit_indirect_variable' => false,
 		'explicit_string_variable' => false,
 		'function_declaration' => false,

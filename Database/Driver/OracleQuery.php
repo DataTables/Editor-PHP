@@ -118,7 +118,7 @@ class OracleQuery extends Query
 		// If insert, add the pkey column
 		if ($this->_type === 'insert' && $pkey) {
 			$sql .= ' RETURNING ' . $this->_protect_identifiers(is_array($pkey) ? $pkey[0] : $pkey) . ' INTO :editor_pkey_value';
-		} else if ($this->_type === 'select' && $this->_oracle_offset !== null) {
+		} elseif ($this->_type === 'select' && $this->_oracle_offset !== null) {
 			$sql = '
 				select * from (select rownum rnum, a.*
 				from (' . $sql . ') a where rownum <= ' . ($this->_oracle_offset + $this->_oracle_limit) . ')
