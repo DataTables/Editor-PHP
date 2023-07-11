@@ -12,8 +12,11 @@
 
 
 namespace DataTables;
-if (!defined('DATATABLES')) exit();
 
+// Ensure Editor is loadable.
+if (!defined('DATATABLES') && !class_exists('\DataTables\Editor')) {
+	exit(1);
+}
 
 //
 // Configuration

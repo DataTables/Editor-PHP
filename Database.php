@@ -11,11 +11,9 @@
  */
 
 namespace DataTables;
-if (!defined('DATATABLES')) exit();
 
 use DataTables\Database\Query;
 use DataTables\Database\Result;
-
 
 /**
  * DataTables Database connection object.

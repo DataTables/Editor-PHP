@@ -11,8 +11,6 @@
  */
 
 namespace DataTables\Editor;
-if (!defined('DATATABLES')) exit();
-
 
 /**
  * Formatter methods for the DataTables Editor

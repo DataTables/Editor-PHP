@@ -9,12 +9,10 @@
  */
 
 namespace DataTables\Database\Driver;
-if (!defined('DATATABLES')) exit();
 
 use PDO;
 use DataTables\Database\Query;
 use DataTables\Database\Driver\PostgresResult;
-
 
 /**
  * SQL Server driver for DataTables Database Query class

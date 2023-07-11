@@ -12,12 +12,10 @@
  */
 
 namespace DataTables;
-if (!defined('DATATABLES')) exit();
 
 use DataTables;
 use DataTables\Editor\Join;
 use DataTables\Editor\Field;
-
 
 /**
  * DataTables Editor base class for creating editable tables.

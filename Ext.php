@@ -11,8 +11,6 @@
  */
 
 namespace DataTables;
-if (!defined('DATATABLES')) exit();
-
 
 /**
  * Base class for DataTables classes.

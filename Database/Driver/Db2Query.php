@@ -5,7 +5,6 @@
  */
 
 namespace DataTables\Database\Driver;
-if (!defined('DATATABLES')) exit();
 
 use DataTables\Database\Query;
 use DataTables\Database\Driver\Db2Result;

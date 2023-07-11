@@ -1,4 +1,9 @@
-<?php if (!defined('DATATABLES')) exit(); // Ensure being used in DataTables env.
+<?php
+
+// Ensure Editor is loadable.
+if (!class_exists('\DataTables\Editor')) {
+	exit(1);
+}
 
 // Enable error reporting for debugging (remove for production)
 error_reporting(E_ALL);

@@ -11,10 +11,8 @@
  */
 
 namespace DataTables\Editor;
-if (!defined('DATATABLES')) exit();
 
 use DataTables\Editor\Join;
-
 
 /**
  * The `Mjoin` class extends the `Join` class with the join data type set to
