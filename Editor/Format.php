@@ -14,7 +14,7 @@
 namespace DataTables\Editor;
 
 /**
- * Formatter methods for the DataTables Editor
+ * Formatter methods for the DataTables Editor.
  *
  * All methods in this class are static with common inputs and returns.
  */
@@ -115,7 +115,7 @@ class Format
 	}
 
 	/**
-	 * Convert from one date time format to another
+	 * Convert from one date time format to another.
 	 *
 	 * Typical use of this method is to use it with the
 	 * {@see Field::getFormatter()} and {@see Field::setFormatter()} methods of
@@ -208,7 +208,7 @@ class Format
 	/**
 	 * Formatter that can be used to specify what value should be used if an
 	 * empty value is submitted by the client-side (e.g. null, 0, 'Not set',
-	 * etc)
+	 * etc).
 	 *
 	 * @callback-param string   $val  Value to convert to from a string to an array
 	 * @callback-param string[] $data Data for the whole row / submitted data

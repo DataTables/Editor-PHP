@@ -17,7 +17,7 @@ namespace DataTables\Database\Driver;
 use DataTables\Database\Query;
 
 /**
- * Oracle driver for DataTables Database Query class
+ * Oracle driver for DataTables Database Query class.
  *
  *  @internal
  */

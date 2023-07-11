@@ -16,7 +16,7 @@ namespace DataTables\Database\Driver;
 use DataTables\Database\Result;
 
 /**
- * Firebird driver for DataTables Database Result class
+ * Firebird driver for DataTables Database Result class.
  *
  *  @internal
  */

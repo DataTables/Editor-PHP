@@ -343,7 +343,7 @@ class Field extends DataTables\Ext
 	}
 
 	/**
-	 * Get a list of values that can be used for the options list in SearchPanes
+	 * Get a list of values that can be used for the options list in SearchPanes.
 	 *
 	 * @param SearchPaneOptions|callable $spInput SearchPaneOptions instance or a closure function if providing a method
 	 *
@@ -370,7 +370,7 @@ class Field extends DataTables\Ext
 	}
 
 	/**
-	 * Get a list of values that can be used for the options list in SearchBuilder
+	 * Get a list of values that can be used for the options list in SearchBuilder.
 	 *
 	 * @param SearchBuilderOptions|callable $sbInput SearchBuilderOptions instance or a closure function if providing a method
 	 *
@@ -610,7 +610,7 @@ class Field extends DataTables\Ext
 
 	/**
 	 * Execute the ipOpts to get the list of options to return to the client-
-	 * side
+	 * side.
 	 *
 	 * @param \DataTables\Database $db Database instance
 	 *
@@ -633,7 +633,7 @@ class Field extends DataTables\Ext
 
 	/**
 	 * Execute the spopts to get the list of options for SearchPanes to return
-	 * to the client-side
+	 * to the client-side.
 	 *
 	 * @param Editor\Field   $field    The field to retrieve the data from
 	 * @param Editor         $editor   The editor instance
@@ -660,7 +660,7 @@ class Field extends DataTables\Ext
 
 	/**
 	 * Execute the spopts to get the list of options for SearchBuilder to return
-	 * to the client-side
+	 * to the client-side.
 	 *
 	 * @param DataTables\Field     $field    The field to retrieve the data from
 	 * @param DataTables\Editor    $editor   The editor instance
@@ -749,7 +749,7 @@ class Field extends DataTables\Ext
 	/**
 	 * Check the validity of the field based on the data submitted. Note that
 	 * this validation is performed on the wire data - i.e. that which is
-	 * submitted, before any setFormatter is run
+	 * submitted, before any setFormatter is run.
 	 *
 	 * Called by the Editor / Join class instances - not expected for general
 	 * consumption - internal.
@@ -822,7 +822,7 @@ class Field extends DataTables\Ext
 	}
 
 	/**
-	 * Write the value for this field to the output array for a read operation
+	 * Write the value for this field to the output array for a read operation.
 	 *
 	 * @param array $out     Row output data (to the JSON)
 	 * @param mixed $srcData Row input data (raw, from the database)
@@ -868,7 +868,7 @@ class Field extends DataTables\Ext
 
 	/**
 	 * Apply a formatter to data. The caller will decide what formatter to apply
-	 * (get or set)
+	 * (get or set).
 	 *
 	 * @param mixed    $val       Value to be formatted
 	 * @param mixed    $data      Full row data
@@ -910,7 +910,7 @@ class Field extends DataTables\Ext
 
 	/**
 	 * Get the value from `_[gs]etValue` - taking into account if it is callable
-	 * function or not
+	 * function or not.
 	 *
 	 * @param mixed $val Value to be evaluated
 	 *

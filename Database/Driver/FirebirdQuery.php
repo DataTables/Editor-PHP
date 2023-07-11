@@ -16,7 +16,7 @@ namespace DataTables\Database\Driver;
 use DataTables\Database\Query;
 
 /**
- * Firebird driver for DataTables Database Query class
+ * Firebird driver for DataTables Database Query class.
  *
  *  @internal
  */

@@ -16,7 +16,7 @@ namespace DataTables\Database\Driver;
 use DataTables\Database\Result;
 
 /**
- * Sqlite driver for DataTables Database Result class
+ * Sqlite driver for DataTables Database Result class.
  *
  *  @internal
  */

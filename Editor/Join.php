@@ -259,7 +259,7 @@ class Join extends DataTables\Ext
 	}
 
 	/**
-	 * Set up a left join operation for the Mjoined data
+	 * Set up a left join operation for the Mjoined data.
 	 *
 	 * @param string $table    to get the information from
 	 * @param string $field1   the first field to get the information from
@@ -405,7 +405,7 @@ class Join extends DataTables\Ext
 	}
 
 	/**
-	 * Set a validator for the array of data (not on a field basis)
+	 * Set a validator for the array of data (not on a field basis).
 	 *
 	 * @param string   $fieldName Name of the field that any error should be shown
 	 *                            against on the client-side
@@ -481,7 +481,7 @@ class Join extends DataTables\Ext
 	 */
 
 	/**
-	 * Get data
+	 * Get data.
 	 *
 	 * @param Editor   $editor  Host Editor instance
 	 * @param string[] $data    Data from the parent table's get and were we need
@@ -721,7 +721,7 @@ class Join extends DataTables\Ext
 	}
 
 	/**
-	 * Delete rows
+	 * Delete rows.
 	 *
 	 * @param Editor $editor Host Editor instance
 	 * @param int[]  $ids    Parent row IDs to delete
@@ -758,7 +758,7 @@ class Join extends DataTables\Ext
 	}
 
 	/**
-	 * Validate input data
+	 * Validate input data.
 	 *
 	 * @param array    $errors Errors array
 	 * @param Editor   $editor Editor instance
@@ -806,7 +806,7 @@ class Join extends DataTables\Ext
 	 */
 
 	/**
-	 * Add local WHERE condition to query
+	 * Add local WHERE condition to query.
 	 *
 	 * @param \DataTables\Database\Query $query Query instance to apply the WHERE conditions to
 	 *
@@ -995,7 +995,7 @@ class Join extends DataTables\Ext
 
 	/**
 	 * Create an SQL string from the fields that this instance knows about for
-	 * using in queries
+	 * using in queries.
 	 *
 	 * @param string $direction Direction: 'get' or 'set'.
 	 *
@@ -1023,7 +1023,7 @@ class Join extends DataTables\Ext
 	}
 
 	/**
-	 * Validate input data
+	 * Validate input data.
 	 *
 	 * @param array    $errors Errors array
 	 * @param Editor   $editor Editor instance

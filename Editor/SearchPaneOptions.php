@@ -91,7 +91,7 @@ class SearchPaneOptions extends DataTables\Ext
 	 */
 
 	/**
-	 * Get / set the column(s) to use as the label value of the options
+	 * Get / set the column(s) to use as the label value of the options.
 	 *
 	 * @param string|string[]|null $_ null to get the current value, string or
 	 *                                array to get.
@@ -205,7 +205,7 @@ class SearchPaneOptions extends DataTables\Ext
 	}
 
 	/**
-	 * Adds all of the where conditions to the desired query
+	 * Adds all of the where conditions to the desired query.
 	 *
 	 * @param string $query the query being built
 	 *
@@ -233,7 +233,7 @@ class SearchPaneOptions extends DataTables\Ext
 	 */
 
 	/**
-	 * Execute the options (i.e. get them)
+	 * Execute the options (i.e. get them).
 	 *
 	 * @return array List of options
 	 *

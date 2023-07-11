@@ -16,7 +16,7 @@ namespace DataTables\Database\Driver;
 use DataTables\Database\Query;
 
 /**
- * MySQL driver for DataTables Database Query class
+ * MySQL driver for DataTables Database Query class.
  *
  *  @internal
  */

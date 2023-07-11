@@ -1,6 +1,6 @@
 <?php
 /**
- * SQL Server driver for DataTables PHP libraries
+ * SQL Server driver for DataTables PHP libraries.
  *
  *  @author    SpryMedia
  *  @copyright 2013 SpryMedia ( http://sprymedia.co.uk )
@@ -14,7 +14,7 @@ namespace DataTables\Database\Driver;
 use DataTables\Database\Query;
 
 /**
- * SQL Server driver for DataTables Database Query class
+ * SQL Server driver for DataTables Database Query class.
  *
  *  @internal
  */

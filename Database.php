@@ -84,7 +84,7 @@ class Database
 
 	/**
 	 * Determine if there is any data in the table that matches the query
-	 * condition
+	 * condition.
 	 *
 	 * @param string|string[] $table Table name(s) to act upon.
 	 * @param array           $where Where condition for what to select - see {@see
@@ -209,7 +209,7 @@ class Database
 
 	/**
 	 * Update or Insert data. When doing an insert, the where condition is
-	 * added as a set field
+	 * added as a set field.
 	 *
 	 * @param string|string[] $table Table name(s) to act upon.
 	 * @param array           $set   Field names and values to set - see {@see
@@ -420,7 +420,7 @@ class Database
 	}
 
 	/**
-	 * Get the database type (e.g. Postgres, Mysql, etc)
+	 * Get the database type (e.g. Postgres, Mysql, etc).
 	 */
 	public function type()
 	{

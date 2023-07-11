@@ -164,7 +164,7 @@ class Validate
 	}
 
 	/**
-	 * Perform common validation using the configuration parameters
+	 * Perform common validation using the configuration parameters.
 	 *
 	 *  @internal
 	 */
@@ -194,7 +194,7 @@ class Validate
 	}
 
 	/**
-	 * Convert the old style validation parameters into ValidateOptions
+	 * Convert the old style validation parameters into ValidateOptions.
 	 *
 	 *  @internal
 	 */
@@ -293,7 +293,7 @@ class Validate
 	}
 
 	/**
-	 * Required field - there must be a value and it must be a non-empty value
+	 * Required field - there must be a value and it must be a non-empty value.
 	 *
 	 * This is a helper short-cut method which is the same as:
 	 *
@@ -328,7 +328,7 @@ class Validate
 	}
 
 	/**
-	 * Optional field, but if given there must be a non-empty value
+	 * Optional field, but if given there must be a non-empty value.
 	 *
 	 * This is a helper short-cut method which is the same as:
 	 *
@@ -794,7 +794,7 @@ class Validate
 	}
 
 	/**
-	 * Check if string could contain an XSS attack string
+	 * Check if string could contain an XSS attack string.
 	 *
 	 * @callback-param string    $val  The value to check for validity
 	 * @callback-param string[]  $data The full data set submitted
@@ -828,7 +828,7 @@ class Validate
 	}
 
 	/**
-	 * Confirm that the value submitted is in a list of allowable values
+	 * Confirm that the value submitted is in a list of allowable values.
 	 *
 	 * @callback-param string    $val  The value to check for validity
 	 * @callback-param string[]  $data The full data set submitted
@@ -862,7 +862,7 @@ class Validate
 	}
 
 	/**
-	 * Check if there are any tags in the submitted value
+	 * Check if there are any tags in the submitted value.
 	 *
 	 * @callback-param string    $val  The value to check for validity
 	 * @callback-param string[]  $data The full data set submitted
@@ -900,7 +900,7 @@ class Validate
 	 */
 
 	/**
-	 * Check that a valid date input is given
+	 * Check that a valid date input is given.
 	 *
 	 * @callback-param string       $val  The value to check for validity
 	 * @callback-param string[]     $data The full data set submitted
@@ -943,7 +943,7 @@ class Validate
 	 */
 
 	/**
-	 * Check that the given value is unique in the database
+	 * Check that the given value is unique in the database.
 	 *
 	 * @callback-param string    $val  The value to check for validity
 	 * @callback-param string[]  $data The full data set submitted

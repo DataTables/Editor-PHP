@@ -1,7 +1,7 @@
 <?php
 /**
  * DB2 database driver for DataTables libraries.
- * BETA! Feedback welcome
+ * BETA! Feedback welcome.
  */
 
 namespace DataTables\Database\Driver;
@@ -9,7 +9,7 @@ namespace DataTables\Database\Driver;
 use DataTables\Database\Query;
 
 /**
- * DB2 driver for DataTables Database Query class
+ * DB2 driver for DataTables Database Query class.
  *
  *  @internal
  */

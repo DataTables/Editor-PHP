@@ -246,7 +246,7 @@ class Editor extends Ext
 	}
 
 	/**
-	 * Get / set the DB connection instance
+	 * Get / set the DB connection instance.
 	 *
 	 * @param Database $_ DataTable's Database class instance to use for database
 	 *                    connectivity. If not given, then used as a getter.
@@ -1238,7 +1238,7 @@ class Editor extends Ext
 	}
 
 	/**
-	 * Insert a new row in the database
+	 * Insert a new row in the database.
 	 *
 	 *  @private
 	 */
@@ -1293,7 +1293,7 @@ class Editor extends Ext
 	}
 
 	/**
-	 * Update a row in the database
+	 * Update a row in the database.
 	 *
 	 * @param string $id The DOM ID for the row that is being edited.
 	 *
@@ -1334,7 +1334,7 @@ class Editor extends Ext
 	}
 
 	/**
-	 * Delete one or more rows from the database
+	 * Delete one or more rows from the database.
 	 *
 	 *  @private
 	 */
@@ -1405,7 +1405,7 @@ class Editor extends Ext
 	}
 
 	/**
-	 * File upload
+	 * File upload.
 	 *
 	 * @param array $data Upload data
 	 *
@@ -1512,7 +1512,7 @@ class Editor extends Ext
 	}
 
 	/**
-	 * Common file get method for any array of fields
+	 * Common file get method for any array of fields.
 	 *
 	 * @param array   &$files     File output array
 	 * @param Field[] $fields     Fields to get file information about
@@ -1577,7 +1577,7 @@ class Editor extends Ext
 	}
 
 	/**
-	 * Run the file clean up
+	 * Run the file clean up.
 	 *
 	 * @private
 	 */
@@ -1608,7 +1608,7 @@ class Editor extends Ext
 
 	/**
 	 * When server-side processing is being used, modify the query with // the
-	 * required extra conditions
+	 * required extra conditions.
 	 *
 	 * @param \DataTables\Database\Query $query Query instance to apply the SSP commands to
 	 * @param array                      $http  Parameters from HTTP request
@@ -2059,7 +2059,7 @@ class Editor extends Ext
 	}
 
 	/**
-	 * Add a limit / offset to a server-side processing query
+	 * Add a limit / offset to a server-side processing query.
 	 *
 	 * @param \DataTables\Database\Query $query Query instance to apply the offset / limit to
 	 * @param array                      $http  HTTP variables (i.e. GET or POST)
@@ -2080,7 +2080,7 @@ class Editor extends Ext
 	 */
 
 	/**
-	 * Add local WHERE condition to query
+	 * Add local WHERE condition to query.
 	 *
 	 * @param \DataTables\Database\Query $query Query instance to apply the WHERE conditions to
 	 *
@@ -2102,7 +2102,7 @@ class Editor extends Ext
 	}
 
 	/**
-	 * Get a field instance from a known field name
+	 * Get a field instance from a known field name.
 	 *
 	 * @param string $name Field name
 	 * @param string $type Matching name type
@@ -2310,7 +2310,7 @@ class Editor extends Ext
 	}
 
 	/**
-	 * Delete one or more rows from the database for an individual table
+	 * Delete one or more rows from the database for an individual table.
 	 *
 	 * @param string $table Database table name to use
 	 * @param array  $ids   Array of ids to remove
@@ -2457,7 +2457,7 @@ class Editor extends Ext
 
 	/**
 	 * Get part of an SQL field definition regardless of how deeply defined it
-	 * is
+	 * is.
 	 *
 	 * @param string $name SQL field
 	 * @param string $type Which part to get: `table` (default) or `db` or
@@ -2498,7 +2498,7 @@ class Editor extends Ext
 	}
 
 	/**
-	 * Trigger an event
+	 * Trigger an event.
 	 *
 	 * @private
 	 */

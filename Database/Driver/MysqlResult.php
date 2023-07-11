@@ -16,7 +16,7 @@ namespace DataTables\Database\Driver;
 use DataTables\Database\Result;
 
 /**
- * MySQL driver for DataTables Database Result class
+ * MySQL driver for DataTables Database Result class.
  *
  *  @internal
  */

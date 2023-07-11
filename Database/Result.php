@@ -43,7 +43,7 @@ abstract class Result
 	abstract public function count();
 
 	/**
-	 * Get the next row in a result set
+	 * Get the next row in a result set.
 	 *
 	 * @param int $fetchType PDO row fetch style - PDO::FETCH_ASSOC is the default
 	 *
@@ -52,7 +52,7 @@ abstract class Result
 	abstract public function fetch($fetchType = \PDO::FETCH_ASSOC);
 
 	/**
-	 * Get all rows in the result set
+	 * Get all rows in the result set.
 	 *
 	 * @param int $fetchType PDO row fetch style - PDO::FETCH_ASSOC is the default
 	 *

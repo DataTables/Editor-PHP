@@ -16,7 +16,7 @@ namespace DataTables\Database\Driver;
 use DataTables\Database\Query;
 
 /**
- * SQLite3 driver for DataTables Database Query class
+ * SQLite3 driver for DataTables Database Query class.
  *
  *  @internal
  */

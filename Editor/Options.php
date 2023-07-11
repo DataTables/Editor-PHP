@@ -97,7 +97,7 @@ class Options extends DataTables\Ext
 	 */
 
 	/**
-	 * Add extra options to the list, in addition to any obtained from the database
+	 * Add extra options to the list, in addition to any obtained from the database.
 	 *
 	 * @param string      $label The label to use for the option
 	 * @param string|null $value Value for the option. If not given, the label will be used
@@ -119,7 +119,7 @@ class Options extends DataTables\Ext
 	}
 
 	/**
-	 * Get / set the column(s) to use as the label value of the options
+	 * Get / set the column(s) to use as the label value of the options.
 	 *
 	 * @param string|string[]|null $_ null to get the current value, string or
 	 *                                array to get.
@@ -141,7 +141,7 @@ class Options extends DataTables\Ext
 	}
 
 	/**
-	 * Set up a left join operation for the options
+	 * Set up a left join operation for the options.
 	 *
 	 * @param string $table    to get the information from
 	 * @param string $field1   the first field to get the information from
@@ -248,7 +248,7 @@ class Options extends DataTables\Ext
 	 */
 
 	/**
-	 * Execute the options (i.e. get them)
+	 * Execute the options (i.e. get them).
 	 *
 	 * @param Database $db Database connection
 	 *

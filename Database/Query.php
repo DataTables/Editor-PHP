@@ -206,7 +206,7 @@ abstract class Query
 	}
 
 	/**
-	 * Start a database transaction
+	 * Start a database transaction.
 	 *
 	 * @param \PDO $dbh The Database handle (typically a PDO object, but not always).
 	 */
@@ -226,7 +226,7 @@ abstract class Query
 	}
 
 	/**
-	 * Common helper for the drivers to handle a PDO DSN postfix
+	 * Common helper for the drivers to handle a PDO DSN postfix.
 	 *
 	 * @param string $dsn DSN postfix to use
 	 *
@@ -276,7 +276,7 @@ abstract class Query
 	}
 
 	/**
-	 * Get the Database host for this query instance
+	 * Get the Database host for this query instance.
 	 *
 	 * @return Database Database class instance
 	 */
@@ -368,7 +368,7 @@ abstract class Query
 	}
 
 	/**
-	 * Perform a JOIN operation
+	 * Perform a JOIN operation.
 	 *
 	 * @param string $table     Table name to do the JOIN on
 	 * @param string $condition JOIN condition
@@ -401,7 +401,7 @@ abstract class Query
 	}
 
 	/**
-	 * Add a left join, with common logic for handling binding or not
+	 * Add a left join, with common logic for handling binding or not.
 	 */
 	public function left_join($joins)
 	{
@@ -449,7 +449,7 @@ abstract class Query
 	}
 
 	/**
-	 * Group the results by the values in a field
+	 * Group the results by the values in a field.
 	 *
 	 * @param string $group_by The field of which the values are to be grouped
 	 *
@@ -528,7 +528,7 @@ abstract class Query
 	}
 
 	/**
-	 * Order by
+	 * Order by.
 	 *
 	 * @param string|string[] $order Columns and direction to order by - can
 	 *                               be specified as individual names, an array of names, a string of comma
@@ -803,7 +803,7 @@ abstract class Query
 	 */
 
 	/**
-	 * Create a comma separated field list
+	 * Create a comma separated field list.
 	 *
 	 * @param bool $addAlias Flag to add an alias
 	 *
@@ -844,7 +844,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create a JOIN statement list
+	 * Create a JOIN statement list.
 	 *
 	 * @return string
 	 *
@@ -856,7 +856,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create the LIMIT / OFFSET string
+	 * Create the LIMIT / OFFSET string.
 	 *
 	 * MySQL and Postgres style - anything else can have the driver override
 	 *
@@ -882,7 +882,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create the GROUP BY string
+	 * Create the GROUP BY string.
 	 *
 	 * @return string
 	 *
@@ -900,7 +900,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create the ORDER BY string
+	 * Create the ORDER BY string.
 	 *
 	 * @return string
 	 *
@@ -916,7 +916,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create a set list
+	 * Create a set list.
 	 *
 	 * @return string
 	 *
@@ -940,7 +940,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create the TABLE list
+	 * Create the TABLE list.
 	 *
 	 * @return string
 	 *
@@ -966,7 +966,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create a bind field value list
+	 * Create a bind field value list.
 	 *
 	 * @return string
 	 *
@@ -984,7 +984,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create the WHERE statement
+	 * Create the WHERE statement.
 	 *
 	 * @return string
 	 *
@@ -1026,7 +1026,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create a DELETE statement
+	 * Create a DELETE statement.
 	 *
 	 * @return Result
 	 *
@@ -1044,7 +1044,7 @@ abstract class Query
 	}
 
 	/**
-	 * Escape quotes in a field identifier
+	 * Escape quotes in a field identifier.
 	 *
 	 *  @internal
 	 */
@@ -1056,7 +1056,7 @@ abstract class Query
 	}
 
 	/**
-	 * Execute the query. Provided by the driver
+	 * Execute the query. Provided by the driver.
 	 *
 	 * @return Result
 	 *
@@ -1065,7 +1065,7 @@ abstract class Query
 	abstract protected function _exec();
 
 	/**
-	 * Create an INSERT statement
+	 * Create an INSERT statement.
 	 *
 	 * @return Result
 	 *
@@ -1088,7 +1088,7 @@ abstract class Query
 
 	/**
 	 * Prepare the SQL query by populating the bound variables.
-	 * Provided by the driver
+	 * Provided by the driver.
 	 *
 	 * @return void
 	 *
@@ -1097,7 +1097,7 @@ abstract class Query
 	abstract protected function _prepare($sql);
 
 	/**
-	 * Protect field names
+	 * Protect field names.
 	 *
 	 * @param string $identifier String to be protected
 	 *
@@ -1145,7 +1145,7 @@ abstract class Query
 	}
 
 	/**
-	 * Passed in SQL statement
+	 * Passed in SQL statement.
 	 *
 	 * @return Result
 	 *
@@ -1161,7 +1161,7 @@ abstract class Query
 	/**
 	 * The characters that can be used for the PDO bindValue name are quite
 	 * limited (`[a-zA-Z0-9_]+`). We need to abstract this out to allow slightly
-	 * more complex expressions including dots for easy aliasing
+	 * more complex expressions including dots for easy aliasing.
 	 *
 	 * @param string $name Field name
 	 *
@@ -1181,7 +1181,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create a SELECT statement
+	 * Create a SELECT statement.
 	 *
 	 * @return Result
 	 *
@@ -1204,7 +1204,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create a SELECT COUNT statement
+	 * Create a SELECT COUNT statement.
 	 *
 	 * @return Result
 	 *
@@ -1228,7 +1228,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create an UPDATE statement
+	 * Create an UPDATE statement.
 	 *
 	 * @return Result
 	 *
@@ -1310,7 +1310,7 @@ abstract class Query
 	}
 
 	/**
-	 * Add parentheses to a where condition
+	 * Add parentheses to a where condition.
 	 *
 	 * @return string
 	 *
@@ -1325,7 +1325,7 @@ abstract class Query
 	}
 
 	/**
-	 * Check if an array is associative or sequential
+	 * Check if an array is associative or sequential.
 	 */
 	private function _is_assoc(array $arr)
 	{

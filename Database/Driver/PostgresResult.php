@@ -16,7 +16,7 @@ namespace DataTables\Database\Driver;
 use DataTables\Database\Result;
 
 /**
- * Postgres driver for DataTables Database Result class
+ * Postgres driver for DataTables Database Result class.
  *
  *  @internal
  */

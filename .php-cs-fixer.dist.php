@@ -85,7 +85,6 @@ return $config
 		'increment_style' => false,
 		'phpdoc_annotation_without_dot' => false,
 		'phpdoc_no_package' => false,
-		'phpdoc_summary' => false,
 		'ternary_to_null_coalescing' => false,
 		'trailing_comma_in_multiline' => false,
 	))

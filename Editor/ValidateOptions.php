@@ -42,7 +42,7 @@ class ValidateOptions extends DataTables\Ext
 	}
 
 	/**
-	 * Get / set the error message to use if validation fails
+	 * Get / set the error message to use if validation fails.
 	 *
 	 * @param string $msg Error message to use. If not given, the currently
 	 *                    set message will be returned.
@@ -61,7 +61,7 @@ class ValidateOptions extends DataTables\Ext
 	}
 
 	/**
-	 * Get / set the field empty option
+	 * Get / set the field empty option.
 	 *
 	 * @param bool $empty `false` if the field is not allowed to be
 	 *                    empty. `true` if it can be.
@@ -80,7 +80,7 @@ class ValidateOptions extends DataTables\Ext
 	}
 
 	/**
-	 * Get / set the field optional option
+	 * Get / set the field optional option.
 	 *
 	 * @param bool $optional `false` if the field does not need to be
 	 *                       submitted. `true` if it must be.

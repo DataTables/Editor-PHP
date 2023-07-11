@@ -16,7 +16,7 @@ namespace DataTables\Database\Driver;
 use DataTables\Database\Query;
 
 /**
- * Postgres driver for DataTables Database Query class
+ * Postgres driver for DataTables Database Query class.
  *
  *  @internal
  */

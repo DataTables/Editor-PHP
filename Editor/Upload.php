@@ -112,7 +112,7 @@ class Upload extends DataTables\Ext
 	 */
 	public const DB_WEB_PATH = 'editor-webPath';
 
-	/** Read from the database - don't write to it
+	/** Read from the database - don't write to it.
 	 */
 	public const DB_READ_ONLY = 'editor-readOnly';
 
@@ -139,7 +139,7 @@ class Upload extends DataTables\Ext
 	 */
 
 	/**
-	 * Upload instance constructor
+	 * Upload instance constructor.
 	 *
 	 * @param string|callable $action Action to take on upload - this is applied
 	 *                                directly to {@see Upload->action()}.
@@ -156,7 +156,7 @@ class Upload extends DataTables\Ext
 	 */
 
 	/**
-	 * Set the action to take when a file is uploaded. This can be either of:
+	 * Set the action to take when a file is uploaded. This can be either of:.
 	 *
 	 * * A string - the value given is the full system path to where the
 	 *   uploaded file is written to. The value given can include three "macros"
@@ -314,7 +314,7 @@ class Upload extends DataTables\Ext
 	 */
 
 	/**
-	 * Get database information data from the table
+	 * Get database information data from the table.
 	 *
 	 * @param \DataTables\Database $db  Database
 	 * @param number[]             $ids Limit to a specific set of ids
@@ -364,7 +364,7 @@ class Upload extends DataTables\Ext
 	}
 
 	/**
-	 * Clean the database
+	 * Clean the database.
 	 *
 	 * @param \DataTables\Editor $editor Calling Editor instance
 	 * @param Field              $field  Host field
@@ -380,7 +380,7 @@ class Upload extends DataTables\Ext
 	}
 
 	/**
-	 * Get the set error message
+	 * Get the set error message.
 	 *
 	 * @return string Class error
 	 *
@@ -392,7 +392,7 @@ class Upload extends DataTables\Ext
 	}
 
 	/**
-	 * Execute an upload
+	 * Execute an upload.
 	 *
 	 * @param \DataTables\Editor $editor Calling Editor instance
 	 *
@@ -462,7 +462,7 @@ class Upload extends DataTables\Ext
 	}
 
 	/**
-	 * Get the primary key column for the table
+	 * Get the primary key column for the table.
 	 *
 	 * @return string Primary key column name
 	 *
@@ -474,7 +474,7 @@ class Upload extends DataTables\Ext
 	}
 
 	/**
-	 * Get the db table name
+	 * Get the db table name.
 	 *
 	 * @return string DB table name
 	 *
@@ -490,7 +490,7 @@ class Upload extends DataTables\Ext
 	 */
 
 	/**
-	 * Execute the configured action for the upload
+	 * Execute the configured action for the upload.
 	 *
 	 * @param array $upload $_FILES['upload']
 	 * @param int   $id     Primary key value
@@ -601,7 +601,7 @@ class Upload extends DataTables\Ext
 	}
 
 	/**
-	 * Add a record to the database for a newly uploaded file
+	 * Add a record to the database for a newly uploaded file.
 	 *
 	 * @param array                $upload $_FILES['upload']
 	 * @param \DataTables\Database $db     Database instance
@@ -715,7 +715,7 @@ class Upload extends DataTables\Ext
 	}
 
 	/**
-	 * Apply macros to a user specified path
+	 * Apply macros to a user specified path.
 	 *
 	 * @param string $name File path
 	 * @param int    $id   Primary key value for the file

@@ -101,7 +101,7 @@ class Ext
 
 	/**
 	 * Determine if a property is available in a data set (allowing `null` to be
-	 * a valid value)
+	 * a valid value).
 	 *
 	 * @param string $name Javascript dotted object name to write to
 	 * @param array  $data Data source array to read from
