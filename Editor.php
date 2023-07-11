@@ -314,8 +314,6 @@ class Editor extends Ext
 	 * @return Field|Field[]|Editor The selected field, an array of fields, or
 	 *                              the Editor instance for chaining, depending on the input parameter.
 	 *
-	 * @throws \Exception Unkown field error
-	 *
 	 * @see {@see Field} for field documentation.
 	 */
 	public function field($_ = null)
@@ -461,8 +459,6 @@ class Editor extends Ext
 	 *                         or `null`, then `$_GET['callback']` is used (the jQuery default).
 	 *
 	 * @return self Self for chaining.
-	 *
-	 * @throws \Exception JSONP function name validation
 	 */
 	public function jsonp($callback = null)
 	{
@@ -619,9 +615,6 @@ class Editor extends Ext
 	 *                    (useful for `where` conditions) or nested for join tables.
 	 *
 	 * @return string The created primary key value.
-	 *
-	 * @throws \Exception If one of the values that the primary key is made up
-	 *                    of cannot be found in the data set given, an Exception will be thrown.
 	 */
 	public function pkeyToValue($row, $flat = false)
 	{
@@ -664,10 +657,6 @@ class Editor extends Ext
 	 *                        if not given
 	 *
 	 * @return array Array of field values that the id was made up of.
-	 *
-	 * @throws \Exception If the primary key value does not match the expected
-	 *                    length based on the primary key configuration, an exception will be
-	 *                    thrown.
 	 */
 	public function pkeyToArray($value, $flat = false, $pkey = null)
 	{
@@ -1097,8 +1086,6 @@ class Editor extends Ext
 	 *
 	 * @return array DataTables get information
 	 *
-	 * @throws \Exception Error on SQL execution
-	 *
 	 * @private
 	 */
 	private function _get($id = null, $http = null)
@@ -1409,8 +1396,6 @@ class Editor extends Ext
 	 *
 	 * @param array $data Upload data
 	 *
-	 * @throws \Exception File upload name error
-	 *
 	 * @private
 	 */
 	private function _upload($data)
@@ -1664,8 +1649,6 @@ class Editor extends Ext
 	 * @param int   $index Index in the DataTables' submitted data
 	 *
 	 * @returns string DB field name
-	 *
-	 * @throws \Exception Unknown fields
 	 *
 	 * @private Note that it is actually public for PHP 5.3 - thread 39810
 	 */
@@ -2225,8 +2208,6 @@ class Editor extends Ext
 	 *
 	 * @return \DataTables\Database\Result Result from the query or null if no query
 	 *                                     performed.
-	 *
-	 * @throws \Exception Where set error
 	 *
 	 * @private
 	 */

@@ -46,7 +46,7 @@ return $config
 		'return_assignment' => false,
 		'comment_to_phpdoc' => false,
 		'general_phpdoc_annotation_remove' => array(
-			'annotations' => array('author', 'copyright', 'throws'),
+			'annotations' => array(/* 'author', 'copyright', */ 'throws'),
 		),
 		'nullable_type_declaration_for_default_null_value' => array(
 			'use_nullable_type_declaration' => false,
@@ -72,7 +72,6 @@ return $config
 		),
 
 		// TODO
-		'general_phpdoc_annotation_remove' => false,
 		'phpdoc_annotation_without_dot' => false,
 	))
 	->setFinder($finder)

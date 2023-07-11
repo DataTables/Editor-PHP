@@ -191,8 +191,6 @@ class Ext
 	 * @param string $name  Javascript dotted object name to write to
 	 * @param mixed  $value Value to write
 	 *
-	 * @throws \Exception Information about duplicate properties
-	 *
 	 * @private
 	 */
 	protected function _writeProp(&$out, $name, $value)

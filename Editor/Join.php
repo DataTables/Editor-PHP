@@ -298,8 +298,6 @@ class Join extends DataTables\Ext
 	 * @param string $field2 Table and field name
 	 *
 	 * @return Join Self for chaining
-	 *
-	 * @throws \Exception Link limitations
 	 */
 	public function link($field1, $field2)
 	{
