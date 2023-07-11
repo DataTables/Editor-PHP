@@ -7,6 +7,7 @@
  *  @author    SpryMedia
  *  @copyright 2012-2014 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
 
@@ -41,8 +42,10 @@ class ValidateOptions extends DataTables\Ext {
 
     /**
      * Get / set the error message to use if validation fails
-     * @param  string                 $msg Error message to use. If not given, the currently
-     *                                     set message will be returned.
+     *
+     * @param string $msg Error message to use. If not given, the currently
+     *                    set message will be returned.
+     *
      * @return ValidateOptions|string Self if setting, message if getting.
      */
     public function message ($msg = null) {
@@ -56,8 +59,10 @@ class ValidateOptions extends DataTables\Ext {
 
     /**
      * Get / set the field empty option
-     * @param  bool                 $empty `false` if the field is not allowed to be
-     *                                     empty. `true` if it can be.
+     *
+     * @param bool $empty `false` if the field is not allowed to be
+     *                    empty. `true` if it can be.
+     *
      * @return ValidateOptions|bool Self if setting, current value if getting.
      */
     public function allowEmpty ($empty = null) {
@@ -71,8 +76,10 @@ class ValidateOptions extends DataTables\Ext {
 
     /**
      * Get / set the field optional option
-     * @param  bool                 $optional `false` if the field does not need to be
-     *                                        submitted. `true` if it must be.
+     *
+     * @param bool $optional `false` if the field does not need to be
+     *                       submitted. `true` if it must be.
+     *
      * @return ValidateOptions|bool Self if setting, current value if getting.
      */
     public function optional ($optional = null) {
@@ -83,7 +90,6 @@ class ValidateOptions extends DataTables\Ext {
         $this->_optional = $optional;
         return $this;
     }
-
 
     /**
      * @internal

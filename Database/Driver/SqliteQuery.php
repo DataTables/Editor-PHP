@@ -7,6 +7,7 @@
  *  @author    SpryMedia
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
 
@@ -18,6 +19,7 @@ use DataTables\Database\Driver\SqliteResult;
 
 /**
  * SQLite3 driver for DataTables Database Query class
+ *
  *  @internal
  */
 class SqliteQuery extends Query {
@@ -25,7 +27,6 @@ class SqliteQuery extends Query {
      * Private properties
      */
     private $_stmt;
-
 
     protected $_identifier_limiter = null;
 
@@ -66,8 +67,6 @@ class SqliteQuery extends Query {
         return $pdo;
     }
 
-
-
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Protected methods
      */
@@ -90,7 +89,6 @@ class SqliteQuery extends Query {
             );
         }
     }
-
 
     protected function _exec()
     {

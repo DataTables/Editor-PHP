@@ -5,6 +5,7 @@
  *  @author    SpryMedia
  *  @copyright 2013 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
 
@@ -16,6 +17,7 @@ use DataTables\Database\Driver\PostgresResult;
 
 /**
  * SQL Server driver for DataTables Database Query class
+ *
  *  @internal
  */
 class SqlserverQuery extends Query {
@@ -23,7 +25,6 @@ class SqlserverQuery extends Query {
      * Private properties
      */
     private $_stmt;
-
 
     protected $_identifier_limiter = array('[', ']');
 
@@ -73,7 +74,6 @@ class SqlserverQuery extends Query {
                     $pdoAttr
                 );
             }
-
         } catch (\PDOException $e) {
             // If we can't establish a DB connection then we return a DataTables
             // error.
@@ -86,8 +86,6 @@ class SqlserverQuery extends Query {
 
         return $pdo;
     }
-
-
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Protected methods
@@ -112,7 +110,6 @@ class SqlserverQuery extends Query {
         }
     }
 
-
     protected function _exec()
     {
         try {
@@ -125,7 +122,6 @@ class SqlserverQuery extends Query {
         $resource = $this->database()->resource();
         return new SqlserverResult($resource, $this->_stmt);
     }
-
 
     // SQL Server 2012+ only
     protected function _build_limit()

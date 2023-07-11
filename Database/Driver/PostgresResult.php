@@ -7,6 +7,7 @@
  *  @author    SpryMedia
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
 
@@ -17,6 +18,7 @@ use DataTables\Database\Result;
 
 /**
  * Postgres driver for DataTables Database Result class
+ *
  *  @internal
  */
 class PostgresResult extends Result {
@@ -30,16 +32,12 @@ class PostgresResult extends Result {
         $this->_stmt = $stmt;
     }
 
-
-
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Private properties
      */
 
     private $_stmt;
     private $_dbh;
-
-
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Public methods
@@ -50,18 +48,15 @@ class PostgresResult extends Result {
         return count($this->fetchAll());
     }
 
-
     public function fetch ($fetchType = \PDO::FETCH_ASSOC)
     {
         return $this->_stmt->fetch($fetchType);
     }
 
-
     public function fetchAll ($fetchType = \PDO::FETCH_ASSOC)
     {
         return $this->_stmt->fetchAll($fetchType);
     }
-
 
     public function insertId ()
     {

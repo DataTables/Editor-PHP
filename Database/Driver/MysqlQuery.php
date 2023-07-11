@@ -7,6 +7,7 @@
  *  @author    SpryMedia
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
 
@@ -18,6 +19,7 @@ use DataTables\Database\Driver\MysqlResult;
 
 /**
  * MySQL driver for DataTables Database Query class
+ *
  *  @internal
  */
 class MysqlQuery extends Query {
@@ -25,8 +27,6 @@ class MysqlQuery extends Query {
      * Private properties
      */
     private $_stmt;
-
-
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Public methods
@@ -71,8 +71,6 @@ class MysqlQuery extends Query {
         return $pdo;
     }
 
-
-
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Protected methods
      */
@@ -95,7 +93,6 @@ class MysqlQuery extends Query {
             );
         }
     }
-
 
     protected function _exec()
     {

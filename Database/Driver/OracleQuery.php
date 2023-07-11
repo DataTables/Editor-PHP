@@ -8,6 +8,7 @@
  *  @author    SpryMedia
  *  @copyright 2014 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
 
@@ -19,6 +20,7 @@ use DataTables\Database\Driver\OracleResult;
 
 /**
  * Oracle driver for DataTables Database Query class
+ *
  *  @internal
  */
 class OracleQuery extends Query {
@@ -34,7 +36,6 @@ class OracleQuery extends Query {
     protected $_field_quote = '"';
 
     protected $_supportsAsAlias = false;
-
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Public methods
@@ -87,7 +88,6 @@ class OracleQuery extends Query {
         return $conn;
     }
 
-
     public static function transaction ($conn)
     {
         // no op
@@ -103,14 +103,12 @@ class OracleQuery extends Query {
         oci_rollback($conn);
     }
 
-
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Protected methods
      */
 
     protected function _prepare($sql)
     {
-
         $resource = $this->database()->resource();
         $pkey = $this->pkey();
 
@@ -151,7 +149,6 @@ class OracleQuery extends Query {
         }
     }
 
-
     protected function _exec()
     {
         $res = @oci_execute($this->_stmt, OCI_NO_AUTO_COMMIT);
@@ -164,7 +161,6 @@ class OracleQuery extends Query {
         $resource = $this->database()->resource();
         return new OracleResult($resource, $this->_stmt, $this->_editor_pkey_value);
     }
-
 
     protected function _build_table()
     {
@@ -184,7 +180,6 @@ class OracleQuery extends Query {
 
         return ' ' . implode(', ', $out) . ' ';
     }
-
 
     private $_oracle_offset = null;
     private $_oracle_limit = null;

@@ -7,6 +7,7 @@
  *  @author    SpryMedia
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
 
@@ -18,6 +19,7 @@ use DataTables\Database\Driver\PostgresResult;
 
 /**
  * Postgres driver for DataTables Database Query class
+ *
  *  @internal
  */
 class PostgresQuery extends Query {
@@ -73,8 +75,6 @@ class PostgresQuery extends Query {
         return $pdo;
     }
 
-
-
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Protected methods
      */
@@ -124,7 +124,6 @@ class PostgresQuery extends Query {
             );
         }
     }
-
 
     protected function _exec()
     {

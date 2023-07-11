@@ -7,6 +7,7 @@
  *  @author    SpryMedia
  *  @copyright SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
 

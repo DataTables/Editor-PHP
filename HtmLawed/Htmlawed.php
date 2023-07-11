@@ -12,12 +12,19 @@
  *
  * @author     Santosh Patnaik <drpatnaikREMOVECAPS@yahoo.com>
  * @copyright  (c) 2007-, Santosh Patnaik
+ *
  * @dependency None
+ *
  * @license    LGPL 3 and GPL 2+ dual license
+ *
  * @link       https://bioinformatics.org/phplabware/internal_utilities/htmLawed
+ *
  * @package    htmLawed
+ *
  * @php        >=4.4
+ *
  * @time       2022-11-05
+ *
  * @version    1.2.10
  */
 
@@ -246,12 +253,13 @@ class Htmlawed {
     /**
      * Validate attribute value and possibly reset to a default.
      *
-     * @param  string $attr   Attribute name.
-     * @param  string $value  Attribute value.
-     * @param  array  $ruleAr Array of rules derived from $spec.
-     * @param  string $ele    Element.
-     * @return mixed  0 if invalid $value,
-     *                or string with validated or default value.
+     * @param string $attr   Attribute name.
+     * @param string $value  Attribute value.
+     * @param array  $ruleAr Array of rules derived from $spec.
+     * @param string $ele    Element.
+     *
+     * @return mixed 0 if invalid $value,
+     *               or string with validated or default value.
      */
     public static function hl_attributeValue($attr, $value, $ruleAr, $ele)
     {
@@ -276,29 +284,37 @@ class Htmlawed {
                     case 'maxlen': if ($lengthVal > $ruleVal) {
                         $ok = 0;
                     }
-                        break; case 'minlen': if ($lengthVal < $ruleVal) {
-                            $ok = 0;
-                        }
-                            break; case 'maxval': if ((float) ($v) > $ruleVal) {
-                                $ok = 0;
-                            }
-                                break; case 'minval': if ((float) ($v) < $ruleVal) {
-                                    $ok = 0;
-                                }
-                                    break; case 'match': if (!preg_match($ruleVal, $v)) {
-                                        $ok = 0;
-                                    }
-                                        break; case 'nomatch': if (preg_match($ruleVal, $v)) {
-                                            $ok = 0;
-                                        }
-                                            break; case 'oneof': if (!in_array($v, explode('|', $ruleVal))) {
-                                                $ok = 0;
-                                            }
-                                                break; case 'noneof': if (in_array($v, explode('|', $ruleVal))) {
-                                                    $ok = 0;
-                                                }
-                                                    break; default:
-                                                        break;
+                        break;
+                    case 'minlen': if ($lengthVal < $ruleVal) {
+                        $ok = 0;
+                    }
+                        break;
+                    case 'maxval': if ((float) ($v) > $ruleVal) {
+                        $ok = 0;
+                    }
+                        break;
+                    case 'minval': if ((float) ($v) < $ruleVal) {
+                        $ok = 0;
+                    }
+                        break;
+                    case 'match': if (!preg_match($ruleVal, $v)) {
+                        $ok = 0;
+                    }
+                        break;
+                    case 'nomatch': if (preg_match($ruleVal, $v)) {
+                        $ok = 0;
+                    }
+                        break;
+                    case 'oneof': if (!in_array($v, explode('|', $ruleVal))) {
+                        $ok = 0;
+                    }
+                        break;
+                    case 'noneof': if (in_array($v, explode('|', $ruleVal))) {
+                        $ok = 0;
+                    }
+                        break;
+                    default:
+                        break;
                 }
                 if (!$ok) {
                     break;
@@ -390,7 +406,6 @@ class Htmlawed {
         $validKidsOfMom = $openEleQueue = array(); // Queue of opened elements
         ob_start();
         for ($i = -1, $eleCount = count($t); ++$i < $eleCount;) {
-
             // Check element validity as child. Same code as section: Finishing (below).
 
             if ($queueLength = count($openEleQueue)) {
@@ -669,7 +684,8 @@ class Htmlawed {
      *
      * Filter/sanitize as per $config and disguise special characters.
      *
-     * @param  array  $t Array result of preg_replace, with potential comment/CDATA.
+     * @param array $t Array result of preg_replace, with potential comment/CDATA.
+     *
      * @return string Sanitized comment/CDATA with hidden special characters.
      */
     public static function hl_commentCdata($t)
@@ -701,11 +717,11 @@ class Htmlawed {
     /**
      * Transform deprecated element, with any attribute, into a new element.
      *
+     * @param string $ele     Deprecated element.
+     * @param string $attrStr Attribute string of element.
+     * @param int    $act     No transformation if 2.
      *
-     * @param  string $ele     Deprecated element.
-     * @param  string $attrStr Attribute string of element.
-     * @param  int    $act     No transformation if 2.
-     * @return mixed  New attribute string (may be empty) or 0.
+     * @return mixed New attribute string (may be empty) or 0.
      */
     public static function hl_deprecatedElement(&$ele, &$attrStr, $act = 1)
     {
@@ -767,7 +783,8 @@ class Htmlawed {
      *
      * As needed, convert to named/hexadecimal form, or neutralize '&' as '&amp;'.
      *
-     * @param  array  $t Array result of preg_replace, with potential entity.
+     * @param array $t Array result of preg_replace, with potential entity.
+     *
      * @return string Neutralized or converted entity.
      */
     public static function hl_entity($t)
@@ -825,8 +842,9 @@ class Htmlawed {
     /**
      * Check regex pattern for PHP error.
      *
-     * @param  string $t Pattern including limiters/modifiers.
-     * @return int    0 or 1 if pattern is invalid or valid, respectively.
+     * @param string $t Pattern including limiters/modifiers.
+     *
+     * @return int 0 or 1 if pattern is invalid or valid, respectively.
      */
     public static function hl_regex($t)
     {
@@ -866,8 +884,9 @@ class Htmlawed {
     /**
      * Parse $spec htmLawed argument as array.
      *
-     * @param  string $t Value of $spec.
-     * @return array  Multidimensional array of form: tag -> attribute -> rule.
+     * @param string $t Value of $spec.
+     *
+     * @return array Multidimensional array of form: tag -> attribute -> rule.
      */
     public static function hl_spec($t)
     {
@@ -971,7 +990,8 @@ class Htmlawed {
     /**
      * Handle tag text with </> limiters, and attributes in opening tags.
      *
-     * @param  array  $t Array from preg_replace call.
+     * @param array $t Array from preg_replace call.
+     *
      * @return string Tag with any attribute,
      *                or text with </> neutralized into entities, or empty.
      */
@@ -1057,18 +1077,16 @@ class Htmlawed {
         // .. Global.
 
         static $globalAttrAr = array(
+            // .... General.
 
-           // .... General.
+            'accesskey' => 1, 'autocapitalize' => 1, 'autofocus' => 1, 'class' => 1, 'contenteditable' => 1, 'contextmenu' => 1, 'dir' => 1, 'draggable' => 1, 'dropzone' => 1, 'enterkeyhint' => 1, 'hidden' => 1, 'id' => 1, 'inert' => 1, 'inputmode' => 1, 'is' => 1, 'itemid' => 1, 'itemprop' => 1, 'itemref' => 1, 'itemscope' => 1, 'itemtype' => 1, 'lang' => 1, 'nonce' => 1, 'role' => 1, 'slot' => 1, 'spellcheck' => 1, 'style' => 1, 'tabindex' => 1, 'title' => 1, 'translate' => 1, 'xmlns' => 1, 'xml:base' => 1, 'xml:lang' => 1, 'xml:space' => 1,
 
-          'accesskey' => 1, 'autocapitalize' => 1, 'autofocus' => 1, 'class' => 1, 'contenteditable' => 1, 'contextmenu' => 1, 'dir' => 1, 'draggable' => 1, 'dropzone' => 1, 'enterkeyhint' => 1, 'hidden' => 1, 'id' => 1, 'inert' => 1, 'inputmode' => 1, 'is' => 1, 'itemid' => 1, 'itemprop' => 1, 'itemref' => 1, 'itemscope' => 1, 'itemtype' => 1, 'lang' => 1, 'nonce' => 1, 'role' => 1, 'slot' => 1, 'spellcheck' => 1, 'style' => 1, 'tabindex' => 1, 'title' => 1, 'translate' => 1, 'xmlns' => 1, 'xml:base' => 1, 'xml:lang' => 1, 'xml:space' => 1,
+            // .... Event.
 
-          // .... Event.
+            'onabort' => 1, 'onauxclick' => 1, 'onblur' => 1, 'oncancel' => 1, 'oncanplay' => 1, 'oncanplaythrough' => 1, 'onchange' => 1, 'onclick' => 1, 'onclose' => 1, 'oncontextlost' => 1, 'oncontextmenu' => 1, 'oncontextrestored' => 1, 'oncopy' => 1, 'oncuechange' => 1, 'oncut' => 1, 'ondblclick' => 1, 'ondrag' => 1, 'ondragend' => 1, 'ondragenter' => 1, 'ondragleave' => 1, 'ondragover' => 1, 'ondragstart' => 1, 'ondrop' => 1, 'ondurationchange' => 1, 'onemptied' => 1, 'onended' => 1, 'onerror' => 1, 'onfocus' => 1, 'onformchange' => 1, 'onformdata' => 1, 'onforminput' => 1, 'ongotpointercapture' => 1, 'oninput' => 1, 'oninvalid' => 1, 'onkeydown' => 1, 'onkeypress' => 1, 'onkeyup' => 1, 'onload' => 1, 'onloadeddata' => 1, 'onloadedmetadata' => 1, 'onloadend' => 1, 'onloadstart' => 1, 'onlostpointercapture' => 1, 'onmousedown' => 1, 'onmouseenter' => 1, 'onmouseleave' => 1, 'onmousemove' => 1, 'onmouseout' => 1, 'onmouseover' => 1, 'onmouseup' => 1, 'onmousewheel' => 1, 'onpaste' => 1, 'onpause' => 1, 'onplay' => 1, 'onplaying' => 1, 'onpointercancel' => 1, 'onpointerdown' => 1, 'onpointerenter' => 1, 'onpointerleave' => 1, 'onpointermove' => 1, 'onpointerout' => 1, 'onpointerover' => 1, 'onpointerup' => 1, 'onprogress' => 1, 'onratechange' => 1, 'onreadystatechange' => 1, 'onreset' => 1, 'onresize' => 1, 'onscroll' => 1, 'onsearch' => 1, 'onsecuritypolicyviolation' => 1, 'onseeked' => 1, 'onseeking' => 1, 'onselect' => 1, 'onshow' => 1, 'onslotchange' => 1, 'onstalled' => 1, 'onsubmit' => 1, 'onsuspend' => 1, 'ontimeupdate' => 1, 'ontoggle' => 1, 'ontouchcancel' => 1, 'ontouchend' => 1, 'ontouchmove' => 1, 'ontouchstart' => 1, 'onvolumechange' => 1, 'onwaiting' => 1, 'onwheel' => 1,
 
-          'onabort' => 1, 'onauxclick' => 1, 'onblur' => 1, 'oncancel' => 1, 'oncanplay' => 1, 'oncanplaythrough' => 1, 'onchange' => 1, 'onclick' => 1, 'onclose' => 1, 'oncontextlost' => 1, 'oncontextmenu' => 1, 'oncontextrestored' => 1, 'oncopy' => 1, 'oncuechange' => 1, 'oncut' => 1, 'ondblclick' => 1, 'ondrag' => 1, 'ondragend' => 1, 'ondragenter' => 1, 'ondragleave' => 1, 'ondragover' => 1, 'ondragstart' => 1, 'ondrop' => 1, 'ondurationchange' => 1, 'onemptied' => 1, 'onended' => 1, 'onerror' => 1, 'onfocus' => 1, 'onformchange' => 1, 'onformdata' => 1, 'onforminput' => 1, 'ongotpointercapture' => 1, 'oninput' => 1, 'oninvalid' => 1, 'onkeydown' => 1, 'onkeypress' => 1, 'onkeyup' => 1, 'onload' => 1, 'onloadeddata' => 1, 'onloadedmetadata' => 1, 'onloadend' => 1, 'onloadstart' => 1, 'onlostpointercapture' => 1, 'onmousedown' => 1, 'onmouseenter' => 1, 'onmouseleave' => 1, 'onmousemove' => 1, 'onmouseout' => 1, 'onmouseover' => 1, 'onmouseup' => 1, 'onmousewheel' => 1, 'onpaste' => 1, 'onpause' => 1, 'onplay' => 1, 'onplaying' => 1, 'onpointercancel' => 1, 'onpointerdown' => 1, 'onpointerenter' => 1, 'onpointerleave' => 1, 'onpointermove' => 1, 'onpointerout' => 1, 'onpointerover' => 1, 'onpointerup' => 1, 'onprogress' => 1, 'onratechange' => 1, 'onreadystatechange' => 1, 'onreset' => 1, 'onresize' => 1, 'onscroll' => 1, 'onsearch' => 1, 'onsecuritypolicyviolation' => 1, 'onseeked' => 1, 'onseeking' => 1, 'onselect' => 1, 'onshow' => 1, 'onslotchange' => 1, 'onstalled' => 1, 'onsubmit' => 1, 'onsuspend' => 1, 'ontimeupdate' => 1, 'ontoggle' => 1, 'ontouchcancel' => 1, 'ontouchend' => 1, 'ontouchmove' => 1, 'ontouchstart' => 1, 'onvolumechange' => 1, 'onwaiting' => 1, 'onwheel' => 1,
-
-          // .... Aria.
-
-          'aria-activedescendant' => 1, 'aria-atomic' => 1, 'aria-autocomplete' => 1, 'aria-braillelabel' => 1, 'aria-brailleroledescription' => 1, 'aria-busy' => 1, 'aria-checked' => 1, 'aria-colcount' => 1, 'aria-colindex' => 1, 'aria-colindextext' => 1, 'aria-colspan' => 1, 'aria-controls' => 1, 'aria-current' => 1, 'aria-describedby' => 1, 'aria-description' => 1, 'aria-details' => 1, 'aria-disabled' => 1, 'aria-dropeffect' => 1, 'aria-errormessage' => 1, 'aria-expanded' => 1, 'aria-flowto' => 1, 'aria-grabbed' => 1, 'aria-haspopup' => 1, 'aria-hidden' => 1, 'aria-invalid' => 1, 'aria-keyshortcuts' => 1, 'aria-label' => 1, 'aria-labelledby' => 1, 'aria-level' => 1, 'aria-live' => 1, 'aria-multiline' => 1, 'aria-multiselectable' => 1, 'aria-orientation' => 1, 'aria-owns' => 1, 'aria-placeholder' => 1, 'aria-posinset' => 1, 'aria-pressed' => 1, 'aria-readonly' => 1, 'aria-relevant' => 1, 'aria-required' => 1, 'aria-roledescription' => 1, 'aria-rowcount' => 1, 'aria-rowindex' => 1, 'aria-rowindextext' => 1, 'aria-rowspan' => 1, 'aria-selected' => 1, 'aria-setsize' => 1, 'aria-sort' => 1, 'aria-valuemax' => 1, 'aria-valuemin' => 1, 'aria-valuenow' => 1, 'aria-valuetext' => 1);
+            // .... Aria.
+            'aria-activedescendant' => 1, 'aria-atomic' => 1, 'aria-autocomplete' => 1, 'aria-braillelabel' => 1, 'aria-brailleroledescription' => 1, 'aria-busy' => 1, 'aria-checked' => 1, 'aria-colcount' => 1, 'aria-colindex' => 1, 'aria-colindextext' => 1, 'aria-colspan' => 1, 'aria-controls' => 1, 'aria-current' => 1, 'aria-describedby' => 1, 'aria-description' => 1, 'aria-details' => 1, 'aria-disabled' => 1, 'aria-dropeffect' => 1, 'aria-errormessage' => 1, 'aria-expanded' => 1, 'aria-flowto' => 1, 'aria-grabbed' => 1, 'aria-haspopup' => 1, 'aria-hidden' => 1, 'aria-invalid' => 1, 'aria-keyshortcuts' => 1, 'aria-label' => 1, 'aria-labelledby' => 1, 'aria-level' => 1, 'aria-live' => 1, 'aria-multiline' => 1, 'aria-multiselectable' => 1, 'aria-orientation' => 1, 'aria-owns' => 1, 'aria-placeholder' => 1, 'aria-posinset' => 1, 'aria-pressed' => 1, 'aria-readonly' => 1, 'aria-relevant' => 1, 'aria-required' => 1, 'aria-roledescription' => 1, 'aria-rowcount' => 1, 'aria-rowindex' => 1, 'aria-rowindextext' => 1, 'aria-rowspan' => 1, 'aria-selected' => 1, 'aria-setsize' => 1, 'aria-sort' => 1, 'aria-valuemax' => 1, 'aria-valuemin' => 1, 'aria-valuenow' => 1, 'aria-valuetext' => 1);
 
         static $urlAttrAr = array('action' => 1, 'archive' => 1, 'cite' => 1, 'classid' => 1, 'codebase' => 1, 'data' => 1, 'href' => 1, 'itemtype' => 1, 'longdesc' => 1, 'model' => 1, 'pluginspage' => 1, 'pluginurl' => 1, 'poster' => 1, 'src' => 1, 'srcset' => 1, 'usemap' => 1); // Excludes style and on*
 
@@ -1105,33 +1123,35 @@ class Htmlawed {
                     $ok = $state = 1;
                     $attrStr = ltrim(substr_replace($attrStr, '', 0, strlen($m[0])));
                 }
-                    break; case 1: if ($attrStr[0] == '=') {
-                        $ok = 1;
-                        $state = 2;
-                        $attrStr = ltrim($attrStr, '= ');
-                    } else { // No value
-                        $ok = 1;
-                        $state = 0;
-                        $attrStr = ltrim($attrStr);
-                        $attrAr[$attr] = '';
-                    }
-                        break; case 2: if (preg_match('`^((?:"[^"]*")|(?:\'[^\']*\')|(?:\s*[^\s"\']+))(.*)`', $attrStr, $m)) { // Value
-                            $attrStr = ltrim($m[2]);
-                            $m = $m[1];
-                            $ok = 1;
-                            $state = 0;
-                            $attrAr[$attr] =
-                              trim(
-                                  str_replace(
-                                      '<',
-                                      '&lt;',
-                                      ($m[0] == '"' || $m[0] == '\'')
-                                      ? substr($m, 1, -1)
-                                      : $m
-                                  )
-                              );
-                        }
-                            break;
+                    break;
+                case 1: if ($attrStr[0] == '=') {
+                    $ok = 1;
+                    $state = 2;
+                    $attrStr = ltrim($attrStr, '= ');
+                } else { // No value
+                    $ok = 1;
+                    $state = 0;
+                    $attrStr = ltrim($attrStr);
+                    $attrAr[$attr] = '';
+                }
+                    break;
+                case 2: if (preg_match('`^((?:"[^"]*")|(?:\'[^\']*\')|(?:\s*[^\s"\']+))(.*)`', $attrStr, $m)) { // Value
+                    $attrStr = ltrim($m[2]);
+                    $m = $m[1];
+                    $ok = 1;
+                    $state = 0;
+                    $attrAr[$attr] =
+                      trim(
+                          str_replace(
+                              '<',
+                              '&lt;',
+                              ($m[0] == '"' || $m[0] == '\'')
+                              ? substr($m, 1, -1)
+                              : $m
+                          )
+                      );
+                }
+                    break;
             }
             if (!$ok) {
                 $attrStr = preg_replace('`^(?:"[^"]*("|$)|\'[^\']*(\'|$)|\S)*\s*`', '', $attrStr);
@@ -1150,11 +1170,9 @@ class Htmlawed {
         $deniedAttrAr = $C['deny_attribute'];
 
         foreach ($attrAr as $attr => $v) {
-
             // .. Check if attribute is permitted.
 
             if (
-
                 // .... Valid attribute.
 
                 ((isset($attrEleAr[$attr][$ele])
@@ -1187,7 +1205,6 @@ class Htmlawed {
                         || (isset($globalAttrAr[$attr])
                             && isset($eleSpec[preg_replace('`^(on|aria|data).+`', '\\1', $attr) . '*']))))
             ) {
-
                 // .. Attribute with no value or standard value.
 
                 if (isset($emptyAttrAr[$attr])) {
@@ -1218,7 +1235,6 @@ class Htmlawed {
                          : $v;
 
                     // .. URLs in other attributes.
-
                 } elseif (isset($urlAttrAr[$attr]) || (isset($globalAttrAr[$attr]) && strpos($attr, 'on') === 0)) {
                     $v =
                       str_replace(
@@ -1437,10 +1453,11 @@ class Htmlawed {
      * Tidy/beautify HTM by adding newline and other spaces (padding),
      * or compact by removing unnecessary spaces.
      *
-     * @param  string $t         HTM.
-     * @param  mixed  $format    -1 (compact) or string (type of padding).
-     * @param  string $parentEle Parent element of $t.
-     * @return mixed  Transformed attribute string (may be empty) or 0.
+     * @param string $t         HTM.
+     * @param mixed  $format    -1 (compact) or string (type of padding).
+     * @param string $parentEle Parent element of $t.
+     *
+     * @return mixed Transformed attribute string (may be empty) or 0.
      */
     public static function hl_tidy($t, $format, $parentEle)
     {
@@ -1552,8 +1569,9 @@ class Htmlawed {
      * Handle URL to convert to relative/absolute type,
      * block scheme, or add anti-spam text.
      *
-     * @param  mixed  $url  URL string, or array with URL value (if $attr is null).
-     * @param  mixed  $attr Attribute name string, or null (if $url is array).
+     * @param mixed $url  URL string, or array with URL value (if $attr is null).
+     * @param mixed $attr Attribute name string, or null (if $url is array).
+     *
      * @return string With URL after any conversion/obfuscation.
      */
     public static function hl_url($url, $attr = null)

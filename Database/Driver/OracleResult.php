@@ -5,6 +5,7 @@
  *  @author    SpryMedia
  *  @copyright 2014 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
 
@@ -15,6 +16,7 @@ use DataTables\Database\Result;
 
 /**
  * MySQL driver for DataTables Database Result class
+ *
  *  @internal
  */
 class OracleResult extends Result {
@@ -29,8 +31,6 @@ class OracleResult extends Result {
         $this->_pkey_val = $pkey_val;
     }
 
-
-
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Private properties
      */
@@ -39,8 +39,6 @@ class OracleResult extends Result {
     private $_dbh; // Result from oci_connect
     private $_rows = null;
     private $_pkey_val;
-
-
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Public methods
@@ -51,12 +49,10 @@ class OracleResult extends Result {
         return count($this->fetchAll());
     }
 
-
     public function fetch ($fetchType = \PDO::FETCH_ASSOC /* irrelevant for oci8 */)
     {
         return oci_fetch_assoc($this->_stmt);
     }
-
 
     public function fetchAll ($fetchType = \PDO::FETCH_ASSOC /* irrelevant for oci8 */)
     {
@@ -70,7 +66,6 @@ class OracleResult extends Result {
 
         return $this->_rows;
     }
-
 
     public function insertId ()
     {

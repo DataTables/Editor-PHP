@@ -7,6 +7,7 @@
  *  @author    SpryMedia
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
 
@@ -17,6 +18,7 @@ use DataTables\Database\Result;
 
 /**
  * Firebird driver for DataTables Database Result class
+ *
  *  @internal
  */
 class FirebirdResult extends Result {
@@ -31,8 +33,6 @@ class FirebirdResult extends Result {
         $this->_pkey = $pkey;
     }
 
-
-
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Private properties
      */
@@ -40,8 +40,6 @@ class FirebirdResult extends Result {
     private $_stmt;
     private $_dbh;
     private $_pkey;
-
-
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Public methods
@@ -52,18 +50,15 @@ class FirebirdResult extends Result {
         return count($this->fetchAll());
     }
 
-
     public function fetch ($fetchType = \PDO::FETCH_ASSOC)
     {
         return $this->_stmt->fetch($fetchType);
     }
 
-
     public function fetchAll ($fetchType = \PDO::FETCH_ASSOC)
     {
         return $this->_stmt->fetchAll($fetchType);
     }
-
 
     public function insertId ()
     {

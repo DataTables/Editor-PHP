@@ -7,6 +7,7 @@
  *  @author    SpryMedia
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
 
@@ -40,7 +41,6 @@ use DataTables\Editor\Field;
  *              Field::inst( 'name' )
  *          )
  *    ```
- *
  *  @example
  *    Single row join - here we join the parent table with a single row in
  *    the child table, without an intermediate link table. In this case the
@@ -62,6 +62,7 @@ class Join extends DataTables\Ext {
 
     /**
      * Join instance constructor.
+     *
      * @param string $table Table name to get the joined data from.
      * @param string $type  Work with a single result ('object') or an array of
      *                      results ('array') for the join.
@@ -71,7 +72,6 @@ class Join extends DataTables\Ext {
         $this->table($table);
         $this->type($type);
     }
-
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Private properties
@@ -87,7 +87,7 @@ class Join extends DataTables\Ext {
         "table" => null
     );
 
-    /**	@var array */
+    /** @var array */
     private $_leftJoin = array();
 
     /** @var string */
@@ -123,7 +123,6 @@ class Join extends DataTables\Ext {
     /** @var callable[] */
     private $_validators = array();
 
-
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Public methods
      */
@@ -143,7 +142,9 @@ class Join extends DataTables\Ext {
      * and you want to use `Join` to link back to the table (resolving a name for example).
      * This method allows that alias to be set. Fields can then use standard SQL notation
      * to select a field, for example `p2.publisher` or `publisher.publisher`.
-     * @param  string      $_ Table alias to use
+     *
+     * @param string $_ Table alias to use
+     *
      * @return string|self Table alias set (which is null by default), or self if used as
      *                     a setter.
      */
@@ -152,16 +153,18 @@ class Join extends DataTables\Ext {
         return $this->_getSet($this->_aliasParentTable, $_);
     }
 
-
     /**
      * Get / set field instances.
      *
      * The list of fields designates which columns in the table that will be read
      * from the joined table.
-     * @param  Field        $_... Instances of the {@see Field} class, given as a single
-     *                            instance of {@see Field}, an array of {@see Field} instances, or multiple
-     *                            {@see Field} instance parameters for the function.
+     *
+     * @param Field $_... Instances of the {@see Field} class, given as a single
+     *                    instance of {@see Field}, an array of {@see Field} instances, or multiple
+     *                    {@see Field} instance parameters for the function.
+     *
      * @return Field[]|self Array of fields, or self if used as a setter.
+     *
      * @see {@see Field} for field documentation.
      */
     public function field ($_ = null)
@@ -174,15 +177,17 @@ class Join extends DataTables\Ext {
         return $this->_getSet($this->_fields, $_, true);
     }
 
-
     /**
      * Get / set field instances.
      *
      * An alias of {@see field}, for convenience.
-     * @param  Field        $_... Instances of the {@see Field} class, given as a single
-     *                            instance of {@see Field}, an array of {@see Field} instances, or multiple
-     *                            {@see Field} instance parameters for the function.
+     *
+     * @param Field $_... Instances of the {@see Field} class, given as a single
+     *                    instance of {@see Field}, an array of {@see Field} instances, or multiple
+     *                    {@see Field} instance parameters for the function.
+     *
      * @return Field[]|self Array of fields, or self if used as a setter.
+     *
      * @see {@see Field} for field documentation.
      */
     public function fields ($_ = null)
@@ -195,19 +200,19 @@ class Join extends DataTables\Ext {
         return $this->_getSet($this->_fields, $_, true);
     }
 
-
     /**
      * Get / set get attribute.
      *
      * When set to false no read operations will occur on the join tables.
-     * @param  bool      $_ Value
+     *
+     * @param bool $_ Value
+     *
      * @return bool|self Name
      */
     public function get ($_ = null)
     {
         return $this->_getSet($this->_get, $_);
     }
-
 
     /**
      * Get / set join properties.
@@ -232,7 +237,9 @@ class Join extends DataTables\Ext {
      *                                in the child table, and the second element being the key's name in the
      *                                link table.
      * @param string          $table  Join table name, if using a link table
+     *
      * @returns Join This for chaining
+     *
      * @deprecated 1.5 Please use the {@see Join->link()} method rather than this
      *                                method now.
      */
@@ -248,14 +255,14 @@ class Join extends DataTables\Ext {
         return $this;
     }
 
-
     /**
      * Set up a left join operation for the Mjoined data
      *
-     * @param  string $table    to get the information from
-     * @param  string $field1   the first field to get the information from
-     * @param  string $operator the operation to perform on the two fields
-     * @param  string $field2   the second field to get the information from
+     * @param string $table    to get the information from
+     * @param string $field1   the first field to get the information from
+     * @param string $operator the operation to perform on the two fields
+     * @param string $field2   the second field to get the information from
+     *
      * @return self
      */
     public function leftJoin ($table, $field1, $operator, $field2)
@@ -269,7 +276,6 @@ class Join extends DataTables\Ext {
 
         return $this;
     }
-
 
     /**
      * Create a join link between two tables. The order of the fields does not
@@ -285,9 +291,11 @@ class Join extends DataTables\Ext {
      * Please refer to the Editor Mjoin documentation for further details:
      * https://editor.datatables.net/manual/php
      *
-     * @param  string     $field1 Table and field name
-     * @param  string     $field2 Table and field name
-     * @return Join       Self for chaining
+     * @param string $field1 Table and field name
+     * @param string $field2 Table and field name
+     *
+     * @return Join Self for chaining
+     *
      * @throws \Exception Link limitations
      */
     public function link ($field1, $field2)
@@ -306,12 +314,12 @@ class Join extends DataTables\Ext {
         return $this;
     }
 
-
     /**
      * Specify the property that the data will be sorted by.
      *
-     * @param  string $order SQL column name to order the data by
-     * @return Join   Self for chaining
+     * @param string $order SQL column name to order the data by
+     *
+     * @return Join Self for chaining
      */
     public function order ($_ = null)
     {
@@ -321,7 +329,6 @@ class Join extends DataTables\Ext {
         return $this->_getSet($this->_customOrder, $_);
     }
 
-
     /**
      * Get / set name.
      *
@@ -329,7 +336,9 @@ class Join extends DataTables\Ext {
      * 'getting' the data, and the HTTP property key (in a JSON style) when
      * 'setting' data. Typically the name of the db table will be used here,
      * but this method allows that to be overridden.
-     * @param  string      $_ Field name
+     *
+     * @param string $_ Field name
+     *
      * @return String|self Name
      */
     public function name ($_ = null)
@@ -337,21 +346,21 @@ class Join extends DataTables\Ext {
         return $this->_getSet($this->_name, $_);
     }
 
-
     /**
      * Get / set set attribute.
      *
      * When set to false no write operations will occur on the join tables.
      * This can be useful when you want to display information which is joined,
      * but want to only perform write operations on the parent table.
-     * @param  bool      $_ Value
+     *
+     * @param bool $_ Value
+     *
      * @return bool|self Name
      */
     public function set ($_ = null)
     {
         return $this->_getSet($this->_set, $_);
     }
-
 
     /**
      * Get / set join table name.
@@ -360,7 +369,9 @@ class Join extends DataTables\Ext {
      * as well. This is for convenience as the JSON output / HTTP input will
      * typically use the same name as the database name. If you want to set a
      * custom name, the {@see Join->name()} method must be called ***after*** this one.
-     * @param  string      $_ Name of the table to read the join data from
+     *
+     * @param string $_ Name of the table to read the join data from
+     *
      * @return String|self Name of the join table, or self if used as a setter.
      */
     public function table ($_ = null)
@@ -371,7 +382,6 @@ class Join extends DataTables\Ext {
         return $this->_getSet($this->_table, $_);
     }
 
-
     /**
      * Get / set the join type.
      *
@@ -379,8 +389,10 @@ class Join extends DataTables\Ext {
      * as an array (i.e. working with multiple possibly results for each record from
      * the parent table), or as an object (i.e. working which one and only one result
      * for each record form the parent table).
-     * @param  string      $_ Join type ('object') or an array of
-     *                        results ('array') for the join.
+     *
+     * @param string $_ Join type ('object') or an array of
+     *                  results ('array') for the join.
+     *
      * @return String|self Join type, or self if used as a setter.
      */
     public function type ($_ = null)
@@ -388,14 +400,14 @@ class Join extends DataTables\Ext {
         return $this->_getSet($this->_type, $_);
     }
 
-
     /**
      * Set a validator for the array of data (not on a field basis)
      *
-     * @param  string   $fieldName Name of the field that any error should be shown
-     *                             against on the client-side
-     * @param  callable $fn        Callback function for validation
-     * @return self     Chainable
+     * @param string   $fieldName Name of the field that any error should be shown
+     *                            against on the client-side
+     * @param callable $fn        Callback function for validation
+     *
+     * @return self Chainable
      */
     public function validator ($fieldName, $fn)
     {
@@ -407,7 +419,6 @@ class Join extends DataTables\Ext {
         return $this;
     }
 
-
     /**
      * Where condition to add to the query used to get data from the database.
      * Note that this is applied to the child table.
@@ -417,10 +428,11 @@ class Join extends DataTables\Ext {
      * * Simple case: `where( field, value, operator )`
      * * Complex: `where( fn )`
      *
-     * @param  string|callable $key   Single field name or a closure function
-     * @param  string|string[] $value Single field value, or an array of values.
-     * @param  string          $op    Condition operator: <, >, = etc
-     * @return string[]|self   Where condition array, or self if used as a setter.
+     * @param string|callable $key   Single field name or a closure function
+     * @param string|string[] $value Single field value, or an array of values.
+     * @param string          $op    Condition operator: <, >, = etc
+     *
+     * @return string[]|self Where condition array, or self if used as a setter.
      */
     public function where ($key = null, $value = null, $op = '=')
     {
@@ -442,7 +454,6 @@ class Join extends DataTables\Ext {
         return $this;
     }
 
-
     /**
      * Get / set if the WHERE conditions should be included in the create and
      * edit actions.
@@ -453,7 +464,8 @@ class Join extends DataTables\Ext {
      *
      * This is default false (i.e. they are not included).
      *
-     * @param  bool $_ Include (`true`), or not (`false`)
+     * @param bool $_ Include (`true`), or not (`false`)
+     *
      * @return bool Current value
      */
     public function whereSet ($_ = null)
@@ -461,18 +473,18 @@ class Join extends DataTables\Ext {
         return $this->_getSet($this->_whereSet, $_);
     }
 
-
-
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Internal methods
      */
 
     /**
      * Get data
+     *
      * @param Editor   $editor  Host Editor instance
      * @param string[] $data    Data from the parent table's get and were we need
      *                          to add out output.
      * @param array    $options options array for fields
+     *
      * @internal
      */
     public function data($editor, &$data, &$options)
@@ -644,12 +656,13 @@ class Join extends DataTables\Ext {
         }
     }
 
-
     /**
      * Create a row.
+     *
      * @param Editor $editor   Host Editor instance
      * @param int    $parentId Parent row's primary key value
      * @param array  $data     Data to be set for the join
+     *
      * @internal
      */
     public function create ($editor, $parentId, $data)
@@ -677,12 +690,13 @@ class Join extends DataTables\Ext {
         }
     }
 
-
     /**
      * Update a row.
+     *
      * @param Editor   $editor   Host Editor instance
      * @param int      $parentId Parent row's primary key value
      * @param string[] $data     Data to be set for the join
+     *
      * @internal
      */
     public function update ($editor, $parentId, $data)
@@ -709,11 +723,12 @@ class Join extends DataTables\Ext {
         }
     }
 
-
     /**
      * Delete rows
+     *
      * @param Editor $editor Host Editor instance
      * @param int[]  $ids    Parent row IDs to delete
+     *
      * @internal
      */
     public function remove ($editor, $ids)
@@ -746,7 +761,6 @@ class Join extends DataTables\Ext {
         }
     }
 
-
     /**
      * Validate input data
      *
@@ -754,6 +768,7 @@ class Join extends DataTables\Ext {
      * @param Editor   $editor Editor instance
      * @param string[] $data   Data to validate
      * @param string   $action `create` or `edit`
+     *
      * @internal
      */
     public function validate (&$errors, $editor, $data, $action)
@@ -791,15 +806,15 @@ class Join extends DataTables\Ext {
         }
     }
 
-
-
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Private methods
      */
 
     /**
      * Add local WHERE condition to query
+     *
      * @param \DataTables\Database\Query $query Query instance to apply the WHERE conditions to
+     *
      * @private
      */
     private function _apply_where ($query)
@@ -818,12 +833,13 @@ class Join extends DataTables\Ext {
         }
     }
 
-
     /**
      * Create a row.
+     *
      * @param \DataTables\Database $db       Database reference to use
      * @param int                  $parentId Parent row's primary key value
      * @param string[]             $data     Data to be set for the join
+     *
      * @private
      */
     private function _insert($db, $parentId, $data)
@@ -866,11 +882,11 @@ class Join extends DataTables\Ext {
         }
     }
 
-
     /**
      * Prepare the instance to be run.
      *
      * @param Editor $editor Editor instance
+     *
      * @private
      */
     private function _prep ($editor)
@@ -934,12 +950,13 @@ class Join extends DataTables\Ext {
         }
     }
 
-
     /**
      * Update a row.
+     *
      * @param \DataTables\Database $db       Database reference to use
      * @param int                  $parentId Parent row's primary key value
      * @param string[]             $data     Data to be set for the join
+     *
      * @private
      */
     private function _update_row ($db, $parentId, $data)
@@ -989,12 +1006,14 @@ class Join extends DataTables\Ext {
         }
     }
 
-
     /**
      * Create an SQL string from the fields that this instance knows about for
      * using in queries
+     *
      * @param string $direction Direction: 'get' or 'set'.
+     *
      * @returns array Fields to include
+     *
      * @private
      */
     private function _fields ($direction)
@@ -1006,7 +1025,8 @@ class Join extends DataTables\Ext {
 
             if ($field->apply($direction, null)) {
                 if (strpos($field->dbField(), ".") === false) {
-                    $fields[] = $this->_table . '.' . $field->dbField() . " as " . $field->dbField();;
+                    $fields[] = $this->_table . '.' . $field->dbField() . " as " . $field->dbField();
+                    ;
                 }
                 else {
                     $fields[] = $field->dbField(); // ." as ".$field->dbField();
@@ -1017,7 +1037,6 @@ class Join extends DataTables\Ext {
         return $fields;
     }
 
-
     /**
      * Validate input data
      *
@@ -1026,6 +1045,7 @@ class Join extends DataTables\Ext {
      * @param string[] $data   Data to validate
      * @param string   $prefix Field error prefix for client-side to show the
      *                         error message on the appropriate field
+     *
      * @internal
      */
     private function _validateFields (&$errors, $editor, $data, $prefix)

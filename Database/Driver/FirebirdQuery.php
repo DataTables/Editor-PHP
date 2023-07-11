@@ -7,6 +7,7 @@
  *  @author    SpryMedia
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
 
@@ -18,6 +19,7 @@ use DataTables\Database\Driver\FirebirdResult;
 
 /**
  * Firebird driver for DataTables Database Query class
+ *
  *  @internal
  */
 class FirebirdQuery extends Query {
@@ -83,8 +85,6 @@ class FirebirdQuery extends Query {
         return $pdo;
     }
 
-
-
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Protected methods
      */
@@ -115,7 +115,6 @@ class FirebirdQuery extends Query {
             );
         }
     }
-
 
     protected function _exec()
     {

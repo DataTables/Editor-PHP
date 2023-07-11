@@ -7,9 +7,9 @@
  *  @author    SpryMedia
  *  @copyright SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
-
 define("DATATABLES", true);
 
 //
@@ -24,7 +24,6 @@ if (version_compare(PHP_VERSION, "5.3.0", '<')) {
     ));
     exit(1);
 }
-
 
 //
 // Load the DataTables bootstrap core file and let it register the required

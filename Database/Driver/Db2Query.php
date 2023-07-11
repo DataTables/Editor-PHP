@@ -11,6 +11,7 @@ use DataTables\Database\Driver\Db2Result;
 
 /**
  * DB2 driver for DataTables Database Query class
+ *
  *  @internal
  */
 class Db2Query extends Query {
@@ -82,7 +83,6 @@ class Db2Query extends Query {
         // no op
     }
 
-
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Protected methods
      */
@@ -98,35 +98,35 @@ class Db2Query extends Query {
         $bindings = $this->_bindings;
 
         $paramSql = preg_replace('/(:[a-zA-Z\-_0-9]*)/', '?', $this->_sql);
-        //echo $paramSql."\n";
+        // echo $paramSql."\n";
         $this->_stmt = db2_prepare($resource, $paramSql);
         $stmt = $this->_stmt;
 
-        //echo $this->_sql."\n";
+        // echo $this->_sql."\n";
 
         preg_match_all('/(:[a-zA-Z\-_0-9]*)/', $this->_sql, $matches);
 
-        //print_r( $matches );
-        //print_r( $bindings);
+        // print_r( $matches );
+        // print_r( $bindings);
 
-        //$allanTest = 65;
-        //db2_bind_param( $stmt, 1, 'allanTest', DB2_PARAM_IN );
+        // $allanTest = 65;
+        // db2_bind_param( $stmt, 1, 'allanTest', DB2_PARAM_IN );
 
         for ($i = 0, $ien = count($matches[0]); $i < $ien; $i++) {
             for ($j = 0, $jen = count($bindings); $j < $jen; $j++) {
                 if ($bindings[$j]['name'] === $matches[0][$i]) {
                     $name = str_replace(':', '', $matches[0][$i]);
                     $$name = $bindings[$j]['value'];
-                    //$_GLOBALS[ $name ] = $bindings[$j]['value'];
+                    // $_GLOBALS[ $name ] = $bindings[$j]['value'];
 
-                    //echo "bind $name as ".$$name."\n";
+                    // echo "bind $name as ".$$name."\n";
 
                     db2_bind_param($stmt, $i + 1, $name, DB2_PARAM_IN);
                 }
             }
         }
 
-        //print_r( get_defined_vars() );
+        // print_r( get_defined_vars() );
 
         $res = db2_execute($stmt);
 

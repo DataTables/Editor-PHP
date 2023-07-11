@@ -7,6 +7,7 @@
  *  @author    SpryMedia
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
+ *
  *  @link      http://editor.datatables.net
  */
 
@@ -24,7 +25,9 @@ class Ext {
      * and then chained - which otherwise isn't available until PHP 5.4.
      * If using PHP 5.4 or later, simply create a 'new' instance of the
      * target class and chain methods as normal.
+     *
      * @return \DataTables\Editor|\DataTables\Editor\Field|\DataTables\Editor\Join|\DataTables\Editor\Upload Instantiated class
+     *
      * @static
      */
     public static function instantiate ()
@@ -43,7 +46,9 @@ class Ext {
      *
      * This method performs exactly the same actions as the 'instantiate'
      * static method, but is simply shorter and easier to type!
+     *
      * @return \DataTables\Editor|\DataTables\Editor\Field|\DataTables\Editor\Join|\DataTables\Editor\Upload class
+     *
      * @static
      */
     public static function inst ()
@@ -61,12 +66,14 @@ class Ext {
      *
      * This getter / setter method makes building getter / setting methods
      * easier, by abstracting everything to a single function call.
-     * @param  mixed      &$prop The property to set
-     * @param  mixed      $val   The value to set - if given as null, then we assume
-     *                           that the function is being used as a getter.
-     * @param  bool       $array Treat the target property as an array or not
-     *                           (default false). If used as an array, then values passed in are added
-     *                           to the $prop array.
+     *
+     * @param mixed &$prop The property to set
+     * @param mixed $val   The value to set - if given as null, then we assume
+     *                     that the function is being used as a getter.
+     * @param bool  $array Treat the target property as an array or not
+     *                     (default false). If used as an array, then values passed in are added
+     *                     to the $prop array.
+     *
      * @return self|mixed Class instance if setting (allowing chaining), or
      *                    the value requested if getting.
      */
@@ -95,9 +102,12 @@ class Ext {
     /**
      * Determine if a property is available in a data set (allowing `null` to be
      * a valid value)
-     * @param  string $name Javascript dotted object name to write to
-     * @param  array  $data Data source array to read from
-     * @return bool   true if present, false otherwise
+     *
+     * @param string $name Javascript dotted object name to write to
+     * @param array  $data Data source array to read from
+     *
+     * @return bool true if present, false otherwise
+     *
      * @private
      */
     protected function _propExists ($name, $data)
@@ -132,9 +142,11 @@ class Ext {
      * the same support, matching DataTables' ability to read nested JSON
      * data objects.
      *
-     * @param  string $name Javascript dotted object name to write to
-     * @param  array  $data Data source array to read from
-     * @return mixed  The read value, or null if no value found.
+     * @param string $name Javascript dotted object name to write to
+     * @param array  $data Data source array to read from
+     *
+     * @return mixed The read value, or null if no value found.
+     *
      * @private
      */
     protected function _readProp ($name, $data)
@@ -175,10 +187,12 @@ class Ext {
      * implement implement quite such a complex structure (no array / function
      * support).
      *
-     * @param  array      &$out  Array to write the data to
-     * @param  string     $name  Javascript dotted object name to write to
-     * @param  mixed      $value Value to write
+     * @param array  &$out  Array to write the data to
+     * @param string $name  Javascript dotted object name to write to
+     * @param mixed  $value Value to write
+     *
      * @throws \Exception Information about duplicate properties
+     *
      * @private
      */
     protected function _writeProp(&$out, $name, $value)

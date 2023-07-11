@@ -10,7 +10,6 @@ if (!defined('DATATABLES')) {
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Database user / pass
  */
@@ -24,7 +23,6 @@ $sql_details = array(
     "dsn" => "",          // PHP DSN extra information. Set as `charset=utf8mb4` if you are using MySQL
     "pdoAttr" => array()   // PHP PDO attributes array. See the PHP documentation for all options
 );
-
 
 // This is included for the development and deploy environment used on the DataTables
 // server. You can delete this block - it just includes my own user/pass without making
