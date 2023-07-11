@@ -29,36 +29,36 @@ namespace DataTables\Database;
  * same for all database types.
  */
 abstract class Result {
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Public methods
-	 */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     * Public methods
+     */
 
-	/**
-	 * Count the number of rows in the result set.
-	 *  @return int
-	 */
-	abstract public function count ();
-
-
-	/**
-	 * Get the next row in a result set
-	 *  @param int $fetchType PDO row fetch style - PDO::FETCH_ASSOC is the default
-	 *  @return array
-	 */
-	abstract public function fetch ( $fetchType=\PDO::FETCH_ASSOC );
+    /**
+     * Count the number of rows in the result set.
+     *  @return int
+     */
+    abstract public function count ();
 
 
-	/**
-	 * Get all rows in the result set
-	 *  @param int $fetchType PDO row fetch style - PDO::FETCH_ASSOC is the default
-	 *  @return array
-	 */
-	abstract public function fetchAll ( $fetchType=\PDO::FETCH_ASSOC );
+    /**
+     * Get the next row in a result set
+     *  @param int $fetchType PDO row fetch style - PDO::FETCH_ASSOC is the default
+     *  @return array
+     */
+    abstract public function fetch ( $fetchType=\PDO::FETCH_ASSOC );
 
 
-	/**
-	 * After an INSERT query, get the ID that was inserted.
-	 *  @return int
-	 */
-	abstract public function insertId ();
+    /**
+     * Get all rows in the result set
+     *  @param int $fetchType PDO row fetch style - PDO::FETCH_ASSOC is the default
+     *  @return array
+     */
+    abstract public function fetchAll ( $fetchType=\PDO::FETCH_ASSOC );
+
+
+    /**
+     * After an INSERT query, get the ID that was inserted.
+     *  @return int
+     */
+    abstract public function insertId ();
 };

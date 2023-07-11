@@ -19,61 +19,61 @@ use DataTables\Database\Result;
  *  @internal
  */
 class Db2Result extends Result {
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Constructor
-	 */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     * Constructor
+     */
 
-	function __construct( $dbh, $stmt )
-	{
-		$this->_dbh = $dbh;
-		$this->_stmt = $stmt;
-	}
-
-
-
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Private properties
-	 */
-
-	private $_stmt;
-	private $_dbh;
-	private $_allRows = null;
+    function __construct( $dbh, $stmt )
+    {
+        $this->_dbh = $dbh;
+        $this->_stmt = $stmt;
+    }
 
 
 
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Public methods
-	 */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     * Private properties
+     */
 
-	public function count ()
-	{
-		$all = $this->_fetchAll();
-		return count($all);
-	}
+    private $_stmt;
+    private $_dbh;
+    private $_allRows = null;
 
 
-	public function fetch ( $fetchType=\PDO::FETCH_ASSOC )
-	{
-		return db2_fetch_assoc( $this->_stmt );
-	}
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     * Public methods
+     */
+
+    public function count ()
+    {
+        $all = $this->_fetchAll();
+        return count($all);
+    }
 
 
-	public function fetchAll ( $fetchType=\PDO::FETCH_ASSOC )
-	{
-		$all = $this->_fetchAll();
-		return $all;
-	}
+    public function fetch ( $fetchType=\PDO::FETCH_ASSOC )
+    {
+        return db2_fetch_assoc( $this->_stmt );
+    }
 
-	public function insertId ()
-	{
-		return db2_last_insert_id( $this->_dbh );
-	}
 
-	private function _fetchAll () {
-		$a = array();
-		while ( $row = db2_fetch_assoc( $this->_stmt ) ) {
-			$a[] = $row;
-		}
-		return $a;
-	}
+    public function fetchAll ( $fetchType=\PDO::FETCH_ASSOC )
+    {
+        $all = $this->_fetchAll();
+        return $all;
+    }
+
+    public function insertId ()
+    {
+        return db2_last_insert_id( $this->_dbh );
+    }
+
+    private function _fetchAll () {
+        $a = array();
+        while ( $row = db2_fetch_assoc( $this->_stmt ) ) {
+            $a[] = $row;
+        }
+        return $a;
+    }
 }

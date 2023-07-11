@@ -20,55 +20,55 @@ use DataTables\Database\Result;
  *  @internal
  */
 class FirebirdResult extends Result {
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Constructor
-	 */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     * Constructor
+     */
 
-	function __construct( $dbh, $stmt, $pkey )
-	{
-		$this->_dbh = $dbh;
-		$this->_stmt = $stmt;
-		$this->_pkey = $pkey;
-	}
-
-
-
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Private properties
-	 */
-
-	private $_stmt;
-	private $_dbh;
-	private $_pkey;
+    function __construct( $dbh, $stmt, $pkey )
+    {
+        $this->_dbh = $dbh;
+        $this->_stmt = $stmt;
+        $this->_pkey = $pkey;
+    }
 
 
 
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Public methods
-	 */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     * Private properties
+     */
 
-	public function count ()
-	{
-		return count($this->fetchAll());
-	}
-
-
-	public function fetch ( $fetchType=\PDO::FETCH_ASSOC )
-	{
-		return $this->_stmt->fetch( $fetchType );
-	}
+    private $_stmt;
+    private $_dbh;
+    private $_pkey;
 
 
-	public function fetchAll ( $fetchType=\PDO::FETCH_ASSOC )
-	{
-		return $this->_stmt->fetchAll( $fetchType );
-	}
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     * Public methods
+     */
+
+    public function count ()
+    {
+        return count($this->fetchAll());
+    }
 
 
-	public function insertId ()
-	{
-		// Only useful after an insert of course...
-		$rows = $this->_stmt->fetchAll();
-		return $rows[0][$this->_pkey];
-	}
+    public function fetch ( $fetchType=\PDO::FETCH_ASSOC )
+    {
+        return $this->_stmt->fetch( $fetchType );
+    }
+
+
+    public function fetchAll ( $fetchType=\PDO::FETCH_ASSOC )
+    {
+        return $this->_stmt->fetchAll( $fetchType );
+    }
+
+
+    public function insertId ()
+    {
+        // Only useful after an insert of course...
+        $rows = $this->_stmt->fetchAll();
+        return $rows[0][$this->_pkey];
+    }
 }

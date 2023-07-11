@@ -20,51 +20,51 @@ use DataTables\Database\Result;
  *  @internal
  */
 class MysqlResult extends Result {
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Constructor
-	 */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     * Constructor
+     */
 
-	function __construct( $dbh, $stmt )
-	{
-		$this->_dbh = $dbh;
-		$this->_stmt = $stmt;
-	}
-
-
-
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Private properties
-	 */
-
-	private $_stmt;
-	private $_dbh;
+    function __construct( $dbh, $stmt )
+    {
+        $this->_dbh = $dbh;
+        $this->_stmt = $stmt;
+    }
 
 
 
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Public methods
-	 */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     * Private properties
+     */
 
-	public function count ()
-	{
-		return count($this->fetchAll());
-	}
+    private $_stmt;
+    private $_dbh;
 
 
-	public function fetch ( $fetchType=\PDO::FETCH_ASSOC )
-	{
-		return $this->_stmt->fetch( $fetchType );
-	}
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     * Public methods
+     */
+
+    public function count ()
+    {
+        return count($this->fetchAll());
+    }
 
 
-	public function fetchAll ( $fetchType=\PDO::FETCH_ASSOC )
-	{
-		return $this->_stmt->fetchAll( $fetchType );
-	}
+    public function fetch ( $fetchType=\PDO::FETCH_ASSOC )
+    {
+        return $this->_stmt->fetch( $fetchType );
+    }
 
 
-	public function insertId ()
-	{
-		return $this->_dbh->lastInsertId();
-	}
+    public function fetchAll ( $fetchType=\PDO::FETCH_ASSOC )
+    {
+        return $this->_stmt->fetchAll( $fetchType );
+    }
+
+
+    public function insertId ()
+    {
+        return $this->_dbh->lastInsertId();
+    }
 }

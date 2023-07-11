@@ -22,8 +22,8 @@ class ValidateOptions extends DataTables\Ext {
     private $_message = 'Input not valid';
     private $_optional = true;
 
-	function __construct( $opts=null )
-	{
+    function __construct( $opts=null )
+    {
         if ( $opts ) {
             if ( isset( $opts['empty'] ) ) {
                 $this->allowEmpty( $opts['empty'] );
