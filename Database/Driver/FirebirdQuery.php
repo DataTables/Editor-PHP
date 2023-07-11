@@ -26,7 +26,7 @@ class FirebirdQuery extends Query {
 	 */
 	private $_stmt;
 
-	protected $_identifier_limiter = ['"', '"'];
+	protected $_identifier_limiter = array('"', '"');
 
 	protected $_field_quote = '"';
 
