@@ -343,7 +343,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @param string $_ Field name
 	 *
-	 * @return String|self Name
+	 * @return string|self Name
 	 */
 	public function name ($_ = null)
 	{
@@ -376,7 +376,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @param string $_ Name of the table to read the join data from
 	 *
-	 * @return String|self Name of the join table, or self if used as a setter.
+	 * @return string|self Name of the join table, or self if used as a setter.
 	 */
 	public function table ($_ = null)
 	{
@@ -398,7 +398,7 @@ class Join extends DataTables\Ext
 	 * @param string $_ Join type ('object') or an array of
 	 *                  results ('array') for the join.
 	 *
-	 * @return String|self Join type, or self if used as a setter.
+	 * @return string|self Join type, or self if used as a setter.
 	 */
 	public function type ($_ = null)
 	{

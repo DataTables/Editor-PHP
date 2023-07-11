@@ -615,7 +615,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @param \DataTables\Database $db Database instance
 	 *
-	 * @return Array Array of value / label options for the list
+	 * @return array Array of value / label options for the list
 	 *
 	 * @internal
 	 */

@@ -481,8 +481,7 @@ class Htmlawed
 							-1,
 							PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
 						) as $m) {
-						echo
-							substr($m, 0, 2) == "\x01\x02"
+						echo substr($m, 0, 2) == "\x01\x02"
 							? $m
 							: ($act > 4
 							   ? preg_replace('`\S`', '', $m)
@@ -689,8 +688,7 @@ class Htmlawed
 						-1,
 						PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
 					) as $m) {
-					echo
-						substr($m, 0, 2) == "\x01\x02"
+					echo substr($m, 0, 2) == "\x01\x02"
 						? $m
 						: ($act > 4
 						   ? preg_replace('`\S`', '', $m)

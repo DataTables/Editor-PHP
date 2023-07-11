@@ -82,7 +82,6 @@ return $config
 		// TODO
 		'array_syntax' => false,
 		'class_attributes_separation' => false,
-		'class_definition' => false,
 		'constant_case' => false,
 		'dir_constant' => false,
 		'explicit_indirect_variable' => false,
@@ -108,7 +107,6 @@ return $config
 		'phpdoc_no_package' => false,
 		'phpdoc_scalar' => false,
 		'phpdoc_summary' => false,
-		'phpdoc_types' => false,
 		'phpdoc_types_order' => false,
 		'ternary_to_null_coalescing' => false,
 		'trailing_comma_in_multiline' => false,
