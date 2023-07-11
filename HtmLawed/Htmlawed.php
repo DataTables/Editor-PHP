@@ -17,7 +17,7 @@
  *
  * @license    LGPL 3 and GPL 2+ dual license
  *
- * @link       https://bioinformatics.org/phplabware/internal_utilities/htmLawed
+ * @see       https://bioinformatics.org/phplabware/internal_utilities/htmLawed
  *
  * @package    htmLawed
  *

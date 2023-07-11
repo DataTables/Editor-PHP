@@ -93,7 +93,6 @@ return $config
 		'no_empty_statement' => false,
 		'no_null_property_initialization' => false,
 		'phpdoc_annotation_without_dot' => false,
-		'phpdoc_no_alias_tag' => false,
 		'phpdoc_no_package' => false,
 		'phpdoc_summary' => false,
 		'phpdoc_types_order' => false,
