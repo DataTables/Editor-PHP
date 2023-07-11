@@ -61,17 +61,6 @@ return $config
 		'array_syntax' => array('syntax' => 'long'), // needs PHP 5.4+
 		'ternary_to_null_coalescing' => false, // needs PHP 7.0+
 		'single_line_comment_style' => false,
-
-		// enable some safe rules from @PHP71Migration:risky
-		'pow_to_exponentiation' => true,
-		'modernize_types_casting' => true,
-		'dir_constant' => true,
-		'combine_nested_dirname' => true,
-		'non_printable_character' => array(
-			'use_escape_sequences_in_strings' => true,
-		),
-
-		// TODO
 		'phpdoc_annotation_without_dot' => false,
 	))
 	->setFinder($finder)
