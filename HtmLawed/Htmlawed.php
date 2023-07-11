@@ -854,7 +854,7 @@ class Htmlawed
 			  . ';';
 		}
 		if (
-			($n = ctype_digit($t = substr($t, 1)) ? intval($t) : hexdec(substr($t, 1))) < 9
+			($n = ctype_digit($t = substr($t, 1)) ? (int) $t : hexdec(substr($t, 1))) < 9
 			|| ($n > 13 && $n < 32)
 			|| $n == 11
 			|| $n == 12
@@ -1272,7 +1272,7 @@ class Htmlawed
 				// .. URLs and CSS expressions in style attribute.
 
 				if ($attr == 'style' && !$C['style_pass']) {
-					if (false !== strpos($v, '&#')) { // Change any entity to character
+					if (strpos($v, '&#') !== false) { // Change any entity to character
 						static $entityAr = array('&#32;' => ' ', '&#x20;' => ' ', '&#58;' => ':', '&#x3a;' => ':', '&#34;' => '"', '&#x22;' => '"', '&#40;' => '(', '&#x28;' => '(', '&#41;' => ')', '&#x29;' => ')', '&#42;' => '*', '&#x2a;' => '*', '&#47;' => '/', '&#x2f;' => '/', '&#92;' => '\\', '&#x5c;' => '\\', '&#101;' => 'e', '&#69;' => 'e', '&#x45;' => 'e', '&#x65;' => 'e', '&#105;' => 'i', '&#73;' => 'i', '&#x49;' => 'i', '&#x69;' => 'i', '&#108;' => 'l', '&#76;' => 'l', '&#x4c;' => 'l', '&#x6c;' => 'l', '&#110;' => 'n', '&#78;' => 'n', '&#x4e;' => 'n', '&#x6e;' => 'n', '&#111;' => 'o', '&#79;' => 'o', '&#x4f;' => 'o', '&#x6f;' => 'o', '&#112;' => 'p', '&#80;' => 'p', '&#x50;' => 'p', '&#x70;' => 'p', '&#114;' => 'r', '&#82;' => 'r', '&#x52;' => 'r', '&#x72;' => 'r', '&#115;' => 's', '&#83;' => 's', '&#x53;' => 's', '&#x73;' => 's', '&#117;' => 'u', '&#85;' => 'u', '&#x55;' => 'u', '&#x75;' => 'u', '&#120;' => 'x', '&#88;' => 'x', '&#x58;' => 'x', '&#x78;' => 'x', '&#39;' => "'", '&#x27;' => "'");
 						$v = strtr($v, $entityAr);
 					}
@@ -1550,9 +1550,9 @@ class Htmlawed
 		$padChar = strpos(" $format", 't') ? "\t" : ' ';
 		$padStr =
 		  preg_match('`\d`', $format, $m)
-		  ? str_repeat($padChar, intval($m[0]))
+		  ? str_repeat($padChar, (int) $m[0])
 		  : str_repeat($padChar, $padChar == "\t" ? 1 : 2);
-		$leadN = preg_match('`[ts]([1-9])`', $format, $m) ? intval($m[1]) : 0;
+		$leadN = preg_match('`[ts]([1-9])`', $format, $m) ? (int) ($m[1]) : 0;
 
 		// Group elements by line-break requirement.
 

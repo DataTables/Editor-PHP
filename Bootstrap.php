@@ -37,7 +37,7 @@ spl_autoload_register(function ($class) {
 		implode('/', $a) . '/' :
 		'';
 
-	require(dirname(__FILE__) . '/' . $path . $className . '.php');
+	require dirname(__FILE__) . '/' . $path . $className . '.php';
 });
 
 //
@@ -45,7 +45,7 @@ spl_autoload_register(function ($class) {
 //   Load the database connection configuration options
 //
 if (!isset($sql_details)) {
-	include(dirname(__FILE__) . '/config.php');
+	include dirname(__FILE__) . '/config.php';
 }
 
 //

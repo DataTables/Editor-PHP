@@ -80,25 +80,18 @@ return $config
 		),
 
 		// TODO
-		'class_attributes_separation' => false,
 		'dir_constant' => false,
 		'explicit_indirect_variable' => false,
 		'explicit_string_variable' => false,
 		'function_declaration' => false,
 		'general_phpdoc_annotation_remove' => false,
-		'include' => false,
 		'increment_style' => false,
-		'method_chaining_indentation' => false,
-		'modernize_types_casting' => false,
-		'no_empty_statement' => false,
 		'no_null_property_initialization' => false,
 		'phpdoc_annotation_without_dot' => false,
 		'phpdoc_no_package' => false,
 		'phpdoc_summary' => false,
-		'phpdoc_types_order' => false,
 		'ternary_to_null_coalescing' => false,
 		'trailing_comma_in_multiline' => false,
-		'yoda_style' => false,
 	))
 	->setFinder($finder)
 	->setCacheFile(sys_get_temp_dir() . '/php-cs-fixer.' . md5(__DIR__) . '.cache');

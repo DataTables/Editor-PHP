@@ -641,7 +641,7 @@ class Field extends DataTables\Ext
 	 * @param Editor\Field[] $fields   All of the fields
 	 * @param array          $leftJoin Info for a leftJoin if required
 	 *
-	 * @return array | bool
+	 * @return array|bool
 	 *
 	 * @internal
 	 */
@@ -668,7 +668,7 @@ class Field extends DataTables\Ext
 	 * @param DataTables\Field[]   $fields   All of the fields
 	 * @param any                  $leftJoin Info for a leftJoin if required
 	 *
-	 * @return Promise<IOption[]> | bool
+	 * @return Promise<IOption[]>|bool
 	 *
 	 * @internal
 	 */

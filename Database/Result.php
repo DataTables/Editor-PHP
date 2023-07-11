@@ -66,4 +66,4 @@ abstract class Result
 	 * @return int
 	 */
 	abstract public function insertId ();
-};
+}

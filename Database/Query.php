@@ -867,8 +867,8 @@ abstract class Query
 	protected function _build_limit()
 	{
 		$out = '';
-		$limit = intval($this->_limit);
-		$offset = intval($this->_offset);
+		$limit = (int) $this->_limit;
+		$offset = (int) $this->_offset;
 
 		if ($limit) {
 			$out .= ' LIMIT ' . $limit;
@@ -1329,10 +1329,10 @@ abstract class Query
 	 */
 	private function _is_assoc(array $arr)
 	{
-		if (array() === $arr) {
+		if ($arr === array()) {
 			return false;
 		}
 
 		return array_keys($arr) !== range(0, count($arr) - 1);
 	}
-};
+}

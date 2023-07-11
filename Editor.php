@@ -1650,7 +1650,7 @@ class Editor extends Ext
 		$ssp_full_count = $ssp_full_count->exec()->fetch();
 
 		return array(
-			'draw' => intval($http['draw']),
+			'draw' => (int) $http['draw'],
 			'recordsTotal' => $ssp_full_count['cnt'],
 			'recordsFiltered' => $ssp_set_count['cnt']
 		);
@@ -1863,25 +1863,25 @@ class Editor extends Ext
 						if ($data['logic'] === 'AND' || $first) {
 							$query->where_group(function ($q) use ($crit, $val1, $val2) {
 								$q
-									->where($crit['origData'], is_numeric($val1) ? intval($val1) : $val1, '>=')
-									->where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '<=');
+									->where($crit['origData'], is_numeric($val1) ? (int) $val1 : $val1, '>=')
+									->where($crit['origData'], is_numeric($val2) ? (int) $val2 : $val2, '<=');
 							});
 							$first = false;
 						} else {
 							$query
-								->or_where($crit['origData'], is_numeric($val1) ? intval($val1) : $val1, '>=')
-								->where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '<=');
+								->or_where($crit['origData'], is_numeric($val1) ? (int) $val1 : $val1, '>=')
+								->where($crit['origData'], is_numeric($val2) ? (int) $val2 : $val2, '<=');
 						}
 
 						break;
 					case '!between':
 						if ($data['logic'] === 'AND' || $first) {
 							$query->where_group(function ($q) use ($crit, $val1, $val2) {
-								$q->where($crit['origData'], is_numeric($val1) ? intval($val1) : $val1, '<')->or_where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '>');
+								$q->where($crit['origData'], is_numeric($val1) ? (int) $val1 : $val1, '<')->or_where($crit['origData'], is_numeric($val2) ? (int) $val2 : $val2, '>');
 							});
 							$first = false;
 						} else {
-							$query->or_where($crit['origData'], is_numeric($val1) ? intval($val1) : $val1, '<')->or_where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '>');
+							$query->or_where($crit['origData'], is_numeric($val1) ? (int) $val1 : $val1, '<')->or_where($crit['origData'], is_numeric($val2) ? (int) $val2 : $val2, '>');
 						}
 
 						break;

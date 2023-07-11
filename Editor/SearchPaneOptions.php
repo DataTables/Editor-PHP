@@ -93,7 +93,7 @@ class SearchPaneOptions extends DataTables\Ext
 	/**
 	 * Get / set the column(s) to use as the label value of the options
 	 *
-	 * @param null|string|string[] $_ null to get the current value, string or
+	 * @param string|string[]|null $_ null to get the current value, string or
 	 *                                array to get.
 	 *
 	 * @return Options|string[] Self if setting for chaining, array of values if
@@ -117,7 +117,7 @@ class SearchPaneOptions extends DataTables\Ext
 	 * provided the ordering will be based on the rendered output, either
 	 * numerically or alphabetically based on the data returned by the renderer.
 	 *
-	 * @param null|string $_ String to set, null to get current value
+	 * @param string|null $_ String to set, null to get current value
 	 *
 	 * @return Options|string Self if setting for chaining, string if getting.
 	 */
@@ -131,7 +131,7 @@ class SearchPaneOptions extends DataTables\Ext
 	 * multiple database columns into a single string that is shown as the label
 	 * to the end user in the list of options.
 	 *
-	 * @param null|callable $_ Function to set, null to get current value
+	 * @param callable|null $_ Function to set, null to get current value
 	 *
 	 * @return Options|callable Self if setting for chaining, callable if
 	 *                          getting.
@@ -145,7 +145,7 @@ class SearchPaneOptions extends DataTables\Ext
 	 * Get / set the database table from which to gather the options for the
 	 * list.
 	 *
-	 * @param null|string $_ String to set, null to get current value
+	 * @param string|null $_ String to set, null to get current value
 	 *
 	 * @return Options|string Self if setting for chaining, string if getting.
 	 */
@@ -158,7 +158,7 @@ class SearchPaneOptions extends DataTables\Ext
 	 * Get / set the column name to use for the value in the options list. This
 	 * would normally be the primary key for the table.
 	 *
-	 * @param null|string $_ String to set, null to get current value
+	 * @param string|null $_ String to set, null to get current value
 	 *
 	 * @return Options|string Self if setting for chaining, string if getting.
 	 */
@@ -171,7 +171,7 @@ class SearchPaneOptions extends DataTables\Ext
 	 * Get / set the method to use for a WHERE condition if it is to be
 	 * applied to the query to get the options.
 	 *
-	 * @param null|callable $_ Function to set, null to get current value
+	 * @param callable|null $_ Function to set, null to get current value
 	 *
 	 * @return Options|callable Self if setting for chaining, callable if
 	 *                          getting.

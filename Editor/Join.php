@@ -1013,7 +1013,6 @@ class Join extends DataTables\Ext
 			if ($field->apply($direction, null)) {
 				if (strpos($field->dbField(), '.') === false) {
 					$fields[] = $this->_table . '.' . $field->dbField() . ' as ' . $field->dbField();
-					;
 				} else {
 					$fields[] = $field->dbField(); // ." as ".$field->dbField();
 				}
