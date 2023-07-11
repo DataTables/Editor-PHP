@@ -58,6 +58,7 @@ return $config
 
 		// disable too destructive formating for now
 		'list_syntax' => array('syntax' => 'long'),
+		'array_syntax' => array('syntax' => 'long'),
 		'escape_implicit_backslashes' => false,
 		'heredoc_to_nowdoc' => false,
 		'no_useless_else' => false,
@@ -71,7 +72,6 @@ return $config
 
 		// enable some safe rules from @PHP71Migration:risky
 		'pow_to_exponentiation' => true,
-		'is_null' => true,
 		'modernize_types_casting' => true,
 		'dir_constant' => true,
 		'combine_nested_dirname' => true,
@@ -80,28 +80,21 @@ return $config
 		),
 
 		// TODO
-		'array_syntax' => false,
 		'class_attributes_separation' => false,
-		'constant_case' => false,
 		'dir_constant' => false,
 		'explicit_indirect_variable' => false,
 		'explicit_string_variable' => false,
 		'function_declaration' => false,
 		'general_phpdoc_annotation_remove' => false,
-		'global_namespace_import' => false,
 		'include' => false,
 		'increment_style' => false,
 		'method_chaining_indentation' => false,
 		'modernize_types_casting' => false,
 		'no_empty_statement' => false,
 		'no_null_property_initialization' => false,
-		'no_useless_concat_operator' => false,
-		'operator_linebreak' => false,
-		'ordered_imports' => false,
 		'phpdoc_annotation_without_dot' => false,
 		'phpdoc_no_alias_tag' => false,
 		'phpdoc_no_package' => false,
-		'phpdoc_scalar' => false,
 		'phpdoc_summary' => false,
 		'phpdoc_types_order' => false,
 		'ternary_to_null_coalescing' => false,

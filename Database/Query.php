@@ -1118,7 +1118,7 @@ abstract class Query
 		$right = $idl[1];
 
 		// Dealing with a function or other expression? Just return immediately
-		if (strpos($identifier, '(') !== FALSE || strpos($identifier, '*') !== FALSE) {
+		if (strpos($identifier, '(') !== false || strpos($identifier, '*') !== false) {
 			return $identifier;
 		}
 

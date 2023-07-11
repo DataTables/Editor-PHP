@@ -443,8 +443,8 @@ class Upload extends DataTables\Ext
 			foreach ($this->_dbFields as $column => $prop) {
 				// We can't know what the path is, if it has moved into place
 				// by an external function - throw an error if this does happen
-				if (!is_string($this->_action) &&
-						($prop === self::DB_SYSTEM_PATH || $prop === self::DB_WEB_PATH)
+				if (!is_string($this->_action)
+						&& ($prop === self::DB_SYSTEM_PATH || $prop === self::DB_WEB_PATH)
 				) {
 					$this->_error = 'Cannot set path information in database ' .
 						'if a custom method is used to save the file.';

@@ -107,7 +107,7 @@ class Htmlawed
 		  	(isset($x[0]) && $x[0] == '*')
 			   ? preg_replace(
 			   	'`^[^*]`',
-			   	'-' . '\\0',
+			   	'-\\0',
 			   	explode(
 			   		'/',
 			   		!empty($C['safe']) ? preg_replace('`/on[^/]+`', '', $x) : $x

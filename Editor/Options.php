@@ -78,7 +78,7 @@ class Options extends DataTables\Ext
 	/** Information for left join */
 	private $_leftJoin = array();
 
-	/** @var integer Row limit */
+	/** @var int Row limit */
 	private $_limit = null;
 
 	/** @var callable Callback function to do rendering of labels */

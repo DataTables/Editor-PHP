@@ -17,8 +17,8 @@
 namespace DataTables;
 
 use DataTables;
-use DataTables\Editor\Join;
 use DataTables\Editor\Field;
+use DataTables\Editor\Join;
 
 /**
  * DataTables Editor base class for creating editable tables.
@@ -1088,12 +1088,12 @@ class Editor extends Ext
 	 * result of an sAjaxSource request, such that DataTables can display the information
 	 * from the DB in the table.
 	 *
-	 * @param integer|string $id   Primary key value to get an individual row
-	 *                             (after create or update operations). Gets the full set if not given.
-	 *                             If a compound key is being used, this should be the string
-	 *                             representation of it (i.e. joined together) rather than an array form.
-	 * @param array          $http HTTP parameters from GET or POST request (so we can service
-	 *                             server-side processing requests from DataTables).
+	 * @param int|string $id   Primary key value to get an individual row
+	 *                         (after create or update operations). Gets the full set if not given.
+	 *                         If a compound key is being used, this should be the string
+	 *                         representation of it (i.e. joined together) rather than an array form.
+	 * @param array      $http HTTP parameters from GET or POST request (so we can service
+	 *                         server-side processing requests from DataTables).
 	 *
 	 * @return array DataTables get information
 	 *
@@ -2351,8 +2351,8 @@ class Editor extends Ext
 				$count++;
 			} elseif ($fieldDots === 1) {
 				if (
-					$field->set() !== Field::SET_NONE &&
-					$this->_part($fieldName, 'table') === $tableAlias
+					$field->set() !== Field::SET_NONE
+					&& $this->_part($fieldName, 'table') === $tableAlias
 				) {
 					$count++;
 				}

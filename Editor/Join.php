@@ -669,9 +669,9 @@ class Join extends DataTables\Ext
 		// If not settable, or the many count for the join was not submitted
 		// there we do nothing
 		if (
-			!$this->_set ||
-			!isset($data[$this->_name]) ||
-			!isset($data[$this->_name . '-many-count'])
+			!$this->_set
+			|| !isset($data[$this->_name])
+			|| !isset($data[$this->_name . '-many-count'])
 		) {
 			return;
 		}
