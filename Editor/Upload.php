@@ -80,7 +80,7 @@ class Upload extends DataTables\Ext {
 	/*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
 	 * Constants
 	 */
-	
+
 	/** Database value option (`Db()`) - File content. This should be written to
 	 * a blob. Typically this should be avoided and the file saved on the file
 	 * system, but there are cases where it can be useful to store the file in
@@ -121,7 +121,7 @@ class Upload extends DataTables\Ext {
 	/*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
 	 * Private parameters
 	 */
-	
+
 	private $_action = null;
 	private $_dbCleanCallback = null;
 	private $_dbCleanTableField = null;
@@ -314,7 +314,7 @@ class Upload extends DataTables\Ext {
 	/*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
 	 * Internal methods
 	 */
-	
+
 	/**
 	 * Get database information data from the table
 	 *

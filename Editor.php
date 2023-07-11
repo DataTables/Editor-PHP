@@ -710,7 +710,7 @@ class Editor extends Ext {
 			catch (\Exception $e) {
 				// Error feedback
 				$this->_out['error'] = $e->getMessage();
-				
+
 				if ( $this->_transaction ) {
 					$this->_db->rollback();
 				}
@@ -1120,7 +1120,7 @@ class Editor extends Ext {
 		$this->_get_where( $query );
 		$query->left_join($this->_leftJoin);
 		$ssp = $this->_ssp_query( $query, $http );
-		
+
 		if ( $id !== null ) {
 			$query->where( $this->pkeyToArray( $id, true ) );
 		}
@@ -1436,7 +1436,7 @@ class Editor extends Ext {
 		}
 
 		$res = $this->_trigger( 'preUpload', $data );
-		
+
 		// Allow the event to be cancelled and inform the client-side
 		if ( $res === false ) {
 			return;
@@ -1460,7 +1460,7 @@ class Editor extends Ext {
 
 			$this->_out['files'] = $files;
 			$this->_out['upload']['id'] = $res;
-		
+
 			$this->_trigger( 'postUpload', $res, $files, $data );
 		}
 	}
@@ -1482,7 +1482,7 @@ class Editor extends Ext {
 
 		// The fields in this instance
 		$this->_fileDataFields( $files, $this->_fields, $limitTable, $ids, $data );
-		
+
 		// From joined tables
 		for ( $i=0 ; $i<count($this->_join) ; $i++ ) {
 			$joinData = null;
@@ -2339,7 +2339,7 @@ class Editor extends Ext {
 			$fieldDots = substr_count( $fieldName, '.' );
 
 			if ( $fieldDots === 0 ) {
-				$count++;	
+				$count++;
 			}
 			else if ( $fieldDots === 1 ) {
 				if (

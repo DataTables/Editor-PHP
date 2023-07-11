@@ -310,7 +310,7 @@ abstract class Query {
 		else if ( $type === 'raw' ) {
 			return $this->_raw( $sql );
 		}
-		
+
 		throw new \Exception("Unknown database command or not supported: ".$type, 1);
 	}
 
@@ -852,7 +852,7 @@ abstract class Query {
 		$out = '';
 		$limit = intval($this->_limit);
 		$offset = intval($this->_offset);
-		
+
 		if ( $limit ) {
 			$out .= ' LIMIT '.$limit;
 		}
@@ -927,14 +927,14 @@ abstract class Query {
 		if ( $this->_type === 'insert' ) {
 			// insert, update and delete statements don't need or want aliases in the table name
 			$a = array();
-	
+
 			for ( $i=0, $ien=count($this->_table) ; $i<$ien ; $i++ ) {
 				$table = str_ireplace( ' as ', ' ', $this->_table[$i] );
 				$tableParts = explode( ' ', $table );
-	
+
 				$a[] = $tableParts[0];
 			}
-	
+
 			return ' '.implode(', ', $a).' ';
 		}
 

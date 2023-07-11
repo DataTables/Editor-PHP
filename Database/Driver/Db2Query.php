@@ -104,9 +104,9 @@ class Db2Query extends Query {
 		$stmt = $this->_stmt;
 
 		//echo $this->_sql."\n";
-		
+
 		preg_match_all('/(:[a-zA-Z\-_0-9]*)/', $this->_sql, $matches);
-		
+
 		//print_r( $matches );
 		//print_r( $bindings);
 

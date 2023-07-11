@@ -94,7 +94,7 @@ class FirebirdQuery extends Query {
 	protected function _prepare( $sql )
 	{
 		$this->database()->debugInfo( $sql, $this->_bindings );
-	
+
 		$resource = $this->database()->resource();
 		$pkey = $this->pkey();
 

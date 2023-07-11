@@ -65,7 +65,7 @@ class SearchPaneOptions extends DataTables\Ext {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private parameters
 	 */
-	
+
 	/** @var string Table to get the information from */
 	private $_table = null;
 
@@ -226,7 +226,7 @@ class SearchPaneOptions extends DataTables\Ext {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Internal methods
 	 */
-	
+
 	/**
 	 * Execute the options (i.e. get them)
 	 *
@@ -372,7 +372,7 @@ class SearchPaneOptions extends DataTables\Ext {
 					$query->get("(1) as count");
 				}
 			}
-			
+
 			// Construct the where queries based upon the options selected by the user
 			foreach ($fields as $fieldOpt) {
 				$add = false;
@@ -403,11 +403,11 @@ class SearchPaneOptions extends DataTables\Ext {
 					});
 				}
 			}
-	
+
 			$entriesRows = $query
 				->exec()
 				->fetchAll();
-	
+
 			// Key by the value for fast lookup
 			$entriesKeys = array_column($entriesRows, 'value');
 			$entries = array_combine($entriesKeys, $entriesRows);

@@ -64,7 +64,7 @@ class Field extends DataTables\Ext {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Statics
 	 */
-	
+
 	/** Set option flag (`set()`) - do not set data */
 	const SET_NONE = 'none';
 
@@ -129,7 +129,7 @@ class Field extends DataTables\Ext {
 
 	/** @var SearchPaneOptions */
 	private $_spopts = null;
-	
+
 	/** @var SearchBuilderOptions */
 	private $_sbopts = null;
 
@@ -688,7 +688,7 @@ class Field extends DataTables\Ext {
 		return false;
 	}
 
-	
+
 	/**
 	 * Get the value of the field, taking into account if it is coming from the
 	 * DB or from a POST. If formatting has been specified for this field, it

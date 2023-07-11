@@ -129,7 +129,7 @@ class Join extends DataTables\Ext {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
 	 */
-	
+
 	/**
 	 * Get / set parent table alias.
 	 *
@@ -495,7 +495,7 @@ class Join extends DataTables\Ext {
 			$dteTable = $arr[0];
 			$this->_aliasParentTable = $arr[1];
 		}
-		
+
 		$dteTableLocal = $this->_aliasParentTable ? // Can be aliased to allow a self join
 			$this->_aliasParentTable :
 			$dteTable;
@@ -668,7 +668,7 @@ class Join extends DataTables\Ext {
 
 		$this->_prep( $editor );
 		$db = $editor->db();
-		
+
 		if ( $this->_type === 'object' ) {
 			$this->_insert( $db, $parentId, $data[$this->_name] );
 		}
@@ -697,7 +697,7 @@ class Join extends DataTables\Ext {
 
 		$this->_prep( $editor );
 		$db = $editor->db();
-		
+
 		if ( $this->_type === 'object' ) {
 			// update or insert
 			$this->_update_row( $db, $parentId, $data[$this->_name] );
@@ -726,7 +726,7 @@ class Join extends DataTables\Ext {
 
 		$this->_prep( $editor );
 		$db = $editor->db();
-		
+
 		if ( isset($this->_join['table']) ) {
 			$stmt = $db
 				->query( 'delete' )
@@ -798,7 +798,7 @@ class Join extends DataTables\Ext {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private methods
 	 */
-	
+
 	/**
 	 * Add local WHERE condition to query
 	 *  @param \DataTables\Database\Query $query Query instance to apply the WHERE conditions to

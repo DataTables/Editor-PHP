@@ -84,9 +84,9 @@ class PostgresQuery extends Query {
 	protected function _prepare( $sql )
 	{
 		$this->database()->debugInfo( $sql, $this->_bindings );
-	
+
 		$resource = $this->database()->resource();
-		
+
 		// Add a RETURNING command to postgres insert queries so we can get the
 		// pkey value from the query reliably
 		if ( $this->_type === 'insert' ) {

@@ -66,7 +66,7 @@ class Options extends DataTables\Ext {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private parameters
 	 */
-	
+
 	/** @var string Table to get the information from */
 	private $_table = null;
 
@@ -243,7 +243,7 @@ class Options extends DataTables\Ext {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Internal methods
 	 */
-	
+
 	/**
 	 * Execute the options (i.e. get them)
 	 *

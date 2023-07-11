@@ -224,7 +224,7 @@ class Database {
 	public function push ( $table, $set, $where=null, $pkey='' )
 	{
 		$selectColumn = '*';
-		
+
 		if ( $pkey ) {
 			$selectColumn = is_array($pkey) ?
 				$pkey[0] :

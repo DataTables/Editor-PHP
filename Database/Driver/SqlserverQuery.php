@@ -137,7 +137,7 @@ class SqlserverQuery extends Query {
 		if ( $this->_offset ) {
 			$out .= ' OFFSET '.$this->_offset.' ROWS';
 		}
-		
+
 		if ( $this->_limit ) {
 			if ( ! $this->_offset ) {
 				$out .= ' OFFSET 0 ROWS';
