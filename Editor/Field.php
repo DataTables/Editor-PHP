@@ -516,12 +516,12 @@ class Field extends DataTables\Ext
 	{
 		if ($_ === null) {
 			return $this->_validator;
-		} else {
-			$this->_validator[] = array(
-				'func' => $_,
-				'opts' => $opts,
-			);
 		}
+
+		$this->_validator[] = array(
+			'func' => $_,
+			'opts' => $opts,
+		);
 
 		return $this;
 	}
@@ -581,31 +581,31 @@ class Field extends DataTables\Ext
 		if ($action === 'get') {
 			// Get action - can we get this field
 			return $this->_get;
-		} else {
-			// Note that validation must be done on input data before we get here
-
-			// Create or edit action, are we configured to use this field
-			if ($action === 'create'
-				&& ($this->_set === Field::SET_NONE || $this->_set === Field::SET_EDIT)
-			) {
-				return false;
-			} elseif ($action === 'edit'
-				&& ($this->_set === Field::SET_NONE || $this->_set === Field::SET_CREATE)
-			) {
-				return false;
-			}
-
-			// Check it was in the submitted data. If not, then not required
-			// (validation would have failed if it was) and therefore we don't
-			// set it. Check for a value as well, as it can format data from
-			// some other source
-			if ($this->_setValue === null && !$this->_inData($this->name(), $data)) {
-				return false;
-			}
-
-			// In the data set, so use it
-			return true;
 		}
+
+		// Note that validation must be done on input data before we get here
+
+		// Create or edit action, are we configured to use this field
+		if ($action === 'create'
+			&& ($this->_set === Field::SET_NONE || $this->_set === Field::SET_EDIT)
+		) {
+			return false;
+		} elseif ($action === 'edit'
+			&& ($this->_set === Field::SET_NONE || $this->_set === Field::SET_CREATE)
+		) {
+			return false;
+		}
+
+		// Check it was in the submitted data. If not, then not required
+		// (validation would have failed if it was) and therefore we don't
+		// set it. Check for a value as well, as it can format data from
+		// some other source
+		if ($this->_setValue === null && !$this->_inData($this->name(), $data)) {
+			return false;
+		}
+
+		// In the data set, so use it
+		return true;
 	}
 
 	/**
@@ -720,30 +720,30 @@ class Field extends DataTables\Ext
 				$this->_getFormatter,
 				$this->_getFormatterOpts
 			);
-		} else {
-			// Sanity check that we aren't operating on a function
-			if (strpos($this->dbField(), '(') !== false) {
-				throw new \Exception('Cannot set the value for an SQL function field. These fields are read only: ' . $this->name());
-			}
-
-			// Setting data, so using from the payload (POST usually) and thus
-			// use the 'name'
-			$val = $this->_setValue !== null ?
-				$this->_getAssignedValue($this->_setValue) :
-				$this->_readProp($this->name(), $data);
-
-			// XSS removal / checker
-			if ($this->_xssFormat && $val) {
-				$val = $this->xssSafety($val);
-			}
-
-			return $this->_format(
-				$val,
-				$data,
-				$this->_setFormatter,
-				$this->_setFormatterOpts
-			);
 		}
+
+		// Sanity check that we aren't operating on a function
+		if (strpos($this->dbField(), '(') !== false) {
+			throw new \Exception('Cannot set the value for an SQL function field. These fields are read only: ' . $this->name());
+		}
+
+		// Setting data, so using from the payload (POST usually) and thus
+		// use the 'name'
+		$val = $this->_setValue !== null ?
+			$this->_getAssignedValue($this->_setValue) :
+			$this->_readProp($this->name(), $data);
+
+		// XSS removal / checker
+		if ($this->_xssFormat && $val) {
+			$val = $this->xssSafety($val);
+		}
+
+		return $this->_format(
+			$val,
+			$data,
+			$this->_setFormatter,
+			$this->_setFormatterOpts
+		);
 	}
 
 	/**
@@ -898,10 +898,10 @@ class Field extends DataTables\Ext
 				$func = call_user_func('\\DataTables\\Editor\\' . $formatter . 'Legacy', $opts);
 
 				return $func($val, $data);
-			} else {
-				// User added old style methods
-				return call_user_func('\\DataTables\\Editor\\' . $formatter, $val, $data, $opts);
 			}
+
+			// User added old style methods
+			return call_user_func('\\DataTables\\Editor\\' . $formatter, $val, $data, $opts);
 		}
 
 		// User function (string identifier)

@@ -520,9 +520,9 @@ class Htmlawed
 				for ($j = -1, $cj = count($openEleQueue); ++$j < $cj;) {
 					if (($closableEle = array_pop($openEleQueue)) == $ele) {
 						break;
-					} else {
-						$closedTags .= "</{$closableEle}>";
 					}
+
+					$closedTags .= "</{$closableEle}>";
 				}
 				echo $closedTags, '</', $ele, '>';
 				unset($ele);
@@ -615,9 +615,8 @@ class Htmlawed
 					}
 
 					break;
-				} else {
-					$openEleQueue2[] = $closableEle;
 				}
+				$openEleQueue2[] = $closableEle;
 			}
 			$openEleQueue = $openEleQueue2;
 			if (!isset($noKidEleAr[$ele])) {
@@ -1495,9 +1494,9 @@ class Htmlawed
 			}
 
 			return "<{$ele}{$attrStr}" . (isset($emptyEleAr[$ele]) ? ' /' : '') . '>';
-		} else {
-			return call_user_func($C['hook_tag'], $ele, $filtAttrAr);
 		}
+
+		return call_user_func($C['hook_tag'], $ele, $filtAttrAr);
 	}
 
 	/**

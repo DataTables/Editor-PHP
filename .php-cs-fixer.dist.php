@@ -57,14 +57,10 @@ return $config
 		'use_arrow_functions' => false,
 
 		// disable too destructive formating for now
-		'escape_implicit_backslashes' => false,
-		'heredoc_to_nowdoc' => false,
-		'no_useless_else' => false,
-		'single_line_comment_style' => false,
-
-		'list_syntax' => array('syntax' => 'long'),
-		'array_syntax' => array('syntax' => 'long'),
+		'list_syntax' => array('syntax' => 'long'), // needs PHP 5.4+
+		'array_syntax' => array('syntax' => 'long'), // needs PHP 5.4+
 		'ternary_to_null_coalescing' => false, // needs PHP 7.0+
+		'single_line_comment_style' => false,
 
 		// enable some safe rules from @PHP71Migration:risky
 		'pow_to_exponentiation' => true,

@@ -1225,16 +1225,16 @@ class Editor extends Ext
 				),
 				$ssp
 			);
-		} else {
-			return array_merge(
-				array(
-					'data' => $out,
-					'options' => $options,
-					'files' => $this->_fileData(null, null, $out),
-				),
-				$ssp
-			);
 		}
+
+		return array_merge(
+			array(
+				'data' => $out,
+				'options' => $options,
+				'files' => $this->_fileData(null, null, $out),
+			),
+			$ssp
+		);
 	}
 
 	/**
@@ -2304,9 +2304,9 @@ class Editor extends Ext
 		// Insert or update
 		if ($action === 'create') {
 			return $this->_db->insert($table, $set, $pkey);
-		} else {
-			return $this->_db->push($table, $set, $where, $pkey);
 		}
+
+		return $this->_db->push($table, $set, $where, $pkey);
 	}
 
 	/**
