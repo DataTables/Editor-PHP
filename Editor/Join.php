@@ -84,7 +84,7 @@ class Join extends DataTables\Ext
 	private $_join = array(
 		'parent' => null,
 		'child' => null,
-		'table' => null
+		'table' => null,
 	);
 
 	/** @var array */
@@ -274,7 +274,7 @@ class Join extends DataTables\Ext
 			'table' => $table,
 			'field1' => $field1,
 			'field2' => $field2,
-			'operator' => $operator
+			'operator' => $operator,
 		);
 
 		return $this;
@@ -417,7 +417,7 @@ class Join extends DataTables\Ext
 	{
 		$this->_validators[] = array(
 			'fieldName' => $fieldName,
-			'fn' => $fn
+			'fn' => $fn,
 		);
 
 		return $this;
@@ -450,7 +450,7 @@ class Join extends DataTables\Ext
 			$this->_where[] = array(
 				'key' => $key,
 				'value' => $value,
-				'op' => $op
+				'op' => $op,
 			);
 		}
 
@@ -575,7 +575,7 @@ class Join extends DataTables\Ext
 				echo json_encode(array(
 					'sError' => "Join was performed on the field '{$joinField}' which was not "
 						. 'included in the Editor field list. The join field must be included '
-						. 'as a regular field in the Editor instance.'
+						. 'as a regular field in the Editor instance.',
 				));
 
 				exit(1);
@@ -787,7 +787,7 @@ class Join extends DataTables\Ext
 			if (is_string($res)) {
 				$errors[] = array(
 					'name' => $validator['fieldName'],
-					'status' => $res
+					'status' => $res,
 				);
 			}
 		}
@@ -955,16 +955,16 @@ class Join extends DataTables\Ext
 				$this->_join['table'],
 				array(
 					$this->_join['parent'][1] => $parentId,
-					$this->_join['child'][1] => $data[$this->_join['child'][0]]
+					$this->_join['child'][1] => $data[$this->_join['child'][0]],
 				),
 				array(
-					$this->_join['parent'][1] => $parentId
+					$this->_join['parent'][1] => $parentId,
 				)
 			);
 		} else {
 			// No link table, just a direct reference
 			$set = array(
-				$this->_join['child'] => $parentId
+				$this->_join['child'] => $parentId,
 			);
 
 			for ($i = 0; $i < count($this->_fields); $i++) {
@@ -1042,7 +1042,7 @@ class Join extends DataTables\Ext
 			if ($validation !== true) {
 				$errors[] = array(
 					'name' => $prefix . $field->name(),
-					'status' => $validation
+					'status' => $validation,
 				);
 			}
 		}

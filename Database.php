@@ -469,7 +469,7 @@ class Database
 		if ($callback) {
 			$callback(array(
 				'query' => $query,
-				'bindings' => $bindings
+				'bindings' => $bindings,
 			));
 		}
 

@@ -519,7 +519,7 @@ class Field extends DataTables\Ext
 		} else {
 			$this->_validator[] = array(
 				'func' => $_,
-				'opts' => $opts
+				'opts' => $opts,
 			);
 		}
 
@@ -780,7 +780,7 @@ class Field extends DataTables\Ext
 			'id' => $id,
 			'field' => $this,
 			'editor' => $editor,
-			'db' => $editor->db()
+			'db' => $editor->db(),
 		);
 
 		for ($i = 0, $ien = count($this->_validator); $i < $ien; $i++) {

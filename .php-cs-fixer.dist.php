@@ -86,7 +86,6 @@ return $config
 		'phpdoc_annotation_without_dot' => false,
 		'phpdoc_no_package' => false,
 		'ternary_to_null_coalescing' => false,
-		'trailing_comma_in_multiline' => false,
 	))
 	->setFinder($finder)
 	->setCacheFile(sys_get_temp_dir() . '/php-cs-fixer.' . md5(__DIR__) . '.cache');

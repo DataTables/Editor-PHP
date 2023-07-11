@@ -60,7 +60,7 @@ class Db2Query extends Query
 
 			echo json_encode(array(
 				'error' => 'An error occurred while connecting to the database ' .
-					"'{$db}'. The error reported by the server was: " . $e
+					"'{$db}'. The error reported by the server was: " . $e,
 			));
 
 			exit(1);

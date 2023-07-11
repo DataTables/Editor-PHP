@@ -21,7 +21,7 @@ $sql_details = array(
 	'port' => '',          // Database connection port (can be left empty for default)
 	'db' => '',          // Database name
 	'dsn' => '',          // PHP DSN extra information. Set as `charset=utf8mb4` if you are using MySQL
-	'pdoAttr' => array()   // PHP PDO attributes array. See the PHP documentation for all options
+	'pdoAttr' => array(),   // PHP PDO attributes array. See the PHP documentation for all options
 );
 
 // This is included for the development and deploy environment used on the DataTables

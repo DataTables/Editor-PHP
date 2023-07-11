@@ -77,7 +77,7 @@ class SqlserverQuery extends Query
 			// error.
 			echo json_encode(array(
 				'error' => 'An error occurred while connecting to the database ' .
-					"'{$db}'. The error reported by the server was: " . $e->getMessage()
+					"'{$db}'. The error reported by the server was: " . $e->getMessage(),
 			));
 
 			exit(1);

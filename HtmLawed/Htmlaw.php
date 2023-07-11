@@ -50,12 +50,12 @@ class Htmlaw
 		'schemes' => 'classid:clsid; href: aim, feed, file, ftp, gopher, http, https, irc, mailto, news, nntp, sftp, ssh, telnet; style: nil; *:file, http, https', // clsid allowed in class
 		'valid_xhtml' => 0,
 		'direct_list_nest' => 1,
-		'balance' => 1
+		'balance' => 1,
 	);
 
 	public static $defaultSpec = array(
 		'object=-classid-type, -codebase',
-		'embed=type(oneof=application/x-shockwave-flash)'
+		'embed=type(oneof=application/x-shockwave-flash)',
 	);
 
 	/**
@@ -107,7 +107,7 @@ class Htmlaw
 			'keep_bad' => 0,
 			'schemes' => 'classid:clsid; href: aim, feed, file, ftp, gopher, http, https, irc, mailto, news, nntp, sftp, ssh, telnet; style: nil; *:file, http, https', // clsid allowed in class
 			'valid_xml' => 2,
-			'balance' => 1
+			'balance' => 1,
 		);
 		$spec = static::$defaultSpec;
 

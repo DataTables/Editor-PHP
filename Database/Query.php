@@ -269,7 +269,7 @@ abstract class Query
 		$this->_bindings[] = array(
 			'name' => $this->_safe_bind($name),
 			'value' => $value,
-			'type' => $type
+			'type' => $type,
 		);
 
 		return $this;
@@ -408,7 +408,7 @@ abstract class Query
 		// Allow a single associative array
 		if ($this->_is_assoc($joins)) {
 			$joins = array(
-				$joins
+				$joins,
 			);
 		}
 
@@ -792,7 +792,7 @@ abstract class Query
 			'operator' => $operator,
 			'group' => null,
 			'field' => $this->_protect_identifiers($field),
-			'query' => $this->_protect_identifiers($field) . ' IN (' . implode(', ', $binders) . ')'
+			'query' => $this->_protect_identifiers($field) . ' IN (' . implode(', ', $binders) . ')',
 		);
 
 		return $this;
@@ -1276,7 +1276,7 @@ abstract class Query
 					'field' => $this->_protect_identifiers($key),
 					'query' => $this->_protect_identifiers($key) . ($op === '=' ?
 						' IS NULL' :
-						' IS NOT NULL')
+						' IS NOT NULL'),
 				);
 			} elseif ($bind) {
 				// Binding condition (i.e. escape data)
@@ -1286,14 +1286,14 @@ abstract class Query
 						'operator' => $type,
 						'group' => null,
 						'field' => $this->_protect_identifiers($key),
-						'query' => $this->_protect_identifiers($key) . '::text ilike ' . $this->_safe_bind(':where_' . $i)
+						'query' => $this->_protect_identifiers($key) . '::text ilike ' . $this->_safe_bind(':where_' . $i),
 					);
 				} else {
 					$this->_where[] = array(
 						'operator' => $type,
 						'group' => null,
 						'field' => $this->_protect_identifiers($key),
-						'query' => $this->_protect_identifiers($key) . ' ' . $op . ' ' . $this->_safe_bind(':where_' . $i)
+						'query' => $this->_protect_identifiers($key) . ' ' . $op . ' ' . $this->_safe_bind(':where_' . $i),
 					);
 				}
 				$this->bind(':where_' . $i, $value);
@@ -1303,7 +1303,7 @@ abstract class Query
 					'operator' => $type,
 					'group' => null,
 					'field' => null,
-					'query' => $this->_protect_identifiers($key) . ' ' . $op . ' ' . $this->_protect_identifiers($value)
+					'query' => $this->_protect_identifiers($key) . ' ' . $op . ' ' . $this->_protect_identifiers($value),
 				);
 			}
 		}
@@ -1320,7 +1320,7 @@ abstract class Query
 	{
 		$this->_where[] = array(
 			'group' => $inOut ? '(' : ')',
-			'operator' => $op
+			'operator' => $op,
 		);
 	}
 

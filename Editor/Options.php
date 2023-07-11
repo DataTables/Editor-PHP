@@ -112,7 +112,7 @@ class Options extends DataTables\Ext
 
 		$this->_manualAdd[] = array(
 			'label' => $label,
-			'value' => $value
+			'value' => $value,
 		);
 
 		return $this;
@@ -156,7 +156,7 @@ class Options extends DataTables\Ext
 			'table' => $table,
 			'field1' => $field1,
 			'field2' => $field2,
-			'operator' => $operator
+			'operator' => $operator,
 		);
 
 		return $this;
@@ -323,7 +323,7 @@ class Options extends DataTables\Ext
 		for ($i = 0, $ien = count($rows); $i < $ien; $i++) {
 			$out[] = array(
 				'label' => $formatter($rows[$i]),
-				'value' => $rows[$i][$value]
+				'value' => $rows[$i][$value],
 			);
 		}
 

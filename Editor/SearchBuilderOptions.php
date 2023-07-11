@@ -198,7 +198,7 @@ class SearchBuilderOptions extends DataTables\Ext
 			'table' => $table,
 			'field1' => $field1,
 			'field2' => $field2,
-			'operator' => $operator
+			'operator' => $operator,
 		);
 
 		return $this;
@@ -317,7 +317,7 @@ class SearchBuilderOptions extends DataTables\Ext
 		for ($j = 0; $j < count($res); $j++) {
 			$out[] = array(
 				'value' => $res[$j]['value'],
-				'label' => $res[$j]['label']
+				'label' => $res[$j]['label'],
 			);
 		}
 

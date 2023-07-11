@@ -442,7 +442,7 @@ class Editor extends Ext
 				echo $json;
 			} else {
 				echo json_encode(array(
-					'error' => 'JSON encoding error: ' . json_last_error_msg()
+					'error' => 'JSON encoding error: ' . json_last_error_msg(),
 				));
 			}
 
@@ -542,7 +542,7 @@ class Editor extends Ext
 			'table' => $table,
 			'field1' => $field1,
 			'field2' => $field2,
-			'operator' => $operator
+			'operator' => $operator,
 		);
 
 		return $this;
@@ -858,7 +858,7 @@ class Editor extends Ext
 				if ($validation !== true) {
 					$errors[] = array(
 						'name' => $field->name(),
-						'status' => $validation
+						'status' => $validation,
 					);
 				}
 			}
@@ -927,7 +927,7 @@ class Editor extends Ext
 			$this->_where[] = array(
 				'key' => $key,
 				'value' => $value,
-				'op' => $op
+				'op' => $op,
 			);
 		}
 
@@ -974,7 +974,7 @@ class Editor extends Ext
 			'error' => '',
 			'data' => array(),
 			'ipOpts' => array(),
-			'cancelled' => array()
+			'cancelled' => array(),
 		);
 
 		$action = Editor::action($data);
@@ -1201,7 +1201,7 @@ class Editor extends Ext
 					'options' => $options,
 					'files' => $this->_fileData(null, null, $out),
 					'searchBuilder' => $searchBuilder,
-					'searchPanes' => $searchPanes
+					'searchPanes' => $searchPanes,
 				),
 				$ssp
 			);
@@ -1211,7 +1211,7 @@ class Editor extends Ext
 					'data' => $out,
 					'options' => $options,
 					'files' => $this->_fileData(null, null, $out),
-					'searchBuilder' => $searchBuilder
+					'searchBuilder' => $searchBuilder,
 				),
 				$ssp
 			);
@@ -1221,7 +1221,7 @@ class Editor extends Ext
 					'data' => $out,
 					'options' => $options,
 					'files' => $this->_fileData(null, null, $out),
-					'searchPanes' => $searchPanes
+					'searchPanes' => $searchPanes,
 				),
 				$ssp
 			);
@@ -1230,7 +1230,7 @@ class Editor extends Ext
 				array(
 					'data' => $out,
 					'options' => $options,
-					'files' => $this->_fileData(null, null, $out)
+					'files' => $this->_fileData(null, null, $out),
 				),
 				$ssp
 			);
@@ -1460,7 +1460,7 @@ class Editor extends Ext
 		if ($res === false) {
 			$this->_out['fieldErrors'][] = array(
 				'name' => $fieldName,      // field name can be just the field's
-				'status' => $upload->error() // name or a join combination
+				'status' => $upload->error(), // name or a join combination
 			);
 		} else {
 			$files = $this->_fileData($upload->table(), array($res));
@@ -1652,7 +1652,7 @@ class Editor extends Ext
 		return array(
 			'draw' => (int) $http['draw'],
 			'recordsTotal' => $ssp_full_count['cnt'],
-			'recordsFiltered' => $ssp_set_count['cnt']
+			'recordsFiltered' => $ssp_set_count['cnt'],
 		);
 	}
 

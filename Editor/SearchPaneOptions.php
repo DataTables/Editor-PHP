@@ -198,7 +198,7 @@ class SearchPaneOptions extends DataTables\Ext
 			'table' => $table,
 			'field1' => $field1,
 			'field2' => $field2,
-			'operator' => $operator
+			'operator' => $operator,
 		);
 
 		return $this;
@@ -437,7 +437,7 @@ class SearchPaneOptions extends DataTables\Ext
 				'label' => $formatter($row['label']),
 				'total' => $total,
 				'value' => $value,
-				'count' => $count
+				'count' => $count,
 			);
 		}
 
