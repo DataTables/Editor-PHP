@@ -300,7 +300,7 @@ class Editor extends Ext
 	 * The list of fields designates which columns in the table that Editor will work
 	 * with (both get and set).
 	 *
-	 * @param Field|string $_... This parameter effects the return value of the
+	 * @param Field|string ...$_ This parameter effects the return value of the
 	 *                           function:
 	 *
 	 *      * `null` - Get an array of all fields assigned to the instance
@@ -344,7 +344,7 @@ class Editor extends Ext
 	 *
 	 * An alias of {@see field}, for convenience.
 	 *
-	 * @param Field|Field[] $_... Instances of the {@see Field} class, given as a single
+	 * @param Field|Field[] ...$_ Instances of the {@see Field} class, given as a single
 	 *                            instance of {@see Field}, an array of {@see Field} instances, or multiple
 	 *                            {@see Field} instance parameters for the function.
 	 *
@@ -403,9 +403,9 @@ class Editor extends Ext
 	 * (i.e. the one that the {@see Editor->table()} and {@see Editor->fields}
 	 * methods refer to in this class instance).
 	 *
-	 * @param Join $_,... Instances of the {@see Join} class, given as a
-	 *                    single instance of {@see Join}, an array of {@see Join} instances,
-	 *                    or multiple {@see Join} instance parameters for the function.
+	 * @param Join ...$_ Instances of the {@see Join} class, given as a
+	 *                   single instance of {@see Join}, an array of {@see Join} instances,
+	 *                   or multiple {@see Join} instance parameters for the function.
 	 *
 	 * @return Join[]|self Array of joins, or self if used as a setter.
 	 */
@@ -748,8 +748,8 @@ class Editor extends Ext
 	 * a useful distinction to allow a read from a VIEW (which could make use of a
 	 * complex SELECT) while writing to a different table.
 	 *
-	 * @param string|array $_,... Read table names given as a single string, an array
-	 *                            of strings or multiple string parameters for the function.
+	 * @param string|array ...$_ Read table names given as a single string, an array
+	 *                           of strings or multiple string parameters for the function.
 	 *
 	 * @return string[]|self Array of read tables names, or self if used as a setter.
 	 */
@@ -773,8 +773,8 @@ class Editor extends Ext
 	 * names would also need to reflect the alias, just like an SQL query. For
 	 * example: `users as a`.
 	 *
-	 * @param string|array $_,... Table names given as a single string, an array of
-	 *                            strings or multiple string parameters for the function.
+	 * @param string|array ...$_ Table names given as a single string, an array of
+	 *                           strings or multiple string parameters for the function.
 	 *
 	 * @return string[]|self Array of tables names, or self if used as a setter.
 	 */
@@ -1478,7 +1478,7 @@ class Editor extends Ext
 	 *
 	 * @param string   $limitTable Limit the data gathering to a single
 	 *                             table only
-	 * @param number[] $id         Limit to a specific set of ids
+	 * @param number[] $ids        Limit to a specific set of ids
 	 *
 	 * @return array File information
 	 *

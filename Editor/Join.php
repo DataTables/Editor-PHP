@@ -159,7 +159,7 @@ class Join extends DataTables\Ext
 	 * The list of fields designates which columns in the table that will be read
 	 * from the joined table.
 	 *
-	 * @param Field $_... Instances of the {@see Field} class, given as a single
+	 * @param Field ...$_ Instances of the {@see Field} class, given as a single
 	 *                    instance of {@see Field}, an array of {@see Field} instances, or multiple
 	 *                    {@see Field} instance parameters for the function.
 	 *
@@ -183,7 +183,7 @@ class Join extends DataTables\Ext
 	 *
 	 * An alias of {@see field}, for convenience.
 	 *
-	 * @param Field $_... Instances of the {@see Field} class, given as a single
+	 * @param Field ...$_ Instances of the {@see Field} class, given as a single
 	 *                    instance of {@see Field}, an array of {@see Field} instances, or multiple
 	 *                    {@see Field} instance parameters for the function.
 	 *
@@ -320,7 +320,7 @@ class Join extends DataTables\Ext
 	/**
 	 * Specify the property that the data will be sorted by.
 	 *
-	 * @param string $order SQL column name to order the data by
+	 * @param string $_ SQL column name to order the data by
 	 *
 	 * @return Join Self for chaining
 	 */

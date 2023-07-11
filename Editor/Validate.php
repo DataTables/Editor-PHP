@@ -270,11 +270,11 @@ class Validate
 	 * );
 	 * ```
 	 *
-	 * @param string   $val  The value to check for validity
-	 * @param string[] $data The full data set submitted
-	 * @param array    $opts Validation options. No additional options are
-	 *                       available or required for this validation method.
-	 * @param array    $host Host information
+	 * @callback-param string   $val  The value to check for validity
+	 * @callback-param string[] $data The full data set submitted
+	 * @callback-param array    $opts Validation options. No additional options are
+	 *                                available or required for this validation method.
+	 * @callback-param array    $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -303,11 +303,11 @@ class Validate
 	 * );
 	 * ```
 	 *
-	 * @param string   $val  The value to check for validity
-	 * @param string[] $data The full data set submitted
-	 * @param array    $opts Validation options. No additional options are
-	 *                       available or required for this validation method.
-	 * @param array    $host Host information
+	 * @callback-param string   $val  The value to check for validity
+	 * @callback-param string[] $data The full data set submitted
+	 * @callback-param array    $opts Validation options. No additional options are
+	 *                                available or required for this validation method.
+	 * @callback-param array    $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -359,11 +359,11 @@ class Validate
 	/**
 	 * Validate an input as a boolean value.
 	 *
-	 * @param string   $val  The value to check for validity
-	 * @param string[] $data The full data set submitted
-	 * @param array    $opts Validation options. No additional options are
-	 *                       available or required for this validation method.
-	 * @param array    $host Host information
+	 * @callback-param string   $val  The value to check for validity
+	 * @callback-param string[] $data The full data set submitted
+	 * @callback-param array    $opts Validation options. No additional options are
+	 *                                available or required for this validation method.
+	 * @callback-param array    $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -396,12 +396,12 @@ class Validate
 	/**
 	 * Check that any input is numeric.
 	 *
-	 * @param string   $val  The value to check for validity
-	 * @param string[] $data The full data set submitted
-	 * @param array    $opts Validation options. Additional options:
-	 *                       * `decimal`: is available to indicate what character should be used
-	 *                       as the decimal
-	 * @param array    $host Host information
+	 * @callback-param string   $val  The value to check for validity
+	 * @callback-param string[] $data The full data set submitted
+	 * @callback-param array    $opts Validation options. Additional options:
+	 *                                * `decimal`: is available to indicate what character should be used
+	 *                                as the decimal
+	 * @callback-param array    $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -432,16 +432,16 @@ class Validate
 	/**
 	 * Check for a numeric input and that it is greater than a given value.
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options. Additional options:
-	 *                        * `min`: indicate the minimum value. If only the default validation
-	 *                        options are required, this parameter can be given as an integer
-	 *                        value, which will be used as the minimum value.
-	 *                        * `decimal`: is available to indicate what character should be used
-	 *                        as the decimal
-	 *                        separator (default '.').
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options. Additional options:
+	 *                                 * `min`: indicate the minimum value. If only the default validation
+	 *                                 options are required, this parameter can be given as an integer
+	 *                                 value, which will be used as the minimum value.
+	 *                                 * `decimal`: is available to indicate what character should be used
+	 *                                 as the decimal
+	 *                                 separator (default '.').
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -479,15 +479,15 @@ class Validate
 	/**
 	 * Check for a numeric input and that it is less than a given value.
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options.
-	 *                        * `max`: indicate the maximum value. If only the default validation
-	 *                        options are required, this parameter can be given as an integer
-	 *                        value, which will be used as the maximum value.
-	 *                        * `decimal`: is available to indicate what character should be used
-	 *                        as the decimal
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options.
+	 *                                 * `max`: indicate the maximum value. If only the default validation
+	 *                                 options are required, this parameter can be given as an integer
+	 *                                 value, which will be used as the maximum value.
+	 *                                 * `decimal`: is available to indicate what character should be used
+	 *                                 as the decimal
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -526,14 +526,14 @@ class Validate
 	 * Check for a numeric input and that it is both greater and smaller than
 	 * given numbers.
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options. Additional options:
-	 *                        * `min`: indicate the minimum value.
-	 *                        * `max`: indicate the maximum value.
-	 *                        * `decimal`: is available to indicate what character should be used
-	 *                        as the decimal
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options. Additional options:
+	 *                                 * `min`: indicate the minimum value.
+	 *                                 * `max`: indicate the maximum value.
+	 *                                 * `decimal`: is available to indicate what character should be used
+	 *                                 as the decimal
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -583,11 +583,11 @@ class Validate
 	/**
 	 * Validate an input as an e-mail address.
 	 *
-	 * @param string   $val  The value to check for validity
-	 * @param string[] $data The full data set submitted
-	 * @param array    $opts Validation options. No additional options are
-	 *                       available or required for this validation method.
-	 * @param array    $host Host information
+	 * @callback-param string   $val  The value to check for validity
+	 * @callback-param string[] $data The full data set submitted
+	 * @callback-param array    $opts Validation options. No additional options are
+	 *                                available or required for this validation method.
+	 * @callback-param array    $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -614,14 +614,14 @@ class Validate
 	/**
 	 * Validate a string has a minimum length.
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options. The additional option of
-	 *                        `min` is available for this method to indicate the minimum string
-	 *                        length. If only the default validation options are required, this
-	 *                        parameter can be given as an integer value, which will be used as the
-	 *                        minimum string length.
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options. The additional option of
+	 *                                 `min` is available for this method to indicate the minimum string
+	 *                                 length. If only the default validation options are required, this
+	 *                                 parameter can be given as an integer value, which will be used as the
+	 *                                 minimum string length.
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -652,14 +652,14 @@ class Validate
 	/**
 	 * Validate a string does not exceed a maximum length.
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options. The additional option of
-	 *                        `max` is available for this method to indicate the maximum string
-	 *                        length. If only the default validation options are required, this
-	 *                        parameter can be given as an integer value, which will be used as the
-	 *                        maximum string length.
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options. The additional option of
+	 *                                 `max` is available for this method to indicate the maximum string
+	 *                                 length. If only the default validation options are required, this
+	 *                                 parameter can be given as an integer value, which will be used as the
+	 *                                 maximum string length.
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -690,12 +690,12 @@ class Validate
 	/**
 	 * Require a string with a certain minimum or maximum number of characters.
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options. The additional options of
-	 *                        `min` and `max` are available for this method to indicate the minimum
-	 *                        and maximum string lengths, respectively.
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options. The additional options of
+	 *                                 `min` and `max` are available for this method to indicate the minimum
+	 *                                 and maximum string lengths, respectively.
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -734,11 +734,11 @@ class Validate
 	/**
 	 * Validate as an IP address.
 	 *
-	 * @param string   $val  The value to check for validity
-	 * @param string[] $data The full data set submitted
-	 * @param array    $opts Validation options. No additional options are
-	 *                       available or required for this validation method.
-	 * @param array    $host Host information
+	 * @callback-param string   $val  The value to check for validity
+	 * @callback-param string[] $data The full data set submitted
+	 * @callback-param array    $opts Validation options. No additional options are
+	 *                                available or required for this validation method.
+	 * @callback-param array    $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -765,11 +765,11 @@ class Validate
 	/**
 	 * Validate as an URL address.
 	 *
-	 * @param string   $val  The value to check for validity
-	 * @param string[] $data The full data set submitted
-	 * @param array    $opts Validation options. No additional options are
-	 *                       available or required for this validation method.
-	 * @param array    $host Host information
+	 * @callback-param string   $val  The value to check for validity
+	 * @callback-param string[] $data The full data set submitted
+	 * @callback-param array    $opts Validation options. No additional options are
+	 *                                available or required for this validation method.
+	 * @callback-param array    $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -796,14 +796,14 @@ class Validate
 	/**
 	 * Check if string could contain an XSS attack string
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options. The additional options of
-	 *                        `db` - database connection object, `table` - database table to use and
-	 *                        `column` - the column to check this value against as value, are also
-	 *                        available. These options are not required and if not given are
-	 *                        automatically derived from the Editor and Field instances.
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options. The additional options of
+	 *                                 `db` - database connection object, `table` - database table to use and
+	 *                                 `column` - the column to check this value against as value, are also
+	 *                                 available. These options are not required and if not given are
+	 *                                 automatically derived from the Editor and Field instances.
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -830,14 +830,14 @@ class Validate
 	/**
 	 * Confirm that the value submitted is in a list of allowable values
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options. The additional options of
-	 *                        `db` - database connection object, `table` - database table to use and
-	 *                        `column` - the column to check this value against as value, are also
-	 *                        available. These options are not required and if not given are
-	 *                        automatically derived from the Editor and Field instances.
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options. The additional options of
+	 *                                 `db` - database connection object, `table` - database table to use and
+	 *                                 `column` - the column to check this value against as value, are also
+	 *                                 available. These options are not required and if not given are
+	 *                                 automatically derived from the Editor and Field instances.
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -864,14 +864,14 @@ class Validate
 	/**
 	 * Check if there are any tags in the submitted value
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options. The additional options of
-	 *                        `db` - database connection object, `table` - database table to use and
-	 *                        `column` - the column to check this value against as value, are also
-	 *                        available. These options are not required and if not given are
-	 *                        automatically derived from the Editor and Field instances.
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options. The additional options of
+	 *                                 `db` - database connection object, `table` - database table to use and
+	 *                                 `column` - the column to check this value against as value, are also
+	 *                                 available. These options are not required and if not given are
+	 *                                 automatically derived from the Editor and Field instances.
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -902,13 +902,13 @@ class Validate
 	/**
 	 * Check that a valid date input is given
 	 *
-	 * @param string       $val  The value to check for validity
-	 * @param string[]     $data The full data set submitted
-	 * @param array|string $opts If given as a string, then $opts is the date
-	 *                           format to check the validity of. If given as an array, then the
-	 *                           date format is in the 'format' parameter, and the return error
-	 *                           message in the 'message' parameter.
-	 * @param array        $host Host information
+	 * @callback-param string       $val  The value to check for validity
+	 * @callback-param string[]     $data The full data set submitted
+	 * @callback-param array|string $opts If given as a string, then $opts is the date
+	 *                                    format to check the validity of. If given as an array, then the
+	 *                                    date format is in the 'format' parameter, and the return error
+	 *                                    message in the 'message' parameter.
+	 * @callback-param array        $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -945,14 +945,14 @@ class Validate
 	/**
 	 * Check that the given value is unique in the database
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options. The additional options of
-	 *                        `db` - database connection object, `table` - database table to use and
-	 *                        `column` - the column to check this value against as value, are also
-	 *                        available. These options are not required and if not given are
-	 *                        automatically derived from the Editor and Field instances.
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options. The additional options of
+	 *                                 `db` - database connection object, `table` - database table to use and
+	 *                                 `column` - the column to check this value against as value, are also
+	 *                                 available. These options are not required and if not given are
+	 *                                 automatically derived from the Editor and Field instances.
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -1011,14 +1011,14 @@ class Validate
 	 * assumption that it will typically be used with a joined field), but the
 	 * table and field can also be specified via the options.
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options. The additional options of
-	 *                        `db` - database connection object, `table` - database table to use and
-	 *                        `column` - the column to check this value against as value, are also
-	 *                        available. These options are not required and if not given are
-	 *                        automatically derived from the Editor and Field instances.
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options. The additional options of
+	 *                                 `db` - database connection object, `table` - database table to use and
+	 *                                 `column` - the column to check this value against as value, are also
+	 *                                 available. These options are not required and if not given are
+	 *                                 automatically derived from the Editor and Field instances.
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.

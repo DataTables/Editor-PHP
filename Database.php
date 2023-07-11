@@ -144,7 +144,7 @@ class Database
 	/**
 	 * Get / set debug mode.
 	 *
-	 * @param bool $_ Debug mode state. If not given, then used as a getter.
+	 * @param bool $set Debug mode state. If not given, then used as a getter.
 	 *
 	 * @return bool|self Debug mode state if no parameter is given, or
 	 *                   self if used as a setter.

@@ -235,8 +235,6 @@ class SearchPaneOptions extends DataTables\Ext
 	/**
 	 * Execute the options (i.e. get them)
 	 *
-	 * @param Database $db Database connection
-	 *
 	 * @return array List of options
 	 *
 	 * @internal

@@ -43,9 +43,9 @@ abstract class Query
 	 * Note that typically instances of this class will be automatically created
 	 * through the {@see \DataTables\Database->query()} method.
 	 *
-	 * @param Database        $db    Database instance
-	 * @param string          $type  Query type - 'select', 'insert', 'update' or 'delete'
-	 * @param string|string[] $table Tables to operate on - see {@see Query->table()}.
+	 * @param Database        $dbHost Database instance
+	 * @param string          $type   Query type - 'select', 'insert', 'update' or 'delete'
+	 * @param string|string[] $table  Tables to operate on - see {@see Query->table()}.
 	 */
 	public function __construct($dbHost, $type, $table = null)
 	{
@@ -331,8 +331,8 @@ abstract class Query
 	/**
 	 * Get fields.
 	 *
-	 * @param string|string[] $get,... Fields to get - can be specified as
-	 *                                 individual fields or an array of fields.
+	 * @param string|string[] ...$get Fields to get - can be specified as
+	 *                                individual fields or an array of fields.
 	 *
 	 * @return self
 	 */
@@ -484,9 +484,9 @@ abstract class Query
 	/**
 	 * Set table(s) to perform the query on.
 	 *
-	 * @param string|string[] $table,... Table(s) to use - can be specified as
-	 *                                   individual names, an array of names, a string of comma separated
-	 *                                   names or any combination of those.
+	 * @param string|string[] ...$table Table(s) to use - can be specified as
+	 *                                  individual names, an array of names, a string of comma separated
+	 *                                  names or any combination of those.
 	 *
 	 * @return self
 	 */

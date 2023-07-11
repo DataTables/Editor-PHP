@@ -56,9 +56,9 @@ class Format
 	 * {@see Field} where the parameters required for this method will be
 	 * automatically satisfied.
 	 *
-	 * @param string   $val  Value to convert from MySQL date format
-	 * @param string[] $data Data for the whole row / submitted data
-	 * @param string   $opts Format to convert to using PHP date() options.
+	 * @callback-param string   $val  Value to convert from MySQL date format
+	 * @callback-param string[] $data Data for the whole row / submitted data
+	 * @callback-param string   $opts Format to convert to using PHP date() options.
 	 *
 	 * @return string Formatted date or empty string on error.
 	 */
@@ -84,9 +84,9 @@ class Format
 	 * {@see Field} where the parameters required for this method will be
 	 * automatically satisfied.
 	 *
-	 * @param string   $val  Value to convert to SQL date format
-	 * @param string[] $data Data for the whole row / submitted data
-	 * @param string   $opts Format to convert from using PHP date() options.
+	 * @callback-param string   $val  Value to convert to SQL date format
+	 * @callback-param string[] $data Data for the whole row / submitted data
+	 * @callback-param string   $opts Format to convert from using PHP date() options.
 	 *
 	 * @return string Formatted date or null on error.
 	 */
@@ -122,10 +122,10 @@ class Format
 	 * {@see Field} where the parameters required for this method will be
 	 * automatically satisfied.
 	 *
-	 * @param string   $val  Value to convert
-	 * @param string[] $data Data for the whole row / submitted data
-	 * @param string   $opts Array with `from` and `to` properties which are the
-	 *                       formats to convert from and to
+	 * @callback-param string   $val  Value to convert
+	 * @callback-param string[] $data Data for the whole row / submitted data
+	 * @callback-param string   $opts Array with `from` and `to` properties which are the
+	 *                                formats to convert from and to
 	 *
 	 * @return string Formatted date or null on error.
 	 */
@@ -153,9 +153,9 @@ class Format
 	/**
 	 * Convert a string of values into an array for use with checkboxes.
 	 *
-	 * @param string   $val  Value to convert to from a string to an array
-	 * @param string[] $data Data for the whole row / submitted data
-	 * @param string   $opts Field delimiter
+	 * @callback-param string   $val  Value to convert to from a string to an array
+	 * @callback-param string[] $data Data for the whole row / submitted data
+	 * @callback-param string   $opts Field delimiter
 	 *
 	 * @return string Formatted value or null on error.
 	 */
@@ -174,9 +174,9 @@ class Format
 	 * Convert an array of values from a checkbox into a string which can be
 	 * used to store in a text field in a database.
 	 *
-	 * @param string   $val  Value to convert to from an array to a string
-	 * @param string[] $data Data for the whole row / submitted data
-	 * @param string   $opts Field delimiter
+	 * @callback-param string   $val  Value to convert to from an array to a string
+	 * @callback-param string[] $data Data for the whole row / submitted data
+	 * @callback-param string   $opts Field delimiter
 	 *
 	 * @return string Formatted value or null on error.
 	 */
@@ -193,9 +193,9 @@ class Format
 	 * value, often leading to an empty string and null overlapping. This method
 	 * will check the value to operate on and return null if it is empty.
 	 *
-	 * @param string   $val  Value to convert to from a string to an array
-	 * @param string[] $data Data for the whole row / submitted data
-	 * @param string   $opts Field delimiter
+	 * @callback-param string   $val  Value to convert to from a string to an array
+	 * @callback-param string[] $data Data for the whole row / submitted data
+	 * @callback-param string   $opts Field delimiter
 	 *
 	 * @return string Formatted value or null on error.
 	 */
@@ -210,9 +210,9 @@ class Format
 	 * empty value is submitted by the client-side (e.g. null, 0, 'Not set',
 	 * etc)
 	 *
-	 * @param string   $val  Value to convert to from a string to an array
-	 * @param string[] $data Data for the whole row / submitted data
-	 * @param string   $opts Empty value
+	 * @callback-param string   $val  Value to convert to from a string to an array
+	 * @callback-param string[] $data Data for the whole row / submitted data
+	 * @callback-param string   $opts Empty value
 	 *
 	 * @return string Formatted value or null on error.
 	 */
@@ -231,9 +231,9 @@ class Format
 	 * input in regions where a comma is used as the decimal character. Use with
 	 * a set formatter.
 	 *
-	 * @param string   $val  Value to convert to from a string to an array
-	 * @param string[] $data Data for the whole row / submitted data
-	 * @param string   $opts Decimal place character (default ',')
+	 * @callback-param string   $val  Value to convert to from a string to an array
+	 * @callback-param string[] $data Data for the whole row / submitted data
+	 * @callback-param string   $opts Decimal place character (default ',')
 	 *
 	 * @return string Formatted value or null on error.
 	 */
@@ -248,9 +248,9 @@ class Format
 	 * Convert a number with a period (dot) as the decimal character to use
 	 * a different character (typically a comma). Use with a get formatter.
 	 *
-	 * @param string   $val  Value to convert to from a string to an array
-	 * @param string[] $data Data for the whole row / submitted data
-	 * @param string   $opts Decimal place character (default ',')
+	 * @callback-param string   $val  Value to convert to from a string to an array
+	 * @callback-param string[] $data Data for the whole row / submitted data
+	 * @callback-param string   $opts Decimal place character (default ',')
 	 *
 	 * @return string Formatted value or null on error.
 	 */

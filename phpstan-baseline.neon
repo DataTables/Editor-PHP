@@ -296,6 +296,11 @@ parameters:
 			path: Editor.php
 
 		-
+			message: "#^Parameter \\#1 \\$set of method DataTables\\\\Database\\:\\:debug\\(\\) expects bool\\|null, Closure given\\.$#"
+			count: 1
+			path: Editor.php
+
+		-
 			message: "#^Parameter \\#2 \\$parentId of method DataTables\\\\Editor\\\\Join\\:\\:create\\(\\) expects int, string given\\.$#"
 			count: 1
 			path: Editor.php
