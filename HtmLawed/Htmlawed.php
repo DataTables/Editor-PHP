@@ -281,37 +281,45 @@ class Htmlawed {
                     continue;
                 }
                 switch ($ruleType) {
-                    case 'maxlen': if ($lengthVal > $ruleVal) {
-                        $ok = 0;
-                    }
+                    case 'maxlen':
+                        if ($lengthVal > $ruleVal) {
+                            $ok = 0;
+                        }
                         break;
-                    case 'minlen': if ($lengthVal < $ruleVal) {
-                        $ok = 0;
-                    }
+                    case 'minlen':
+                        if ($lengthVal < $ruleVal) {
+                            $ok = 0;
+                        }
                         break;
-                    case 'maxval': if ((float) ($v) > $ruleVal) {
-                        $ok = 0;
-                    }
+                    case 'maxval':
+                        if ((float) ($v) > $ruleVal) {
+                            $ok = 0;
+                        }
                         break;
-                    case 'minval': if ((float) ($v) < $ruleVal) {
-                        $ok = 0;
-                    }
+                    case 'minval':
+                        if ((float) ($v) < $ruleVal) {
+                            $ok = 0;
+                        }
                         break;
-                    case 'match': if (!preg_match($ruleVal, $v)) {
-                        $ok = 0;
-                    }
+                    case 'match':
+                        if (!preg_match($ruleVal, $v)) {
+                            $ok = 0;
+                        }
                         break;
-                    case 'nomatch': if (preg_match($ruleVal, $v)) {
-                        $ok = 0;
-                    }
+                    case 'nomatch':
+                        if (preg_match($ruleVal, $v)) {
+                            $ok = 0;
+                        }
                         break;
-                    case 'oneof': if (!in_array($v, explode('|', $ruleVal))) {
-                        $ok = 0;
-                    }
+                    case 'oneof':
+                        if (!in_array($v, explode('|', $ruleVal))) {
+                            $ok = 0;
+                        }
                         break;
-                    case 'noneof': if (in_array($v, explode('|', $ruleVal))) {
-                        $ok = 0;
-                    }
+                    case 'noneof':
+                        if (in_array($v, explode('|', $ruleVal))) {
+                            $ok = 0;
+                        }
                         break;
                     default:
                         break;
@@ -1118,39 +1126,42 @@ class Htmlawed {
         while (strlen($attrStr)) {
             $ok = 0; // For parsing errors, to deal with space, ", and ' characters
             switch ($state) {
-                case 0: if (preg_match('`^[^=\s/\x7f-\x9f]+`', $attrStr, $m)) { // Name
-                    $attr = strtolower($m[0]);
-                    $ok = $state = 1;
-                    $attrStr = ltrim(substr_replace($attrStr, '', 0, strlen($m[0])));
-                }
+                case 0:
+                    if (preg_match('`^[^=\s/\x7f-\x9f]+`', $attrStr, $m)) { // Name
+                        $attr = strtolower($m[0]);
+                        $ok = $state = 1;
+                        $attrStr = ltrim(substr_replace($attrStr, '', 0, strlen($m[0])));
+                    }
                     break;
-                case 1: if ($attrStr[0] == '=') {
-                    $ok = 1;
-                    $state = 2;
-                    $attrStr = ltrim($attrStr, '= ');
-                } else { // No value
-                    $ok = 1;
-                    $state = 0;
-                    $attrStr = ltrim($attrStr);
-                    $attrAr[$attr] = '';
-                }
+                case 1:
+                    if ($attrStr[0] == '=') {
+                        $ok = 1;
+                        $state = 2;
+                        $attrStr = ltrim($attrStr, '= ');
+                    } else { // No value
+                        $ok = 1;
+                        $state = 0;
+                        $attrStr = ltrim($attrStr);
+                        $attrAr[$attr] = '';
+                    }
                     break;
-                case 2: if (preg_match('`^((?:"[^"]*")|(?:\'[^\']*\')|(?:\s*[^\s"\']+))(.*)`', $attrStr, $m)) { // Value
-                    $attrStr = ltrim($m[2]);
-                    $m = $m[1];
-                    $ok = 1;
-                    $state = 0;
-                    $attrAr[$attr] =
-                      trim(
-                          str_replace(
-                              '<',
-                              '&lt;',
-                              ($m[0] == '"' || $m[0] == '\'')
-                              ? substr($m, 1, -1)
-                              : $m
-                          )
-                      );
-                }
+                case 2:
+                    if (preg_match('`^((?:"[^"]*")|(?:\'[^\']*\')|(?:\s*[^\s"\']+))(.*)`', $attrStr, $m)) { // Value
+                        $attrStr = ltrim($m[2]);
+                        $m = $m[1];
+                        $ok = 1;
+                        $state = 0;
+                        $attrAr[$attr] =
+                          trim(
+                              str_replace(
+                                  '<',
+                                  '&lt;',
+                                  ($m[0] == '"' || $m[0] == '\'')
+                                  ? substr($m, 1, -1)
+                                  : $m
+                              )
+                          );
+                    }
                     break;
             }
             if (!$ok) {
