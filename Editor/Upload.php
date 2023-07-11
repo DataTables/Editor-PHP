@@ -223,7 +223,7 @@ class Upload extends DataTables\Ext {
 	 *     defined by the constants of this class. The value can also be a
 	 *     string or a closure function if you wish to send custom information
 	 *     to the database.
-	 * @param callable Formatting function that can change the data obtained
+	 * @param callable $format Formatting function that can change the data obtained
 	 *     from the database. Only gets a single parameter passed in - the
 	 *     database row for the file that is read.
 	 * @return self Current instance, used for chaining
@@ -318,8 +318,8 @@ class Upload extends DataTables\Ext {
 	/**
 	 * Get database information data from the table
 	 *
-	 * @param \DataTables\Database $db Database
-	 * @param number[] [$ids=null] Limit to a specific set of ids
+	 * @param \DataTables\Database $db  Database
+	 * @param number[]             $ids Limit to a specific set of ids
 	 * @return array Database information
 	 * @internal
 	 */

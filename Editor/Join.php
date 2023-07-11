@@ -650,8 +650,8 @@ class Join extends DataTables\Ext {
 	/**
 	 * Create a row.
 	 *  @param Editor $editor Host Editor instance
-	 *  @param int $parentId Parent row's primary key value
-	 *  @param string[] $data Data to be set for the join
+	 *  @param int    $parentId Parent row's primary key value
+	 *  @param array  $data Data to be set for the join
 	 *  @internal
 	 */
 	public function create ( $editor, $parentId, $data )

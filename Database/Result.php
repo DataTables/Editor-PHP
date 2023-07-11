@@ -44,7 +44,7 @@ abstract class Result {
 
 	/**
 	 * Get the next row in a result set
-	 *  @param int PDO row fetch style - PDO::FETCH_ASSOC is the default
+	 *  @param int $fetchType PDO row fetch style - PDO::FETCH_ASSOC is the default
 	 *  @return array
 	 */
 	abstract public function fetch ( $fetchType=\PDO::FETCH_ASSOC );
@@ -52,7 +52,7 @@ abstract class Result {
 
 	/**
 	 * Get all rows in the result set
-	 *  @param int PDO row fetch style - PDO::FETCH_ASSOC is the default
+	 *  @param int $fetchType PDO row fetch style - PDO::FETCH_ASSOC is the default
 	 *  @return array
 	 */
 	abstract public function fetchAll ( $fetchType=\PDO::FETCH_ASSOC );

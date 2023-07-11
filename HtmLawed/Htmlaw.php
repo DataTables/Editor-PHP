@@ -86,7 +86,7 @@ class Htmlaw {
     /**
      * Filter a string of html so that it can be put into an rss feed.
      *
-     * @param $html The html text to fitlter.
+     * @param string $html The html text to fitlter.
      * @return string Returns the filtered html.
      * @see Htmlawed::filter().
      */

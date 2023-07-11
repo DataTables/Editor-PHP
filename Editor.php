@@ -167,7 +167,7 @@ class Editor extends Ext {
 	/** @var DataTables\Editor\Join[] */
 	private $_join = array();
 
-	/** @var array */
+	/** @var string[] */
 	private $_pkey = array('id');
 
 	/** @var string[] */
@@ -228,7 +228,7 @@ class Editor extends Ext {
 	 * Get / set the action name to read in HTTP parameters. This can be useful
 	 * to set if you are using a framework that uses the default name of `action`
 	 * for something else (e.g. WordPress).
-	 *  @param string Value to set. If not given, then used as a getter.
+	 *  @param string $_ Value to set. If not given, then used as a getter.
 	 *  @return string|self Value, or self if used as a setter.
 	 */
 	public function actionName ( $_=null )
@@ -276,10 +276,10 @@ class Editor extends Ext {
 	 * added to the debug information sent back to the client-side. This can
 	 * be useful when debugging event listeners, etc.
 	 *
-	 *  @param bool|mixed $_ Debug mode state. If not given, then used as a
+	 *  @param bool|mixed $_    Debug mode state. If not given, then used as a
 	 *    getter. If given as anything other than a boolean, it will be added
 	 *    to the debug information sent back to the client.
-	 *  @param string     [$path=null] Set an output path to log debug information
+	 *  @param string     $path Set an output path to log debug information
 	 *  @return bool|self Debug mode state if no parameter is given, or
 	 *    self if used as a setter or when adding a debug message.
 	 */
@@ -344,7 +344,7 @@ class Editor extends Ext {
 	 * Get / set field instances.
 	 *
 	 * An alias of {@see field}, for convenience.
-	 *  @param Field $_... Instances of the {@see Field} class, given as a single
+	 *  @param Field|Field[] $_... Instances of the {@see Field} class, given as a single
 	 *    instance of {@see Field}, an array of {@see Field} instances, or multiple
 	 *    {@see Field} instance parameters for the function.
 	 *  @return Field[]|self Array of fields, or self if used as a setter.
@@ -421,9 +421,9 @@ class Editor extends Ext {
 	 *
 	 * Basically the same as the {@see Editor->data()} method, but in this case we echo, or
 	 * return the JSON string of the data.
-	 *  @param bool $print Echo the JSON string out (true, default) or return it
+	 *  @param bool $print  Echo the JSON string out (true, default) or return it
 	 *    (false).
-	 *  @param int         JSON encode option https://www.php.net/manual/en/json.constants.php
+	 *  @param int $options JSON encode option https://www.php.net/manual/en/json.constants.php
 	 *  @return string|self self if printing the JSON, or JSON representation of
 	 *    the processed data if false is given as the first parameter.
 	 */
@@ -584,10 +584,10 @@ class Editor extends Ext {
 	 * The primary key must be known to Editor so it will know which rows are being
 	 * edited / deleted upon those actions. The default value is ['id'].
 	 *
-	 *  @param string|array $_ Primary key's name. If not given, then used as a
+	 *  @param string|string[] $_ Primary key's name. If not given, then used as a
 	 *    getter. An array of column names can be given to allow composite keys to
 	 *    be used.
-	 *  @return string|self Primary key value if no parameter is given, or
+	 *  @return string[]|self Primary key value if no parameter is given, or
 	 *    self if used as a setter.
 	 */
 	public function pkey ( $_=null )
@@ -603,7 +603,7 @@ class Editor extends Ext {
 	/**
 	 * Convert a primary key array of field values to a combined value.
 	 *
-	 * @param  string  $row   The row of data that the primary key value should
+	 * @param  array  $row   The row of data that the primary key value should
 	 *   be extracted from.
 	 * @param  bool    $flat  Flag to indicate if the given array is flat
 	 *   (useful for `where` conditions) or nested for join tables.
@@ -1470,9 +1470,9 @@ class Editor extends Ext {
 	 * Get information about the files that are detailed in the database for
 	 * the fields which have an upload method defined on them.
 	 *
-	 * @param  string [$limitTable=null] Limit the data gathering to a single
+	 * @param  string  $limitTable Limit the data gathering to a single
 	 *     table only
-	 * @param number[] [$id=null] Limit to a specific set of ids
+	 * @param number[] $id Limit to a specific set of ids
 	 * @return array File information
 	 * @private
 	 */
@@ -1508,7 +1508,7 @@ class Editor extends Ext {
 	 * Common file get method for any array of fields
 	 * @param  array &$files File output array
 	 * @param  Field[] $fields Fields to get file information about
-	 * @param  string[] $limitTable Limit the data gathering to a single table
+	 * @param  string  $limitTable Limit the data gathering to a single table
 	 *     only
 	 * @private
 	 */
@@ -2582,7 +2582,7 @@ class Editor extends Ext {
 	/**
 	 * Create the separator value for a compound primary key.
 	 *
-	 * @return string Calculated separator
+	 * @return non-empty-string Calculated separator
 	 */
 	private function _pkey_separator ()
 	{

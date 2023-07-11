@@ -124,22 +124,22 @@ class Field extends DataTables\Ext {
 	/** @var mixed */
 	private $_getValue = null;
 
-	/** @var Options */
+	/** @var Options|null */
 	private $_opts = null;
 
-	/** @var SearchPaneOptions */
+	/** @var SearchPaneOptions|null */
 	private $_spopts = null;
 
-	/** @var SearchBuilderOptions */
+	/** @var SearchBuilderOptions|null */
 	private $_sbopts = null;
 
-	/** @var callable */
+	/** @var callable|null */
 	private $_optsFn = null;
 
-	/** @var callable */
+	/** @var callable|null */
 	private $_spoptsFn = null;
 
-	/** @var callable */
+	/** @var callable|null */
 	private $_sboptsFn = null;
 
 	/** @var string */

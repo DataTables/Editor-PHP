@@ -122,7 +122,7 @@ abstract class Query {
 	protected $_limit = null;
 
 	/**
-	 * @var int
+	 * @var string
 	 * @internal
 	 */
 	protected $_group_by = null;
@@ -437,7 +437,7 @@ abstract class Query {
 
 	/**
 	 * Group the results by the values in a field
-	 * @param string The field of which the values are to be grouped
+	 * @param string $group_by The field of which the values are to be grouped
 	 * @return self
 	 */
 	public function group_by ( $group_by )
@@ -747,9 +747,9 @@ abstract class Query {
 	 * Note this is only suitable for local values, not a sub-query. For that use
 	 * `->where()` with an unbound value.
 	 *
-	 *  @param string Field name
-	 *  @param array Values
-	 *  @param string Conditional operator to use to join to the
+	 *  @param string $field    Field name
+	 *  @param array  $arr      Values
+	 *  @param string $operator Conditional operator to use to join to the
 	 *      preceding condition. Default `AND`.
 	 *  @return self
 	 */
@@ -1203,7 +1203,7 @@ abstract class Query {
 	/**
 	 * Add an individual where condition to the query.
 	 * @internal
-	 * @param $where
+	 * @param string|array $where
 	 * @param null $value
 	 * @param string $type
 	 * @param string $op

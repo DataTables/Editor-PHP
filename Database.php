@@ -35,7 +35,7 @@ class Database {
 
 	/**
 	 * Database instance constructor.
-	 *  @param string[] $opts Array of connection parameters for the database:
+	 *  @param array<string, string|\PDO> $opts Array of connection parameters for the database:
 	 *    ```php
 	 *      array(
 	 *          "user" => "", // User name
