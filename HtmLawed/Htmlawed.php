@@ -740,7 +740,7 @@ class Htmlawed
 		  str_replace(
 		  	array('&', '<', '>'),
 		  	array("\x03", "\x04", "\x05"),
-		  	$type == 'comment' ? "\x01\x02\x04!--$t--\x05\x02\x01" : "\x01\x01\x04$t\x05\x01\x01"
+		  	$type == 'comment' ? "\x01\x02\x04!--{$t}--\x05\x02\x01" : "\x01\x01\x04{$t}\x05\x01\x01"
 		  );
 	}
 
@@ -1101,7 +1101,7 @@ class Htmlawed
 			return
 				!isset($emptyEleAr[$ele])
 				? (empty($C['hook_tag'])
-				   ? "</$ele>"
+				   ? "</{$ele}>"
 				   : call_user_func($C['hook_tag'], $ele, 0))
 				: ($C['keep_bad'] % 2
 				   ? str_replace(array('<', '>'), array('&lt;', '&gt;'), $t)
@@ -1245,7 +1245,7 @@ class Htmlawed
 
 				 && (empty($deniedAttrAr)
 					 || (isset($deniedAttrAr['*'])
-						 ? (isset($deniedAttrAr["-$attr"])
+						 ? (isset($deniedAttrAr["-{$attr}"])
 							|| isset($deniedAttrAr['-' . preg_replace('`^(on|aria|data)..+`', '\\1', $attr) . '*']))
 						 : (!isset($deniedAttrAr[$attr])
 							&& !isset($deniedAttrAr[preg_replace('`^(on|aria|data).+`', '\\1', $attr) . '*'])))))
@@ -1514,7 +1514,7 @@ class Htmlawed
 	 */
 	public static function hl_tidy($t, $format, $parentEle)
 	{
-		if (strpos(' pre,script,textarea', "$parentEle,")) {
+		if (strpos(' pre,script,textarea', "{$parentEle},")) {
 			return $t;
 		}
 
@@ -1547,7 +1547,7 @@ class Htmlawed
 		if (($format = strtolower($format)) == -1) {
 			return str_replace(array("\x01", "\x02", "\x03", "\x04", "\x05", "\x07"), array('<', '>', "\n", "\r", "\t", ' '), $t);
 		}
-		$padChar = strpos(" $format", 't') ? "\t" : ' ';
+		$padChar = strpos(" {$format}", 't') ? "\t" : ' ';
 		$padStr =
 		  preg_match('`\d`', $format, $m)
 		  ? str_repeat($padChar, (int) $m[0])
@@ -1576,11 +1576,11 @@ class Htmlawed
 				list($tag, $rest) = explode('>', $eleAr[$i]);
 				$open = $tag[0] == '/' ? 0 : (substr($tag, -1) == '/' ? 1 : ($tag[0] != '!' ? 2 : -1));
 				$ele = !$open ? ltrim($tag, '/') : ($open > 0 ? substr($tag, 0, strcspn($tag, ' ')) : 0);
-				$tag = "<$tag>";
+				$tag = "<{$tag}>";
 				if (isset($prePostEleAr[$ele])) {
 					if (!$open) {
 						if ($n) {
-							echo "\n", str_repeat($padStr, --$n), "$tag\n", str_repeat($padStr, $n);
+							echo "\n", str_repeat($padStr, --$n), "{$tag}\n", str_repeat($padStr, $n);
 						} else {
 							++$leadN;
 							ob_end_clean();
@@ -1588,7 +1588,7 @@ class Htmlawed
 							continue 2;
 						}
 					} else {
-						echo "\n", str_repeat($padStr, $n), "$tag\n", str_repeat($padStr, $open != 1 ? ++$n : $n);
+						echo "\n", str_repeat($padStr, $n), "{$tag}\n", str_repeat($padStr, $open != 1 ? ++$n : $n);
 					}
 					echo $rest;
 
@@ -1615,7 +1615,7 @@ class Htmlawed
 		}
 		$t = str_replace(array("\n ", " \n"), "\n", preg_replace('`[\n]\s*?[\n]+`', "\n", ob_get_contents()));
 		ob_end_clean();
-		if ($newline = strpos(" $format", 'r') ? (strpos(" $format", 'n') ? "\r\n" : "\r") : 0) {
+		if ($newline = strpos(" {$format}", 'r') ? (strpos(" {$format}", 'n') ? "\r\n" : "\r") : 0) {
 			$t = str_replace("\n", $newline, $t);
 		}
 

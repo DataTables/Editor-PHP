@@ -81,8 +81,6 @@ return $config
 
 		// TODO
 		'dir_constant' => false,
-		'explicit_indirect_variable' => false,
-		'explicit_string_variable' => false,
 		'general_phpdoc_annotation_remove' => false,
 		'increment_style' => false,
 		'no_null_property_initialization' => false,
