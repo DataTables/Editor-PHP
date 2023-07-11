@@ -13,8 +13,9 @@
 
 namespace DataTables;
 
-// Ensure Editor is loadable.
-if (!defined('DATATABLES') && !class_exists('\DataTables\Editor')) {
+// ensure included from DataTables.php
+// this file must not be included when installed using composer
+if (!defined('DATATABLES')) {
 	exit(1);
 }
 
