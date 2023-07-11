@@ -63,16 +63,16 @@ class Field extends DataTables\Ext
 	 */
 
 	/** Set option flag (`set()`) - do not set data */
-	const SET_NONE = 'none';
+	public const SET_NONE = 'none';
 
 	/** Set option flag (`set()`) - write to database on both create and edit */
-	const SET_BOTH = 'both';
+	public const SET_BOTH = 'both';
 
 	/** Set option flag (`set()`) - write to database only on create */
-	const SET_CREATE = 'create';
+	public const SET_CREATE = 'create';
 
 	/** Set option flag (`set()`) - write to database only on edit */
-	const SET_EDIT = 'edit';
+	public const SET_EDIT = 'edit';
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
@@ -86,7 +86,7 @@ class Field extends DataTables\Ext
 	 *                        HTTP submit from the client-side when editing. If not given then the
 	 *                        $dbField name is used.
 	 */
-	function __construct($dbField = null, $name = null)
+	public function __construct($dbField = null, $name = null)
 	{
 		if ($dbField !== null && $name === null) {
 			// Allow just a single parameter to be passed - each can be

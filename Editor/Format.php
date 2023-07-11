@@ -21,31 +21,31 @@ namespace DataTables\Editor;
 class Format
 {
 	/** Date format: 2012-03-09. jQuery UI equivalent format: yy-mm-dd */
-	const DATE_ISO_8601 = 'Y-m-d';
+	public const DATE_ISO_8601 = 'Y-m-d';
 
 	/** Date format: Fri, 9 Mar 12. jQuery UI equivalent format: D, d M y */
-	const DATE_ISO_822 = 'D, j M y';
+	public const DATE_ISO_822 = 'D, j M y';
 
 	/** Date format: Friday, 09-Mar-12.  jQuery UI equivalent format: DD, dd-M-y */
-	const DATE_ISO_850 = 'l, d-M-y';
+	public const DATE_ISO_850 = 'l, d-M-y';
 
 	/** Date format: Fri, 9 Mar 12. jQuery UI equivalent format: D, d M y */
-	const DATE_ISO_1036 = 'D, j M y';
+	public const DATE_ISO_1036 = 'D, j M y';
 
 	/** Date format: Fri, 9 Mar 2012. jQuery UI equivalent format: D, d M yy */
-	const DATE_ISO_1123 = 'D, j M Y';
+	public const DATE_ISO_1123 = 'D, j M Y';
 
 	/** Date format: Fri, 9 Mar 2012. jQuery UI equivalent format: D, d M yy */
-	const DATE_ISO_2822 = 'D, j M Y';
+	public const DATE_ISO_2822 = 'D, j M Y';
 
 	/** Date format: March-. jQuery UI equivalent format: D, d M yy */
-	const DATE_USA = 'm-d-Y';
+	public const DATE_USA = 'm-d-Y';
 
 	/** Date format: 1331251200. jQuery UI equivalent format: @ */
-	const DATE_TIMESTAMP = 'U';
+	public const DATE_TIMESTAMP = 'U';
 
 	/** Date format: 1331251200. jQuery UI equivalent format: @ */
-	const DATE_EPOCH = 'U';
+	public const DATE_EPOCH = 'U';
 
 	/**
 	 * Convert from SQL date / date time format to a format given by the options

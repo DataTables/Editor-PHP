@@ -115,7 +115,6 @@ return $config
 		'phpdoc_types_order' => false,
 		'ternary_to_null_coalescing' => false,
 		'trailing_comma_in_multiline' => false,
-		'visibility_required' => false,
 		'yoda_style' => false,
 	))
 	->setFinder($finder)

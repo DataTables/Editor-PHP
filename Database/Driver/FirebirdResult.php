@@ -27,7 +27,7 @@ class FirebirdResult extends Result
 	 * Constructor
 	 */
 
-	function __construct($dbh, $stmt, $pkey)
+	public function __construct($dbh, $stmt, $pkey)
 	{
 		$this->_dbh = $dbh;
 		$this->_stmt = $stmt;

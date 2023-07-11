@@ -48,7 +48,7 @@ class Database
 	 *                                         )
 	 *                                         ```
 	 */
-	function __construct($opts)
+	public function __construct($opts)
 	{
 		$types = array('Mysql', 'Oracle', 'Postgres', 'Sqlite', 'Sqlserver', 'Db2', 'Firebird');
 

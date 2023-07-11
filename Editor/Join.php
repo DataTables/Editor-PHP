@@ -68,7 +68,7 @@ class Join extends DataTables\Ext
 	 * @param string $type  Work with a single result ('object') or an array of
 	 *                      results ('array') for the join.
 	 */
-	function __construct($table = null, $type = 'object')
+	public function __construct($table = null, $type = 'object')
 	{
 		$this->table($table);
 		$this->type($type);

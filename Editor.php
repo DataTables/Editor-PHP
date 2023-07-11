@@ -65,19 +65,19 @@ class Editor extends Ext
 	 */
 
 	/** Request type - read */
-	const ACTION_READ = 'read';
+	public const ACTION_READ = 'read';
 
 	/** Request type - create */
-	const ACTION_CREATE = 'create';
+	public const ACTION_CREATE = 'create';
 
 	/** Request type - edit */
-	const ACTION_EDIT = 'edit';
+	public const ACTION_EDIT = 'edit';
 
 	/** Request type - delete */
-	const ACTION_DELETE = 'remove';
+	public const ACTION_DELETE = 'remove';
 
 	/** Request type - upload */
-	const ACTION_UPLOAD = 'upload';
+	public const ACTION_UPLOAD = 'upload';
 
 	/**
 	 * Determine the request type from an HTTP request.
@@ -90,7 +90,7 @@ class Editor extends Ext
 	 *                `Editor::ACTION_EDIT` or `Editor::ACTION_DELETE` indicating the request
 	 *                type.
 	 */
-	static public function action ($http, $name = 'action')
+	public static function action ($http, $name = 'action')
 	{
 		if (!isset($http[$name])) {
 			return self::ACTION_READ;
@@ -124,7 +124,7 @@ class Editor extends Ext
 	 * @param string|array $pkey  Primary key column name in the table given in
 	 *                            the $table parameter. Can be given here or with the 'pkey' method.
 	 */
-	function __construct($db = null, $table = null, $pkey = null)
+	public function __construct($db = null, $table = null, $pkey = null)
 	{
 		// Set constructor parameters using the API - note that the get/set will
 		// ignore null values if they are used (i.e. not passed in)

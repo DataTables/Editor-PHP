@@ -26,7 +26,7 @@ class Db2Result extends Result
 	 * Constructor
 	 */
 
-	function __construct($dbh, $stmt)
+	public function __construct($dbh, $stmt)
 	{
 		$this->_dbh = $dbh;
 		$this->_stmt = $stmt;

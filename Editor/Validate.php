@@ -281,7 +281,7 @@ class Validate
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
 	 */
-	static function basic($cfg = null)
+	public static function basic($cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
@@ -314,7 +314,7 @@ class Validate
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
 	 */
-	static function required($cfg = null)
+	public static function required($cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 		$opts->allowEmpty(false);
@@ -344,7 +344,7 @@ class Validate
 	 *
 	 * @return callable Validation function
 	 */
-	static function notEmpty($cfg = null)
+	public static function notEmpty($cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 		$opts->allowEmpty(false);
@@ -1087,7 +1087,7 @@ class Validate
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	* File validation methods
 	*/
-	static function fileExtensions ($extensions, $msg = 'This file type cannot be uploaded.')
+	public static function fileExtensions ($extensions, $msg = 'This file type cannot be uploaded.')
 	{
 		return function ($file) use ($extensions, $msg) {
 			$extn = pathinfo($file['name'], PATHINFO_EXTENSION);
@@ -1102,7 +1102,7 @@ class Validate
 		};
 	}
 
-	static function fileSize ($size, $msg = 'Uploaded file is too large.')
+	public static function fileSize ($size, $msg = 'Uploaded file is too large.')
 	{
 		return function ($file) use ($size, $msg) {
 			return $file['size'] > $size ?
@@ -1114,7 +1114,7 @@ class Validate
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	* Mjoin validation methods
 	*/
-	static function mjoinMinCount ($count, $msg = 'Too few items.')
+	public static function mjoinMinCount ($count, $msg = 'Too few items.')
 	{
 		return function ($editor, $action, $values) use ($count, $msg) {
 			if ($action === 'create' || $action === 'edit') {
@@ -1126,7 +1126,7 @@ class Validate
 		};
 	}
 
-	static function mjoinMaxCount ($count, $msg = 'Too many items.')
+	public static function mjoinMaxCount ($count, $msg = 'Too many items.')
 	{
 		return function ($editor, $action, $values) use ($count, $msg) {
 			if ($action === 'create' || $action === 'edit') {
@@ -1147,7 +1147,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function noneLegacy($legacyOpts)
+	public static function noneLegacy($legacyOpts)
 	{
 		return Validate::none();
 	}
@@ -1155,7 +1155,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function basicLegacy($legacyOpts)
+	public static function basicLegacy($legacyOpts)
 	{
 		$cfg = Validate::_extend($legacyOpts, null, array());
 		$opts = Validate::_commonLegacy($cfg);
@@ -1166,7 +1166,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function requiredLegacy($legacyOpts)
+	public static function requiredLegacy($legacyOpts)
 	{
 		$cfg = Validate::_extend($legacyOpts, null, array(
 			'message' => 'This field is required.'
@@ -1179,7 +1179,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function notEmptyLegacy($legacyOpts)
+	public static function notEmptyLegacy($legacyOpts)
 	{
 		$cfg = Validate::_extend($legacyOpts, null, array(
 			'message' => 'This field is required.'
@@ -1192,7 +1192,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function booleanLegacy($legacyOpts)
+	public static function booleanLegacy($legacyOpts)
 	{
 		$cfg = Validate::_extend($legacyOpts, null, array(
 			'message' => 'Please enter true or false.'
@@ -1205,7 +1205,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function numericLegacy($legacyOpts)
+	public static function numericLegacy($legacyOpts)
 	{
 		$cfg = Validate::_extend($legacyOpts, null, array(
 			'message' => 'This input must be given as a number.'
@@ -1220,7 +1220,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function minNumLegacy($legacyOpts)
+	public static function minNumLegacy($legacyOpts)
 	{
 		$min = is_array($legacyOpts) ? $legacyOpts['min'] : $legacyOpts;
 		$cfg = Validate::_extend($legacyOpts, null, array(
@@ -1236,7 +1236,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function maxNumLegacy($legacyOpts)
+	public static function maxNumLegacy($legacyOpts)
 	{
 		$max = is_array($legacyOpts) ? $legacyOpts['max'] : $legacyOpts;
 		$cfg = Validate::_extend($legacyOpts, null, array(
@@ -1252,7 +1252,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function minMaxNumLegacy($legacyOpts)
+	public static function minMaxNumLegacy($legacyOpts)
 	{
 		$min = $legacyOpts['min'];
 		$max = $legacyOpts['max'];
@@ -1267,7 +1267,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function emailLegacy($legacyOpts)
+	public static function emailLegacy($legacyOpts)
 	{
 		$cfg = Validate::_extend($legacyOpts, null, array(
 			'message' => 'Please enter a valid e-mail address.'
@@ -1280,7 +1280,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function minLenLegacy($legacyOpts)
+	public static function minLenLegacy($legacyOpts)
 	{
 		$min = is_array($legacyOpts) ? $legacyOpts['min'] : $legacyOpts;
 		$cfg = Validate::_extend($legacyOpts, null, array(
@@ -1294,7 +1294,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function maxLenLegacy($legacyOpts)
+	public static function maxLenLegacy($legacyOpts)
 	{
 		$max = is_array($legacyOpts) ? $legacyOpts['max'] : $legacyOpts;
 		$cfg = Validate::_extend($legacyOpts, null, array(
@@ -1308,7 +1308,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function minMaxLenLegacy($legacyOpts)
+	public static function minMaxLenLegacy($legacyOpts)
 	{
 		$min = $legacyOpts['min'];
 		$max = $legacyOpts['max'];
@@ -1321,7 +1321,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function ipLegacy($legacyOpts)
+	public static function ipLegacy($legacyOpts)
 	{
 		$cfg = Validate::_extend($legacyOpts, null, array(
 			'message' => 'Please enter a valid IP address.'
@@ -1334,7 +1334,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function urlLegacy($legacyOpts)
+	public static function urlLegacy($legacyOpts)
 	{
 		$cfg = Validate::_extend($legacyOpts, null, array(
 			'message' => 'Please enter a valid URL.'
@@ -1347,7 +1347,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function xssLegacy($legacyOpts)
+	public static function xssLegacy($legacyOpts)
 	{
 		$cfg = Validate::_extend($legacyOpts, null, array(
 			'message' => 'This field contains potentially unsafe data.'
@@ -1360,7 +1360,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function valuesLegacy($legacyOpts)
+	public static function valuesLegacy($legacyOpts)
 	{
 		$values = isset($legacyOpts['valid']) ? $legacyOpts['valid'] : $legacyOpts;
 		$cfg = Validate::_extend($legacyOpts, null, array(
@@ -1374,7 +1374,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function noTagsLegacy($legacyOpts)
+	public static function noTagsLegacy($legacyOpts)
 	{
 		$cfg = Validate::_extend($legacyOpts, null, array(
 			'message' => 'This field may not contain HTML.'
@@ -1387,7 +1387,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function dateFormatLegacy($legacyOpts)
+	public static function dateFormatLegacy($legacyOpts)
 	{
 		$format = is_array($legacyOpts) ? $legacyOpts['format'] : $legacyOpts;
 		$cfg = Validate::_extend($legacyOpts, null, array(
@@ -1401,7 +1401,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function uniqueLegacy($legacyOpts)
+	public static function uniqueLegacy($legacyOpts)
 	{
 		$table = isset($legacyOpts['table']) ? $legacyOpts['table'] : null;
 		$column = isset($legacyOpts['column']) ? $legacyOpts['column'] : null;
@@ -1417,7 +1417,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function dbValuesLegacy($legacyOpts)
+	public static function dbValuesLegacy($legacyOpts)
 	{
 		$table = isset($legacyOpts['table']) ? $legacyOpts['table'] : null;
 		$column = isset($legacyOpts['column']) ? $legacyOpts['column'] : null;

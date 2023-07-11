@@ -33,7 +33,7 @@ class MysqlQuery extends Query
 	 * Public methods
 	 */
 
-	static function connect($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '')
+	public static function connect($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '')
 	{
 		if (is_array($user)) {
 			$opts = $user;

@@ -24,7 +24,7 @@ class ValidateOptions extends DataTables\Ext
 	private $_message = 'Input not valid';
 	private $_optional = true;
 
-	function __construct($opts = null)
+	public function __construct($opts = null)
 	{
 		if ($opts) {
 			if (isset($opts['empty'])) {
@@ -98,7 +98,7 @@ class ValidateOptions extends DataTables\Ext
 	/**
 	 * @internal
 	 */
-	static public function select ($user)
+	public static function select ($user)
 	{
 		if ($user) {
 			return $user;

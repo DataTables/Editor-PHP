@@ -237,7 +237,7 @@ abstract class Query
 	 *
 	 * @internal
 	 */
-	static function dsnPostfix ($dsn)
+	public static function dsnPostfix ($dsn)
 	{
 		if (!$dsn) {
 			return '';

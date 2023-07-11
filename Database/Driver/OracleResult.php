@@ -25,7 +25,7 @@ class OracleResult extends Result
 	 * Constructor
 	 */
 
-	function __construct($dbh, $stmt, $pkey_val)
+	public function __construct($dbh, $stmt, $pkey_val)
 	{
 		$this->_dbh = $dbh;
 		$this->_stmt = $stmt;
