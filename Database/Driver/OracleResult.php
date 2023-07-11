@@ -21,55 +21,55 @@ use DataTables\Database\Result;
  */
 class OracleResult extends Result
 {
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     * Constructor
-     */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * Constructor
+	 */
 
-    function __construct($dbh, $stmt, $pkey_val)
-    {
-        $this->_dbh = $dbh;
-        $this->_stmt = $stmt;
-        $this->_pkey_val = $pkey_val;
-    }
+	function __construct($dbh, $stmt, $pkey_val)
+	{
+		$this->_dbh = $dbh;
+		$this->_stmt = $stmt;
+		$this->_pkey_val = $pkey_val;
+	}
 
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     * Private properties
-     */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * Private properties
+	 */
 
-    private $_stmt; // Result from oci_parse
-    private $_dbh; // Result from oci_connect
-    private $_rows = null;
-    private $_pkey_val;
+	private $_stmt; // Result from oci_parse
+	private $_dbh; // Result from oci_connect
+	private $_rows = null;
+	private $_pkey_val;
 
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     * Public methods
-     */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * Public methods
+	 */
 
-    public function count ()
-    {
-        return count($this->fetchAll());
-    }
+	public function count ()
+	{
+		return count($this->fetchAll());
+	}
 
-    public function fetch ($fetchType = \PDO::FETCH_ASSOC /* irrelevant for oci8 */)
-    {
-        return oci_fetch_assoc($this->_stmt);
-    }
+	public function fetch ($fetchType = \PDO::FETCH_ASSOC /* irrelevant for oci8 */)
+	{
+		return oci_fetch_assoc($this->_stmt);
+	}
 
-    public function fetchAll ($fetchType = \PDO::FETCH_ASSOC /* irrelevant for oci8 */)
-    {
-        if (!$this->_rows) {
-            $out = array();
+	public function fetchAll ($fetchType = \PDO::FETCH_ASSOC /* irrelevant for oci8 */)
+	{
+		if (!$this->_rows) {
+			$out = array();
 
-            oci_fetch_all($this->_stmt, $out, 0, -1, OCI_FETCHSTATEMENT_BY_ROW + OCI_ASSOC);
+			oci_fetch_all($this->_stmt, $out, 0, -1, OCI_FETCHSTATEMENT_BY_ROW + OCI_ASSOC);
 
-            $this->_rows = $out;
-        }
+			$this->_rows = $out;
+		}
 
-        return $this->_rows;
-    }
+		return $this->_rows;
+	}
 
-    public function insertId ()
-    {
-        return $this->_pkey_val;
-    }
+	public function insertId ()
+	{
+		return $this->_pkey_val;
+	}
 }

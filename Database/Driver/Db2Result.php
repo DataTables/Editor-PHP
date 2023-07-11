@@ -22,56 +22,56 @@ use DataTables\Database\Result;
  */
 class Db2Result extends Result
 {
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     * Constructor
-     */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * Constructor
+	 */
 
-    function __construct($dbh, $stmt)
-    {
-        $this->_dbh = $dbh;
-        $this->_stmt = $stmt;
-    }
+	function __construct($dbh, $stmt)
+	{
+		$this->_dbh = $dbh;
+		$this->_stmt = $stmt;
+	}
 
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     * Private properties
-     */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * Private properties
+	 */
 
-    private $_stmt;
-    private $_dbh;
-    private $_allRows = null;
+	private $_stmt;
+	private $_dbh;
+	private $_allRows = null;
 
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     * Public methods
-     */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * Public methods
+	 */
 
-    public function count ()
-    {
-        $all = $this->_fetchAll();
-        return count($all);
-    }
+	public function count ()
+	{
+		$all = $this->_fetchAll();
+		return count($all);
+	}
 
-    public function fetch ($fetchType = \PDO::FETCH_ASSOC)
-    {
-        return db2_fetch_assoc($this->_stmt);
-    }
+	public function fetch ($fetchType = \PDO::FETCH_ASSOC)
+	{
+		return db2_fetch_assoc($this->_stmt);
+	}
 
-    public function fetchAll ($fetchType = \PDO::FETCH_ASSOC)
-    {
-        $all = $this->_fetchAll();
-        return $all;
-    }
+	public function fetchAll ($fetchType = \PDO::FETCH_ASSOC)
+	{
+		$all = $this->_fetchAll();
+		return $all;
+	}
 
-    public function insertId ()
-    {
-        return db2_last_insert_id($this->_dbh);
-    }
+	public function insertId ()
+	{
+		return db2_last_insert_id($this->_dbh);
+	}
 
-    private function _fetchAll ()
-    {
-        $a = array();
-        while ($row = db2_fetch_assoc($this->_stmt)) {
-            $a[] = $row;
-        }
-        return $a;
-    }
+	private function _fetchAll ()
+	{
+		$a = array();
+		while ($row = db2_fetch_assoc($this->_stmt)) {
+			$a[] = $row;
+		}
+		return $a;
+	}
 }

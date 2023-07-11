@@ -62,285 +62,285 @@ use DataTables\Database;
  */
 class Options extends DataTables\Ext
 {
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     * Private parameters
-     */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * Private parameters
+	 */
 
-    /** @var string Table to get the information from */
-    private $_table = null;
+	/** @var string Table to get the information from */
+	private $_table = null;
 
-    /** @var string Column name containing the value */
-    private $_value = null;
+	/** @var string Column name containing the value */
+	private $_value = null;
 
-    /** @var string[] Column names for the label(s) */
-    private $_label = array();
+	/** @var string[] Column names for the label(s) */
+	private $_label = array();
 
-    /** Information for left join */
-    private $_leftJoin = array();
+	/** Information for left join */
+	private $_leftJoin = array();
 
-    /** @var integer Row limit */
-    private $_limit = null;
+	/** @var integer Row limit */
+	private $_limit = null;
 
-    /** @var callable Callback function to do rendering of labels */
-    private $_renderer = null;
+	/** @var callable Callback function to do rendering of labels */
+	private $_renderer = null;
 
-    /** @var callable Callback function to add where conditions */
-    private $_where = null;
+	/** @var callable Callback function to add where conditions */
+	private $_where = null;
 
-    /** @var string ORDER BY clause */
-    private $_order = null;
+	/** @var string ORDER BY clause */
+	private $_order = null;
 
-    private $_manualAdd = array();
+	private $_manualAdd = array();
 
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     * Public methods
-     */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * Public methods
+	 */
 
-    /**
-     * Add extra options to the list, in addition to any obtained from the database
-     *
-     * @param string      $label The label to use for the option
-     * @param string|null $value Value for the option. If not given, the label will be used
-     *
-     * @return Options Self for chaining
-     */
-    public function add ($label, $value = null)
-    {
-        if ($value === null) {
-            $value = $label;
-        }
+	/**
+	 * Add extra options to the list, in addition to any obtained from the database
+	 *
+	 * @param string      $label The label to use for the option
+	 * @param string|null $value Value for the option. If not given, the label will be used
+	 *
+	 * @return Options Self for chaining
+	 */
+	public function add ($label, $value = null)
+	{
+		if ($value === null) {
+			$value = $label;
+		}
 
-        $this->_manualAdd[] = array(
-            'label' => $label,
-            'value' => $value
-        );
+		$this->_manualAdd[] = array(
+			'label' => $label,
+			'value' => $value
+		);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get / set the column(s) to use as the label value of the options
-     *
-     * @param null|string|string[] $_ null to get the current value, string or
-     *                                array to get.
-     *
-     * @return Options|string[] Self if setting for chaining, array of values if
-     *                          getting.
-     */
-    public function label ($_ = null)
-    {
-        if ($_ === null) {
-            return $this;
-        } else if (is_string($_)) {
-            $this->_label = array($_);
-        } else {
-            $this->_label = $_;
-        }
+	/**
+	 * Get / set the column(s) to use as the label value of the options
+	 *
+	 * @param null|string|string[] $_ null to get the current value, string or
+	 *                                array to get.
+	 *
+	 * @return Options|string[] Self if setting for chaining, array of values if
+	 *                          getting.
+	 */
+	public function label ($_ = null)
+	{
+		if ($_ === null) {
+			return $this;
+		} else if (is_string($_)) {
+			$this->_label = array($_);
+		} else {
+			$this->_label = $_;
+		}
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Set up a left join operation for the options
-     *
-     * @param string $table    to get the information from
-     * @param string $field1   the first field to get the information from
-     * @param string $operator the operation to perform on the two fields
-     * @param string $field2   the second field to get the information from
-     *
-     * @return self
-     */
-    public function leftJoin ($table, $field1, $operator, $field2)
-    {
-        $this->_leftJoin[] = array(
-            'table' => $table,
-            'field1' => $field1,
-            'field2' => $field2,
-            'operator' => $operator
-        );
+	/**
+	 * Set up a left join operation for the options
+	 *
+	 * @param string $table    to get the information from
+	 * @param string $field1   the first field to get the information from
+	 * @param string $operator the operation to perform on the two fields
+	 * @param string $field2   the second field to get the information from
+	 *
+	 * @return self
+	 */
+	public function leftJoin ($table, $field1, $operator, $field2)
+	{
+		$this->_leftJoin[] = array(
+			'table' => $table,
+			'field1' => $field1,
+			'field2' => $field2,
+			'operator' => $operator
+		);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get / set the LIMIT clause to limit the number of records returned.
-     *
-     * @param null|number $_ Number of rows to limit the result to
-     *
-     * @return Options|string[] Self if setting for chaining, limit if getting.
-     */
-    public function limit ($_ = null)
-    {
-        return $this->_getSet($this->_limit, $_);
-    }
+	/**
+	 * Get / set the LIMIT clause to limit the number of records returned.
+	 *
+	 * @param null|number $_ Number of rows to limit the result to
+	 *
+	 * @return Options|string[] Self if setting for chaining, limit if getting.
+	 */
+	public function limit ($_ = null)
+	{
+		return $this->_getSet($this->_limit, $_);
+	}
 
-    /**
-     * Get / set the ORDER BY clause to use in the SQL. If this option is not
-     * provided the ordering will be based on the rendered output, either
-     * numerically or alphabetically based on the data returned by the renderer.
-     *
-     * @param null|string $_ String to set, null to get current value
-     *
-     * @return Options|string Self if setting for chaining, string if getting.
-     */
-    public function order ($_ = null)
-    {
-        return $this->_getSet($this->_order, $_);
-    }
+	/**
+	 * Get / set the ORDER BY clause to use in the SQL. If this option is not
+	 * provided the ordering will be based on the rendered output, either
+	 * numerically or alphabetically based on the data returned by the renderer.
+	 *
+	 * @param null|string $_ String to set, null to get current value
+	 *
+	 * @return Options|string Self if setting for chaining, string if getting.
+	 */
+	public function order ($_ = null)
+	{
+		return $this->_getSet($this->_order, $_);
+	}
 
-    /**
-     * Get / set the label renderer. The renderer can be used to combine
-     * multiple database columns into a single string that is shown as the label
-     * to the end user in the list of options.
-     *
-     * @param null|callable $_ Function to set, null to get current value
-     *
-     * @return Options|callable Self if setting for chaining, callable if
-     *                          getting.
-     */
-    public function render ($_ = null)
-    {
-        return $this->_getSet($this->_renderer, $_);
-    }
+	/**
+	 * Get / set the label renderer. The renderer can be used to combine
+	 * multiple database columns into a single string that is shown as the label
+	 * to the end user in the list of options.
+	 *
+	 * @param null|callable $_ Function to set, null to get current value
+	 *
+	 * @return Options|callable Self if setting for chaining, callable if
+	 *                          getting.
+	 */
+	public function render ($_ = null)
+	{
+		return $this->_getSet($this->_renderer, $_);
+	}
 
-    /**
-     * Get / set the database table from which to gather the options for the
-     * list.
-     *
-     * @param null|string $_ String to set, null to get current value
-     *
-     * @return Options|string Self if setting for chaining, string if getting.
-     */
-    public function table ($_ = null)
-    {
-        return $this->_getSet($this->_table, $_);
-    }
+	/**
+	 * Get / set the database table from which to gather the options for the
+	 * list.
+	 *
+	 * @param null|string $_ String to set, null to get current value
+	 *
+	 * @return Options|string Self if setting for chaining, string if getting.
+	 */
+	public function table ($_ = null)
+	{
+		return $this->_getSet($this->_table, $_);
+	}
 
-    /**
-     * Get / set the column name to use for the value in the options list. This
-     * would normally be the primary key for the table.
-     *
-     * @param null|string $_ String to set, null to get current value
-     *
-     * @return Options|string Self if setting for chaining, string if getting.
-     */
-    public function value ($_ = null)
-    {
-        return $this->_getSet($this->_value, $_);
-    }
+	/**
+	 * Get / set the column name to use for the value in the options list. This
+	 * would normally be the primary key for the table.
+	 *
+	 * @param null|string $_ String to set, null to get current value
+	 *
+	 * @return Options|string Self if setting for chaining, string if getting.
+	 */
+	public function value ($_ = null)
+	{
+		return $this->_getSet($this->_value, $_);
+	}
 
-    /**
-     * Get / set the method to use for a WHERE condition if it is to be
-     * applied to the query to get the options.
-     *
-     * @param null|callable $_ Function to set, null to get current value
-     *
-     * @return Options|callable Self if setting for chaining, callable if
-     *                          getting.
-     */
-    public function where ($_ = null)
-    {
-        return $this->_getSet($this->_where, $_);
-    }
+	/**
+	 * Get / set the method to use for a WHERE condition if it is to be
+	 * applied to the query to get the options.
+	 *
+	 * @param null|callable $_ Function to set, null to get current value
+	 *
+	 * @return Options|callable Self if setting for chaining, callable if
+	 *                          getting.
+	 */
+	public function where ($_ = null)
+	{
+		return $this->_getSet($this->_where, $_);
+	}
 
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     * Internal methods
-     */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * Internal methods
+	 */
 
-    /**
-     * Execute the options (i.e. get them)
-     *
-     * @param Database $db Database connection
-     *
-     * @return array List of options
-     *
-     * @internal
-     */
-    public function exec ($db)
-    {
-        $label = $this->_label;
-        $value = $this->_value;
-        $formatter = $this->_renderer;
+	/**
+	 * Execute the options (i.e. get them)
+	 *
+	 * @param Database $db Database connection
+	 *
+	 * @return array List of options
+	 *
+	 * @internal
+	 */
+	public function exec ($db)
+	{
+		$label = $this->_label;
+		$value = $this->_value;
+		$formatter = $this->_renderer;
 
-        // Create a list of the fields that we need to get from the db
-        $fields = array();
-        $fields[] = $value;
-        $fields = array_merge($fields, $label);
+		// Create a list of the fields that we need to get from the db
+		$fields = array();
+		$fields[] = $value;
+		$fields = array_merge($fields, $label);
 
-        // We need a default formatter if one isn't provided
-        if (!$formatter) {
-            $formatter = function ($row) use ($label) {
-                $a = array();
+		// We need a default formatter if one isn't provided
+		if (!$formatter) {
+			$formatter = function ($row) use ($label) {
+				$a = array();
 
-                for ($i = 0, $ien = count($label); $i < $ien; $i++) {
-                    $a[] = $row[$label[$i]];
-                }
+				for ($i = 0, $ien = count($label); $i < $ien; $i++) {
+					$a[] = $row[$label[$i]];
+				}
 
-                return implode(' ', $a);
-            };
-        }
+				return implode(' ', $a);
+			};
+		}
 
-        // Get the data
-        $q = $db
-            ->query('select')
-            ->distinct(true)
-            ->table($this->_table)
-            ->left_join($this->_leftJoin)
-            ->get($fields)
-            ->where($this->_where);
+		// Get the data
+		$q = $db
+			->query('select')
+			->distinct(true)
+			->table($this->_table)
+			->left_join($this->_leftJoin)
+			->get($fields)
+			->where($this->_where);
 
-        if ($this->_order) {
-            // For cases where we are ordering by a field which isn't included in the list
-            // of fields to display, we need to add the ordering field, due to the
-            // select distinct.
-            $orderFields = explode(',', $this->_order);
+		if ($this->_order) {
+			// For cases where we are ordering by a field which isn't included in the list
+			// of fields to display, we need to add the ordering field, due to the
+			// select distinct.
+			$orderFields = explode(',', $this->_order);
 
-            for ($i = 0, $ien = count($orderFields); $i < $ien; $i++) {
-                $field = strtolower($orderFields[$i]);
-                $field = str_replace(' asc', '', $field);
-                $field = str_replace(' desc', '', $field);
-                $field = trim($field);
+			for ($i = 0, $ien = count($orderFields); $i < $ien; $i++) {
+				$field = strtolower($orderFields[$i]);
+				$field = str_replace(' asc', '', $field);
+				$field = str_replace(' desc', '', $field);
+				$field = trim($field);
 
-                if (!in_array($field, $fields)) {
-                    $q->get($field);
-                }
-            }
+				if (!in_array($field, $fields)) {
+					$q->get($field);
+				}
+			}
 
-            $q->order($this->_order);
-        }
+			$q->order($this->_order);
+		}
 
-        if ($this->_limit !== null) {
-            $q->limit($this->_limit);
-        }
+		if ($this->_limit !== null) {
+			$q->limit($this->_limit);
+		}
 
-        $rows = $q
-            ->exec()
-            ->fetchAll();
+		$rows = $q
+			->exec()
+			->fetchAll();
 
-        // Create the output array
-        $out = array();
+		// Create the output array
+		$out = array();
 
-        for ($i = 0, $ien = count($rows); $i < $ien; $i++) {
-            $out[] = array(
-                'label' => $formatter($rows[$i]),
-                'value' => $rows[$i][$value]
-            );
-        }
+		for ($i = 0, $ien = count($rows); $i < $ien; $i++) {
+			$out[] = array(
+				'label' => $formatter($rows[$i]),
+				'value' => $rows[$i][$value]
+			);
+		}
 
-        // Stick on any extra manually added options
-        if (count($this->_manualAdd)) {
-            $out = array_merge($out, $this->_manualAdd);
-        }
+		// Stick on any extra manually added options
+		if (count($this->_manualAdd)) {
+			$out = array_merge($out, $this->_manualAdd);
+		}
 
-        // Only sort if there was no SQL order field
-        if (!$this->_order) {
-            usort($out, function ($a, $b) {
-                return is_numeric($a['label']) && is_numeric($b['label']) ?
-                    ($a['label'] * 1) - ($b['label'] * 1) :
-                    strcmp($a['label'], $b['label']);
-            });
-        }
+		// Only sort if there was no SQL order field
+		if (!$this->_order) {
+			usort($out, function ($a, $b) {
+				return is_numeric($a['label']) && is_numeric($b['label']) ?
+					($a['label'] * 1) - ($b['label'] * 1) :
+					strcmp($a['label'], $b['label']);
+			});
+		}
 
-        return $out;
-    }
+		return $out;
+	}
 }

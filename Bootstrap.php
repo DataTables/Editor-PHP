@@ -16,7 +16,7 @@ namespace DataTables;
 // ensure included from DataTables.php
 // this file must not be included when installed using composer
 if (!defined('DATATABLES')) {
-    exit(1);
+	exit(1);
 }
 
 //
@@ -24,20 +24,20 @@ if (!defined('DATATABLES')) {
 //   Automatically loads DataTables classes - they are psr-4 compliant
 //
 spl_autoload_register(function ($class) {
-    $a = explode('\\', $class);
+	$a = explode('\\', $class);
 
-    // Are we working in the DataTables namespace
-    if ($a[0] !== 'DataTables') {
-        return;
-    }
+	// Are we working in the DataTables namespace
+	if ($a[0] !== 'DataTables') {
+		return;
+	}
 
-    array_shift($a);
-    $className = array_pop($a);
-    $path = count($a) ?
-        implode('/', $a) . '/' :
-        '';
+	array_shift($a);
+	$className = array_pop($a);
+	$path = count($a) ?
+		implode('/', $a) . '/' :
+		'';
 
-    require(dirname(__FILE__) . '/' . $path . $className . '.php');
+	require(dirname(__FILE__) . '/' . $path . $className . '.php');
 });
 
 //
@@ -45,7 +45,7 @@ spl_autoload_register(function ($class) {
 //   Load the database connection configuration options
 //
 if (!isset($sql_details)) {
-    include(dirname(__FILE__) . '/config.php');
+	include(dirname(__FILE__) . '/config.php');
 }
 
 //

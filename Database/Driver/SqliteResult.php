@@ -23,44 +23,44 @@ use DataTables\Database\Result;
  */
 class SqliteResult extends Result
 {
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     * Constructor
-     */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * Constructor
+	 */
 
-    function __construct($dbh, $stmt)
-    {
-        $this->_dbh = $dbh;
-        $this->_stmt = $stmt;
-    }
+	function __construct($dbh, $stmt)
+	{
+		$this->_dbh = $dbh;
+		$this->_stmt = $stmt;
+	}
 
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     * Private properties
-     */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * Private properties
+	 */
 
-    private $_stmt;
-    private $_dbh;
+	private $_stmt;
+	private $_dbh;
 
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     * Public methods
-     */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * Public methods
+	 */
 
-    public function count ()
-    {
-        return count($this->fetchAll());
-    }
+	public function count ()
+	{
+		return count($this->fetchAll());
+	}
 
-    public function fetch ($fetchType = \PDO::FETCH_ASSOC)
-    {
-        return $this->_stmt->fetch($fetchType);
-    }
+	public function fetch ($fetchType = \PDO::FETCH_ASSOC)
+	{
+		return $this->_stmt->fetch($fetchType);
+	}
 
-    public function fetchAll ($fetchType = \PDO::FETCH_ASSOC)
-    {
-        return $this->_stmt->fetchAll($fetchType);
-    }
+	public function fetchAll ($fetchType = \PDO::FETCH_ASSOC)
+	{
+		return $this->_stmt->fetchAll($fetchType);
+	}
 
-    public function insertId ()
-    {
-        return $this->_dbh->lastInsertId();
-    }
+	public function insertId ()
+	{
+		return $this->_dbh->lastInsertId();
+	}
 }

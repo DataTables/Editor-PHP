@@ -36,83 +36,83 @@ namespace DataTables\HtmLawed;
  */
 class Htmlaw
 {
-    // / Methods ///
+	// / Methods ///
 
-    public static $defaultConfig = array(
-        'anti_link_spam' => array('`.`', ''),
-        'comment' => 1,
-        'cdata' => 3,
-        'css_expression' => 1,
-        'deny_attribute' => 'on*',
-        'unique_ids' => 0,
-        'elements' => '*-applet-form-input-textarea-iframe-script-style-embed-object',
-        'keep_bad' => 1,
-        'schemes' => 'classid:clsid; href: aim, feed, file, ftp, gopher, http, https, irc, mailto, news, nntp, sftp, ssh, telnet; style: nil; *:file, http, https', // clsid allowed in class
-        'valid_xhtml' => 0,
-        'direct_list_nest' => 1,
-        'balance' => 1
-    );
+	public static $defaultConfig = array(
+		'anti_link_spam' => array('`.`', ''),
+		'comment' => 1,
+		'cdata' => 3,
+		'css_expression' => 1,
+		'deny_attribute' => 'on*',
+		'unique_ids' => 0,
+		'elements' => '*-applet-form-input-textarea-iframe-script-style-embed-object',
+		'keep_bad' => 1,
+		'schemes' => 'classid:clsid; href: aim, feed, file, ftp, gopher, http, https, irc, mailto, news, nntp, sftp, ssh, telnet; style: nil; *:file, http, https', // clsid allowed in class
+		'valid_xhtml' => 0,
+		'direct_list_nest' => 1,
+		'balance' => 1
+	);
 
-    public static $defaultSpec = array(
-        'object=-classid-type, -codebase',
-        'embed=type(oneof=application/x-shockwave-flash)'
-    );
+	public static $defaultSpec = array(
+		'object=-classid-type, -codebase',
+		'embed=type(oneof=application/x-shockwave-flash)'
+	);
 
-    /**
-     * Filters a string of html with the htmLawed library.
-     *
-     * @param string            $html   The text to filter.
-     * @param array|null        $config Config settings for the array.
-     * @param string|array|null $spec   A specification to further limit the allowed attribute values in the html.
-     *
-     * @return string Returns the filtered html.
-     *
-     * @see http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/htmLawed_README.htm
-     */
-    public static function filter($html, array $config = null, $spec = null)
-    {
-        if ($config === null) {
-            $config = self::$defaultConfig;
-        }
+	/**
+	 * Filters a string of html with the htmLawed library.
+	 *
+	 * @param string            $html   The text to filter.
+	 * @param array|null        $config Config settings for the array.
+	 * @param string|array|null $spec   A specification to further limit the allowed attribute values in the html.
+	 *
+	 * @return string Returns the filtered html.
+	 *
+	 * @see http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/htmLawed_README.htm
+	 */
+	public static function filter($html, array $config = null, $spec = null)
+	{
+		if ($config === null) {
+			$config = self::$defaultConfig;
+		}
 
-        if (isset($config['spec']) && !$spec) {
-            $spec = $config['spec'];
-        }
+		if (isset($config['spec']) && !$spec) {
+			$spec = $config['spec'];
+		}
 
-        if ($spec === null) {
-            $spec = static::$defaultSpec;
-        }
+		if ($spec === null) {
+			$spec = static::$defaultSpec;
+		}
 
-        return Htmlawed::hl($html, $config, $spec);
-    }
+		return Htmlawed::hl($html, $config, $spec);
+	}
 
-    /**
-     * Filter a string of html so that it can be put into an rss feed.
-     *
-     * @param string $html The html text to fitlter.
-     *
-     * @return string Returns the filtered html.
-     *
-     * @see Htmlawed::filter().
-     */
-    public static function filterRSS($html)
-    {
-        $config = array(
-            'anti_link_spam' => array('`.`', ''),
-            'comment' => 1,
-            'cdata' => 3,
-            'css_expression' => 1,
-            'deny_attribute' => 'on*,style,class',
-            'elements' => '*-applet-form-input-textarea-iframe-script-style-object-embed-comment-link-listing-meta-noscript-plaintext-xmp',
-            'keep_bad' => 0,
-            'schemes' => 'classid:clsid; href: aim, feed, file, ftp, gopher, http, https, irc, mailto, news, nntp, sftp, ssh, telnet; style: nil; *:file, http, https', // clsid allowed in class
-            'valid_xml' => 2,
-            'balance' => 1
-        );
-        $spec = static::$defaultSpec;
+	/**
+	 * Filter a string of html so that it can be put into an rss feed.
+	 *
+	 * @param string $html The html text to fitlter.
+	 *
+	 * @return string Returns the filtered html.
+	 *
+	 * @see Htmlawed::filter().
+	 */
+	public static function filterRSS($html)
+	{
+		$config = array(
+			'anti_link_spam' => array('`.`', ''),
+			'comment' => 1,
+			'cdata' => 3,
+			'css_expression' => 1,
+			'deny_attribute' => 'on*,style,class',
+			'elements' => '*-applet-form-input-textarea-iframe-script-style-object-embed-comment-link-listing-meta-noscript-plaintext-xmp',
+			'keep_bad' => 0,
+			'schemes' => 'classid:clsid; href: aim, feed, file, ftp, gopher, http, https, irc, mailto, news, nntp, sftp, ssh, telnet; style: nil; *:file, http, https', // clsid allowed in class
+			'valid_xml' => 2,
+			'balance' => 1
+		);
+		$spec = static::$defaultSpec;
 
-        $result = static::filter($html, $config, $spec);
+		$result = static::filter($html, $config, $spec);
 
-        return $result;
-    }
+		return $result;
+	}
 }

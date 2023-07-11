@@ -24,76 +24,76 @@ use DataTables\Database\Driver\PostgresResult;
  */
 class PostgresQuery extends Query
 {
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     * Private properties
-     */
-    private $_stmt;
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * Private properties
+	 */
+	private $_stmt;
 
-    protected $_identifier_limiter = array('"', '"');
+	protected $_identifier_limiter = array('"', '"');
 
-    protected $_field_quote = '"';
+	protected $_field_quote = '"';
 
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     * Public methods
-     */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * Public methods
+	 */
 
-    static function connect($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '')
-    {
-        if (is_array($user)) {
-            $opts = $user;
-            $user = $opts['user'];
-            $pass = $opts['pass'];
-            $port = $opts['port'];
-            $host = $opts['host'];
-            $db = $opts['db'];
-            $dsn = isset($opts['dsn']) ? $opts['dsn'] : '';
-            $pdoAttr = isset($opts['pdoAttr']) ? $opts['pdoAttr'] : array();
-        }
+	static function connect($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '')
+	{
+		if (is_array($user)) {
+			$opts = $user;
+			$user = $opts['user'];
+			$pass = $opts['pass'];
+			$port = $opts['port'];
+			$host = $opts['host'];
+			$db = $opts['db'];
+			$dsn = isset($opts['dsn']) ? $opts['dsn'] : '';
+			$pdoAttr = isset($opts['pdoAttr']) ? $opts['pdoAttr'] : array();
+		}
 
-        if ($port !== '') {
-            $port = "port={$port};";
-        }
+		if ($port !== '') {
+			$port = "port={$port};";
+		}
 
-        try {
-            $pdoAttr[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+		try {
+			$pdoAttr[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 
-            $pdo = @new PDO(
-                "pgsql:host={$host};{$port}dbname={$db}" . self::dsnPostfix($dsn),
-                $user,
-                $pass,
-                $pdoAttr
-            );
-        } catch (\PDOException $e) {
-            // If we can't establish a DB connection then we return a DataTables
-            // error.
-            echo json_encode(array(
-                'error' => 'An error occurred while connecting to the database ' .
-                    "'{$db}'. The error reported by the server was: " . $e->getMessage()
-            ));
-            exit(1);
-        }
+			$pdo = @new PDO(
+				"pgsql:host={$host};{$port}dbname={$db}" . self::dsnPostfix($dsn),
+				$user,
+				$pass,
+				$pdoAttr
+			);
+		} catch (\PDOException $e) {
+			// If we can't establish a DB connection then we return a DataTables
+			// error.
+			echo json_encode(array(
+				'error' => 'An error occurred while connecting to the database ' .
+					"'{$db}'. The error reported by the server was: " . $e->getMessage()
+			));
+			exit(1);
+		}
 
-        return $pdo;
-    }
+		return $pdo;
+	}
 
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     * Protected methods
-     */
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * Protected methods
+	 */
 
-    protected function _prepare($sql)
-    {
-        $this->database()->debugInfo($sql, $this->_bindings);
+	protected function _prepare($sql)
+	{
+		$this->database()->debugInfo($sql, $this->_bindings);
 
-        $resource = $this->database()->resource();
+		$resource = $this->database()->resource();
 
-        // Add a RETURNING command to postgres insert queries so we can get the
-        // pkey value from the query reliably
-        if ($this->_type === 'insert') {
-            $table = explode(' as ', $this->_table[0]);
+		// Add a RETURNING command to postgres insert queries so we can get the
+		// pkey value from the query reliably
+		if ($this->_type === 'insert') {
+			$table = explode(' as ', $this->_table[0]);
 
-            // Get the pkey field name
-            $pkRes = $resource->prepare(
-                "SELECT
+			// Get the pkey field name
+			$pkRes = $resource->prepare(
+				"SELECT
 					pg_attribute.attname,
 					format_type(pg_attribute.atttypid, pg_attribute.atttypmod)
 				FROM pg_index, pg_class, pg_attribute
@@ -103,38 +103,38 @@ class PostgresQuery extends Query
 					pg_attribute.attrelid = pg_class.oid AND
 					pg_attribute.attnum = any(pg_index.indkey)
 					AND indisprimary"
-            );
-            $pkRes->execute();
-            $row = $pkRes->fetch();
+			);
+			$pkRes->execute();
+			$row = $pkRes->fetch();
 
-            if ($row && isset($row['attname'])) {
-                $sql .= ' RETURNING ' . $row['attname'] . ' as dt_pkey';
-            }
-        }
+			if ($row && isset($row['attname'])) {
+				$sql .= ' RETURNING ' . $row['attname'] . ' as dt_pkey';
+			}
+		}
 
-        $this->_stmt = $resource->prepare($sql);
+		$this->_stmt = $resource->prepare($sql);
 
-        // bind values
-        for ($i = 0; $i < count($this->_bindings); $i++) {
-            $binding = $this->_bindings[$i];
+		// bind values
+		for ($i = 0; $i < count($this->_bindings); $i++) {
+			$binding = $this->_bindings[$i];
 
-            $this->_stmt->bindValue(
-                $binding['name'],
-                $binding['value'],
-                $binding['type'] ? $binding['type'] : \PDO::PARAM_STR
-            );
-        }
-    }
+			$this->_stmt->bindValue(
+				$binding['name'],
+				$binding['value'],
+				$binding['type'] ? $binding['type'] : \PDO::PARAM_STR
+			);
+		}
+	}
 
-    protected function _exec()
-    {
-        try {
-            $this->_stmt->execute();
-        } catch (\PDOException $e) {
-            throw new \Exception('An SQL error occurred: ' . $e->getMessage(), 0, $e);
-        }
+	protected function _exec()
+	{
+		try {
+			$this->_stmt->execute();
+		} catch (\PDOException $e) {
+			throw new \Exception('An SQL error occurred: ' . $e->getMessage(), 0, $e);
+		}
 
-        $resource = $this->database()->resource();
-        return new PostgresResult($resource, $this->_stmt);
-    }
+		$resource = $this->database()->resource();
+		return new PostgresResult($resource, $this->_stmt);
+	}
 }
