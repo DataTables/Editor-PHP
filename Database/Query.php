@@ -344,11 +344,11 @@ abstract class Query
 			return $this;
 		}
 
-		for ($i = 0; $i < count($args); $i++) {
+		for ($i = 0; $i < count($args); ++$i) {
 			// If argument is an array then we loop over and add each using a
 			// recursive call
 			if (is_array($args[$i])) {
-				for ($j = 0; $j < count($args[$i]); $j++) {
+				for ($j = 0; $j < count($args[$i]); ++$j) {
 					$this->get($args[$i][$j]);
 				}
 			} elseif (strpos($args[$i], ',') !== false && strpos($args[$i], '(') === false) {
@@ -356,7 +356,7 @@ abstract class Query
 				// an array on input
 				$a = explode(',', $args[$i]);
 
-				for ($j = 0; $j < count($a); $j++) {
+				for ($j = 0; $j < count($a); ++$j) {
 					$this->get($a[$j]);
 				}
 			} else {
@@ -412,7 +412,7 @@ abstract class Query
 			);
 		}
 
-		for ($i = 0, $ien = count($joins); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($joins); $i < $ien; ++$i) {
 			$join = $joins[$i];
 
 			if ($join['field2'] === null && $join['operator'] === null) {
@@ -498,14 +498,14 @@ abstract class Query
 
 		if (is_array($table)) {
 			// Array so loop internally
-			for ($i = 0; $i < count($table); $i++) {
+			for ($i = 0; $i < count($table); ++$i) {
 				$this->table($table[$i]);
 			}
 		} else {
 			// String based, explode for multiple tables
 			$tables = explode(',', $table);
 
-			for ($i = 0; $i < count($tables); $i++) {
+			for ($i = 0; $i < count($tables); ++$i) {
 				$this->_table[] = $this->_protect_identifiers(trim($tables[$i]));
 			}
 		}
@@ -546,7 +546,7 @@ abstract class Query
 			$order = preg_split('/\,(?![^\(]*\))/', $order);
 		}
 
-		for ($i = 0; $i < count($order); $i++) {
+		for ($i = 0; $i < count($order); ++$i) {
 			// Simplify the white-space
 			$order[$i] = trim(preg_replace('/[\t ]+/', ' ', $order[$i]));
 
@@ -642,7 +642,7 @@ abstract class Query
 			$key($this);
 			$this->_where_group(false, 'OR');
 		} elseif (!is_array($key) && is_array($value)) {
-			for ($i = 0; $i < count($value); $i++) {
+			for ($i = 0; $i < count($value); ++$i) {
 				$this->where($key, $value[$i], $op, $bind);
 			}
 		} else {
@@ -704,7 +704,7 @@ abstract class Query
 			$this->_where_group(false, 'OR');
 		} else {
 			if (!is_array($key) && is_array($value)) {
-				for ($i = 0; $i < count($value); $i++) {
+				for ($i = 0; $i < count($value); ++$i) {
 					$this->or_where($key, $value[$i], $op, $bind);
 				}
 
@@ -779,13 +779,13 @@ abstract class Query
 
 		// Need to build an array of the binders (having bound the values) so
 		// the query can be constructed
-		for ($i = 0, $ien = count($arr); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($arr); $i < $ien; ++$i) {
 			$binder = $prefix . $this->_whereInCnt;
 
 			$this->bind($binder, $arr[$i]);
 
 			$binders[] = $binder;
-			$this->_whereInCnt++;
+			++$this->_whereInCnt;
 		}
 
 		$this->_where[] = array(
@@ -818,7 +818,7 @@ abstract class Query
 			' as ' :
 			' ';
 
-		for ($i = 0; $i < count($this->_field); $i++) {
+		for ($i = 0; $i < count($this->_field); ++$i) {
 			$field = $this->_field[$i];
 
 			// Keep the name when referring to a table
@@ -926,7 +926,7 @@ abstract class Query
 	{
 		$a = array();
 
-		for ($i = 0; $i < count($this->_field); $i++) {
+		for ($i = 0; $i < count($this->_field); ++$i) {
 			$field = $this->_field[$i];
 
 			if (isset($this->_noBind[$field])) {
@@ -952,7 +952,7 @@ abstract class Query
 			// insert, update and delete statements don't need or want aliases in the table name
 			$a = array();
 
-			for ($i = 0, $ien = count($this->_table); $i < $ien; $i++) {
+			for ($i = 0, $ien = count($this->_table); $i < $ien; ++$i) {
 				$table = str_ireplace(' as ', ' ', $this->_table[$i]);
 				$tableParts = explode(' ', $table);
 
@@ -976,7 +976,7 @@ abstract class Query
 	{
 		$a = array();
 
-		for ($i = 0, $ien = count($this->_field); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($this->_field); $i < $ien; ++$i) {
 			$a[] = ' :' . $this->_safe_bind($this->_field[$i]);
 		}
 
@@ -998,7 +998,7 @@ abstract class Query
 
 		$condition = 'WHERE ';
 
-		for ($i = 0; $i < count($this->_where); $i++) {
+		for ($i = 0; $i < count($this->_where); ++$i) {
 			if ($i === 0) {
 				// Nothing (simplifies the logic!)
 			} elseif ($this->_where[$i]['group'] === ')') {

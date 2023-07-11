@@ -1091,7 +1091,7 @@ class Validate
 		return function ($file) use ($extensions, $msg) {
 			$extn = pathinfo($file['name'], \PATHINFO_EXTENSION);
 
-			for ($i = 0, $ien = count($extensions); $i < $ien; $i++) {
+			for ($i = 0, $ien = count($extensions); $i < $ien; ++$i) {
 				if (strtolower($extn) === strtolower($extensions[$i])) {
 					return true;
 				}

@@ -323,7 +323,7 @@ class Editor extends Ext
 		$args = func_get_args();
 
 		if (is_string($_)) {
-			for ($i = 0, $ien = count($this->_fields); $i < $ien; $i++) {
+			for ($i = 0, $ien = count($this->_fields); $i < $ien; ++$i) {
 				if ($this->_fields[$i]->name() === $_) {
 					return $this->_fields[$i];
 				}
@@ -628,7 +628,7 @@ class Editor extends Ext
 		$pkey = $this->_pkey;
 		$id = array();
 
-		for ($i = 0, $ien = count($pkey); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($pkey); $i < $ien; ++$i) {
 			$column = $pkey[$i];
 
 			if ($flat) {
@@ -683,7 +683,7 @@ class Editor extends Ext
 			throw new \Exception("Primary key data doesn't match submitted data", 1);
 		}
 
-		for ($i = 0, $ien = count($idParts); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($idParts); $i < $ien; ++$i) {
 			if ($flat) {
 				$arr[$pkey[$i]] = $idParts[$i];
 			} else {
@@ -847,7 +847,7 @@ class Editor extends Ext
 		}
 
 		foreach ($data['data'] as $id => $values) {
-			for ($i = 0; $i < count($this->_fields); $i++) {
+			for ($i = 0; $i < count($this->_fields); ++$i) {
 				$field = $this->_fields[$i];
 				$validation = $field->validate(
 					$values,
@@ -864,7 +864,7 @@ class Editor extends Ext
 			}
 
 			// MJoin validation
-			for ($i = 0; $i < count($this->_join); $i++) {
+			for ($i = 0; $i < count($this->_join); ++$i) {
 				$this->_join[$i]->validate($errors, $this, $values, $data[$this->_actionName]);
 			}
 		}
@@ -995,7 +995,7 @@ class Editor extends Ext
 			$this->_prepJoin();
 
 			if ($validators) {
-				for ($i = 0; $i < count($validators); $i++) {
+				for ($i = 0; $i < count($validators); ++$i) {
 					$validator = $validators[$i];
 					$ret = $validator($this, $action, $data);
 
@@ -1188,7 +1188,7 @@ class Editor extends Ext
 		$searchBuilder['options'] = $sbOptions;
 
 		// Row based "joins"
-		for ($i = 0; $i < count($this->_join); $i++) {
+		for ($i = 0; $i < count($this->_join); ++$i) {
 			$this->_join[$i]->data($this, $out, $options);
 		}
 
@@ -1275,7 +1275,7 @@ class Editor extends Ext
 			$this->_pkey_submit_merge($id, $all);
 
 		// Join tables
-		for ($i = 0; $i < count($this->_join); $i++) {
+		for ($i = 0; $i < count($this->_join); ++$i) {
 			$this->_join[$i]->create($this, $id, $values);
 		}
 
@@ -1312,7 +1312,7 @@ class Editor extends Ext
 		$this->_insert_or_update($id, $values);
 
 		// And the join tables
-		for ($i = 0; $i < count($this->_join); $i++) {
+		for ($i = 0; $i < count($this->_join); ++$i) {
 			$this->_join[$i]->update($this, $id, $values);
 		}
 
@@ -1363,13 +1363,13 @@ class Editor extends Ext
 
 		// Row based joins - remove first as the host row will be removed which
 		// is a dependency
-		for ($i = 0; $i < count($this->_join); $i++) {
+		for ($i = 0; $i < count($this->_join); ++$i) {
 			$this->_join[$i]->remove($this, $ids);
 		}
 
 		// Remove from the left join tables
 		if ($this->_leftJoinRemove) {
-			for ($i = 0, $ien = count($this->_leftJoin); $i < $ien; $i++) {
+			for ($i = 0, $ien = count($this->_leftJoin); $i < $ien; ++$i) {
 				$join = $this->_leftJoin[$i];
 				$table = $this->_alias($join['table'], 'orig');
 
@@ -1393,7 +1393,7 @@ class Editor extends Ext
 		}
 
 		// Remove from the primary tables
-		for ($i = 0, $ien = count($this->_table); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($this->_table); $i < $ien; ++$i) {
 			$this->_remove_table($this->_table[$i], $ids);
 		}
 
@@ -1421,11 +1421,11 @@ class Editor extends Ext
 
 		if (!$field) {
 			// Perhaps it is in a join instance
-			for ($i = 0; $i < count($this->_join); $i++) {
+			for ($i = 0; $i < count($this->_join); ++$i) {
 				$join = $this->_join[$i];
 				$fields = $join->fields();
 
-				for ($j = 0, $jen = count($fields); $j < $jen; $j++) {
+				for ($j = 0, $jen = count($fields); $j < $jen; ++$j) {
 					$joinField = $fields[$j];
 					$name = $join->name() . '[].' . $joinField->name();
 
@@ -1492,7 +1492,7 @@ class Editor extends Ext
 		$this->_fileDataFields($files, $this->_fields, $limitTable, $ids, $data);
 
 		// From joined tables
-		for ($i = 0; $i < count($this->_join); $i++) {
+		for ($i = 0; $i < count($this->_join); ++$i) {
 			$joinData = null;
 
 			// If we have data from the get, it is nested from the join, so we need to
@@ -1500,7 +1500,7 @@ class Editor extends Ext
 			if ($data) {
 				$joinData = array();
 
-				for ($j = 0, $jen = count($data); $j < $jen; $j++) {
+				for ($j = 0, $jen = count($data); $j < $jen; ++$j) {
 					$joinData = array_merge($joinData, $data[$j][$this->_join[$i]->name()]);
 				}
 			}
@@ -1546,7 +1546,7 @@ class Editor extends Ext
 				}
 
 				if ($data !== null) {
-					for ($i = 0, $ien = count($data); $i < $ien; $i++) {
+					for ($i = 0, $ien = count($data); $i < $ien; ++$i) {
 						$val = $field->val('set', $data[$i]);
 
 						if ($val && !in_array($val, $ids)) {
@@ -1591,7 +1591,7 @@ class Editor extends Ext
 			}
 		}
 
-		for ($i = 0; $i < count($this->_join); $i++) {
+		for ($i = 0; $i < count($this->_join); ++$i) {
 			foreach ($this->_join[$i]->fields() as $field) {
 				$upload = $field->upload();
 
@@ -1697,7 +1697,7 @@ class Editor extends Ext
 	private function _ssp_sort($query, $http)
 	{
 		if (isset($http['order'])) {
-			for ($i = 0; $i < count($http['order']); $i++) {
+			for ($i = 0; $i < count($http['order']); ++$i) {
 				$order = $http['order'][$i];
 
 				$query->order(
@@ -1950,7 +1950,7 @@ class Editor extends Ext
 		// in the table (not the fields, just the columns submitted)
 		if ($http['search']['value']) {
 			$query->where(function ($q) use ($http) {
-				for ($i = 0; $i < count($http['columns']); $i++) {
+				for ($i = 0; $i < count($http['columns']); ++$i) {
 					if ($http['columns'][$i]['searchable'] == 'true') {
 						$fieldName = $this->_ssp_field($http, $i);
 
@@ -1981,7 +1981,7 @@ class Editor extends Ext
 			// For every selection in every column
 			foreach ($this->_fields as $field) {
 				if (isset($http['searchPanes'][$field->name()])) {
-					for ($i = 0; $i < count($http['searchPanes'][$field->name()]); $i++) {
+					for ($i = 0; $i < count($http['searchPanes'][$field->name()]); ++$i) {
 						// Check the number of rows...
 						$q = $db
 							->query('select')
@@ -1999,12 +1999,12 @@ class Editor extends Ext
 						// ... If there are none then don't bother with this selection
 						if ($r[0]['cnt'] == 0) {
 							array_splice($http['searchPanes'][$field->name()], $i, 1);
-							$i--;
+							--$i;
 						}
 					}
 
 					$query->where(function ($q) use ($field, $http) {
-						for ($j = 0; $j < count($http['searchPanes'][$field->name()]); $j++) {
+						for ($j = 0; $j < count($http['searchPanes'][$field->name()]); ++$j) {
 							$q->or_where(
 								$field->dbField(),
 								isset($http['searchPanes_null'][$field->name()][$j])
@@ -2048,7 +2048,7 @@ class Editor extends Ext
 		// }
 
 		// Column filters
-		for ($i = 0, $ien = count($http['columns']); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($http['columns']); $i < $ien; ++$i) {
 			$column = $http['columns'][$i];
 			$search = $column['search']['value'];
 
@@ -2088,7 +2088,7 @@ class Editor extends Ext
 	 */
 	private function _get_where($query)
 	{
-		for ($i = 0; $i < count($this->_where); $i++) {
+		for ($i = 0; $i < count($this->_where); ++$i) {
 			if (is_callable($this->_where[$i])) {
 				$this->_where[$i]($query);
 			} else {
@@ -2113,7 +2113,7 @@ class Editor extends Ext
 	 */
 	private function _find_field($name, $type)
 	{
-		for ($i = 0, $ien = count($this->_fields); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($this->_fields); $i < $ien; ++$i) {
 			$field = $this->_fields[$i];
 
 			if ($type === 'name' && $field->name() === $name) {
@@ -2143,7 +2143,7 @@ class Editor extends Ext
 	private function _insert_or_update($id, $values)
 	{
 		// Loop over all tables in _table, doing the insert or update as needed
-		for ($i = 0, $ien = count($this->_table); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($this->_table); $i < $ien; ++$i) {
 			$res = $this->_insert_or_update_table(
 				$this->_table[$i],
 				$values,
@@ -2160,7 +2160,7 @@ class Editor extends Ext
 		}
 
 		// And for the left join tables as well
-		for ($i = 0, $ien = count($this->_leftJoin); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($this->_leftJoin); $i < $ien; ++$i) {
 			$join = $this->_leftJoin[$i];
 
 			// which side of the join refers to the parent table?
@@ -2236,7 +2236,7 @@ class Editor extends Ext
 		$action = ($where === null) ? 'create' : 'edit';
 		$tableAlias = $this->_alias($table, 'alias');
 
-		for ($i = 0; $i < count($this->_fields); $i++) {
+		for ($i = 0; $i < count($this->_fields); ++$i) {
 			$field = $this->_fields[$i];
 			$tablePart = $this->_part($field->dbField());
 
@@ -2267,7 +2267,7 @@ class Editor extends Ext
 		// table
 		// Note that `whereSet` is now deprecated
 		if ($this->_whereSet) {
-			for ($j = 0, $jen = count($this->_where); $j < $jen; $j++) {
+			for ($j = 0, $jen = count($this->_where); $j < $jen; ++$j) {
 				$cond = $this->_where[$j];
 
 				if (!is_callable($cond)) {
@@ -2331,7 +2331,7 @@ class Editor extends Ext
 
 		// If using an alias we need to replace the alias'ed table name in our pkey
 		// with the real table name
-		for ($i = 0; $i < count($pkey); $i++) {
+		for ($i = 0; $i < count($pkey); ++$i) {
 			$a = explode('.', $pkey[$i]);
 
 			if (count($a) > 1 && $a[0] === $tableAlias) {
@@ -2348,13 +2348,13 @@ class Editor extends Ext
 			$fieldDots = substr_count($fieldName, '.');
 
 			if ($fieldDots === 0) {
-				$count++;
+				++$count;
 			} elseif ($fieldDots === 1) {
 				if (
 					$field->set() !== Field::SET_NONE
 					&& $this->_part($fieldName, 'table') === $tableAlias
 				) {
-					$count++;
+					++$count;
 				}
 			} else {
 				// db link
@@ -2363,7 +2363,7 @@ class Editor extends Ext
 				$dbTable = $this->_part($fieldName, 'db') . '.' . $this->_part($fieldName, 'table');
 
 				if ($field->set() !== Field::SET_NONE && $dbTable === $table) {
-					$count++;
+					++$count;
 				}
 			}
 		}
@@ -2373,7 +2373,7 @@ class Editor extends Ext
 				->query('delete')
 				->table($tableOrig);
 
-			for ($i = 0, $ien = count($ids); $i < $ien; $i++) {
+			for ($i = 0, $ien = count($ids); $i < $ien; ++$i) {
 				$cond = $this->pkeyToArray($ids[$i], true, $pkey);
 
 				$q->or_where(function ($q2) use ($cond) {
@@ -2399,7 +2399,7 @@ class Editor extends Ext
 		}
 
 		// Check if the primary key has a table identifier - if not - add one
-		for ($i = 0, $ien = count($this->_pkey); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($this->_pkey); $i < $ien; ++$i) {
 			$val = $this->_pkey[$i];
 
 			if (strpos($val, '.') === false) {
@@ -2410,7 +2410,7 @@ class Editor extends Ext
 		// Check that all fields have a table selector, otherwise, we'd need to
 		// know the structure of the tables, to know which fields belong in
 		// which. This extra requirement on the fields removes that
-		for ($i = 0, $ien = count($this->_fields); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($this->_fields); $i < $ien; ++$i) {
 			$field = $this->_fields[$i];
 			$name = $field->dbField();
 
@@ -2509,7 +2509,7 @@ class Editor extends Ext
 		$args = array($this);
 
 		// Hack to enable pass by reference with a "variable" number of parameters
-		for ($i = 1; $i < $argc; $i++) {
+		for ($i = 1; $i < $argc; ++$i) {
 			$name = 'arg' . $i;
 			$args[] = &${$name};
 		}
@@ -2520,7 +2520,7 @@ class Editor extends Ext
 
 		$events = $this->_events[$eventName];
 
-		for ($i = 0, $ien = count($events); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($events); $i < $ien; ++$i) {
 			$res = call_user_func_array($events[$i], $args);
 
 			if ($res !== null) {
@@ -2544,7 +2544,7 @@ class Editor extends Ext
 		$pkey = $this->_pkey;
 		$arr = $this->pkeyToArray($pkeyVal, true);
 
-		for ($i = 0, $ien = count($pkey); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($pkey); $i < $ien; ++$i) {
 			$column = $pkey[$i];
 			$field = $this->_find_field($column, 'db');
 
@@ -2571,7 +2571,7 @@ class Editor extends Ext
 			return true;
 		}
 
-		for ($i = 0, $ien = count($pkey); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($pkey); $i < $ien; ++$i) {
 			$column = $pkey[$i];
 			$field = $this->_find_field($column, 'db');
 

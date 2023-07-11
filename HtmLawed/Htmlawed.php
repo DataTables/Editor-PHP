@@ -19,8 +19,6 @@
  *
  * @see       https://bioinformatics.org/phplabware/internal_utilities/htmLawed
  *
- * @package    htmLawed
- *
  * @php        >=4.4
  *
  * @time       2022-11-05

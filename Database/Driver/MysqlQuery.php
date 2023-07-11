@@ -83,7 +83,7 @@ class MysqlQuery extends Query
 		$this->_stmt = $resource->prepare($sql);
 
 		// bind values
-		for ($i = 0; $i < count($this->_bindings); $i++) {
+		for ($i = 0; $i < count($this->_bindings); ++$i) {
 			$binding = $this->_bindings[$i];
 
 			$this->_stmt->bindValue(

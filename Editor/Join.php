@@ -590,7 +590,7 @@ class Join extends DataTables\Ext
 			if (count($data) < 1000) {
 				$whereIn = array();
 
-				for ($i = 0; $i < count($data); $i++) {
+				for ($i = 0; $i < count($data); ++$i) {
 					$whereIn[] = $pkeyIsJoin ?
 						str_replace($idPrefix, '', $data[$i]['DT_RowId']) :
 						$this->_readProp($readField, $data[$i]);
@@ -610,7 +610,7 @@ class Join extends DataTables\Ext
 			while ($row = $res->fetch()) {
 				$inner = array();
 
-				for ($j = 0; $j < count($this->_fields); $j++) {
+				for ($j = 0; $j < count($this->_fields); ++$j) {
 					$field = $this->_fields[$j];
 					if ($field->apply('get')) {
 						$field->write($inner, $row);
@@ -628,7 +628,7 @@ class Join extends DataTables\Ext
 			}
 
 			// Loop over the data and do a join based on the data available
-			for ($i = 0; $i < count($data); $i++) {
+			for ($i = 0; $i < count($data); ++$i) {
 				$rowPKey = $pkeyIsJoin ?
 					str_replace($idPrefix, '', $data[$i]['DT_RowId']) :
 					$this->_readProp($readField, $data[$i]);
@@ -682,7 +682,7 @@ class Join extends DataTables\Ext
 		if ($this->_type === 'object') {
 			$this->_insert($db, $parentId, $data[$this->_name]);
 		} else {
-			for ($i = 0; $i < count($data[$this->_name]); $i++) {
+			for ($i = 0; $i < count($data[$this->_name]); ++$i) {
 				$this->_insert($db, $parentId, $data[$this->_name][$i]);
 			}
 		}
@@ -779,7 +779,7 @@ class Join extends DataTables\Ext
 			$data[$this->_name] :
 			array();
 
-		for ($i = 0; $i < count($this->_validators); $i++) {
+		for ($i = 0; $i < count($this->_validators); ++$i) {
 			$validator = $this->_validators[$i];
 			$fn = $validator['fn'];
 			$res = $fn($editor, $action, $joinData);
@@ -795,7 +795,7 @@ class Join extends DataTables\Ext
 		if ($this->_type === 'object') {
 			$this->_validateFields($errors, $editor, $joinData, $this->_name . '.');
 		} else {
-			for ($i = 0; $i < count($joinData); $i++) {
+			for ($i = 0; $i < count($joinData); ++$i) {
 				$this->_validateFields($errors, $editor, $joinData[$i], $this->_name . '[].');
 			}
 		}
@@ -814,7 +814,7 @@ class Join extends DataTables\Ext
 	 */
 	private function _apply_where($query)
 	{
-		for ($i = 0; $i < count($this->_where); $i++) {
+		for ($i = 0; $i < count($this->_where); ++$i) {
 			if (is_callable($this->_where[$i])) {
 				$this->_where[$i]($query);
 			} else {
@@ -853,7 +853,7 @@ class Join extends DataTables\Ext
 				->table($this->_table)
 				->set($this->_join['child'], $parentId);
 
-			for ($i = 0; $i < count($this->_fields); $i++) {
+			for ($i = 0; $i < count($this->_fields); ++$i) {
 				$field = $this->_fields[$i];
 
 				if ($field->apply('set', $data)) { // TODO should be create or edit
@@ -864,7 +864,7 @@ class Join extends DataTables\Ext
 			// If the where condition variables should also be added to the database
 			// Note that `whereSet` is now deprecated
 			if ($this->_whereSet) {
-				for ($i = 0, $ien = count($this->_where); $i < $ien; $i++) {
+				for ($i = 0, $ien = count($this->_where); $i < $ien; ++$i) {
 					if (!is_callable($this->_where[$i])) {
 						$stmt->set($this->_where[$i]['key'], $this->_where[$i]['value']);
 					}
@@ -967,7 +967,7 @@ class Join extends DataTables\Ext
 				$this->_join['child'] => $parentId,
 			);
 
-			for ($i = 0; $i < count($this->_fields); $i++) {
+			for ($i = 0; $i < count($this->_fields); ++$i) {
 				$field = $this->_fields[$i];
 
 				if ($field->apply('set', $data)) {
@@ -977,7 +977,7 @@ class Join extends DataTables\Ext
 
 			// Add WHERE conditions
 			$where = array($this->_join['child'] => $parentId);
-			for ($i = 0, $ien = count($this->_where); $i < $ien; $i++) {
+			for ($i = 0, $ien = count($this->_where); $i < $ien; ++$i) {
 				$where[$this->_where[$i]['key']] = $this->_where[$i]['value'];
 
 				// Is there any point in this? Is there any harm?
@@ -1007,7 +1007,7 @@ class Join extends DataTables\Ext
 	{
 		$fields = array();
 
-		for ($i = 0; $i < count($this->_fields); $i++) {
+		for ($i = 0; $i < count($this->_fields); ++$i) {
 			$field = $this->_fields[$i];
 
 			if ($field->apply($direction, null)) {
@@ -1035,7 +1035,7 @@ class Join extends DataTables\Ext
 	 */
 	private function _validateFields(&$errors, $editor, $data, $prefix)
 	{
-		for ($i = 0; $i < count($this->_fields); $i++) {
+		for ($i = 0; $i < count($this->_fields); ++$i) {
 			$field = $this->_fields[$i];
 			$validation = $field->validate($data, $editor);
 

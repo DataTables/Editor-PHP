@@ -213,7 +213,7 @@ class SearchPaneOptions extends DataTables\Ext
 	 */
 	private function _get_where($query)
 	{
-		for ($i = 0; $i < count($this->_where); $i++) {
+		for ($i = 0; $i < count($this->_where); ++$i) {
 			if (is_callable($this->_where[$i])) {
 				$this->_where[$i]($query);
 			} else {
@@ -321,7 +321,7 @@ class SearchPaneOptions extends DataTables\Ext
 			// select distinct.
 			$orderFields = explode(',', $this->_order);
 
-			for ($i = 0, $ien = count($orderFields); $i < $ien; $i++) {
+			for ($i = 0, $ien = count($orderFields); $i < $ien; ++$i) {
 				$orderField = strtolower($orderFields[$i]);
 				$orderField = str_replace(' asc', '', $orderField);
 				$orderField = str_replace(' desc', '', $orderField);
@@ -344,7 +344,7 @@ class SearchPaneOptions extends DataTables\Ext
 			$values = array_column($rows, 'value');
 			$selected = $http['searchPanes'][$field->name()];
 
-			for ($i = 0; $i < count($selected); $i++) {
+			for ($i = 0; $i < count($selected); ++$i) {
 				$idx = array_search($selected[$i], $values);
 
 				if ($idx === false) {
@@ -391,7 +391,7 @@ class SearchPaneOptions extends DataTables\Ext
 
 				if ($add) {
 					$query->where(function ($q) use ($fieldOpt, $http, $fieldName) {
-						for ($j = 0, $jen = count($http['searchPanes'][$fieldName]); $j < $jen; $j++) {
+						for ($j = 0, $jen = count($http['searchPanes'][$fieldName]); $j < $jen; ++$j) {
 							$q->or_where(
 								$fieldOpt->dbField(),
 								isset($http['searchPanes_null'][$fieldName][$j])
@@ -415,7 +415,7 @@ class SearchPaneOptions extends DataTables\Ext
 
 		$out = array();
 
-		for ($i = 0, $ien = count($rows); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($rows); $i < $ien; ++$i) {
 			$row = $rows[$i];
 			$value = $row['value'];
 			$total = isset($row['total']) ? $row['total'] : null;

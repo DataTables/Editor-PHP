@@ -345,14 +345,14 @@ class Upload extends DataTables\Ext
 			$q->where_in($this->_dbPKey, $ids);
 		}
 
-		for ($i = 0, $ien = count($this->_where); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($this->_where); $i < $ien; ++$i) {
 			$q->where($this->_where[$i]);
 		}
 
 		$result = $q->exec()->fetchAll();
 		$out = array();
 
-		for ($i = 0, $ien = count($result); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($result); $i < $ien; ++$i) {
 			if ($this->_dbFormat) {
 				$this->_dbFormat($result[$i]);
 			}
@@ -428,7 +428,7 @@ class Upload extends DataTables\Ext
 		}
 
 		// Validation - custom callback
-		for ($i = 0, $ien = count($this->_validators); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($this->_validators); $i < $ien; ++$i) {
 			$res = $this->_validators[$i]($upload);
 
 			if (is_string($res)) {
@@ -592,7 +592,7 @@ class Upload extends DataTables\Ext
 				->query('delete')
 				->table($this->_dbTable);
 
-			for ($i = 0, $ien = count($data); $i < $ien; $i++) {
+			for ($i = 0, $ien = count($data); $i < $ien; ++$i) {
 				$qDelete->or_where($this->_dbPKey, $data[$i][$this->_dbPKey]);
 			}
 

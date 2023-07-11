@@ -783,7 +783,7 @@ class Field extends DataTables\Ext
 			'db' => $editor->db(),
 		);
 
-		for ($i = 0, $ien = count($this->_validator); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($this->_validator); $i < $ien; ++$i) {
 			$validator = $this->_validator[$i];
 
 			// Backwards compatibility
@@ -946,7 +946,7 @@ class Field extends DataTables\Ext
 		$names = explode('.', $name);
 		$inner = $data;
 
-		for ($i = 0; $i < count($names) - 1; $i++) {
+		for ($i = 0; $i < count($names) - 1; ++$i) {
 			if (!isset($inner[$names[$i]])) {
 				return false;
 			}

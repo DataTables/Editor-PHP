@@ -113,8 +113,8 @@ class Db2Query extends Query
 		// $allanTest = 65;
 		// db2_bind_param( $stmt, 1, 'allanTest', DB2_PARAM_IN );
 
-		for ($i = 0, $ien = count($matches[0]); $i < $ien; $i++) {
-			for ($j = 0, $jen = count($bindings); $j < $jen; $j++) {
+		for ($i = 0, $ien = count($matches[0]); $i < $ien; ++$i) {
+			for ($j = 0, $jen = count($bindings); $j < $jen; ++$j) {
 				if ($bindings[$j]['name'] === $matches[0][$i]) {
 					$name = str_replace(':', '', $matches[0][$i]);
 					${$name} = $bindings[$j]['value'];
@@ -144,7 +144,7 @@ class Db2Query extends Query
 	{
 		$out = array();
 
-		for ($i = 0, $ien = count($this->_table); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($this->_table); $i < $ien; ++$i) {
 			$t = $this->_table[$i];
 
 			if (strpos($t, ' as ')) {

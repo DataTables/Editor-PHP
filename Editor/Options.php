@@ -272,7 +272,7 @@ class Options extends DataTables\Ext
 			$formatter = function ($row) use ($label) {
 				$a = array();
 
-				for ($i = 0, $ien = count($label); $i < $ien; $i++) {
+				for ($i = 0, $ien = count($label); $i < $ien; ++$i) {
 					$a[] = $row[$label[$i]];
 				}
 
@@ -295,7 +295,7 @@ class Options extends DataTables\Ext
 			// select distinct.
 			$orderFields = explode(',', $this->_order);
 
-			for ($i = 0, $ien = count($orderFields); $i < $ien; $i++) {
+			for ($i = 0, $ien = count($orderFields); $i < $ien; ++$i) {
 				$field = strtolower($orderFields[$i]);
 				$field = str_replace(' asc', '', $field);
 				$field = str_replace(' desc', '', $field);
@@ -320,7 +320,7 @@ class Options extends DataTables\Ext
 		// Create the output array
 		$out = array();
 
-		for ($i = 0, $ien = count($rows); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($rows); $i < $ien; ++$i) {
 			$out[] = array(
 				'label' => $formatter($rows[$i]),
 				'value' => $rows[$i][$value],

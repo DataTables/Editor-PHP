@@ -213,7 +213,7 @@ class SearchBuilderOptions extends DataTables\Ext
 	 */
 	private function _get_where($query)
 	{
-		for ($i = 0; $i < count($this->_where); $i++) {
+		for ($i = 0; $i < count($this->_where); ++$i) {
 			if (is_callable($this->_where[$i])) {
 				$this->_where[$i]($query);
 			} else {
@@ -314,7 +314,7 @@ class SearchBuilderOptions extends DataTables\Ext
 		// Create the output array
 		$out = array();
 
-		for ($j = 0; $j < count($res); $j++) {
+		for ($j = 0; $j < count($res); ++$j) {
 			$out[] = array(
 				'value' => $res[$j]['value'],
 				'label' => $res[$j]['label'],

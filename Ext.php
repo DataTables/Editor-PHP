@@ -119,7 +119,7 @@ class Ext
 		$names = explode('.', $name);
 		$inner = $data;
 
-		for ($i = 0; $i < count($names) - 1; $i++) {
+		for ($i = 0; $i < count($names) - 1; ++$i) {
 			if (!isset($inner[$names[$i]])) {
 				return false;
 			}
@@ -160,7 +160,7 @@ class Ext
 		$names = explode('.', $name);
 		$inner = $data;
 
-		for ($i = 0; $i < count($names) - 1; $i++) {
+		for ($i = 0; $i < count($names) - 1; ++$i) {
 			if (!isset($inner[$names[$i]])) {
 				return null;
 			}
@@ -205,7 +205,7 @@ class Ext
 
 		$names = explode('.', $name);
 		$inner = &$out;
-		for ($i = 0; $i < count($names) - 1; $i++) {
+		for ($i = 0; $i < count($names) - 1; ++$i) {
 			$loopName = $names[$i];
 
 			if (!isset($inner[$loopName])) {

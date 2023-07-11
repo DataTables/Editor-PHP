@@ -138,7 +138,7 @@ class OracleQuery extends Query
 		}
 
 		// Bind values
-		for ($i = 0; $i < count($this->_bindings); $i++) {
+		for ($i = 0; $i < count($this->_bindings); ++$i) {
 			$binding = $this->_bindings[$i];
 
 			oci_bind_by_name(
@@ -168,7 +168,7 @@ class OracleQuery extends Query
 	{
 		$out = array();
 
-		for ($i = 0, $ien = count($this->_table); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($this->_table); $i < $ien; ++$i) {
 			$t = $this->_table[$i];
 
 			if (strpos($t, ' as ')) {

@@ -82,9 +82,7 @@ return $config
 		// TODO
 		'dir_constant' => false,
 		'general_phpdoc_annotation_remove' => false,
-		'increment_style' => false,
 		'phpdoc_annotation_without_dot' => false,
-		'phpdoc_no_package' => false,
 		'ternary_to_null_coalescing' => false,
 	))
 	->setFinder($finder)
