@@ -292,7 +292,7 @@ class SearchBuilderOptions extends DataTables\Ext
 				}
 			}
 			if (!$found) {
-				array_push($leftJoin, $lj);
+				$leftJoin[] = $lj;
 			}
 		}
 

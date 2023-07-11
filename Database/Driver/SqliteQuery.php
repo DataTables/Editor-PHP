@@ -85,7 +85,7 @@ class SqliteQuery extends Query
 			$this->_stmt->bindValue(
 				$binding['name'],
 				$binding['value'],
-				$binding['type'] ? $binding['type'] : \PDO::PARAM_STR
+				$binding['type'] ?: \PDO::PARAM_STR
 			);
 		}
 	}

@@ -275,11 +275,9 @@ class SearchPaneOptions extends DataTables\Ext
 			? $value
 			: $this->_label[0];
 
-		$formatter = $this->_renderer
-			? $this->_renderer
-			: function ($str) {
-				return $str;
-			};
+		$formatter = $this->_renderer ?: function ($str) {
+			return $str;
+		};
 
 		// Set up the join variable so that it will fit nicely later
 		$leftJoin = gettype($this->_leftJoin) === 'array' ?
@@ -296,7 +294,7 @@ class SearchPaneOptions extends DataTables\Ext
 			}
 
 			if (!$found) {
-				array_push($leftJoin, $lj);
+				$leftJoin[] = $lj;
 			}
 		}
 

@@ -507,9 +507,8 @@ class Join extends DataTables\Ext
 			$this->_aliasParentTable = $arr[1];
 		}
 
-		$dteTableLocal = $this->_aliasParentTable ? // Can be aliased to allow a self join
-			$this->_aliasParentTable :
-			$dteTable;
+		$dteTableLocal = $this->_aliasParentTable ?: $dteTable;  // Can be aliased to allow a self join
+
 		$joinField = isset($this->_join['table']) ?
 			$this->_join['parent'][0] :
 			$this->_join['parent'];

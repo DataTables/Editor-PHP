@@ -12,7 +12,9 @@ return $config
 	->setIndent("\t")
 	->setRules(array(
 		'@PhpCsFixer' => true,
+		'@PhpCsFixer:risky' => true,
 		'@PHP74Migration' => true,
+		'@PHP74Migration:risky' => true,
 
 		// required by PSR-12
 		'concat_space' => array(
@@ -62,6 +64,12 @@ return $config
 		'ternary_to_null_coalescing' => false, // needs PHP 7.0+
 		'single_line_comment_style' => false,
 		'phpdoc_annotation_without_dot' => false,
+		'declare_strict_types' => false,
+		'strict_comparison' => false,
+		'strict_param' => false, // TODO
+		'final_internal_class' => false,
+		'function_to_constant' => false, // needs PHP 5.5+
+		'self_accessor' => false, // TODO some should be converted to static:: probably
 	))
 	->setFinder($finder)
 	->setCacheFile(sys_get_temp_dir() . '/php-cs-fixer.' . md5(__DIR__) . '.cache');

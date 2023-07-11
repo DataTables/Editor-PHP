@@ -1721,10 +1721,10 @@ class Editor extends Ext
 				$val1 = isset($crit['value1']) ? $crit['value1'] : '';
 				$val2 = isset($crit['value2']) ? $crit['value2'] : '';
 
-				if (strlen($val1) === 0 && $crit['condition'] !== 'null' && $crit['condition'] !== '!null') {
+				if ($val1 == '' && $crit['condition'] !== 'null' && $crit['condition'] !== '!null') {
 					continue;
 				}
-				if (strlen($val2) === 0 && ($crit['condition'] === 'between' || $crit['condition'] === '!between')) {
+				if ($val2 == '' && ($crit['condition'] === 'between' || $crit['condition'] === '!between')) {
 					continue;
 				}
 
