@@ -1,38 +1,38 @@
 <?php
 
 $finder = PhpCsFixer\Finder::create()
-    ->in([__DIR__])
-    ->exclude(['vendor']);
+    ->in(array(__DIR__))
+    ->exclude(array('vendor'));
 
-return (new PhpCsFixer\Config())
+$config = new PhpCsFixer\Config();
+
+return $config
     ->setRiskyAllowed(true)
-    ->setRules([
+    ->setRules(array(
         '@PhpCsFixer' => true,
         '@PHP74Migration' => true,
 
         // required by PSR-12
-        'concat_space' => [
+        'concat_space' => array(
             'spacing' => 'one',
-        ],
+        ),
 
         // disable some too strict rules
-        'phpdoc_types_order' => [
+        'phpdoc_types_order' => array(
             'null_adjustment' => 'always_last',
             'sort_algorithm' => 'none',
-        ],
+        ),
         'single_line_throw' => false,
-        'yoda_style' => [
+        'yoda_style' => array(
             'equal' => false,
             'identical' => false,
-        ],
-        'native_constant_invocation' => [
-            'include' => ['SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGTERM'],
-        ],
+        ),
+        'native_constant_invocation' => true,
         'native_function_invocation' => false,
         'void_return' => false,
-        'blank_line_before_statement' => [
-            'statements' => ['break', 'continue', 'declare', 'return', 'throw', 'exit'],
-        ],
+        'blank_line_before_statement' => array(
+            'statements' => array('break', 'continue', 'declare', 'return', 'throw', 'exit'),
+        ),
         'combine_consecutive_issets' => false,
         'combine_consecutive_unsets' => false,
         'multiline_whitespace_before_semicolons' => false,
@@ -43,18 +43,19 @@ return (new PhpCsFixer\Config())
         'phpdoc_add_missing_param_annotation' => false,
         'return_assignment' => false,
         'comment_to_phpdoc' => false,
-        'general_phpdoc_annotation_remove' => [
-            'annotations' => ['author', 'copyright', 'throws'],
-        ],
-        'nullable_type_declaration_for_default_null_value' => [
+        'general_phpdoc_annotation_remove' => array(
+            'annotations' => array('author', 'copyright', 'throws'),
+        ),
+        'nullable_type_declaration_for_default_null_value' => array(
             'use_nullable_type_declaration' => false,
-        ],
+        ),
 
         // fn => without curly brackets is less readable,
         // also prevent bounding of unwanted variables for GC
         'use_arrow_functions' => false,
 
         // disable too destructive formating for now
+        'list_syntax' => array('syntax' => 'long'),
         'escape_implicit_backslashes' => false,
         'heredoc_to_nowdoc' => false,
         'no_useless_else' => false,
@@ -72,9 +73,9 @@ return (new PhpCsFixer\Config())
         'modernize_types_casting' => true,
         'dir_constant' => true,
         'combine_nested_dirname' => true,
-        'non_printable_character' => [
+        'non_printable_character' => array(
             'use_escape_sequences_in_strings' => true,
-        ],
+        ),
 
         // TODO
         'array_syntax' => false,
@@ -93,7 +94,6 @@ return (new PhpCsFixer\Config())
         'global_namespace_import' => false,
         'include' => false,
         'increment_style' => false,
-        'list_syntax' => false,
         'method_chaining_indentation' => false,
         'modernize_types_casting' => false,
         'native_constant_invocation' => false,
@@ -118,6 +118,6 @@ return (new PhpCsFixer\Config())
         'trailing_comma_in_multiline' => false,
         'visibility_required' => false,
         'yoda_style' => false,
-    ])
+    ))
     ->setFinder($finder)
     ->setCacheFile(sys_get_temp_dir() . '/php-cs-fixer.' . md5(__DIR__) . '.cache');
