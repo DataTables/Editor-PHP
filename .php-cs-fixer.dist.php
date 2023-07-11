@@ -115,7 +115,6 @@ return (new PhpCsFixer\Config())
         'phpdoc_no_alias_tag' => false,
         'phpdoc_no_package' => false,
         'phpdoc_scalar' => false,
-        'phpdoc_separation' => false,
         'phpdoc_single_line_var_spacing' => false,
         'phpdoc_summary' => false,
         'phpdoc_trim_consecutive_blank_line_separation' => false,
