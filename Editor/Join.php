@@ -83,9 +83,9 @@ class Join extends DataTables\Ext
 
     /** @var array */
     private $_join = array(
-        "parent" => null,
-        "child" => null,
-        "table" => null
+        'parent' => null,
+        'child' => null,
+        'table' => null
     );
 
     /** @var array */
@@ -269,10 +269,10 @@ class Join extends DataTables\Ext
     public function leftJoin ($table, $field1, $operator, $field2)
     {
         $this->_leftJoin[] = array(
-            "table" => $table,
-            "field1" => $field1,
-            "field2" => $field2,
-            "operator" => $operator
+            'table' => $table,
+            'field1' => $field1,
+            'field2' => $field2,
+            'operator' => $operator
         );
 
         return $this;
@@ -302,11 +302,11 @@ class Join extends DataTables\Ext
     public function link ($field1, $field2)
     {
         if (strpos($field1, '.') === false || strpos($field2, '.') === false) {
-            throw new \Exception("Link fields must contain both the table name and the column name");
+            throw new \Exception('Link fields must contain both the table name and the column name');
         }
 
         if (count($this->_links) >= 4) {
-            throw new \Exception("Link method cannot be called more than twice for a single instance");
+            throw new \Exception('Link method cannot be called more than twice for a single instance');
         }
 
         $this->_links[] = $field1;
@@ -445,9 +445,9 @@ class Join extends DataTables\Ext
             $this->_where[] = $key;
         } else {
             $this->_where[] = array(
-                "key" => $key,
-                "value" => $value,
-                "op" => $op
+                'key' => $key,
+                'value' => $value,
+                'op' => $op
             );
         }
 
@@ -517,7 +517,7 @@ class Join extends DataTables\Ext
         // is a relatively low use feature. Please get in touch if this is
         // something you require.
         if (count($pkey) > 1) {
-            throw new \Exception("MJoin is not currently supported with a compound primary key for the main table", 1);
+            throw new \Exception('MJoin is not currently supported with a compound primary key for the main table', 1);
         }
 
         if (count($data) > 0) {
@@ -570,9 +570,9 @@ class Join extends DataTables\Ext
                 $readField = $joinField;
             } else if (!$pkeyIsJoin) {
                 echo json_encode(array(
-                    "sError" => "Join was performed on the field '{$joinField}' which was not "
-                        . "included in the Editor field list. The join field must be included "
-                        . "as a regular field in the Editor instance."
+                    'sError' => "Join was performed on the field '{$joinField}' which was not "
+                        . 'included in the Editor field list. The join field must be included '
+                        . 'as a regular field in the Editor instance.'
                 ));
                 exit(1);
             }
@@ -782,8 +782,8 @@ class Join extends DataTables\Ext
 
             if (is_string($res)) {
                 $errors[] = array(
-                    "name" => $validator['fieldName'],
-                    "status" => $res
+                    'name' => $validator['fieldName'],
+                    'status' => $res
                 );
             }
         }
@@ -1007,8 +1007,8 @@ class Join extends DataTables\Ext
             $field = $this->_fields[$i];
 
             if ($field->apply($direction, null)) {
-                if (strpos($field->dbField(), ".") === false) {
-                    $fields[] = $this->_table . '.' . $field->dbField() . " as " . $field->dbField();
+                if (strpos($field->dbField(), '.') === false) {
+                    $fields[] = $this->_table . '.' . $field->dbField() . ' as ' . $field->dbField();
                     ;
                 } else {
                     $fields[] = $field->dbField(); // ." as ".$field->dbField();
@@ -1038,8 +1038,8 @@ class Join extends DataTables\Ext
 
             if ($validation !== true) {
                 $errors[] = array(
-                    "name" => $prefix . $field->name(),
-                    "status" => $validation
+                    'name' => $prefix . $field->name(),
+                    'status' => $validation
                 );
             }
         }

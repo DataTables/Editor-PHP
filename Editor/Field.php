@@ -517,8 +517,8 @@ class Field extends DataTables\Ext
             return $this->_validator;
         } else {
             $this->_validator[] = array(
-                "func" => $_,
-                "opts" => $opts
+                'func' => $_,
+                'opts' => $opts
             );
         }
 
@@ -784,17 +784,17 @@ class Field extends DataTables\Ext
 
             // Backwards compatibility
             if (is_string($validator['func'])) {
-                if (strpos($validator['func'], "Validate::") === 0) {
-                    $a = explode("::", $validator['func']);
+                if (strpos($validator['func'], 'Validate::') === 0) {
+                    $a = explode('::', $validator['func']);
 
                     // Validate class static methods - they have `Legacy` counter parts that
                     // convert from the old style to the new so the old style options still work.
-                    if (method_exists("\\DataTables\\Editor\\" . $a[0], $a[1] . 'Legacy')) {
-                        $func = call_user_func("\\DataTables\\Editor\\" . $validator['func'] . 'Legacy', $validator['opts']);
+                    if (method_exists('\\DataTables\\Editor\\' . $a[0], $a[1] . 'Legacy')) {
+                        $func = call_user_func('\\DataTables\\Editor\\' . $validator['func'] . 'Legacy', $validator['opts']);
                         $res = call_user_func($func, $val, $data, $this, $instances);
                     } else {
                         // User style legacy function. Call it directly
-                        $func = "\\DataTables\\Editor\\" . $validator['func'];
+                        $func = '\\DataTables\\Editor\\' . $validator['func'];
                         $res = call_user_func($func, $val, $data, $this, $instances);
                     }
                 } else {
@@ -885,18 +885,18 @@ class Field extends DataTables\Ext
         }
 
         // Backwards compatibility - strings will not be supported in v2
-        if (strpos($formatter, "Format::") === 0) {
+        if (strpos($formatter, 'Format::') === 0) {
             $a = explode('::', $formatter);
 
             // Old style Editor formatter - use the legacy functions to
             // convert to the new style
-            if (method_exists("\\DataTables\\Editor\\" . $a[0], $a[1] . 'Legacy')) {
-                $func = call_user_func("\\DataTables\\Editor\\" . $formatter . 'Legacy', $opts);
+            if (method_exists('\\DataTables\\Editor\\' . $a[0], $a[1] . 'Legacy')) {
+                $func = call_user_func('\\DataTables\\Editor\\' . $formatter . 'Legacy', $opts);
 
                 return $func($val, $data);
             } else {
                 // User added old style methods
-                return call_user_func("\\DataTables\\Editor\\" . $formatter, $val, $data, $opts);
+                return call_user_func('\\DataTables\\Editor\\' . $formatter, $val, $data, $opts);
             }
         }
 

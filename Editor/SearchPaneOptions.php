@@ -195,10 +195,10 @@ class SearchPaneOptions extends DataTables\Ext
     public function leftJoin ($table, $field1, $operator, $field2)
     {
         $this->_leftJoin[] = array(
-            "table" => $table,
-            "field1" => $field1,
-            "field2" => $field2,
-            "operator" => $operator
+            'table' => $table,
+            'field1' => $field1,
+            'field2' => $field2,
+            'operator' => $operator
         );
 
         return $this;
@@ -306,14 +306,14 @@ class SearchPaneOptions extends DataTables\Ext
             ->query('select')
             ->distinct(true)
             ->table($table)
-            ->get($label . " as label", $value . " as value")
+            ->get($label . ' as label', $value . ' as value')
             ->left_join($leftJoin)
             ->group_by($value)
             ->where($this->_where);
 
         // If not cascading, then the total and count must be the same
         if ($viewTotal) {
-            $q->get("COUNT(*) as total");
+            $q->get('COUNT(*) as total');
         }
 
         if ($this->_order) {
@@ -363,15 +363,15 @@ class SearchPaneOptions extends DataTables\Ext
                 ->left_join($leftJoin);
 
             if ($field->apply('get') && $field->getValue() === null) {
-                $query->get($value . " as value");
+                $query->get($value . ' as value');
                 $query->group_by($value);
 
                 // We viewTotal is enabled, we need to do a count to get the number of records,
                 // If it isn't we still need to know it exists, but don't care about the cardinality
                 if ($viewCount) {
-                    $query->get("COUNT(*) as count");
+                    $query->get('COUNT(*) as count');
                 } else {
-                    $query->get("(1) as count");
+                    $query->get('(1) as count');
                 }
             }
 
@@ -435,10 +435,10 @@ class SearchPaneOptions extends DataTables\Ext
             }
 
             $out[] = array(
-                "label" => $formatter($row['label']),
-                "total" => $total,
-                "value" => $value,
-                "count" => $count
+                'label' => $formatter($row['label']),
+                'total' => $total,
+                'value' => $value,
+                'count' => $count
             );
         }
 

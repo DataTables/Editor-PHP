@@ -50,7 +50,7 @@ class PostgresQuery extends Query
             $pdoAttr = isset($opts['pdoAttr']) ? $opts['pdoAttr'] : array();
         }
 
-        if ($port !== "") {
+        if ($port !== '') {
             $port = "port={$port};";
         }
 
@@ -67,7 +67,7 @@ class PostgresQuery extends Query
             // If we can't establish a DB connection then we return a DataTables
             // error.
             echo json_encode(array(
-                "error" => "An error occurred while connecting to the database " .
+                'error' => 'An error occurred while connecting to the database ' .
                     "'{$db}'. The error reported by the server was: " . $e->getMessage()
             ));
             exit(1);

@@ -24,10 +24,10 @@ if (!defined('DATATABLES')) {
 //   Automatically loads DataTables classes - they are psr-4 compliant
 //
 spl_autoload_register(function ($class) {
-    $a = explode("\\", $class);
+    $a = explode('\\', $class);
 
     // Are we working in the DataTables namespace
-    if ($a[0] !== "DataTables") {
+    if ($a[0] !== 'DataTables') {
         return;
     }
 

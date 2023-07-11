@@ -197,7 +197,7 @@ class Upload extends DataTables\Ext
      *
      * @deprecated Use Validate::fileExtensions
      */
-    public function allowedExtensions ($extn, $error = "This file type cannot be uploaded")
+    public function allowedExtensions ($extn, $error = 'This file type cannot be uploaded')
     {
         $this->_extns = $extn;
         $this->_extnError = $error;
@@ -408,9 +408,9 @@ class Upload extends DataTables\Ext
         // Validation - PHP standard validation
         if ($upload['error'] !== UPLOAD_ERR_OK) {
             if ($upload['error'] === UPLOAD_ERR_INI_SIZE) {
-                $this->_error = "File exceeds maximum file upload size";
+                $this->_error = 'File exceeds maximum file upload size';
             } else {
-                $this->_error = "There was an error uploading the file (" . $upload['error'] . ")";
+                $this->_error = 'There was an error uploading the file (' . $upload['error'] . ')';
             }
             return false;
         }
@@ -443,8 +443,8 @@ class Upload extends DataTables\Ext
                 if (!is_string($this->_action) &&
                         ($prop === self::DB_SYSTEM_PATH || $prop === self::DB_WEB_PATH)
                 ) {
-                    $this->_error = "Cannot set path information in database " .
-                        "if a custom method is used to save the file.";
+                    $this->_error = 'Cannot set path information in database ' .
+                        'if a custom method is used to save the file.';
 
                     return false;
                 }
@@ -508,7 +508,7 @@ class Upload extends DataTables\Ext
         $res = rename($upload['tmp_name'], $to);
 
         if ($res === false) {
-            $this->_error = "An error occurred while moving the uploaded file.";
+            $this->_error = 'An error occurred while moving the uploaded file.';
             return false;
         }
 
@@ -715,9 +715,9 @@ class Upload extends DataTables\Ext
         $extn = pathinfo($name, PATHINFO_EXTENSION);
 
         $to = $this->_action;
-        $to = str_replace("__NAME__", $name, $to);
-        $to = str_replace("__ID__", $id, $to);
-        $to = str_replace("__EXTN__", $extn, $to);
+        $to = str_replace('__NAME__', $name, $to);
+        $to = str_replace('__ID__', $id, $to);
+        $to = str_replace('__EXTN__', $extn, $to);
 
         return $to;
     }

@@ -111,7 +111,6 @@ return $config
         'phpdoc_summary' => false,
         'phpdoc_types' => false,
         'phpdoc_types_order' => false,
-        'single_quote' => false,
         'ternary_to_null_coalescing' => false,
         'trailing_comma_in_multiline' => false,
         'visibility_required' => false,

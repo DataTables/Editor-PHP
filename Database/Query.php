@@ -73,7 +73,7 @@ abstract class Query
      *
      * @internal
      */
-    protected $_type = "";
+    protected $_type = '';
 
     /**
      * @var array
@@ -270,9 +270,9 @@ abstract class Query
     public function bind ($name, $value, $type = null)
     {
         $this->_bindings[] = array(
-            "name" => $this->_safe_bind($name),
-            "value" => $value,
-            "type" => $type
+            'name' => $this->_safe_bind($name),
+            'value' => $value,
+            'type' => $type
         );
 
         return $this;
@@ -327,7 +327,7 @@ abstract class Query
             return $this->_raw($sql);
         }
 
-        throw new \Exception("Unknown database command or not supported: " . $type, 1);
+        throw new \Exception('Unknown database command or not supported: ' . $type, 1);
     }
 
     /**
@@ -505,7 +505,7 @@ abstract class Query
             }
         } else {
             // String based, explode for multiple tables
-            $tables = explode(",", $table);
+            $tables = explode(',', $table);
 
             for ($i = 0; $i < count($tables); $i++) {
                 $this->_table[] = $this->_protect_identifiers(trim($tables[$i]));
@@ -635,7 +635,7 @@ abstract class Query
      *         } );
      *     ```
      */
-    public function where ($key, $value = null, $op = "=", $bind = true)
+    public function where ($key, $value = null, $op = '=', $bind = true)
     {
         if ($key === null) {
             return $this;
@@ -673,7 +673,7 @@ abstract class Query
      *
      * @return self
      */
-    public function and_where ($key, $value = null, $op = "=", $bind = true)
+    public function and_where ($key, $value = null, $op = '=', $bind = true)
     {
         return $this->where($key, $value, $op, $bind);
     }
@@ -696,7 +696,7 @@ abstract class Query
      *
      * @return self
      */
-    public function or_where ($key, $value = null, $op = "=", $bind = true)
+    public function or_where ($key, $value = null, $op = '=', $bind = true)
     {
         if ($key === null) {
             return $this;
@@ -769,7 +769,7 @@ abstract class Query
      *
      * @return self
      */
-    public function where_in ($field, $arr, $operator = "AND")
+    public function where_in ($field, $arr, $operator = 'AND')
     {
         if (count($arr) === 0) {
             return $this;
@@ -993,10 +993,10 @@ abstract class Query
     protected function _build_where()
     {
         if (count($this->_where) === 0) {
-            return "";
+            return '';
         }
 
-        $condition = "WHERE ";
+        $condition = 'WHERE ';
 
         for ($i = 0; $i < count($this->_where); $i++) {
             if ($i === 0) {
@@ -1052,7 +1052,7 @@ abstract class Query
     {
         $quote = $this->_field_quote;
 
-        return str_replace($quote, "\\" . $quote, $field);
+        return str_replace($quote, '\\' . $quote, $field);
     }
 
     /**
@@ -1256,7 +1256,7 @@ abstract class Query
      * @param string       $op
      * @param bool         $bind
      */
-    protected function _where ($where, $value = null, $type = 'AND ', $op = "=", $bind = true)
+    protected function _where ($where, $value = null, $type = 'AND ', $op = '=', $bind = true)
     {
         if ($where === null) {
             return;
@@ -1318,8 +1318,8 @@ abstract class Query
     protected function _where_group ($inOut, $op)
     {
         $this->_where[] = array(
-            "group" => $inOut ? '(' : ')',
-            "operator" => $op
+            'group' => $inOut ? '(' : ')',
+            'operator' => $op
         );
     }
 

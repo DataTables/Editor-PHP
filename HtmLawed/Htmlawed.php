@@ -909,7 +909,7 @@ class Htmlawed
                 return
                   substr(
                       str_replace(
-                          array(";", "|", "~", " ", ",", "/", "(", ")", '`"'),
+                          array(';', '|', '~', ' ', ',', '/', '(', ')', '`"'),
                           array("\x01", "\x02", "\x03", "\x04", "\x05", "\x06", "\x07", "\x08", '"'),
                           $x[0]
                       ),
@@ -966,7 +966,7 @@ class Htmlawed
                     $ruleAr[$attr][$rule] =
                       str_replace(
                           array("\x01", "\x02", "\x03", "\x04", "\x05", "\x06", "\x07", "\x08"),
-                          array(";", "|", "~", " ", ",", "/", "(", ")"),
+                          array(';', '|', '~', ' ', ',', '/', '(', ')'),
                           substr($m, $rulePos + 1)
                       );
                 }
@@ -1251,7 +1251,7 @@ class Htmlawed
                 } elseif (isset($urlAttrAr[$attr]) || (isset($globalAttrAr[$attr]) && strpos($attr, 'on') === 0)) {
                     $v =
                       str_replace(
-                          "­",
+                          '­',
                           ' ',
                           (strpos($v, '&') !== false  // ! Double-quoted character = soft-hyphen
                            ? str_replace(array('&#xad;', '&#173;', '&shy;'), ' ', $v)
@@ -1486,7 +1486,7 @@ class Htmlawed
                 return
                   $x[1]
                   . str_replace(
-                      array("<", ">", "\n", "\r", "\t", ' '),
+                      array('<', '>', "\n", "\r", "\t", ' '),
                       array("\x01", "\x02", "\x03", "\x04", "\x05", "\x07"),
                       $x[3]
                   )

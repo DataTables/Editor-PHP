@@ -195,10 +195,10 @@ class SearchBuilderOptions extends DataTables\Ext
     public function leftJoin ($table, $field1, $operator, $field2)
     {
         $this->_leftJoin[] = array(
-            "table" => $table,
-            "field1" => $field1,
-            "field2" => $field2,
-            "operator" => $operator
+            'table' => $table,
+            'field1' => $field1,
+            'field2' => $field2,
+            'operator' => $operator
         );
 
         return $this;
@@ -304,7 +304,7 @@ class SearchBuilderOptions extends DataTables\Ext
             ->left_join($leftJoin);
 
         if ($field->apply('get') && $field->getValue() === null) {
-            $query->get($value . " as value", $label . " as label");
+            $query->get($value . ' as value', $label . ' as label');
             $query->group_by($value);
         }
 
@@ -317,8 +317,8 @@ class SearchBuilderOptions extends DataTables\Ext
 
         for ($j = 0; $j < count($res); $j++) {
             $out[] = array(
-                "value" => $res[$j]['value'],
-                "label" => $res[$j]['label']
+                'value' => $res[$j]['value'],
+                'label' => $res[$j]['label']
             );
         }
 

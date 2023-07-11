@@ -106,7 +106,7 @@ class Editor extends Ext
             case 'upload':
                 return self::ACTION_UPLOAD;
             default:
-                throw new \Exception("Unknown Editor action: " . $http['action']);
+                throw new \Exception('Unknown Editor action: ' . $http['action']);
         }
     }
 
@@ -439,7 +439,7 @@ class Editor extends Ext
                 echo $json;
             } else {
                 echo json_encode(array(
-                    "error" => "JSON encoding error: " . json_last_error_msg()
+                    'error' => 'JSON encoding error: ' . json_last_error_msg()
                 ));
             }
 
@@ -467,7 +467,7 @@ class Editor extends Ext
         }
 
         if (preg_match('/[^a-zA-Z0-9_]/', $callback)) {
-            throw new \Exception("Invalid JSONP callback function name");
+            throw new \Exception('Invalid JSONP callback function name');
         }
 
         echo $callback . '(' . json_encode($this->_out) . ');';
@@ -534,10 +534,10 @@ class Editor extends Ext
     public function leftJoin ($table, $field1, $operator = null, $field2 = null)
     {
         $this->_leftJoin[] = array(
-            "table" => $table,
-            "field1" => $field1,
-            "field2" => $field2,
-            "operator" => $operator
+            'table' => $table,
+            'field1' => $field1,
+            'field2' => $field2,
+            'operator' => $operator
         );
 
         return $this;
@@ -627,7 +627,7 @@ class Editor extends Ext
             if ($flat) {
                 if (isset($row[$column])) {
                     if ($row[$column] === null) {
-                        throw new \Exception("Primary key value is null.", 1);
+                        throw new \Exception('Primary key value is null.', 1);
                     }
                     $val = $row[$column];
                 } else {
@@ -638,7 +638,7 @@ class Editor extends Ext
             }
 
             if ($val === null) {
-                throw new \Exception("Primary key element is not available in data set.", 1);
+                throw new \Exception('Primary key element is not available in data set.', 1);
             }
 
             $id[] = $val;
@@ -833,7 +833,7 @@ class Editor extends Ext
     public function validate (&$errors, $data)
     {
         // Validation is only performed on create and edit
-        if ($data[$this->_actionName] != "create" && $data[$this->_actionName] != "edit") {
+        if ($data[$this->_actionName] != 'create' && $data[$this->_actionName] != 'edit') {
             return true;
         }
 
@@ -848,8 +848,8 @@ class Editor extends Ext
 
                 if ($validation !== true) {
                     $errors[] = array(
-                        "name" => $field->name(),
-                        "status" => $validation
+                        'name' => $field->name(),
+                        'status' => $validation
                     );
                 }
             }
@@ -916,9 +916,9 @@ class Editor extends Ext
             $this->_where[] = $key;
         } else {
             $this->_where[] = array(
-                "key" => $key,
-                "value" => $value,
-                "op" => $op
+                'key' => $key,
+                'value' => $value,
+                'op' => $op
             );
         }
 
@@ -961,11 +961,11 @@ class Editor extends Ext
     private function _process($data)
     {
         $this->_out = array(
-            "fieldErrors" => array(),
-            "error" => "",
-            "data" => array(),
-            "ipOpts" => array(),
-            "cancelled" => array()
+            'fieldErrors' => array(),
+            'error' => '',
+            'data' => array(),
+            'ipOpts' => array(),
+            'cancelled' => array()
         );
 
         $action = Editor::action($data);
@@ -1335,7 +1335,7 @@ class Editor extends Ext
         // Get the ids to delete from the data source
         foreach ($data['data'] as $idSrc => $rowData) {
             // Strip the ID prefix that the client-side sends back
-            $id = str_replace($this->_idPrefix, "", $idSrc);
+            $id = str_replace($this->_idPrefix, '', $idSrc);
 
             $res = $this->_trigger('preRemove', $id, $rowData);
 
@@ -1388,7 +1388,7 @@ class Editor extends Ext
         }
 
         foreach ($data['data'] as $idSrc => $rowData) {
-            $id = str_replace($this->_idPrefix, "", $idSrc);
+            $id = str_replace($this->_idPrefix, '', $idSrc);
 
             $this->_trigger('postRemove', $id, $rowData);
         }
@@ -1430,7 +1430,7 @@ class Editor extends Ext
         }
 
         if (!$field) {
-            throw new \Exception("Unknown upload field name submitted");
+            throw new \Exception('Unknown upload field name submitted');
         }
 
         $res = $this->_trigger('preUpload', $data);
@@ -1442,15 +1442,15 @@ class Editor extends Ext
 
         $upload = $field->upload();
         if (!$upload) {
-            throw new \Exception("File uploaded to a field that does not have upload options configured");
+            throw new \Exception('File uploaded to a field that does not have upload options configured');
         }
 
         $res = $upload->exec($this);
 
         if ($res === false) {
             $this->_out['fieldErrors'][] = array(
-                "name" => $fieldName,      // field name can be just the field's
-                "status" => $upload->error() // name or a join combination
+                'name' => $fieldName,      // field name can be just the field's
+                'status' => $upload->error() // name or a join combination
             );
         } else {
             $files = $this->_fileData($upload->table(), array($res));
@@ -1640,9 +1640,9 @@ class Editor extends Ext
         $ssp_full_count = $ssp_full_count->exec()->fetch();
 
         return array(
-            "draw" => intval($http['draw']),
-            "recordsTotal" => $ssp_full_count['cnt'],
-            "recordsFiltered" => $ssp_set_count['cnt']
+            'draw' => intval($http['draw']),
+            'recordsTotal' => $ssp_full_count['cnt'],
+            'recordsFiltered' => $ssp_set_count['cnt']
         );
     }
 
@@ -1864,17 +1864,17 @@ class Editor extends Ext
                     case 'null':
                         if ($data['logic'] === 'AND' || $first) {
                             $query->where_group(function ($q) use ($crit) {
-                                $q->where($crit['origData'], null, "=");
+                                $q->where($crit['origData'], null, '=');
                                 if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
-                                    $q->or_where($crit['origData'], "", "=");
+                                    $q->or_where($crit['origData'], '', '=');
                                 }
                             });
                             $first = false;
                         } else {
                             $query->where_group(function ($q) use ($crit) {
-                                $q->where($crit['origData'], null, "=");
+                                $q->where($crit['origData'], null, '=');
                                 if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
-                                    $q->or_where($crit['origData'], "", "=");
+                                    $q->or_where($crit['origData'], '', '=');
                                 }
                             }, 'OR');
                         }
@@ -1882,17 +1882,17 @@ class Editor extends Ext
                     case '!null':
                         if ($data['logic'] === 'AND' || $first) {
                             $query->where_group(function ($q) use ($crit) {
-                                $q->where($crit['origData'], null, "!=");
+                                $q->where($crit['origData'], null, '!=');
                                 if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
-                                    $q->where($crit['origData'], "", "!=");
+                                    $q->where($crit['origData'], '', '!=');
                                 }
                             });
                             $first = false;
                         } else {
                             $query->where_group(function ($q) use ($crit) {
-                                $q->where($crit['origData'], null, "!=");
+                                $q->where($crit['origData'], null, '!=');
                                 if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
-                                    $q->where($crit['origData'], "", "!=");
+                                    $q->where($crit['origData'], '', '!=');
                                 }
                             }, 'OR');
                         }
@@ -2545,11 +2545,11 @@ class Editor extends Ext
             $column = $pkey[$i];
             $field = $this->_find_field($column, 'db');
 
-            if (!$field || !$field->apply("create", $row)) {
+            if (!$field || !$field->apply('create', $row)) {
                 throw new \Exception(
-                    "When inserting into a compound key table, " .
-                    "all fields that are part of the compound key must be " .
-                    "submitted with a specific value.",
+                    'When inserting into a compound key table, ' .
+                    'all fields that are part of the compound key must be ' .
+                    'submitted with a specific value.',
                     1
                 );
             }

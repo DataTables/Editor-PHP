@@ -60,7 +60,7 @@ class Db2Query extends Query
             $e = 'Connection failed: ' . db2_conn_error() . ' : ' . db2_conn_errormsg();
 
             echo json_encode(array(
-                "error" => "An error occurred while connecting to the database " .
+                'error' => 'An error occurred while connecting to the database ' .
                     "'{$db}'. The error reported by the server was: " . $e
             ));
             exit(1);

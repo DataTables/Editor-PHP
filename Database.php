@@ -54,13 +54,13 @@ class Database
 
         if (!in_array($opts['type'], $types)) {
             throw new \Exception(
-                "Unknown database driver type. Must be one of " . implode(', ', $types),
+                'Unknown database driver type. Must be one of ' . implode(', ', $types),
                 1
             );
         }
 
         $this->_type = $opts['type'];
-        $this->query_driver = "DataTables\\Database\\Driver\\" . $opts['type'] . 'Query';
+        $this->query_driver = 'DataTables\\Database\\Driver\\' . $opts['type'] . 'Query';
         $this->_dbResource = isset($opts['pdo']) ?
             $opts['pdo'] :
             call_user_func($this->query_driver . '::connect', $opts);
@@ -127,7 +127,7 @@ class Database
      *
      * @return Number
      */
-    public function count ($table, $field = "id", $where = null)
+    public function count ($table, $field = 'id', $where = null)
     {
         $res = $this->query('count')
             ->table($table)
@@ -334,7 +334,7 @@ class Database
      *
      * @return Result
      */
-    public function select ($table, $field = "*", $where = null, $orderBy = null)
+    public function select ($table, $field = '*', $where = null, $orderBy = null)
     {
         return $this->query('select')
             ->table($table)
@@ -361,7 +361,7 @@ class Database
      *
      * @return Result
      */
-    public function selectDistinct ($table, $field = "*", $where = null, $orderBy = null)
+    public function selectDistinct ($table, $field = '*', $where = null, $orderBy = null)
     {
         return $this->query('select')
             ->table($table)
@@ -464,8 +464,8 @@ class Database
 
         if ($callback) {
             $callback(array(
-                "query" => $query,
-                "bindings" => $bindings
+                'query' => $query,
+                'bindings' => $bindings
             ));
         }
 
