@@ -11,7 +11,6 @@
 
 namespace DataTables\Database\Driver;
 
-use PDO;
 use DataTables\Database\Result;
 
 /**

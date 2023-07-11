@@ -15,7 +15,6 @@ namespace DataTables\Editor;
 
 use DataTables;
 use DataTables\Editor;
-use DataTables\Editor\Field;
 
 /**
  * Join table class for DataTables Editor.

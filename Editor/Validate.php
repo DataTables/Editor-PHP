@@ -13,8 +13,6 @@
 
 namespace DataTables\Editor;
 
-use DataTables\Editor\ValidateOptions;
-
 /**
  * Validation methods for DataTables Editor fields.
  *

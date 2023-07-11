@@ -13,8 +13,6 @@
 
 namespace DataTables\Editor;
 
-use DataTables\Editor\Join;
-
 /**
  * The `Mjoin` class extends the `Join` class with the join data type set to
  * 'array', whereas the `Join` default is `object` which has been rendered

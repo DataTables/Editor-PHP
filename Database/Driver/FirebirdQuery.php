@@ -13,9 +13,7 @@
 
 namespace DataTables\Database\Driver;
 
-use PDO;
 use DataTables\Database\Query;
-use DataTables\Database\Driver\FirebirdResult;
 
 /**
  * Firebird driver for DataTables Database Query class
@@ -65,9 +63,9 @@ class FirebirdQuery extends Query
 		}
 
 		try {
-			$pdoAttr[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+			$pdoAttr[\PDO::ATTR_ERRMODE] = \PDO::ERRMODE_EXCEPTION;
 
-			$pdo = @new PDO(
+			$pdo = @new \PDO(
 				"firebird:{$host}dbname={$db}" . self::dsnPostfix($dsn),
 				$user,
 				$pass,

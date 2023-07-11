@@ -13,9 +13,7 @@
 
 namespace DataTables\Database\Driver;
 
-use PDO;
 use DataTables\Database\Query;
-use DataTables\Database\Driver\MysqlResult;
 
 /**
  * MySQL driver for DataTables Database Query class
@@ -51,9 +49,9 @@ class MysqlQuery extends Query
 		}
 
 		try {
-			$pdoAttr[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+			$pdoAttr[\PDO::ATTR_ERRMODE] = \PDO::ERRMODE_EXCEPTION;
 
-			$pdo = @new PDO(
+			$pdo = @new \PDO(
 				"mysql:host={$host};{$port}dbname={$db}" . self::dsnPostfix($dsn),
 				$user,
 				$pass,

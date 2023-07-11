@@ -7,7 +7,6 @@
 namespace DataTables\Database\Driver;
 
 use DataTables\Database\Query;
-use DataTables\Database\Driver\Db2Result;
 
 /**
  * DB2 driver for DataTables Database Query class

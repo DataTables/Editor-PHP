@@ -15,7 +15,6 @@ namespace DataTables\Editor;
 
 use DataTables;
 use DataTables\Editor;
-use DataTables\Editor\Options;
 use DataTables\HtmLawed\Htmlaw;
 
 /**

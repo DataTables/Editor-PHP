@@ -11,9 +11,7 @@
 
 namespace DataTables\Database\Driver;
 
-use PDO;
 use DataTables\Database\Query;
-use DataTables\Database\Driver\PostgresResult;
 
 /**
  * SQL Server driver for DataTables Database Query class
@@ -47,15 +45,15 @@ class SqlserverQuery extends Query
 		}
 
 		try {
-			$pdoAttr[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+			$pdoAttr[\PDO::ATTR_ERRMODE] = \PDO::ERRMODE_EXCEPTION;
 
-			if (in_array('sqlsrv', PDO::getAvailableDrivers())) {
+			if (in_array('sqlsrv', \PDO::getAvailableDrivers())) {
 				// Windows
 				if ($port !== '') {
 					$port = ",{$port}";
 				}
 
-				$pdo = new PDO(
+				$pdo = new \PDO(
 					"sqlsrv:Server={$host}{$port};Database={$db}" . self::dsnPostfix($dsn),
 					$user,
 					$pass,
@@ -67,7 +65,7 @@ class SqlserverQuery extends Query
 					$port = ":{$port}";
 				}
 
-				$pdo = new PDO(
+				$pdo = new \PDO(
 					"dblib:host={$host}{$port};dbname={$db}" . self::dsnPostfix($dsn),
 					$user,
 					$pass,

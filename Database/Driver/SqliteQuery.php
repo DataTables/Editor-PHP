@@ -13,9 +13,7 @@
 
 namespace DataTables\Database\Driver;
 
-use PDO;
 use DataTables\Database\Query;
-use DataTables\Database\Driver\SqliteResult;
 
 /**
  * SQLite3 driver for DataTables Database Query class
@@ -47,9 +45,9 @@ class SqliteQuery extends Query
 		}
 
 		try {
-			$pdoAttr[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+			$pdoAttr[\PDO::ATTR_ERRMODE] = \PDO::ERRMODE_EXCEPTION;
 
-			$pdo = @new PDO(
+			$pdo = @new \PDO(
 				"sqlite:{$db}" . self::dsnPostfix($dsn),
 				$user,
 				$pass,
