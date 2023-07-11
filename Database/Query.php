@@ -1090,8 +1090,6 @@ abstract class Query
 	 * Prepare the SQL query by populating the bound variables.
 	 * Provided by the driver.
 	 *
-	 * @return void
-	 *
 	 * @internal
 	 */
 	abstract protected function _prepare($sql);

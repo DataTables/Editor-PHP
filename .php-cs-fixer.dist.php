@@ -57,18 +57,14 @@ return $config
 		'use_arrow_functions' => false,
 
 		// disable too destructive formating for now
-		'list_syntax' => array('syntax' => 'long'),
-		'array_syntax' => array('syntax' => 'long'),
 		'escape_implicit_backslashes' => false,
 		'heredoc_to_nowdoc' => false,
 		'no_useless_else' => false,
-		'no_useless_return' => false,
-		'phpdoc_no_empty_return' => false,
-		'phpdoc_order' => false,
-		'phpdoc_var_annotation_correct_order' => false,
-		'protected_to_private' => false,
-		'simple_to_complex_string_variable' => false,
 		'single_line_comment_style' => false,
+
+		'list_syntax' => array('syntax' => 'long'),
+		'array_syntax' => array('syntax' => 'long'),
+		'ternary_to_null_coalescing' => false, // needs PHP 7.0+
 
 		// enable some safe rules from @PHP71Migration:risky
 		'pow_to_exponentiation' => true,
@@ -80,10 +76,8 @@ return $config
 		),
 
 		// TODO
-		'dir_constant' => false,
 		'general_phpdoc_annotation_remove' => false,
 		'phpdoc_annotation_without_dot' => false,
-		'ternary_to_null_coalescing' => false,
 	))
 	->setFinder($finder)
 	->setCacheFile(sys_get_temp_dir() . '/php-cs-fixer.' . md5(__DIR__) . '.cache');
