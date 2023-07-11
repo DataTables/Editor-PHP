@@ -62,16 +62,16 @@ class Field extends DataTables\Ext
 	 */
 
 	/** Set option flag (`set()`) - do not set data */
-	public const SET_NONE = 'none';
+	const SET_NONE = 'none';
 
 	/** Set option flag (`set()`) - write to database on both create and edit */
-	public const SET_BOTH = 'both';
+	const SET_BOTH = 'both';
 
 	/** Set option flag (`set()`) - write to database only on create */
-	public const SET_CREATE = 'create';
+	const SET_CREATE = 'create';
 
 	/** Set option flag (`set()`) - write to database only on edit */
-	public const SET_EDIT = 'edit';
+	const SET_EDIT = 'edit';
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor

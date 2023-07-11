@@ -3,7 +3,8 @@
 $finder = PhpCsFixer\Finder::create()
 	->in(array(__DIR__))
 	->ignoreDotFiles(false)
-	->exclude(array('.git', 'vendor'));
+	->ignoreVCS(true)
+	->exclude(array('vendor'));
 
 $config = new PhpCsFixer\Config();
 
@@ -70,6 +71,7 @@ return $config
 		'final_internal_class' => false,
 		'function_to_constant' => false, // needs PHP 5.5+
 		'self_accessor' => false, // TODO some should be converted to static:: probably
+		'visibility_required' => array('elements' => array('property', 'method')), // needs PHP 7.1+
 	))
 	->setFinder($finder)
 	->setCacheFile(sys_get_temp_dir() . '/php-cs-fixer.' . md5(__DIR__) . '.cache');

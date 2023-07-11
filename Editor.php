@@ -65,19 +65,19 @@ class Editor extends Ext
 	 */
 
 	/** Request type - read */
-	public const ACTION_READ = 'read';
+	const ACTION_READ = 'read';
 
 	/** Request type - create */
-	public const ACTION_CREATE = 'create';
+	const ACTION_CREATE = 'create';
 
 	/** Request type - edit */
-	public const ACTION_EDIT = 'edit';
+	const ACTION_EDIT = 'edit';
 
 	/** Request type - delete */
-	public const ACTION_DELETE = 'remove';
+	const ACTION_DELETE = 'remove';
 
 	/** Request type - upload */
-	public const ACTION_UPLOAD = 'upload';
+	const ACTION_UPLOAD = 'upload';
 
 	/**
 	 * Determine the request type from an HTTP request.

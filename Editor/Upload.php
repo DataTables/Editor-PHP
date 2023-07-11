@@ -85,36 +85,36 @@ class Upload extends DataTables\Ext
 	 * system, but there are cases where it can be useful to store the file in
 	 * the database.
 	 */
-	public const DB_CONTENT = 'editor-content';
+	const DB_CONTENT = 'editor-content';
 
 	/** Database value option (`Db()`) - Content type */
-	public const DB_CONTENT_TYPE = 'editor-contentType';
+	const DB_CONTENT_TYPE = 'editor-contentType';
 
 	/** Database value option (`Db()`) - File extension */
-	public const DB_EXTN = 'editor-extn';
+	const DB_EXTN = 'editor-extn';
 
 	/** Database value option (`Db()`) - File name (with extension) */
-	public const DB_FILE_NAME = 'editor-fileName';
+	const DB_FILE_NAME = 'editor-fileName';
 
 	/** Database value option (`Db()`) - File size (bytes) */
-	public const DB_FILE_SIZE = 'editor-fileSize';
+	const DB_FILE_SIZE = 'editor-fileSize';
 
 	/** Database value option (`Db()`) - MIME type */
-	public const DB_MIME_TYPE = 'editor-mimeType';
+	const DB_MIME_TYPE = 'editor-mimeType';
 
 	/** Database value option (`Db()`) - Full system path to the file */
-	public const DB_SYSTEM_PATH = 'editor-systemPath';
+	const DB_SYSTEM_PATH = 'editor-systemPath';
 
 	/** Database value option (`Db()`) - HTTP path to the file. This is derived
 	 * from the system path by removing `$_SERVER['DOCUMENT_ROOT']`. If your
 	 * images live outside of the document root a custom value would be to be
 	 * used.
 	 */
-	public const DB_WEB_PATH = 'editor-webPath';
+	const DB_WEB_PATH = 'editor-webPath';
 
 	/** Read from the database - don't write to it.
 	 */
-	public const DB_READ_ONLY = 'editor-readOnly';
+	const DB_READ_ONLY = 'editor-readOnly';
 
 	/*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
 	 * Private parameters
