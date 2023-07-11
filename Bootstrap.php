@@ -5,7 +5,7 @@
  * PHP libraries for DataTables and DataTables Editor, utilising PHP 5.3+.
  *
  *  @author    SpryMedia
- *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
+ *  @copyright SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
  *  @link      http://editor.datatables.net
  */
@@ -17,15 +17,6 @@ namespace DataTables;
 if (!defined('DATATABLES') && !class_exists('\DataTables\Editor')) {
 	exit(1);
 }
-
-//
-// Configuration
-//   Load the database connection configuration options
-//
-if ( ! isset( $sql_details ) ) {
-	include( dirname(__FILE__).'/config.php' );
-}
-
 
 //
 // Auto-loader
@@ -48,6 +39,13 @@ spl_autoload_register( function ($class) {
 	require( dirname(__FILE__).'/'.$path.$className.'.php' );
 } );
 
+//
+// Configuration
+//   Load the database connection configuration options
+//
+if ( ! isset( $sql_details ) ) {
+	include( dirname(__FILE__).'/config.php' );
+}
 
 //
 // Database connection

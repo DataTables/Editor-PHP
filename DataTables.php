@@ -5,11 +5,12 @@
  * PHP libraries for DataTables and DataTables Editor, utilising PHP 5.3+.
  *
  *  @author    SpryMedia
- *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
+ *  @copyright SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
  *  @link      http://editor.datatables.net
  */
 
+define("DATATABLES", true);
 
 //
 // Error checking - check that we are PHP 5.3 or newer
