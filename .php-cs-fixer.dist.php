@@ -101,7 +101,6 @@ return (new PhpCsFixer\Config())
         'native_constant_invocation' => false,
         'no_blank_lines_after_phpdoc' => false,
         'no_empty_statement' => false,
-        'no_extra_blank_lines' => false,
         'no_multiple_statements_per_line' => false,
         'no_null_property_initialization' => false,
         'no_superfluous_phpdoc_tags' => false,
