@@ -60,7 +60,7 @@ class OracleQuery extends Query {
 			echo json_encode( array(
 				"error" => "oci methods are not available in this PHP install to connect to Oracle"
 			) );
-			exit(0);
+			exit(1);
 		}
 
 		$conn = @oci_connect($user, $pass, $host.$port.'/'.$db, 'utf8');
@@ -74,7 +74,7 @@ class OracleQuery extends Query {
 				"error" => "An error occurred while connecting to the database ".
 					"'{$db}'. The error reported by the server was: ".$e['message']
 			) );
-			exit(0);
+			exit(1);
 		}
 
 		// Use ISO date and time styles

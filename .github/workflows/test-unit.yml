@@ -3,16 +3,20 @@ name: Unit
 on:
   pull_request:
   push:
+  schedule:
+    - cron: '0 0/2 * * *'
 
 jobs:
   unit-test:
     name: Unit
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/mvorisek/image-php:${{ matrix.php }}
+      image: ${{ (matrix.php == '5.3' || matrix.php == '5.4' || matrix.php == '5.5' || matrix.php == '5.6' || matrix.php == '7.0' || matrix.php == '7.1' || matrix.php == '7.2' || matrix.php == '7.3') && 'php' || 'ghcr.io/mvorisek/image-php' }}:${{ matrix.php }}
     strategy:
       fail-fast: false
       matrix:
+        php: ['5.3', '5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', 'latest']
+        type: ['Lint']
 #        php: ['7.4', '8.0', '8.1']
 #        type: ['Phpunit']
         include:
@@ -22,9 +26,22 @@ jobs:
             type: 'StaticAnalysis'
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Configure PHP
+      - name: Configure PHP (for PHP < 7.4)
+        if: matrix.php == '5.3' || matrix.php == '5.4' || matrix.php == '5.5' || matrix.php == '5.6' || matrix.php == '7.0' || matrix.php == '7.1' || matrix.php == '7.2' || matrix.php == '7.3'
+        run: |
+          php --version
+          echo 'deb [trusted=yes] http://archive.debian.org/debian jessie main' > /etc/apt/sources.list
+          apt-get -y update
+          apt-get -y install ca-certificates wget
+          wget -q -O composer https://getcomposer.org/download/latest-1.x/composer.phar && chmod +x composer && mv composer /usr/bin
+          composer --version
+          composer config -g disable-tls true
+          sed -i 's/require-dev/require-xxx/g' composer.json
+
+      - name: Configure PHP (for PHP >= 7.4)
+        if: matrix.php != '5.3' && matrix.php != '5.4' && matrix.php != '5.5' && matrix.php != '5.6' && matrix.php != '7.0' && matrix.php != '7.1' && matrix.php != '7.2' && matrix.php != '7.3'
         run: |
           rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
           php --version
@@ -32,10 +49,10 @@ jobs:
       - name: Setup cache 1/2
         id: composer-cache
         run: |
-          echo "::set-output name=dir::$(composer config cache-files-dir)"
+          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
       - name: Setup cache 2/2
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ matrix.php }}-${{ matrix.type }}-${{ hashFiles('composer.json') }}
@@ -45,6 +62,15 @@ jobs:
       - name: Install PHP dependencies
         run: |
           composer update --ansi --prefer-dist --no-interaction --no-progress --optimize-autoloader
+
+      - name: "Run Lint (only for Lint)"
+        if: matrix.type == 'Lint'
+        run: |
+          find . -not -path './vendor/*' -type f -name '*.php' -exec php -l {} \; | tee lint.txt
+          (grep -q 'Errors parsing' lint.txt || exit 0 && exit 1)
+          php -r 'require_once "vendor/autoload.php"; new \DataTables\Editor(); echo "composer autoload ok\n";'
+          sed -i 's/\$db = /\/\//g' Bootstrap.php
+          php -r 'require_once "DataTables.php"; new \DataTables\Editor(); echo "manual bootstrap ok\n";'
 
       - name: "Run tests (only for Phpunit)"
         if: startsWith(matrix.type, 'Phpunit')

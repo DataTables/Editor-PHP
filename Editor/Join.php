@@ -565,7 +565,7 @@ class Join extends DataTables\Ext {
 						."included in the Editor field list. The join field must be included "
 						."as a regular field in the Editor instance."
 				) );
-				exit(0);
+				exit(1);
 			}
 
 			// Get list of pkey values and apply as a WHERE IN condition
