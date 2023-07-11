@@ -37,7 +37,7 @@ class Db2Result extends Result
 
 	private $_stmt;
 	private $_dbh;
-	private $_allRows = null;
+	private $_allRows;
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods

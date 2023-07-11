@@ -91,13 +91,13 @@ class Join extends DataTables\Ext
 	private $_leftJoin = array();
 
 	/** @var string */
-	private $_table = null;
+	private $_table;
 
 	/** @var string */
-	private $_type = null;
+	private $_type;
 
 	/** @var string */
-	private $_name = null;
+	private $_name;
 
 	/** @var bool */
 	private $_get = true;
@@ -106,7 +106,7 @@ class Join extends DataTables\Ext
 	private $_set = true;
 
 	/** @var string */
-	private $_aliasParentTable = null;
+	private $_aliasParentTable;
 
 	/** @var array */
 	private $_where = array();
@@ -118,7 +118,7 @@ class Join extends DataTables\Ext
 	private $_links = array();
 
 	/** @var string */
-	private $_customOrder = null;
+	private $_customOrder;
 
 	/** @var callable[] */
 	private $_validators = array();

@@ -145,7 +145,7 @@ class Editor extends Ext
 	 */
 
 	/** @var DataTables\Database */
-	private $_db = null;
+	private $_db;
 
 	/** @var DataTables\Editor\Field[] */
 	private $_fields = array();
@@ -2511,7 +2511,7 @@ class Editor extends Ext
 		// Hack to enable pass by reference with a "variable" number of parameters
 		for ($i = 1; $i < $argc; $i++) {
 			$name = 'arg' . $i;
-			$args[] = &$$name;
+			$args[] = &${$name};
 		}
 
 		if (!isset($this->_events[$eventName])) {

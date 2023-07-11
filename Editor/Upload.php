@@ -120,16 +120,16 @@ class Upload extends DataTables\Ext
 	 * Private parameters
 	 */
 
-	private $_action = null;
-	private $_dbCleanCallback = null;
-	private $_dbCleanTableField = null;
-	private $_dbTable = null;
-	private $_dbPKey = null;
-	private $_dbFields = null;
-	private $_dbFormat = null;
-	private $_extns = null;
-	private $_extnError = null;
-	private $_error = null;
+	private $_action;
+	private $_dbCleanCallback;
+	private $_dbCleanTableField;
+	private $_dbTable;
+	private $_dbPKey;
+	private $_dbFields;
+	private $_dbFormat;
+	private $_extns;
+	private $_extnError;
+	private $_error;
 	private $_mode = 0644;
 	private $_validators = array();
 	private $_where = array();

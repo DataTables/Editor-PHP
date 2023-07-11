@@ -27,7 +27,7 @@ class SqliteQuery extends Query
 	 */
 	private $_stmt;
 
-	protected $_identifier_limiter = null;
+	protected $_identifier_limiter;
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods

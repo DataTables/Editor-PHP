@@ -83,7 +83,6 @@ return $config
 		'dir_constant' => false,
 		'general_phpdoc_annotation_remove' => false,
 		'increment_style' => false,
-		'no_null_property_initialization' => false,
 		'phpdoc_annotation_without_dot' => false,
 		'phpdoc_no_package' => false,
 		'phpdoc_summary' => false,

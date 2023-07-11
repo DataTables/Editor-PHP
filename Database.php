@@ -71,12 +71,12 @@ class Database
 	 */
 
 	/** @var \PDO */
-	private $_dbResource = null;
+	private $_dbResource;
 
 	/** @var callable */
-	private $_type = null;
-	private $_debugCallback = null;
-	private $query_driver = null;
+	private $_type;
+	private $_debugCallback;
+	private $query_driver;
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods

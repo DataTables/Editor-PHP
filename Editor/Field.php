@@ -103,61 +103,61 @@ class Field extends DataTables\Ext
 	 */
 
 	/** @var string */
-	private $_dbField = null;
+	private $_dbField;
 
 	/** @var bool */
 	private $_get = true;
 
 	/** @var mixed */
-	private $_getFormatter = null;
+	private $_getFormatter;
 
 	/** @var mixed */
-	private $_getFormatterOpts = null;
+	private $_getFormatterOpts;
 
 	/** @var mixed */
-	private $_getValue = null;
+	private $_getValue;
 
 	/** @var Options|null */
-	private $_opts = null;
+	private $_opts;
 
 	/** @var SearchPaneOptions|null */
-	private $_spopts = null;
+	private $_spopts;
 
 	/** @var SearchBuilderOptions|null */
-	private $_sbopts = null;
+	private $_sbopts;
 
 	/** @var callable|null */
-	private $_optsFn = null;
+	private $_optsFn;
 
 	/** @var callable|null */
-	private $_spoptsFn = null;
+	private $_spoptsFn;
 
 	/** @var callable|null */
-	private $_sboptsFn = null;
+	private $_sboptsFn;
 
 	/** @var string */
-	private $_name = null;
+	private $_name;
 
 	/** @var string */
 	private $_set = Field::SET_BOTH;
 
 	/** @var mixed */
-	private $_setFormatter = null;
+	private $_setFormatter;
 
 	/** @var mixed */
-	private $_setFormatterOpts = null;
+	private $_setFormatterOpts;
 
 	/** @var mixed */
-	private $_setValue = null;
+	private $_setValue;
 
 	/** @var mixed */
 	private $_validator = array();
 
 	/** @var Upload */
-	private $_upload = null;
+	private $_upload;
 
 	/** @var callable */
-	private $_xss = null;
+	private $_xss;
 
 	/** @var bool */
 	private $_xssFormat = true;

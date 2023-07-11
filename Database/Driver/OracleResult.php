@@ -37,7 +37,7 @@ class OracleResult extends Result
 
 	private $_stmt; // Result from oci_parse
 	private $_dbh; // Result from oci_connect
-	private $_rows = null;
+	private $_rows;
 	private $_pkey_val;
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

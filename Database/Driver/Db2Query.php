@@ -24,7 +24,7 @@ class Db2Query extends Query
 
 	private $_sql;
 
-	protected $_identifier_limiter = null;
+	protected $_identifier_limiter;
 
 	protected $_field_quote = '"';
 
@@ -117,7 +117,7 @@ class Db2Query extends Query
 			for ($j = 0, $jen = count($bindings); $j < $jen; $j++) {
 				if ($bindings[$j]['name'] === $matches[0][$i]) {
 					$name = str_replace(':', '', $matches[0][$i]);
-					$$name = $bindings[$j]['value'];
+					${$name} = $bindings[$j]['value'];
 					// $_GLOBALS[ $name ] = $bindings[$j]['value'];
 
 					// echo "bind $name as ".$$name."\n";

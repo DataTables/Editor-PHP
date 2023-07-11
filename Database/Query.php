@@ -126,21 +126,21 @@ abstract class Query
 	 *
 	 * @internal
 	 */
-	protected $_limit = null;
+	protected $_limit;
 
 	/**
 	 * @var string
 	 *
 	 * @internal
 	 */
-	protected $_group_by = null;
+	protected $_group_by;
 
 	/**
 	 * @var int
 	 *
 	 * @internal
 	 */
-	protected $_offset = null;
+	protected $_offset;
 
 	/**
 	 * @var string
@@ -168,7 +168,7 @@ abstract class Query
 	 *
 	 * @internal
 	 */
-	protected $_pkey = null;
+	protected $_pkey;
 
 	protected $_supportsAsAlias = true;
 

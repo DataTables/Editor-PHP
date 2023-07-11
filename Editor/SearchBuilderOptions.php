@@ -66,10 +66,10 @@ class SearchBuilderOptions extends DataTables\Ext
 	 */
 
 	/** @var string Table to get the information from */
-	private $_table = null;
+	private $_table;
 
 	/** @var string Column name containing the value */
-	private $_value = null;
+	private $_value;
 
 	/** @var string[] Column names for the label(s) */
 	private $_label = array();
@@ -78,13 +78,13 @@ class SearchBuilderOptions extends DataTables\Ext
 	private $_leftJoin = array();
 
 	/** @var callable Callback function to do rendering of labels */
-	private $_renderer = null;
+	private $_renderer;
 
 	/** @var array Callback function to add where conditions */
-	private $_where = null;
+	private $_where;
 
 	/** @var string ORDER BY clause */
-	private $_order = null;
+	private $_order;
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods

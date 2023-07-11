@@ -182,8 +182,8 @@ class OracleQuery extends Query
 		return ' ' . implode(', ', $out) . ' ';
 	}
 
-	private $_oracle_offset = null;
-	private $_oracle_limit = null;
+	private $_oracle_offset;
+	private $_oracle_limit;
 
 	protected function _build_limit()
 	{
