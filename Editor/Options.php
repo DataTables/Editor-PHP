@@ -85,7 +85,7 @@ class Options extends DataTables\Ext {
 	/** @var callable Callback function to do rendering of labels */
 	private $_renderer = null;
 
-	/** @var callback Callback function to add where conditions */
+	/** @var callable Callback function to add where conditions */
 	private $_where = null;
 
 	/** @var string ORDER BY clause */

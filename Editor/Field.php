@@ -642,12 +642,12 @@ class Field extends DataTables\Ext {
 	 * Execute the spopts to get the list of options for SearchPanes to return
 	 * to the client-side
 	 *
-	 * @param DataTables\Field $field The field to retrieve the data from
-	 * @param DataTables\Editor $editor The editor instance
-	 * @param DataTables\DTRequest $http The http request sent to the server
-	 * @param DataTables\Field[] $fields All of the fields
-	 * @param any $leftJoin Info for a leftJoin if required
-	 * @return Promise<IOption[]> | bool
+	 * @param Editor\Field $field The field to retrieve the data from
+	 * @param Editor $editor The editor instance
+	 * @param array $http The http request sent to the server
+	 * @param Editor\Field[] $fields All of the fields
+	 * @param array $leftJoin Info for a leftJoin if required
+	 * @return array | bool
 	 * @internal
 	 */
 	public function searchPaneOptionsExec ( $field, $editor, $http, $fields, $leftJoin)

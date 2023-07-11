@@ -262,7 +262,7 @@ abstract class Query {
 
 	/**
 	 * Get the Database host for this query instance
-	 * @return DataTable Database class instance
+	 * @return Database Database class instance
 	 */
 	public function database ()
 	{

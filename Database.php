@@ -71,7 +71,7 @@ class Database {
 	 * Private properties
 	 */
 
-	/** @var resource */
+	/** @var \PDO */
 	private $_dbResource = null;
 
 	/** @var callable */
@@ -297,7 +297,7 @@ class Database {
 
 	/**
 	 * Get the database resource connector. This is typically a PDO object.
-	 * @return resource PDO connection resource (driver dependent)
+	 * @return \PDO PDO connection resource (driver dependent)
 	 */
 	public function resource ()
 	{

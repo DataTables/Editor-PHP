@@ -206,7 +206,7 @@ class Editor extends Ext {
 	/** @var string Log output path */
 	private $_debugLog = '';
 
-	/** @var callback */
+	/** @var callable */
 	private $_validator = array();
 
 	/** @var bool Enable true / catch when processing */
@@ -869,7 +869,7 @@ class Editor extends Ext {
 	 * @param  callable $_ Function to execute when validating the input data.
 	 *   It is passed three parameters: 1. The editor instance, 2. The action
 	 *   and 3. The values.
-	 * @return Editor|callback Editor instance if called as a setter, or the
+	 * @return Editor|callable Editor instance if called as a setter, or the
 	 *   validator function if not.
 	 */
 	public function validator ( $_=null )
