@@ -78,7 +78,7 @@ class Htmlawed
 					  	$x
 					  );
 				}
-				preg_match_all('`(?:^|-|\+)[^\-+]+?(?=-|\+|$)`', $x, $m, PREG_SET_ORDER);
+				preg_match_all('`(?:^|-|\+)[^\-+]+?(?=-|\+|$)`', $x, $m, \PREG_SET_ORDER);
 				for ($i = count($m); --$i >= 0;) {
 					$m[$i] = $m[$i][0];
 				}
@@ -479,7 +479,7 @@ class Htmlawed
 							'`(\x01\x02[^\x01\x02]+\x02\x01)`',
 							$content,
 							-1,
-							PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
+							\PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY
 						) as $m) {
 						echo substr($m, 0, 2) == "\x01\x02"
 							? $m
@@ -686,7 +686,7 @@ class Htmlawed
 						'`(\x01\x02[^\x01\x02]+\x02\x01)`',
 						$content,
 						-1,
-						PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
+						\PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY
 					) as $m) {
 					echo substr($m, 0, 2) == "\x01\x02"
 						? $m

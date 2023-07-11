@@ -406,8 +406,8 @@ class Upload extends DataTables\Ext
 		$upload = $_FILES['upload'];
 
 		// Validation - PHP standard validation
-		if ($upload['error'] !== UPLOAD_ERR_OK) {
-			if ($upload['error'] === UPLOAD_ERR_INI_SIZE) {
+		if ($upload['error'] !== \UPLOAD_ERR_OK) {
+			if ($upload['error'] === \UPLOAD_ERR_INI_SIZE) {
 				$this->_error = 'File exceeds maximum file upload size';
 			} else {
 				$this->_error = 'There was an error uploading the file (' . $upload['error'] . ')';
@@ -418,7 +418,7 @@ class Upload extends DataTables\Ext
 
 		// Validation - acceptable file extensions
 		if (is_array($this->_extns)) {
-			$extn = pathinfo($upload['name'], PATHINFO_EXTENSION);
+			$extn = pathinfo($upload['name'], \PATHINFO_EXTENSION);
 
 			if (in_array(strtolower($extn), array_map('strtolower', $this->_extns)) === false) {
 				$this->_error = $this->_extnError;
@@ -629,7 +629,7 @@ class Upload extends DataTables\Ext
 					break;
 				case self::DB_CONTENT_TYPE:
 				case self::DB_MIME_TYPE:
-					$finfo = finfo_open(FILEINFO_MIME);
+					$finfo = finfo_open(\FILEINFO_MIME);
 					$mime = finfo_file($finfo, $upload['tmp_name']);
 					finfo_close($finfo);
 
@@ -637,7 +637,7 @@ class Upload extends DataTables\Ext
 
 					break;
 				case self::DB_EXTN:
-					$extn = pathinfo($upload['name'], PATHINFO_EXTENSION);
+					$extn = pathinfo($upload['name'], \PATHINFO_EXTENSION);
 					$q->set($column, $extn);
 
 					break;
@@ -724,7 +724,7 @@ class Upload extends DataTables\Ext
 	 */
 	private function _path ($name, $id)
 	{
-		$extn = pathinfo($name, PATHINFO_EXTENSION);
+		$extn = pathinfo($name, \PATHINFO_EXTENSION);
 
 		$to = $this->_action;
 		$to = str_replace('__NAME__', $name, $to);

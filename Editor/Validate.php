@@ -381,7 +381,7 @@ class Validate
 					$common;
 			}
 
-			if (filter_var($val, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) === null) {
+			if (filter_var($val, \FILTER_VALIDATE_BOOLEAN, \FILTER_NULL_ON_FAILURE) === null) {
 				return $opts->message();
 			}
 
@@ -605,7 +605,7 @@ class Validate
 					$common;
 			}
 
-			return filter_var($val, FILTER_VALIDATE_EMAIL) !== false ?
+			return filter_var($val, \FILTER_VALIDATE_EMAIL) !== false ?
 				true :
 				$opts->message();
 		};
@@ -756,7 +756,7 @@ class Validate
 					$common;
 			}
 
-			return filter_var($val, FILTER_VALIDATE_IP) !== false ?
+			return filter_var($val, \FILTER_VALIDATE_IP) !== false ?
 				true :
 				$opts->message();
 		};
@@ -787,7 +787,7 @@ class Validate
 					$common;
 			}
 
-			return filter_var($val, FILTER_VALIDATE_URL) !== false ?
+			return filter_var($val, \FILTER_VALIDATE_URL) !== false ?
 				true :
 				$opts->message();
 		};
@@ -1089,7 +1089,7 @@ class Validate
 	public static function fileExtensions ($extensions, $msg = 'This file type cannot be uploaded.')
 	{
 		return function ($file) use ($extensions, $msg) {
-			$extn = pathinfo($file['name'], PATHINFO_EXTENSION);
+			$extn = pathinfo($file['name'], \PATHINFO_EXTENSION);
 
 			for ($i = 0, $ien = count($extensions); $i < $ien; $i++) {
 				if (strtolower($extn) === strtolower($extensions[$i])) {

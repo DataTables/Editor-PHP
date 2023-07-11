@@ -245,13 +245,13 @@ class SearchPaneOptions extends DataTables\Ext
 		$readTable = $editor->readTable();
 		$filteringActive = isset($http['searchPanes']);
 		$viewCount = isset($http['searchPanes_options'])
-			? filter_var($http['searchPanes_options']['viewCount'], FILTER_VALIDATE_BOOLEAN)
+			? filter_var($http['searchPanes_options']['viewCount'], \FILTER_VALIDATE_BOOLEAN)
 			: true;
 		$viewTotal = isset($http['searchPanes_options'])
-			? filter_var($http['searchPanes_options']['viewTotal'], FILTER_VALIDATE_BOOLEAN)
+			? filter_var($http['searchPanes_options']['viewTotal'], \FILTER_VALIDATE_BOOLEAN)
 			: false;
 		$cascade = isset($http['searchPanes_options'])
-			? filter_var($http['searchPanes_options']['cascade'], FILTER_VALIDATE_BOOLEAN)
+			? filter_var($http['searchPanes_options']['cascade'], \FILTER_VALIDATE_BOOLEAN)
 			: false;
 		$entries = null;
 

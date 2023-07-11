@@ -93,7 +93,6 @@ return $config
 		'increment_style' => false,
 		'method_chaining_indentation' => false,
 		'modernize_types_casting' => false,
-		'native_constant_invocation' => false,
 		'no_empty_statement' => false,
 		'no_null_property_initialization' => false,
 		'no_useless_concat_operator' => false,

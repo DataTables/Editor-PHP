@@ -733,7 +733,7 @@ class Editor extends Ext
 
 			// Save to a log file
 			if ($this->_debugLog) {
-				file_put_contents($this->_debugLog, json_encode($this->_debugInfo) . "\n", FILE_APPEND);
+				file_put_contents($this->_debugLog, json_encode($this->_debugInfo) . "\n", \FILE_APPEND);
 			}
 
 			$this->_db->debug(false);
@@ -983,7 +983,7 @@ class Editor extends Ext
 		$validators = $this->_validator;
 
 		// Sanity check that data isn't getting truncated as that can lead to data corruption
-		if ($data && count($data, COUNT_RECURSIVE) >= ini_get('max_input_vars')) {
+		if ($data && count($data, \COUNT_RECURSIVE) >= ini_get('max_input_vars')) {
 			$this->_out['error'] = 'Too many rows edited at the same time (tech info: max_input_vars exceeded).';
 		}
 
