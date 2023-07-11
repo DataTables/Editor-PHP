@@ -21,7 +21,8 @@ use DataTables\Database\Result;
  *
  *  @internal
  */
-class FirebirdResult extends Result {
+class FirebirdResult extends Result
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Constructor
      */

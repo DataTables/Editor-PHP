@@ -34,7 +34,8 @@ namespace DataTables\HtmLawed;
 /**
  * A class wrapper for the htmLawed library.
  */
-class Htmlaw {
+class Htmlaw
+{
     // / Methods ///
 
     public static $defaultConfig = array(
@@ -68,7 +69,8 @@ class Htmlaw {
      *
      * @see http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/htmLawed_README.htm
      */
-    public static function filter($html, array $config = null, $spec = null) {
+    public static function filter($html, array $config = null, $spec = null)
+    {
         if ($config === null) {
             $config = self::$defaultConfig;
         }
@@ -93,7 +95,8 @@ class Htmlaw {
      *
      * @see Htmlawed::filter().
      */
-    public static function filterRSS($html) {
+    public static function filterRSS($html)
+    {
         $config = array(
             'anti_link_spam' => array('`.`', ''),
             'comment' => 1,

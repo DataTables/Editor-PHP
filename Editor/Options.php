@@ -60,7 +60,8 @@ use DataTables\Database;
  *        )
  *    ```
  */
-class Options extends DataTables\Ext {
+class Options extends DataTables\Ext
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Private parameters
      */
@@ -130,11 +131,9 @@ class Options extends DataTables\Ext {
     {
         if ($_ === null) {
             return $this;
-        }
-        else if (is_string($_)) {
+        } else if (is_string($_)) {
             $this->_label = array($_);
-        }
-        else {
+        } else {
             $this->_label = $_;
         }
 

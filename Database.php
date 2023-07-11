@@ -27,7 +27,8 @@ use DataTables\Database\Result;
  * required for basic database interaction is provided through the abstracted
  * methods.
  */
-class Database {
+class Database
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Constructor
      */
@@ -150,11 +151,9 @@ class Database {
     {
         if ($set === null) {
             return $this->_debugCallback ? true : false;
-        }
-        else if ($set === false) {
+        } else if ($set === false) {
             $this->_debugCallback = null;
-        }
-        else {
+        } else {
             $this->_debugCallback = $set;
         }
 

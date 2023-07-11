@@ -58,7 +58,8 @@ use DataTables\Editor\Field;
  *          ->json();
  *    ```
  */
-class Editor extends Ext {
+class Editor extends Ext
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Statics
      */
@@ -436,8 +437,7 @@ class Editor extends Ext {
 
             if ($json !== false) {
                 echo $json;
-            }
-            else {
+            } else {
                 echo json_encode(array(
                     "error" => "JSON encoding error: " . json_last_error_msg()
                 ));
@@ -630,12 +630,10 @@ class Editor extends Ext {
                         throw new \Exception("Primary key value is null.", 1);
                     }
                     $val = $row[$column];
-                }
-                else {
+                } else {
                     $val = null;
                 }
-            }
-            else {
+            } else {
                 $val = $this->_readProp($column, $row);
             }
 
@@ -681,8 +679,7 @@ class Editor extends Ext {
         for ($i = 0, $ien = count($idParts); $i < $ien; $i++) {
             if ($flat) {
                 $arr[$pkey[$i]] = $idParts[$i];
-            }
-            else {
+            } else {
                 $this->_writeProp($arr, $pkey[$i], $idParts[$i]);
             }
         }
@@ -712,8 +709,7 @@ class Editor extends Ext {
         if ($this->_tryCatch) {
             try {
                 $this->_process($data);
-            }
-            catch (\Exception $e) {
+            } catch (\Exception $e) {
                 // Error feedback
                 $this->_out['error'] = $e->getMessage();
 
@@ -721,8 +717,7 @@ class Editor extends Ext {
                     $this->_db->rollback();
                 }
             }
-        }
-        else {
+        } else {
             $this->_process($data);
         }
 
@@ -919,8 +914,7 @@ class Editor extends Ext {
 
         if (is_callable($key) && is_object($key)) {
             $this->_where[] = $key;
-        }
-        else {
+        } else {
             $this->_where[] = array(
                 "key" => $key,
                 "value" => $value,
@@ -948,7 +942,8 @@ class Editor extends Ext {
         return $this->_getSet($this->_whereSet, $_);
     }
 
-    public function write ($_writeVal = null){
+    public function write ($_writeVal = null)
+    {
         return $this->_getSet($this->_write, $_writeVal);
     }
 
@@ -1007,17 +1002,14 @@ class Editor extends Ext {
             if ($action === Editor::ACTION_READ) {
                 /* Get data */
                 $this->_out = array_merge($this->_out, $this->_get(null, $data));
-            }
-            else if ($action === Editor::ACTION_UPLOAD && $this->_write === true) {
+            } else if ($action === Editor::ACTION_UPLOAD && $this->_write === true) {
                 /* File upload */
                 $this->_upload($data);
-            }
-            else if ($action === Editor::ACTION_DELETE && $this->_write === true) {
+            } else if ($action === Editor::ACTION_DELETE && $this->_write === true) {
                 /* Remove rows */
                 $this->_remove($data);
                 $this->_fileClean();
-            }
-            else if (($action === Editor::ACTION_CREATE || $action === Editor::ACTION_EDIT) && $this->_write === true) {
+            } else if (($action === Editor::ACTION_CREATE || $action === Editor::ACTION_EDIT) && $this->_write === true) {
                 /* Create or edit row */
                 // Pre events so they can occur before the validation
                 foreach ($data['data'] as $idSrc => &$values) {
@@ -1025,8 +1017,7 @@ class Editor extends Ext {
 
                     if ($action === Editor::ACTION_CREATE) {
                         $cancel = $this->_trigger('preCreate', $values);
-                    }
-                    else {
+                    } else {
                         $id = str_replace($this->_idPrefix, '', $idSrc);
                         $cancel = $this->_trigger('preEdit', $id, $values);
                     }
@@ -1204,8 +1195,7 @@ class Editor extends Ext {
                 ),
                 $ssp
             );
-        }
-        else if (count($searchBuilder['options']) > 0) {
+        } else if (count($searchBuilder['options']) > 0) {
             return array_merge(
                 array(
                     'data' => $out,
@@ -1215,8 +1205,7 @@ class Editor extends Ext {
                 ),
                 $ssp
             );
-        }
-        else if (count($searchPanes['options']) > 0) {
+        } else if (count($searchPanes['options']) > 0) {
             return array_merge(
                 array(
                     'data' => $out,
@@ -1226,8 +1215,7 @@ class Editor extends Ext {
                 ),
                 $ssp
             );
-        }
-        else {
+        } else {
             return array_merge(
                 array(
                     'data' => $out,
@@ -1354,8 +1342,7 @@ class Editor extends Ext {
             // Allow the event to be cancelled and inform the client-side
             if ($res === false) {
                 $this->_out['cancelled'][] = $idSrc;
-            }
-            else {
+            } else {
                 $ids[] = $id;
             }
         }
@@ -1380,8 +1367,7 @@ class Editor extends Ext {
                 if (strpos($join['field1'], $join['table']) === 0) {
                     $parentLink = $join['field2'];
                     $childLink = $join['field1'];
-                }
-                else {
+                } else {
                     $parentLink = $join['field1'];
                     $childLink = $join['field2'];
                 }
@@ -1439,8 +1425,7 @@ class Editor extends Ext {
                     }
                 }
             }
-        }
-        else {
+        } else {
             $fieldName = $field->name();
         }
 
@@ -1467,8 +1452,7 @@ class Editor extends Ext {
                 "name" => $fieldName,      // field name can be just the field's
                 "status" => $upload->error() // name or a join combination
             );
-        }
-        else {
+        } else {
             $files = $this->_fileData($upload->table(), array($res));
 
             $this->_out['files'] = $files;
@@ -1563,8 +1547,7 @@ class Editor extends Ext {
                     if (count($ids) === 0) {
                         // If no data to fetch for this field, so don't bother
                         continue;
-                    }
-                    else if (count($ids) > 1000) {
+                    } else if (count($ids) > 1000) {
                         // Don't use `where_in` for really large data sets
                         $ids = array();
                     }
@@ -1575,8 +1558,7 @@ class Editor extends Ext {
                 if ($fileData !== null) {
                     if (isset($files[$table])) {
                         $files[$table] = $files[$table] + $fileData;
-                    }
-                    else {
+                    } else {
                         $files[$table] = $fileData;
                     }
                 }
@@ -1716,7 +1698,8 @@ class Editor extends Ext {
         }
     }
 
-    private function _constructSearchBuilderConditions($query, $data) {
+    private function _constructSearchBuilderConditions($query, $data)
+    {
         $first = true;
 
         if (!isset($data['criteria'])) {
@@ -1734,14 +1717,12 @@ class Editor extends Ext {
                     });
                     // Set first to false so that in future only the logic is checked
                     $first = false;
-                }
-                else {
+                } else {
                     $query->where_group(function ($q) use ($crit) {
                         $this->_constructSearchBuilderConditions($q, $crit);
                     }, 'OR');
                 }
-            }
-            else if (isset($crit['condition']) && (isset($crit['value1']) || $crit['condition'] === 'null' || $crit['condition'] === '!null')) {
+            } else if (isset($crit['condition']) && (isset($crit['value1']) || $crit['condition'] === 'null' || $crit['condition'] === '!null')) {
                 // Sometimes the structure of the object that is passed across is named in a strange way.
                 // This conditional assignment solves that issue
                 $val1 = isset($crit['value1']) ? $crit['value1'] : '';
@@ -1763,8 +1744,7 @@ class Editor extends Ext {
                             $query->where($crit['origData'], $val1, '=');
                             // Set first to false so that in future only the logic is checked
                             $first = false;
-                        }
-                        else {
+                        } else {
                             // Call the or_where function - has to be or logic in this block
                             $query->or_where($crit['origData'], $val1, '=');
                         }
@@ -1773,8 +1753,7 @@ class Editor extends Ext {
                         if ($data['logic'] === 'AND' || $first) {
                             $query->where($crit['origData'], $val1, '<>');
                             $first = false;
-                        }
-                        else {
+                        } else {
                             $query->or_where($crit['origData'], $val1, '<>');
                         }
                         break;
@@ -1782,8 +1761,7 @@ class Editor extends Ext {
                         if ($data['logic'] === 'AND' || $first) {
                             $query->where($crit['origData'], '%' . $val1 . '%', 'LIKE');
                             $first = false;
-                        }
-                        else {
+                        } else {
                             $query->or_where($crit['origData'], '%' . $val1 . '%', 'LIKE');
                         }
                         break;
@@ -1791,8 +1769,7 @@ class Editor extends Ext {
                         if ($data['logic'] === 'AND' || $first) {
                             $query->where($crit['origData'], '%' . $val1 . '%', 'NOT LIKE');
                             $first = false;
-                        }
-                        else {
+                        } else {
                             $query->or_where($crit['origData'], '%' . $val1 . '%', 'NOT LIKE');
                         }
                         break;
@@ -1800,8 +1777,7 @@ class Editor extends Ext {
                         if ($data['logic'] === 'AND' || $first) {
                             $query->where($crit['origData'], $val1 . '%', 'LIKE');
                             $first = false;
-                        }
-                        else {
+                        } else {
                             $query->or_where($crit['origData'], $val1 . '%', 'LIKE');
                         }
                         break;
@@ -1809,8 +1785,7 @@ class Editor extends Ext {
                         if ($data['logic'] === 'AND' || $first) {
                             $query->where($crit['origData'], $val1 . '%', 'NOT LIKE');
                             $first = false;
-                        }
-                        else {
+                        } else {
                             $query->or_where($crit['origData'], $val1 . '%', 'NOT LIKE');
                         }
                         break;
@@ -1818,8 +1793,7 @@ class Editor extends Ext {
                         if ($data['logic'] === 'AND' || $first) {
                             $query->where($crit['origData'], '%' . $val1, 'LIKE');
                             $first = false;
-                        }
-                        else {
+                        } else {
                             $query->or_where($crit['origData'], '%' . $val1, 'LIKE');
                         }
                         break;
@@ -1827,8 +1801,7 @@ class Editor extends Ext {
                         if ($data['logic'] === 'AND' || $first) {
                             $query->where($crit['origData'], '%' . $val1, 'NOT LIKE');
                             $first = false;
-                        }
-                        else {
+                        } else {
                             $query->or_where($crit['origData'], '%' . $val1, 'NOT LIKE');
                         }
                         break;
@@ -1836,8 +1809,7 @@ class Editor extends Ext {
                         if ($data['logic'] === 'AND' || $first) {
                             $query->where($crit['origData'], $val1, '<');
                             $first = false;
-                        }
-                        else {
+                        } else {
                             $query->or_where($crit['origData'], $val1, '<');
                         }
                         break;
@@ -1845,8 +1817,7 @@ class Editor extends Ext {
                         if ($data['logic'] === 'AND' || $first) {
                             $query->where($crit['origData'], $val1, '<=');
                             $first = false;
-                        }
-                        else {
+                        } else {
                             $query->or_where($crit['origData'], $val1, '<=');
                         }
                         break;
@@ -1854,8 +1825,7 @@ class Editor extends Ext {
                         if ($data['logic'] === 'AND' || $first) {
                             $query->where($crit['origData'], $val1, '>=');
                             $first = false;
-                        }
-                        else {
+                        } else {
                             $query->or_where($crit['origData'], $val1, '>=');
                         }
                         break;
@@ -1863,8 +1833,7 @@ class Editor extends Ext {
                         if ($data['logic'] === 'AND' || $first) {
                             $query->where($crit['origData'], $val1, '>');
                             $first = false;
-                        }
-                        else {
+                        } else {
                             $query->or_where($crit['origData'], $val1, '>');
                         }
                         break;
@@ -1876,8 +1845,7 @@ class Editor extends Ext {
                                     ->where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '<=');
                             });
                             $first = false;
-                        }
-                        else {
+                        } else {
                             $query
                                 ->or_where($crit['origData'], is_numeric($val1) ? intval($val1) : $val1, '>=')
                                 ->where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '<=');
@@ -1889,8 +1857,7 @@ class Editor extends Ext {
                                 $q->where($crit['origData'], is_numeric($val1) ? intval($val1) : $val1, '<')->or_where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '>');
                             });
                             $first = false;
-                        }
-                        else {
+                        } else {
                             $query->or_where($crit['origData'], is_numeric($val1) ? intval($val1) : $val1, '<')->or_where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '>');
                         }
                         break;
@@ -1903,8 +1870,7 @@ class Editor extends Ext {
                                 }
                             });
                             $first = false;
-                        }
-                        else {
+                        } else {
                             $query->where_group(function ($q) use ($crit) {
                                 $q->where($crit['origData'], null, "=");
                                 if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
@@ -1922,8 +1888,7 @@ class Editor extends Ext {
                                 }
                             });
                             $first = false;
-                        }
-                        else {
+                        } else {
                             $query->where_group(function ($q) use ($crit) {
                                 $q->where($crit['origData'], null, "!=");
                                 if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
@@ -1988,7 +1953,7 @@ class Editor extends Ext {
             $db = $this->_db;
             // For every selection in every column
             foreach ($this->_fields as $field) {
-                if (isset($http['searchPanes'][$field->name()])){
+                if (isset($http['searchPanes'][$field->name()])) {
                     for ($i = 0; $i < count($http['searchPanes'][$field->name()]); $i++) {
                         // Check the number of rows...
                         $q = $db
@@ -2012,7 +1977,7 @@ class Editor extends Ext {
                     }
 
                     $query->where(function ($q) use ($field, $http) {
-                        for ($j = 0; $j < count($http['searchPanes'][$field->name()]); $j++){
+                        for ($j = 0; $j < count($http['searchPanes'][$field->name()]); $j++) {
                             $q->or_where(
                                 $field->dbField(),
                                 isset($http['searchPanes_null'][$field->name()][$j])
@@ -2099,8 +2064,7 @@ class Editor extends Ext {
         for ($i = 0; $i < count($this->_where); $i++) {
             if (is_callable($this->_where[$i])) {
                 $this->_where[$i]($query);
-            }
-            else {
+            } else {
                 $query->where(
                     $this->_where[$i]['key'],
                     $this->_where[$i]['value'],
@@ -2127,8 +2091,7 @@ class Editor extends Ext {
 
             if ($type === 'name' && $field->name() === $name) {
                 return $field;
-            }
-            else if ($type === 'db' && $field->dbField() === $name) {
+            } else if ($type === 'db' && $field->dbField() === $name) {
                 return $field;
             }
         }
@@ -2184,16 +2147,14 @@ class Editor extends Ext {
             if ($tablePart === $joinTable) {
                 $parentLink = $join['field2'];
                 $childLink = $join['field1'];
-            }
-            else {
+            } else {
                 $parentLink = $join['field1'];
                 $childLink = $join['field2'];
             }
 
             if ($parentLink === $this->_pkey[0] && count($this->_pkey) === 1) {
                 $whereVal = $id;
-            }
-            else {
+            } else {
                 // We need submitted information about the joined data to be
                 // submitted as well as the new value. We first check if the
                 // host field was submitted
@@ -2285,8 +2246,7 @@ class Editor extends Ext {
                 if (!is_callable($cond)) {
                     // Make sure the value wasn't in the submitted data set,
                     // otherwise we would be overwriting it
-                    if (!isset($set[$cond['key']]))
-                    {
+                    if (!isset($set[$cond['key']])) {
                         $whereTablePart = $this->_part($cond['key'], 'table');
 
                         // No table part on the where condition to match against
@@ -2294,8 +2254,7 @@ class Editor extends Ext {
                         if (!$whereTablePart || $tableAlias == $whereTablePart) {
                             $set[$cond['key']] = $cond['value'];
                         }
-                    }
-                    else {
+                    } else {
                         throw new \Exception(
                             'Where condition used as a setter, ' .
                             'but value submitted for field: ' . $cond['key']
@@ -2318,8 +2277,7 @@ class Editor extends Ext {
         // Insert or update
         if ($action === 'create') {
             return $this->_db->insert($table, $set, $pkey);
-        }
-        else {
+        } else {
             return $this->_db->push($table, $set, $where, $pkey);
         }
     }
@@ -2364,16 +2322,14 @@ class Editor extends Ext {
 
             if ($fieldDots === 0) {
                 $count++;
-            }
-            else if ($fieldDots === 1) {
+            } else if ($fieldDots === 1) {
                 if (
                     $field->set() !== Field::SET_NONE &&
                     $this->_part($fieldName, 'table') === $tableAlias
                 ) {
                     $count++;
                 }
-            }
-            else {
+            } else {
                 // db link
                 // note that if the table name for the constructor uses a db part, we need to also have
                 // the fields using the db name as Editor doesn't do any conflict resolution.
@@ -2495,20 +2451,17 @@ class Editor extends Ext {
                 $db = $a[0];
                 $table = $a[1];
                 $column = $a[2];
-            }
-            else if (count($a) === 2) {
+            } else if (count($a) === 2) {
                 $table = $a[0];
                 $column = $a[1];
             }
-        }
-        else {
+        } else {
             $column = $name;
         }
 
         if ($type === 'db') {
             return $db;
-        }
-        else if ($type === 'table') {
+        } else if ($type === 'table') {
             return $table;
         }
         return $column;

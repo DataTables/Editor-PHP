@@ -55,7 +55,8 @@ use DataTables\Editor\Field;
  *            )
  *    ```
  */
-class Join extends DataTables\Ext {
+class Join extends DataTables\Ext
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Constructor
      */
@@ -442,8 +443,7 @@ class Join extends DataTables\Ext {
 
         if (is_callable($key) && is_object($key)) {
             $this->_where[] = $key;
-        }
-        else {
+        } else {
             $this->_where[] = array(
                 "key" => $key,
                 "value" => $value,
@@ -550,8 +550,7 @@ class Join extends DataTables\Ext {
                         $this->_table,
                         $this->_table . '.' . $this->_join['child'][0] . ' = ' . $this->_join['table'] . '.' . $this->_join['child'][1]
                     );
-            }
-            else {
+            } else {
                 // No link table in the middle
                 $stmt
                     ->join(
@@ -567,11 +566,9 @@ class Join extends DataTables\Ext {
             // use that. Otherwise, the key must be in the field list.
             if ($this->_propExists($dteTable . '.' . $joinField, $data[0])) {
                 $readField = $dteTable . '.' . $joinField;
-            }
-            else if ($this->_propExists($joinField, $data[0])) {
+            } else if ($this->_propExists($joinField, $data[0])) {
                 $readField = $joinField;
-            }
-            else if (!$pkeyIsJoin) {
+            } else if (!$pkeyIsJoin) {
                 echo json_encode(array(
                     "sError" => "Join was performed on the field '{$joinField}' which was not "
                         . "included in the Editor field list. The join field must be included "
@@ -618,8 +615,7 @@ class Join extends DataTables\Ext {
 
                 if ($this->_type === 'object') {
                     $join[$row['dteditor_pkey']] = $inner;
-                }
-                else {
+                } else {
                     if (!isset($join[$row['dteditor_pkey']])) {
                         $join[$row['dteditor_pkey']] = array();
                     }
@@ -635,8 +631,7 @@ class Join extends DataTables\Ext {
 
                 if (isset($join[$rowPKey])) {
                     $data[$i][$this->_name] = $join[$rowPKey];
-                }
-                else {
+                } else {
                     $data[$i][$this->_name] = ($this->_type === 'object') ?
                         (object) array() : array();
                 }
@@ -682,8 +677,7 @@ class Join extends DataTables\Ext {
 
         if ($this->_type === 'object') {
             $this->_insert($db, $parentId, $data[$this->_name]);
-        }
-        else {
+        } else {
             for ($i = 0; $i < count($data[$this->_name]); $i++) {
                 $this->_insert($db, $parentId, $data[$this->_name][$i]);
             }
@@ -713,8 +707,7 @@ class Join extends DataTables\Ext {
         if ($this->_type === 'object') {
             // update or insert
             $this->_update_row($db, $parentId, $data[$this->_name]);
-        }
-        else {
+        } else {
             // WARNING - this will remove rows and then readd them. Any
             // data not in the field list WILL BE LOST
             // todo - is there a better way of doing this?
@@ -746,8 +739,7 @@ class Join extends DataTables\Ext {
                 ->table($this->_join['table'])
                 ->or_where($this->_join['parent'][1], $ids)
                 ->exec();
-        }
-        else {
+        } else {
             $stmt = $db
                 ->query('delete')
                 ->table($this->_table)
@@ -798,8 +790,7 @@ class Join extends DataTables\Ext {
 
         if ($this->_type === 'object') {
             $this->_validateFields($errors, $editor, $joinData, $this->_name . '.');
-        }
-        else {
+        } else {
             for ($i = 0; $i < count($joinData); $i++) {
                 $this->_validateFields($errors, $editor, $joinData[$i], $this->_name . '[].');
             }
@@ -822,8 +813,7 @@ class Join extends DataTables\Ext {
         for ($i = 0; $i < count($this->_where); $i++) {
             if (is_callable($this->_where[$i])) {
                 $this->_where[$i]($query);
-            }
-            else {
+            } else {
                 $query->where(
                     $this->_where[$i]['key'],
                     $this->_where[$i]['value'],
@@ -852,8 +842,7 @@ class Join extends DataTables\Ext {
                 ->set($this->_join['parent'][1], $parentId)
                 ->set($this->_join['child'][1], $data[$this->_join['child'][0]])
                 ->exec();
-        }
-        else {
+        } else {
             // Insert values into the target table
             $stmt = $db
                 ->query('insert')
@@ -917,13 +906,11 @@ class Join extends DataTables\Ext {
                 if ($f1[0] === $editorTable) {
                     $this->_join['parent'] = $f1[1];
                     $this->_join['child'] = $f2[1];
-                }
-                else {
+                } else {
                     $this->_join['parent'] = $f2[1];
                     $this->_join['child'] = $f1[1];
                 }
-            }
-            else {
+            } else {
                 // Link table
                 $f1 = explode('.', $links[0]);
                 $f2 = explode('.', $links[1]);
@@ -933,14 +920,11 @@ class Join extends DataTables\Ext {
                 // Discover the name of the link table
                 if ($f1[0] !== $editorTable && $f1[0] !== $joinTable) {
                     $this->_join['table'] = $f1[0];
-                }
-                else if ($f2[0] !== $editorTable && $f2[0] !== $joinTable) {
+                } else if ($f2[0] !== $editorTable && $f2[0] !== $joinTable) {
                     $this->_join['table'] = $f2[0];
-                }
-                else if ($f3[0] !== $editorTable && $f3[0] !== $joinTable) {
+                } else if ($f3[0] !== $editorTable && $f3[0] !== $joinTable) {
                     $this->_join['table'] = $f3[0];
-                }
-                else {
+                } else {
                     $this->_join['table'] = $f4[0];
                 }
 
@@ -973,8 +957,7 @@ class Join extends DataTables\Ext {
                     $this->_join['parent'][1] => $parentId
                 )
             );
-        }
-        else {
+        } else {
             // No link table, just a direct reference
             $set = array(
                 $this->_join['child'] => $parentId
@@ -1027,8 +1010,7 @@ class Join extends DataTables\Ext {
                 if (strpos($field->dbField(), ".") === false) {
                     $fields[] = $this->_table . '.' . $field->dbField() . " as " . $field->dbField();
                     ;
-                }
-                else {
+                } else {
                     $fields[] = $field->dbField(); // ." as ".$field->dbField();
                 }
             }

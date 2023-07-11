@@ -74,7 +74,8 @@ use DataTables;
  *			)
  *	```
  */
-class Upload extends DataTables\Ext {
+class Upload extends DataTables\Ext
+{
     /*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
      * Constants
      */
@@ -266,7 +267,8 @@ class Upload extends DataTables\Ext {
      * Set the permissions on the file after it has been uploaded using
      * chmod.
      */
-    public function mode($m) {
+    public function mode($m)
+    {
         $this->_mode = $m;
 
         return $this;
@@ -407,8 +409,7 @@ class Upload extends DataTables\Ext {
         if ($upload['error'] !== UPLOAD_ERR_OK) {
             if ($upload['error'] === UPLOAD_ERR_INI_SIZE) {
                 $this->_error = "File exceeds maximum file upload size";
-            }
-            else {
+            } else {
                 $this->_error = "There was an error uploading the file (" . $upload['error'] . ")";
             }
             return false;
@@ -548,12 +549,10 @@ class Upload extends DataTables\Ext {
         if (count($a) === 1) {
             $table = $editorTable;
             $field = $a[0];
-        }
-        else if (count($a) === 2) {
+        } else if (count($a) === 2) {
             $table = $a[0];
             $field = $a[1];
-        }
-        else {
+        } else {
             $table = $a[1];
             $field = $a[2];
         }
@@ -665,8 +664,7 @@ class Upload extends DataTables\Ext {
                         // Allow for replacement of __ID__, etc when the value is a string
                         $pathFields[$column] = $val;
                         $q->set($column, '-'); // Use a temporary value (as above)
-                    }
-                    else {
+                    } else {
                         $q->set($column, $val);
                     }
 

@@ -19,7 +19,8 @@ use DataTables\Database\Result;
  *
  *  @internal
  */
-class OracleResult extends Result {
+class OracleResult extends Result
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Constructor
      */

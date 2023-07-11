@@ -21,7 +21,8 @@ use DataTables\Database\Result;
  *
  *  @internal
  */
-class PostgresResult extends Result {
+class PostgresResult extends Result
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Constructor
      */

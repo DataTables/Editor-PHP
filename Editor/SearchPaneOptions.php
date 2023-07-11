@@ -59,7 +59,8 @@ use DataTables;
  *        )
  *    ```
  */
-class SearchPaneOptions extends DataTables\Ext {
+class SearchPaneOptions extends DataTables\Ext
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Private parameters
      */
@@ -102,11 +103,9 @@ class SearchPaneOptions extends DataTables\Ext {
     {
         if ($_ === null) {
             return $this;
-        }
-        else if (is_string($_)) {
+        } else if (is_string($_)) {
             $this->_label = array($_);
-        }
-        else {
+        } else {
             $this->_label = $_;
         }
 
@@ -217,8 +216,7 @@ class SearchPaneOptions extends DataTables\Ext {
         for ($i = 0; $i < count($this->_where); $i++) {
             if (is_callable($this->_where[$i])) {
                 $this->_where[$i]($query);
-            }
-            else {
+            } else {
                 $query->where(
                     $this->_where[$i]['key'],
                     $this->_where[$i]['value'],
@@ -267,11 +265,9 @@ class SearchPaneOptions extends DataTables\Ext {
         // This is not taking a value from the SearchPaneOptions instance as the table should be defined in value/label. This throws up errors if not.
         if ($this->_table !== null) {
             $table = $this->_table;
-        }
-        else if (count($readTable) > 0) {
+        } else if (count($readTable) > 0) {
             $table = $readTable;
-        }
-        else {
+        } else {
             $table = $editor->table();
         }
 
@@ -374,8 +370,7 @@ class SearchPaneOptions extends DataTables\Ext {
                 // If it isn't we still need to know it exists, but don't care about the cardinality
                 if ($viewCount) {
                     $query->get("COUNT(*) as count");
-                }
-                else {
+                } else {
                     $query->get("(1) as count");
                 }
             }
@@ -391,8 +386,7 @@ class SearchPaneOptions extends DataTables\Ext {
                     if (isset($http['searchPanes'][$fieldName]) && $fieldName !== $http['searchPanesLast']) {
                         $add = true;
                     }
-                }
-                else if (isset($http['searchPanes']) && isset($http['searchPanes'][$fieldName])) {
+                } else if (isset($http['searchPanes']) && isset($http['searchPanes'][$fieldName])) {
                     $add = true;
                 }
 

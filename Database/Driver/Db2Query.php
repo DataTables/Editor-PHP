@@ -14,7 +14,8 @@ use DataTables\Database\Driver\Db2Result;
  *
  *  @internal
  */
-class Db2Query extends Query {
+class Db2Query extends Query
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Private properties
      */

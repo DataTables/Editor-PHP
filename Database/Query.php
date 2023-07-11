@@ -34,7 +34,8 @@ use DataTables\Database\Result;
  * additional methods, but this is discouraged to ensure that the API is the
  * same for all database types.
  */
-abstract class Query {
+abstract class Query
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Constructor
      */
@@ -200,7 +201,8 @@ abstract class Query {
      *
      * @return Query
      */
-    public static function connect ($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '') {
+    public static function connect ($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '')
+    {
         // noop - PHP <7 can't have an abstract static without causing
         // an error in strict mode. This should technically be an
         // abstract method however.
@@ -313,20 +315,15 @@ abstract class Query {
 
         if ($type === 'select') {
             return $this->_select();
-        }
-        else if ($type === 'insert') {
+        } else if ($type === 'insert') {
             return $this->_insert();
-        }
-        else if ($type === 'update') {
+        } else if ($type === 'update') {
             return $this->_update();
-        }
-        else if ($type === 'delete') {
+        } else if ($type === 'delete') {
             return $this->_delete();
-        }
-        else if ($type === 'count') {
+        } else if ($type === 'count') {
             return $this->_count();
-        }
-        else if ($type === 'raw') {
+        } else if ($type === 'raw') {
             return $this->_raw($sql);
         }
 
@@ -356,8 +353,7 @@ abstract class Query {
                 for ($j = 0; $j < count($args[$i]); $j++) {
                     $this->get($args[$i][$j]);
                 }
-            }
-            else if (strpos($args[$i], ',') !== false && strpos($args[$i], '(') === false) {
+            } else if (strpos($args[$i], ',') !== false && strpos($args[$i], '(') === false) {
                 // Comma delimited set of fields - legacy. Recommended that fields be split into
                 // an array on input
                 $a = explode(',', $args[$i]);
@@ -365,8 +361,7 @@ abstract class Query {
                 for ($j = 0; $j < count($a); $j++) {
                     $this->get($a[$j]);
                 }
-            }
-            else {
+            } else {
                 $this->_field[] = trim($args[$i]);
             }
         }
@@ -395,8 +390,7 @@ abstract class Query {
         }
 
         // Protect the identifiers
-        if ($bind && preg_match('/([\w\.]+)([\W\s]+)(.+)/', $condition, $match))
-        {
+        if ($bind && preg_match('/([\w\.]+)([\W\s]+)(.+)/', $condition, $match)) {
             $match[1] = $this->_protect_identifiers($match[1]);
             $match[3] = $this->_protect_identifiers($match[3]);
 
@@ -430,8 +424,7 @@ abstract class Query {
                     'LEFT',
                     false
                 );
-            }
-            else {
+            } else {
                 $this->join(
                     $join['table'],
                     $join['field1'] . ' ' . $join['operator'] . ' ' . $join['field2'],
@@ -510,8 +503,7 @@ abstract class Query {
             for ($i = 0; $i < count($table); $i++) {
                 $this->table($table[$i]);
             }
-        }
-        else {
+        } else {
             // String based, explode for multiple tables
             $tables = explode(",", $table);
 
@@ -564,8 +556,7 @@ abstract class Query {
             if (strpos($order[$i], ' ') !== false) {
                 $direction = strstr($order[$i], ' ');
                 $identifier = substr($order[$i], 0, -strlen($direction));
-            }
-            else {
+            } else {
                 $direction = '';
                 $identifier = $order[$i];
             }
@@ -605,8 +596,7 @@ abstract class Query {
 
             if ($bind) {
                 $this->bind(':' . $key, $value);
-            }
-            else {
+            } else {
                 $this->_noBind[$key] = $value;
             }
         }
@@ -649,18 +639,15 @@ abstract class Query {
     {
         if ($key === null) {
             return $this;
-        }
-        else if (is_callable($key) && is_object($key)) { // is a closure
+        } else if (is_callable($key) && is_object($key)) { // is a closure
             $this->_where_group(true, 'AND');
             $key($this);
             $this->_where_group(false, 'OR');
-        }
-        else if (!is_array($key) && is_array($value)) {
+        } else if (!is_array($key) && is_array($value)) {
             for ($i = 0; $i < count($value); $i++) {
                 $this->where($key, $value[$i], $op, $bind);
             }
-        }
-        else {
+        } else {
             $this->_where($key, $value, 'AND ', $op, $bind);
         }
 
@@ -713,13 +700,11 @@ abstract class Query {
     {
         if ($key === null) {
             return $this;
-        }
-        else if (is_callable($key) && is_object($key)) {
+        } else if (is_callable($key) && is_object($key)) {
             $this->_where_group(true, 'OR');
             $key($this);
             $this->_where_group(false, 'OR');
-        }
-        else {
+        } else {
             if (!is_array($key) && is_array($value)) {
                 for ($i = 0; $i < count($value); $i++) {
                     $this->or_where($key, $value[$i], $op, $bind);
@@ -763,8 +748,7 @@ abstract class Query {
             $this->_where_group(true, $op);
             $inOut($this);
             $this->_where_group(false, $op);
-        }
-        else {
+        } else {
             $this->_where_group($inOut, $op);
         }
 
@@ -845,17 +829,14 @@ abstract class Query {
                 if (count($split) > 1) {
                     $a[] = $this->_protect_identifiers($split[0]) . $asAlias .
                         $this->_field_quote . $split[1] . $this->_field_quote;
-                }
-                else {
+                } else {
                     $a[] = $this->_protect_identifiers($field) . $asAlias .
                         $this->_field_quote . $this->_escape_field($field) . $this->_field_quote;
                 }
-            }
-            else if ($addAlias && strpos($field, '(') !== false && !strpos($field, ' as ')) {
+            } else if ($addAlias && strpos($field, '(') !== false && !strpos($field, ' as ')) {
                 $a[] = $this->_protect_identifiers($field) . $asAlias .
                     $this->_field_quote . $this->_escape_field($field) . $this->_field_quote;
-            }
-            else {
+            } else {
                 $a[] = $this->_protect_identifiers($field);
             }
         }
@@ -950,8 +931,7 @@ abstract class Query {
 
             if (isset($this->_noBind[$field])) {
                 $a[] = $this->_protect_identifiers($field) . ' = ' . $this->_noBind[$field];
-            }
-            else {
+            } else {
                 $a[] = $this->_protect_identifiers($field) . ' = :' . $this->_safe_bind($field);
             }
         }
@@ -1021,8 +1001,7 @@ abstract class Query {
         for ($i = 0; $i < count($this->_where); $i++) {
             if ($i === 0) {
                 // Nothing (simplifies the logic!)
-            }
-            else if ($this->_where[$i]['group'] === ')') {
+            } else if ($this->_where[$i]['group'] === ')') {
                 // If a group has been used but no conditions were added inside
                 // of, we don't want to end up with `()` in the SQL as that is
                 // invalid, so add a 1.
@@ -1030,18 +1009,15 @@ abstract class Query {
                     $condition .= '1=1';
                 }
                 // else nothing
-            }
-            else if ($this->_where[$i - 1]['group'] === '(') {
+            } else if ($this->_where[$i - 1]['group'] === '(') {
                 // Nothing
-            }
-            else {
+            } else {
                 $condition .= $this->_where[$i]['operator'] . ' ';
             }
 
             if ($this->_where[$i]['group'] !== null) {
                 $condition .= $this->_where[$i]['group'];
-            }
-            else {
+            } else {
                 $condition .= $this->_where[$i]['query'] . ' ';
             }
         }
@@ -1142,8 +1118,7 @@ abstract class Query {
         $right = $idl[1];
 
         // Dealing with a function or other expression? Just return immediately
-        if (strpos($identifier, '(') !== FALSE || strpos($identifier, '*') !== FALSE)
-        {
+        if (strpos($identifier, '(') !== FALSE || strpos($identifier, '*') !== FALSE) {
             return $identifier;
         }
 
@@ -1160,8 +1135,7 @@ abstract class Query {
         if (strpos($identifier, ' ') !== false) {
             $alias = strstr($identifier, ' ');
             $identifier = substr($identifier, 0, -strlen($alias));
-        }
-        else {
+        } else {
             $alias = '';
         }
 
@@ -1286,8 +1260,7 @@ abstract class Query {
     {
         if ($where === null) {
             return;
-        }
-        else if (!is_array($where)) {
+        } else if (!is_array($where)) {
             $where = array($where => $value);
         }
 
@@ -1304,8 +1277,7 @@ abstract class Query {
                         ' IS NULL' :
                         ' IS NOT NULL')
                 );
-            }
-            else if ($bind) {
+            } else if ($bind) {
                 // Binding condition (i.e. escape data)
                 if ($this->_dbHost->type() === 'Postgres' && $op === 'like') {
                     // Postgres specific a it needs a case for string searching non-text data
@@ -1315,8 +1287,7 @@ abstract class Query {
                         'field' => $this->_protect_identifiers($key),
                         'query' => $this->_protect_identifiers($key) . '::text ilike ' . $this->_safe_bind(':where_' . $i)
                     );
-                }
-                else {
+                } else {
                     $this->_where[] = array(
                         'operator' => $type,
                         'group' => null,
@@ -1325,8 +1296,7 @@ abstract class Query {
                     );
                 }
                 $this->bind(':where_' . $i, $value);
-            }
-            else {
+            } else {
                 // Non-binding condition
                 $this->_where[] = array(
                     'operator' => $type,

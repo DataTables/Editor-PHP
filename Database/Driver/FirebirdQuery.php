@@ -22,7 +22,8 @@ use DataTables\Database\Driver\FirebirdResult;
  *
  *  @internal
  */
-class FirebirdQuery extends Query {
+class FirebirdQuery extends Query
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Private properties
      */
@@ -120,8 +121,7 @@ class FirebirdQuery extends Query {
     {
         try {
             $this->_stmt->execute();
-        }
-        catch (\PDOException $e) {
+        } catch (\PDOException $e) {
             throw new \Exception('An SQL error occurred: ' . $e->getMessage(), 0, $e);
         }
 

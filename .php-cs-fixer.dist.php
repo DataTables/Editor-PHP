@@ -83,8 +83,6 @@ return $config
         'class_attributes_separation' => false,
         'class_definition' => false,
         'constant_case' => false,
-        'control_structure_continuation_position' => false,
-        'curly_braces_position' => false,
         'dir_constant' => false,
         'elseif' => false,
         'explicit_indirect_variable' => false,

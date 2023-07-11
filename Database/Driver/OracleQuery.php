@@ -23,7 +23,8 @@ use DataTables\Database\Driver\OracleResult;
  *
  *  @internal
  */
-class OracleQuery extends Query {
+class OracleQuery extends Query
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Private properties
      */
@@ -115,8 +116,7 @@ class OracleQuery extends Query {
         // If insert, add the pkey column
         if ($this->_type === 'insert' && $pkey) {
             $sql .= ' RETURNING ' . $this->_protect_identifiers(is_array($pkey) ? $pkey[0] : $pkey) . ' INTO :editor_pkey_value';
-        }
-        else if ($this->_type === 'select' && $this->_oracle_offset !== null) {
+        } else if ($this->_type === 'select' && $this->_oracle_offset !== null) {
             $sql = '
 				select * from (select rownum rnum, a.*
 				from (' . $sql . ') a where rownum <= ' . ($this->_oracle_offset + $this->_oracle_limit) . ')
@@ -172,8 +172,7 @@ class OracleQuery extends Query {
             if (strpos($t, ' as ')) {
                 $a = explode(' as ', $t);
                 $out[] = $this->_protect_identifiers($a[0]) . ' ' . $this->_protect_identifiers($a[1]);
-            }
-            else {
+            } else {
                 $out[] = $t;
             }
         }

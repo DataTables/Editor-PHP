@@ -21,7 +21,8 @@ use DataTables\Database\Result;
  *
  *  @internal
  */
-class MysqlResult extends Result {
+class MysqlResult extends Result
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Constructor
      */

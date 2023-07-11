@@ -22,7 +22,8 @@ use DataTables\Database\Driver\SqliteResult;
  *
  *  @internal
  */
-class SqliteQuery extends Query {
+class SqliteQuery extends Query
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Private properties
      */
@@ -94,8 +95,7 @@ class SqliteQuery extends Query {
     {
         try {
             $this->_stmt->execute();
-        }
-        catch (\PDOException $e) {
+        } catch (\PDOException $e) {
             throw new \Exception('An SQL error occurred: ' . $e->getMessage(), 0, $e);
         }
 

@@ -16,7 +16,8 @@ namespace DataTables;
 /**
  * Base class for DataTables classes.
  */
-class Ext {
+class Ext
+{
     /**
      * Static method to instantiate a new instance of a class.
      *
@@ -90,8 +91,7 @@ class Ext {
             is_array($val) ?
                 $prop = array_merge($prop, $val) :
                 $prop[] = $val;
-        }
-        else {
+        } else {
             // Property is just a value
             $prop = $val;
         }
@@ -209,8 +209,7 @@ class Ext {
 
             if (!isset($inner[$loopName])) {
                 $inner[$loopName] = array();
-            }
-            else if (!is_array($inner[$loopName])) {
+            } else if (!is_array($inner[$loopName])) {
                 throw new \Exception(
                     'A property with the name `' . $name . '` already exists. This ' .
                     'can occur if you have properties which share a prefix - ' .

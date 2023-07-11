@@ -18,7 +18,8 @@ use DataTables;
 /**
  * Common validation options that can be specified for all validation methods.
  */
-class ValidateOptions extends DataTables\Ext {
+class ValidateOptions extends DataTables\Ext
+{
     private $_empty = true;
     private $_message = 'Input not valid';
     private $_optional = true;
@@ -48,7 +49,8 @@ class ValidateOptions extends DataTables\Ext {
      *
      * @return ValidateOptions|string Self if setting, message if getting.
      */
-    public function message ($msg = null) {
+    public function message ($msg = null)
+    {
         if ($msg === null) {
             return $this->_message;
         }
@@ -65,7 +67,8 @@ class ValidateOptions extends DataTables\Ext {
      *
      * @return ValidateOptions|bool Self if setting, current value if getting.
      */
-    public function allowEmpty ($empty = null) {
+    public function allowEmpty ($empty = null)
+    {
         if ($empty === null) {
             return $this->_empty;
         }
@@ -82,7 +85,8 @@ class ValidateOptions extends DataTables\Ext {
      *
      * @return ValidateOptions|bool Self if setting, current value if getting.
      */
-    public function optional ($optional = null) {
+    public function optional ($optional = null)
+    {
         if ($optional === null) {
             return $this->_optional;
         }
@@ -94,7 +98,8 @@ class ValidateOptions extends DataTables\Ext {
     /**
      * @internal
      */
-    static public function select ($user) {
+    static public function select ($user)
+    {
         if ($user) {
             return $user;
         }

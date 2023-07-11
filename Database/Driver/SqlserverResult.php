@@ -19,7 +19,8 @@ use DataTables\Database\Result;
  *
  *  @internal
  */
-class SqlserverResult extends Result {
+class SqlserverResult extends Result
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Constructor
      */

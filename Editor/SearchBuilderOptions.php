@@ -59,7 +59,8 @@ use DataTables;
  *        )
  *    ```
  */
-class SearchBuilderOptions extends DataTables\Ext {
+class SearchBuilderOptions extends DataTables\Ext
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Private parameters
      */
@@ -102,11 +103,9 @@ class SearchBuilderOptions extends DataTables\Ext {
     {
         if ($_ === null) {
             return $this;
-        }
-        else if (is_string($_)) {
+        } else if (is_string($_)) {
             $this->_label = array($_);
-        }
-        else {
+        } else {
             $this->_label = $_;
         }
 
@@ -217,8 +216,7 @@ class SearchBuilderOptions extends DataTables\Ext {
         for ($i = 0; $i < count($this->_where); $i++) {
             if (is_callable($this->_where[$i])) {
                 $this->_where[$i]($query);
-            }
-            else {
+            } else {
                 $query->where(
                     $this->_where[$i]['key'],
                     $this->_where[$i]['value'],
@@ -247,8 +245,7 @@ class SearchBuilderOptions extends DataTables\Ext {
         // If the value is not yet set then set the variable to be the field name
         if ($this->_value == null) {
             $value = $field->dbField();
-        }
-        else {
+        } else {
             $value = $this->_value;
         }
 
@@ -258,19 +255,16 @@ class SearchBuilderOptions extends DataTables\Ext {
         // This is not taking a value from the SearchBuilderOptions instance as the table should be defined in value/label. This throws up errors if not.
         if ($this->_table !== null) {
             $table = $this->_table;
-        }
-        else if (count($readTable) > 0) {
+        } else if (count($readTable) > 0) {
             $table = $readTable;
-        }
-        else {
+        } else {
             $table = $editor->table();
         }
 
         // If the label value has not yet been set then just set it to be the same as value
         if ($this->_label == null) {
             $label = $value;
-        }
-        else {
+        } else {
             $label = $this->_label[0];
         }
 

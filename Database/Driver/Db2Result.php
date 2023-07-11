@@ -20,7 +20,8 @@ use DataTables\Database\Result;
  *
  *  @internal
  */
-class Db2Result extends Result {
+class Db2Result extends Result
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Constructor
      */
@@ -65,7 +66,8 @@ class Db2Result extends Result {
         return db2_last_insert_id($this->_dbh);
     }
 
-    private function _fetchAll () {
+    private function _fetchAll ()
+    {
         $a = array();
         while ($row = db2_fetch_assoc($this->_stmt)) {
             $a[] = $row;

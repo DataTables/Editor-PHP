@@ -20,7 +20,8 @@ use DataTables\Database\Driver\PostgresResult;
  *
  *  @internal
  */
-class SqlserverQuery extends Query {
+class SqlserverQuery extends Query
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Private properties
      */
@@ -60,8 +61,7 @@ class SqlserverQuery extends Query {
                     $pass,
                     $pdoAttr
                 );
-            }
-            else {
+            } else {
                 // Linux
                 if ($port !== "") {
                     $port = ":{$port}";
@@ -114,8 +114,7 @@ class SqlserverQuery extends Query {
     {
         try {
             $this->_stmt->execute();
-        }
-        catch (\PDOException $e) {
+        } catch (\PDOException $e) {
             throw new \Exception('An SQL error occurred: ' . $e->getMessage(), 0, $e);
         }
 

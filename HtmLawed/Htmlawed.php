@@ -30,7 +30,8 @@
 
 namespace DataTables\HtmLawed;
 
-class Htmlawed {
+class Htmlawed
+{
     /*
      * Main function.
      * Calls all other functions (alphabetically ordered further below).
@@ -903,7 +904,8 @@ class Htmlawed {
         // Hide special characters used for rules.
 
         if (!function_exists('hl_aux1')) {
-            function hl_aux1($x) {
+            function hl_aux1($x)
+            {
                 return
                   substr(
                       str_replace(
@@ -1479,7 +1481,8 @@ class Htmlawed {
         // Hide CDATA/comment.
 
         if (!function_exists('hl_aux2')) {
-            function hl_aux2($x) {
+            function hl_aux2($x)
+            {
                 return
                   $x[1]
                   . str_replace(

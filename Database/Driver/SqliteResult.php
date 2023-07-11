@@ -21,7 +21,8 @@ use DataTables\Database\Result;
  *
  *  @internal
  */
-class SqliteResult extends Result {
+class SqliteResult extends Result
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Constructor
      */

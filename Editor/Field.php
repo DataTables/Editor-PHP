@@ -56,7 +56,8 @@ use DataTables\HtmLawed\Htmlaw;
  *      Field::inst( 'name.first as first_name' )
  *    ```
  */
-class Field extends DataTables\Ext {
+class Field extends DataTables\Ext
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Statics
      */
@@ -92,8 +93,7 @@ class Field extends DataTables\Ext {
             // overridden if needed later using the API.
             $this->name($dbField);
             $this->dbField($dbField);
-        }
-        else {
+        } else {
             $this->name($name);
             $this->dbField($dbField);
         }
@@ -197,8 +197,7 @@ class Field extends DataTables\Ext {
         if (count($a) > 1) {
             $this->_dbField = trim($a[0]);
             $this->_name = trim($a[1]);
-        }
-        else {
+        } else {
             $this->_dbField = $_;
         }
 
@@ -316,13 +315,11 @@ class Field extends DataTables\Ext {
             // Options class
             $this->_optsFn = null;
             $this->_opts = $table;
-        }
-        else if (is_callable($table) && is_object($table)) {
+        } else if (is_callable($table) && is_object($table)) {
             // Function
             $this->_opts = null;
             $this->_optsFn = $table;
-        }
-        else {
+        } else {
             $this->_optsFn = null;
             $this->_opts = Options::inst()
                 ->table($table)
@@ -363,8 +360,7 @@ class Field extends DataTables\Ext {
             // Options class
             $this->_spoptsFn = null;
             $this->_spopts = $spInput;
-        }
-        else if (is_callable($spInput) && is_object($spInput)) {
+        } else if (is_callable($spInput) && is_object($spInput)) {
             // Function
             $this->_spopts = null;
             $this->_spoptsFn = $spInput;
@@ -391,8 +387,7 @@ class Field extends DataTables\Ext {
             // Options class
             $this->_sboptsFn = null;
             $this->_sbopts = $sbInput;
-        }
-        else if (is_callable($sbInput) && is_object($sbInput)) {
+        } else if (is_callable($sbInput) && is_object($sbInput)) {
             // Function
             $this->_sbopts = null;
             $this->_sboptsFn = $sbInput;
@@ -427,8 +422,7 @@ class Field extends DataTables\Ext {
     {
         if ($_ === true) {
             $_ = Field::SET_BOTH;
-        }
-        else if ($_ === false) {
+        } else if ($_ === false) {
             $_ = Field::SET_NONE;
         }
 
@@ -521,8 +515,7 @@ class Field extends DataTables\Ext {
     {
         if ($_ === null) {
             return $this->_validator;
-        }
-        else {
+        } else {
             $this->_validator[] = array(
                 "func" => $_,
                 "opts" => $opts
@@ -556,8 +549,7 @@ class Field extends DataTables\Ext {
     {
         if ($xssFormatter === true || $xssFormatter === false || $xssFormatter === null) {
             $this->_xssFormat = $xssFormatter;
-        }
-        else {
+        } else {
             $this->_xss = $xssFormatter;
         }
 
@@ -588,8 +580,7 @@ class Field extends DataTables\Ext {
         if ($action === 'get') {
             // Get action - can we get this field
             return $this->_get;
-        }
-        else {
+        } else {
             // Note that validation must be done on input data before we get here
 
             // Create or edit action, are we configured to use this field
@@ -597,8 +588,7 @@ class Field extends DataTables\Ext {
                 ($this->_set === Field::SET_NONE || $this->_set === Field::SET_EDIT)
             ) {
                 return false;
-            }
-            else if ($action === 'edit' &&
+            } else if ($action === 'edit' &&
                 ($this->_set === Field::SET_NONE || $this->_set === Field::SET_CREATE)
             ) {
                 return false;
@@ -632,8 +622,7 @@ class Field extends DataTables\Ext {
         if ($this->_optsFn) {
             $fn = $this->_optsFn;
             return $fn($db);
-        }
-        else if ($this->_opts) {
+        } else if ($this->_opts) {
             return $this->_opts->exec($db);
         }
 
@@ -659,8 +648,7 @@ class Field extends DataTables\Ext {
         if ($this->_spoptsFn) {
             $fn = $this->_spoptsFn;
             return $fn($editor->db(), $editor);
-        }
-        else if ($this->_spopts) {
+        } else if ($this->_spopts) {
             return $this->_spopts->exec($field, $editor, $http, $fields, $leftJoin);
         }
 
@@ -686,8 +674,7 @@ class Field extends DataTables\Ext {
         if ($this->_sboptsFn) {
             $fn = $this->_sboptsFn;
             return $fn($editor->db(), $editor);
-        }
-        else if ($this->_sbopts) {
+        } else if ($this->_sbopts) {
             return $this->_sbopts->exec($field, $editor, $http, $fields, $leftJoin);
         }
 
@@ -716,8 +703,7 @@ class Field extends DataTables\Ext {
         if ($direction === 'get') {
             if ($this->_getValue !== null) {
                 $val = $this->_getAssignedValue($this->_getValue);
-            }
-            else {
+            } else {
                 // Getting data, so the db field name
                 $val = isset($data[$this->_dbField]) ?
                     $data[$this->_dbField] :
@@ -730,8 +716,7 @@ class Field extends DataTables\Ext {
                 $this->_getFormatter,
                 $this->_getFormatterOpts
             );
-        }
-        else {
+        } else {
             // Sanity check that we aren't operating on a function
             if (strpos($this->dbField(), '(') !== false) {
                 throw new \Exception('Cannot set the value for an SQL function field. These fields are read only: ' . $this->name());
@@ -807,20 +792,17 @@ class Field extends DataTables\Ext {
                     if (method_exists("\\DataTables\\Editor\\" . $a[0], $a[1] . 'Legacy')) {
                         $func = call_user_func("\\DataTables\\Editor\\" . $validator['func'] . 'Legacy', $validator['opts']);
                         $res = call_user_func($func, $val, $data, $this, $instances);
-                    }
-                    else {
+                    } else {
                         // User style legacy function. Call it directly
                         $func = "\\DataTables\\Editor\\" . $validator['func'];
                         $res = call_user_func($func, $val, $data, $this, $instances);
                     }
-                }
-                else {
+                } else {
                     // And for cases where a string was used to point to a function,
                     // which was not in the Validate class
                     $res = call_user_func($validator['func'], $val, $data, $validator['opts'], $instances);
                 }
-            }
-            else {
+            } else {
                 $func = $validator['func'];
                 $res = $func($val, $data, $this, $instances);
             }
@@ -855,7 +837,8 @@ class Field extends DataTables\Ext {
      *
      * @return string Safe value
      */
-    public function xssSafety ($val) {
+    public function xssSafety ($val)
+    {
         $xss = $this->_xss;
 
         if (is_array($val)) {
@@ -911,8 +894,7 @@ class Field extends DataTables\Ext {
                 $func = call_user_func("\\DataTables\\Editor\\" . $formatter . 'Legacy', $opts);
 
                 return $func($val, $data);
-            }
-            else {
+            } else {
                 // User added old style methods
                 return call_user_func("\\DataTables\\Editor\\" . $formatter, $val, $data, $opts);
             }

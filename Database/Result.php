@@ -29,7 +29,8 @@ namespace DataTables\Database;
  * additional methods, but this is discouraged to ensure that the API is the
  * same for all database types.
  */
-abstract class Result {
+abstract class Result
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Public methods
      */

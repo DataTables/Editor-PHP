@@ -22,7 +22,8 @@ use DataTables\Database\Driver\MysqlResult;
  *
  *  @internal
  */
-class MysqlQuery extends Query {
+class MysqlQuery extends Query
+{
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Private properties
      */
@@ -100,8 +101,7 @@ class MysqlQuery extends Query {
 
         try {
             $this->_stmt->execute();
-        }
-        catch (\PDOException $e) {
+        } catch (\PDOException $e) {
             throw new \Exception('An SQL error occurred: ' . $e->getMessage(), 0, $e);
         }
 
