@@ -33,22 +33,22 @@ class SqliteQuery extends Query {
      * Public methods
      */
 
-    static function connect( $user, $pass='', $host='', $port='', $db='', $dsn='' )
+    static function connect($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '')
     {
-        if ( is_array( $user ) ) {
+        if (is_array($user)) {
             $opts = $user;
             $user = $opts['user'];
             $pass = $opts['pass'];
-            $db   = $opts['db'];
-            $dsn  = isset( $opts['dsn'] ) ? $opts['dsn'] : '';
-            $pdoAttr = isset( $opts['pdoAttr'] ) ? $opts['pdoAttr'] : array();
+            $db = $opts['db'];
+            $dsn = isset($opts['dsn']) ? $opts['dsn'] : '';
+            $pdoAttr = isset($opts['pdoAttr']) ? $opts['pdoAttr'] : array();
         }
 
         try {
-            $pdoAttr[ PDO::ATTR_ERRMODE ] = PDO::ERRMODE_EXCEPTION;
+            $pdoAttr[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 
             $pdo = @new PDO(
-                "sqlite:{$db}".self::dsnPostfix( $dsn ),
+                "sqlite:{$db}" . self::dsnPostfix($dsn),
                 $user,
                 $pass,
                 $pdoAttr
@@ -56,10 +56,10 @@ class SqliteQuery extends Query {
         } catch (\PDOException $e) {
             // If we can't establish a DB connection then we return a DataTables
             // error.
-            echo json_encode( array(
-                "error" => "An error occurred while connecting to the database ".
-                    "'{$db}'. The error reported by the server was: ".$e->getMessage()
-            ) );
+            echo json_encode(array(
+                "error" => "An error occurred while connecting to the database " .
+                    "'{$db}'. The error reported by the server was: " . $e->getMessage()
+            ));
             exit(1);
         }
 
@@ -72,15 +72,15 @@ class SqliteQuery extends Query {
      * Protected methods
      */
 
-    protected function _prepare( $sql )
+    protected function _prepare($sql)
     {
-        $this->database()->debugInfo( $sql, $this->_bindings );
+        $this->database()->debugInfo($sql, $this->_bindings);
 
         $resource = $this->database()->resource();
-        $this->_stmt = $resource->prepare( $sql );
+        $this->_stmt = $resource->prepare($sql);
 
         // bind values
-        for ( $i=0 ; $i<count($this->_bindings) ; $i++ ) {
+        for ($i = 0; $i < count($this->_bindings); $i++) {
             $binding = $this->_bindings[$i];
 
             $this->_stmt->bindValue(
@@ -102,6 +102,6 @@ class SqliteQuery extends Query {
         }
 
         $resource = $this->database()->resource();
-        return new SqliteResult( $resource, $this->_stmt );
+        return new SqliteResult($resource, $this->_stmt);
     }
 }

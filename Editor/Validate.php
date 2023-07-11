@@ -119,14 +119,14 @@ class Validate {
      * @param array $arguments Function arguments
      * @return mixed|string
      */
-    public static function __callStatic( $name, $arguments ) {
-        if ( preg_match( '/_required$/', $name ) ) {
-            if ( $arguments[0] === null || $arguments[0] === '' ) {
+    public static function __callStatic($name, $arguments) {
+        if (preg_match('/_required$/', $name)) {
+            if ($arguments[0] === null || $arguments[0] === '') {
                 return 'This field is required';
             }
 
             return call_user_func_array(
-                __NAMESPACE__.'\Validate::'.str_replace( '_required', '', $name ),
+                __NAMESPACE__ . '\Validate::' . str_replace('_required', '', $name),
                 $arguments
             );
         }
@@ -139,17 +139,17 @@ class Validate {
      *
      *  @internal
      */
-    public static function _extend( $userOpts, $prop, $fnOpts ) {
+    public static function _extend($userOpts, $prop, $fnOpts) {
         $cfg = array(
-            'message'  => 'Input not valid',
+            'message' => 'Input not valid',
             'required' => false,
-            'empty'    => true,
+            'empty' => true,
             'optional' => true
         );
 
-        if ( ! is_array( $userOpts ) ) {
-            if ( $prop ) {
-                $cfg[ $prop ] = $userOpts;
+        if (!is_array($userOpts)) {
+            if ($prop) {
+                $cfg[$prop] = $userOpts;
             }
 
             // Not an array, but the non-array case has been handled above, so
@@ -171,25 +171,25 @@ class Validate {
      *
      *  @internal
      */
-    public static function _common( $val, $opts ) {
+    public static function _common($val, $opts) {
         $optional = $opts->optional();
-        $empty    = $opts->allowEmpty();
+        $empty = $opts->allowEmpty();
 
         // Error state tests
-        if ( ! $optional && $val === null  ) {
+        if (!$optional && $val === null) {
             // Value must be given
             return false;
         }
-        else if ( $empty === false && $val === '' ) {
+        else if ($empty === false && $val === '') {
             // Value must not be empty
             return false;
         }
 
         // Validation passed states
-        if ( $optional && $val === null ) {
+        if ($optional && $val === null) {
             return true;
         }
-        else if ( $empty === true && $val === '' ) {
+        else if ($empty === true && $val === '') {
             return true;
         }
 
@@ -202,26 +202,26 @@ class Validate {
      *
      *  @internal
      */
-    public static function _commonLegacy( $cfg ) {
+    public static function _commonLegacy($cfg) {
         $opts = new ValidateOptions();
 
-        if ( is_array( $cfg ) ) {
+        if (is_array($cfg)) {
             // `required` is a legacy shortcut for optional=false, empty=false
-            if ( isset( $cfg['required'] ) ) {
-                $opts->optional( false );
-                $opts->allowEmpty( false );
+            if (isset($cfg['required'])) {
+                $opts->optional(false);
+                $opts->allowEmpty(false);
             }
 
-            if ( isset( $cfg['empty'] ) ) {
-                $opts->allowEmpty( $cfg['empty'] );
+            if (isset($cfg['empty'])) {
+                $opts->allowEmpty($cfg['empty']);
             }
 
-            if ( isset( $cfg['message'] ) ) {
-                $opts->message( $cfg['message'] );
+            if (isset($cfg['message'])) {
+                $opts->message($cfg['message']);
             }
 
-            if ( isset( $cfg['optional'] ) ) {
-                $opts->optional( $cfg['optional'] );
+            if (isset($cfg['optional'])) {
+                $opts->optional($cfg['optional']);
             }
         }
 
@@ -239,7 +239,7 @@ class Validate {
      *  @return callable Validation function
      */
     public static function none() {
-        return function ( $val, $data, $field, $host ) {
+        return function ($val, $data, $field, $host) {
             return true;
         };
     }
@@ -282,11 +282,11 @@ class Validate {
      * @return string|true true if the value is valid, a string with an error
      *    message otherwise.
      */
-    static function basic( $cfg=null ) {
-        $opts = ValidateOptions::select( $cfg );
+    static function basic($cfg = null) {
+        $opts = ValidateOptions::select($cfg);
 
-        return function ( $val, $data, $field, $host ) use ( $opts ) {
-            $common = Validate::_common( $val, $opts );
+        return function ($val, $data, $field, $host) use ($opts) {
+            $common = Validate::_common($val, $opts);
 
             return $common === false ?
                 $opts->message() :
@@ -314,13 +314,13 @@ class Validate {
      *  @return string|true true if the value is valid, a string with an error
      *    message otherwise.
      */
-    static function required( $cfg=null ) {
-        $opts = ValidateOptions::select( $cfg );
-        $opts->allowEmpty( false );
-        $opts->optional( false );
+    static function required($cfg = null) {
+        $opts = ValidateOptions::select($cfg);
+        $opts->allowEmpty(false);
+        $opts->optional(false);
 
-        return function ( $val, $data, $field, $host ) use ( $opts ) {
-            $common = Validate::_common( $val, $opts );
+        return function ($val, $data, $field, $host) use ($opts) {
+            $common = Validate::_common($val, $opts);
 
             return $common === false ?
                 $opts->message() :
@@ -343,12 +343,12 @@ class Validate {
      *  @param ValidateOptions $cfg Validation options
      *  @return callable Validation function
      */
-    static function notEmpty( $cfg=null ) {
-        $opts = ValidateOptions::select( $cfg );
-        $opts->allowEmpty( false );
+    static function notEmpty($cfg = null) {
+        $opts = ValidateOptions::select($cfg);
+        $opts->allowEmpty(false);
 
-        return function ( $val, $data, $field, $host ) use ( $opts ) {
-            $common = Validate::_common( $val, $opts );
+        return function ($val, $data, $field, $host) use ($opts) {
+            $common = Validate::_common($val, $opts);
 
             return $common === false ?
                 $opts->message() :
@@ -368,19 +368,19 @@ class Validate {
      *  @return string|true true if the value is valid, a string with an error
      *    message otherwise.
      */
-    public static function boolean( $cfg=null ) {
-        $opts = ValidateOptions::select( $cfg );
+    public static function boolean($cfg = null) {
+        $opts = ValidateOptions::select($cfg);
 
-        return function ( $val, $data, $field, $host ) use ( $opts ) {
-            $common = Validate::_common( $val, $opts );
+        return function ($val, $data, $field, $host) use ($opts) {
+            $common = Validate::_common($val, $opts);
 
-            if ( $common !== null ) {
+            if ($common !== null) {
                 return $common === false ?
                     $opts->message() :
                     $common;
             }
 
-            if ( filter_var($val, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) === null ) {
+            if (filter_var($val, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) === null) {
                 return $opts->message();
             }
             return true;
@@ -405,23 +405,23 @@ class Validate {
      *  @return string|true true if the value is valid, a string with an error
      *    message otherwise.
      */
-    public static function numeric ( $decimal=".", $cfg=null ) {
-        $opts = ValidateOptions::select( $cfg );
+    public static function numeric ($decimal = ".", $cfg = null) {
+        $opts = ValidateOptions::select($cfg);
 
-        return function ( $val, $data, $field, $host ) use ( $opts, $decimal ) {
-            $common = Validate::_common( $val, $opts );
+        return function ($val, $data, $field, $host) use ($opts, $decimal) {
+            $common = Validate::_common($val, $opts);
 
-            if ( $common !== null ) {
+            if ($common !== null) {
                 return $common === false ?
                     $opts->message() :
                     $common;
             }
 
-            if ( $decimal !== '.' ) {
-                $val = str_replace( $decimal, '.', $val );
+            if ($decimal !== '.') {
+                $val = str_replace($decimal, '.', $val);
             }
 
-            return ! is_numeric( $val ) ?
+            return !is_numeric($val) ?
                 $opts->message() :
                 true;
         };
@@ -443,27 +443,27 @@ class Validate {
      *  @return string|true true if the value is valid, a string with an error
      *    message otherwise.
      */
-    public static function minNum ( $min, $decimal=".", $cfg=null ) {
-        $opts = ValidateOptions::select( $cfg );
+    public static function minNum ($min, $decimal = ".", $cfg = null) {
+        $opts = ValidateOptions::select($cfg);
 
-        return function ( $val, $data, $field, $host ) use ( $opts, $min, $decimal ) {
-            $common = Validate::_common( $val, $opts );
+        return function ($val, $data, $field, $host) use ($opts, $min, $decimal) {
+            $common = Validate::_common($val, $opts);
 
-            if ( $common !== null ) {
+            if ($common !== null) {
                 return $common === false ?
                     $opts->message() :
                     $common;
             }
 
-            $fn = Validate::numeric( $decimal, $opts );
-            $numeric = $fn( $val, $data, $field, $host );
+            $fn = Validate::numeric($decimal, $opts);
+            $numeric = $fn($val, $data, $field, $host);
 
-            if ( $numeric !== true ) {
+            if ($numeric !== true) {
                 return $numeric;
             }
 
-            if ( $decimal !== '.' ) {
-                $val = str_replace( $decimal, '.', $val );
+            if ($decimal !== '.') {
+                $val = str_replace($decimal, '.', $val);
             }
 
             return $val < $min ?
@@ -487,27 +487,27 @@ class Validate {
      *  @return string|true true if the value is valid, a string with an error
      *    message otherwise.
      */
-    public static function maxNum ( $max, $decimal=".", $cfg=null ) {
-        $opts = ValidateOptions::select( $cfg );
+    public static function maxNum ($max, $decimal = ".", $cfg = null) {
+        $opts = ValidateOptions::select($cfg);
 
-        return function ( $val, $data, $field, $host ) use ( $opts, $max, $decimal ) {
-            $common = Validate::_common( $val, $opts );
+        return function ($val, $data, $field, $host) use ($opts, $max, $decimal) {
+            $common = Validate::_common($val, $opts);
 
-            if ( $common !== null ) {
+            if ($common !== null) {
                 return $common === false ?
                     $opts->message() :
                     $common;
             }
 
-            $fn = Validate::numeric( $decimal, $opts );
-            $numeric = $fn( $val, $data, $field, $host );
+            $fn = Validate::numeric($decimal, $opts);
+            $numeric = $fn($val, $data, $field, $host);
 
-            if ( $numeric !== true ) {
+            if ($numeric !== true) {
                 return $numeric;
             }
 
-            if ( $decimal !== '.' ) {
-                $val = str_replace( $decimal, '.', $val );
+            if ($decimal !== '.') {
+                $val = str_replace($decimal, '.', $val);
             }
 
             return $val > $max ?
@@ -532,36 +532,36 @@ class Validate {
      *  @return string|true true if the value is valid, a string with an error
      *    message otherwise.
      */
-    public static function minMaxNum ( $min, $max, $decimal='.', $cfg=null ) {
-        $opts = ValidateOptions::select( $cfg );
+    public static function minMaxNum ($min, $max, $decimal = '.', $cfg = null) {
+        $opts = ValidateOptions::select($cfg);
 
-        return function ( $val, $data, $field, $host ) use ( $opts, $min, $max, $decimal ) {
-            $common = Validate::_common( $val, $opts );
+        return function ($val, $data, $field, $host) use ($opts, $min, $max, $decimal) {
+            $common = Validate::_common($val, $opts);
 
-            if ( $common !== null ) {
+            if ($common !== null) {
                 return $common === false ?
                     $opts->message() :
                     $common;
             }
 
-            $fn = Validate::numeric( $decimal, $opts );
-            $numeric = $fn( $val, $data, $field, $host );
+            $fn = Validate::numeric($decimal, $opts);
+            $numeric = $fn($val, $data, $field, $host);
 
-            if ( $numeric !== true ) {
+            if ($numeric !== true) {
                 return $numeric;
             }
 
-            $fn = Validate::minNum( $min, $decimal, $opts );
-            $numeric = $fn( $val, $data, $field, $host );
+            $fn = Validate::minNum($min, $decimal, $opts);
+            $numeric = $fn($val, $data, $field, $host);
 
-            if ( $numeric !== true ) {
+            if ($numeric !== true) {
                 return $numeric;
             }
 
-            $fn = Validate::maxNum( $max, $decimal, $opts );
-            $numeric = $fn( $val, $data, $field, $host );
+            $fn = Validate::maxNum($max, $decimal, $opts);
+            $numeric = $fn($val, $data, $field, $host);
 
-            if ( $numeric !== true ) {
+            if ($numeric !== true) {
                 return $numeric;
             }
 
@@ -586,13 +586,13 @@ class Validate {
      *  @return string|true true if the value is valid, a string with an error
      *    message otherwise.
      */
-    public static function email( $cfg=null ) {
-        $opts = ValidateOptions::select( $cfg );
+    public static function email($cfg = null) {
+        $opts = ValidateOptions::select($cfg);
 
-        return function ( $val, $data, $field, $host ) use ( $opts ) {
-            $common = Validate::_common( $val, $opts );
+        return function ($val, $data, $field, $host) use ($opts) {
+            $common = Validate::_common($val, $opts);
 
-            if ( $common !== null ) {
+            if ($common !== null) {
                 return $common === false ?
                     $opts->message() :
                     $common;
@@ -619,13 +619,13 @@ class Validate {
      *  @return string|true true if the value is valid, a string with an error
      *    message otherwise.
      */
-    public static function minLen( $min, $cfg=null ) {
-        $opts = ValidateOptions::select( $cfg );
+    public static function minLen($min, $cfg = null) {
+        $opts = ValidateOptions::select($cfg);
 
-        return function ( $val, $data, $field, $host ) use ( $min, $opts ) {
-            $common = Validate::_common( $val, $opts );
+        return function ($val, $data, $field, $host) use ($min, $opts) {
+            $common = Validate::_common($val, $opts);
 
-            if ( $common !== null ) {
+            if ($common !== null) {
                 return $common === false ?
                     $opts->message() :
                     $common;
@@ -635,7 +635,7 @@ class Validate {
                 'mb_strlen' :
                 'strlen';
 
-            return $strlen( $val ) < $min ?
+            return $strlen($val) < $min ?
                 $opts->message() :
                 true;
         };
@@ -656,13 +656,13 @@ class Validate {
      *  @return string|true true if the value is valid, a string with an error
      *    message otherwise.
      */
-    public static function maxLen( $max, $cfg=null ) {
-        $opts = ValidateOptions::select( $cfg );
+    public static function maxLen($max, $cfg = null) {
+        $opts = ValidateOptions::select($cfg);
 
-        return function ( $val, $data, $field, $host ) use ( $max, $opts ) {
-            $common = Validate::_common( $val, $opts );
+        return function ($val, $data, $field, $host) use ($max, $opts) {
+            $common = Validate::_common($val, $opts);
 
-            if ( $common !== null ) {
+            if ($common !== null) {
                 return $common === false ?
                     $opts->message() :
                     $common;
@@ -672,7 +672,7 @@ class Validate {
                 'mb_strlen' :
                 'strlen';
 
-            return $strlen( $val ) > $max ?
+            return $strlen($val) > $max ?
                 $opts->message() :
                 true;
         };
@@ -690,29 +690,29 @@ class Validate {
      *  @return string|true true if the value is valid, a string with an error
      *    message otherwise.
      */
-    public static function minMaxLen( $min, $max, $cfg=null ) {
-        $opts = ValidateOptions::select( $cfg );
+    public static function minMaxLen($min, $max, $cfg = null) {
+        $opts = ValidateOptions::select($cfg);
 
-        return function ( $val, $data, $field, $host ) use ( $opts, $min, $max ) {
-            $common = Validate::_common( $val, $opts );
+        return function ($val, $data, $field, $host) use ($opts, $min, $max) {
+            $common = Validate::_common($val, $opts);
 
-            if ( $common !== null ) {
+            if ($common !== null) {
                 return $common === false ?
                     $opts->message() :
                     $common;
             }
 
-            $fn = Validate::minLen( $min, $opts );
-            $res = $fn( $val, $data, $field, $host );
+            $fn = Validate::minLen($min, $opts);
+            $res = $fn($val, $data, $field, $host);
 
-            if ( $res !== true ) {
+            if ($res !== true) {
                 return $res;
             }
 
-            $fn = Validate::maxLen( $max, $opts );
-            $res = $fn( $val, $data, $field, $host );
+            $fn = Validate::maxLen($max, $opts);
+            $res = $fn($val, $data, $field, $host);
 
-            if ( $res !== true ) {
+            if ($res !== true) {
                 return $res;
             }
 
@@ -732,13 +732,13 @@ class Validate {
      *  @return string|true true if the value is valid, a string with an error
      *    message otherwise.
      */
-    public static function ip( $cfg=null ) {
-        $opts = ValidateOptions::select( $cfg );
+    public static function ip($cfg = null) {
+        $opts = ValidateOptions::select($cfg);
 
-        return function ( $val, $data, $field, $host ) use ( $opts ) {
-            $common = Validate::_common( $val, $opts );
+        return function ($val, $data, $field, $host) use ($opts) {
+            $common = Validate::_common($val, $opts);
 
-            if ( $common !== null ) {
+            if ($common !== null) {
                 return $common === false ?
                     $opts->message() :
                     $common;
@@ -762,13 +762,13 @@ class Validate {
      *  @return string|true true if the value is valid, a string with an error
      *    message otherwise.
      */
-    public static function url( $cfg=null ) {
-        $opts = ValidateOptions::select( $cfg );
+    public static function url($cfg = null) {
+        $opts = ValidateOptions::select($cfg);
 
-        return function ( $val, $data, $field, $host ) use ( $opts ) {
-            $common = Validate::_common( $val, $opts );
+        return function ($val, $data, $field, $host) use ($opts) {
+            $common = Validate::_common($val, $opts);
 
-            if ( $common !== null ) {
+            if ($common !== null) {
                 return $common === false ?
                     $opts->message() :
                     $common;
@@ -795,19 +795,19 @@ class Validate {
      *  @return string|true true if the value is valid, a string with an error
      *    message otherwise.
      */
-    public static function xss ( $cfg=null ) {
-        $opts = ValidateOptions::select( $cfg );
+    public static function xss ($cfg = null) {
+        $opts = ValidateOptions::select($cfg);
 
-        return function ( $val, $data, $field, $host ) use ( $opts ) {
-            $common = Validate::_common( $val, $opts );
+        return function ($val, $data, $field, $host) use ($opts) {
+            $common = Validate::_common($val, $opts);
 
-            if ( $common !== null ) {
+            if ($common !== null) {
                 return $common === false ?
                     $opts->message() :
                     $common;
             }
 
-            return $field->xssSafety( $val ) != $val ?
+            return $field->xssSafety($val) != $val ?
                 $opts->message() :
                 true;
         };
@@ -828,13 +828,13 @@ class Validate {
      *  @return string|true true if the value is valid, a string with an error
      *    message otherwise.
      */
-    public static function values( $values, $cfg=null ) {
-        $opts = ValidateOptions::select( $cfg );
+    public static function values($values, $cfg = null) {
+        $opts = ValidateOptions::select($cfg);
 
-        return function ( $val, $data, $field, $host ) use ( $values, $opts ) {
-            $common = Validate::_common( $val, $opts );
+        return function ($val, $data, $field, $host) use ($values, $opts) {
+            $common = Validate::_common($val, $opts);
 
-            if ( $common !== null ) {
+            if ($common !== null) {
                 return $common === false ?
                     $opts->message() :
                     $common;
@@ -861,19 +861,19 @@ class Validate {
      *  @return string|true true if the value is valid, a string with an error
      *    message otherwise.
      */
-    public static function noTags ( $cfg=null ) {
-        $opts = ValidateOptions::select( $cfg );
+    public static function noTags ($cfg = null) {
+        $opts = ValidateOptions::select($cfg);
 
-        return function ( $val, $data, $field, $host ) use ( $opts ) {
-            $common = Validate::_common( $val, $opts );
+        return function ($val, $data, $field, $host) use ($opts) {
+            $common = Validate::_common($val, $opts);
 
-            if ( $common !== null ) {
+            if ($common !== null) {
                 return $common === false ?
                     $opts->message() :
                     $common;
             }
 
-            return strip_tags( $val ) != $val ?
+            return strip_tags($val) != $val ?
                 $opts->message() :
                 true;
         };
@@ -898,25 +898,25 @@ class Validate {
      *  @return string|true true if the value is valid, a string with an error
      *    message otherwise.
      */
-    public static function dateFormat( $format, $cfg=null ) {
-        $opts = ValidateOptions::select( $cfg );
+    public static function dateFormat($format, $cfg = null) {
+        $opts = ValidateOptions::select($cfg);
 
-        return function ( $val, $data, $field, $host ) use ( $format, $opts ) {
-            $common = Validate::_common( $val, $opts );
+        return function ($val, $data, $field, $host) use ($format, $opts) {
+            $common = Validate::_common($val, $opts);
 
-            if ( $common !== null ) {
+            if ($common !== null) {
                 return $common === false ?
                     $opts->message() :
                     $common;
             }
 
             $formatCreate = substr($format, 0, 1) !== '!' ?
-                '!'.$format :
+                '!' . $format :
                 $format;
 
-            $date = \DateTime::createFromFormat( $formatCreate, $val );
+            $date = \DateTime::createFromFormat($formatCreate, $val);
 
-            return $date && $date->format( $format ) === $val ?
+            return $date && $date->format($format) === $val ?
                 true :
                 $opts->message();
         };
@@ -941,13 +941,13 @@ class Validate {
      *  @return string|true true if the value is valid, a string with an error
      *    message otherwise.
      */
-    public static function unique( $cfg=null, $column=null, $table=null, $db=null ) {
-        $opts = ValidateOptions::select( $cfg );
+    public static function unique($cfg = null, $column = null, $table = null, $db = null) {
+        $opts = ValidateOptions::select($cfg);
 
-        return function ( $val, $data, $field, $host ) use ( $opts, $column, $table, $db ) {
-            $common = Validate::_common( $val, $opts );
+        return function ($val, $data, $field, $host) use ($opts, $column, $table, $db) {
+            $common = Validate::_common($val, $opts);
 
-            if ( $common !== null ) {
+            if ($common !== null) {
                 return $common === false ?
                     $opts->message() :
                     $common;
@@ -955,28 +955,28 @@ class Validate {
 
             $editor = $host['editor'];
 
-            if ( ! $db ) {
+            if (!$db) {
                 $db = $host['db'];
             }
 
-            if ( ! $table ) {
+            if (!$table) {
                 $table = $editor->table(); // Returns an array, but `select` will take an array
             }
 
-            if ( ! $column ) {
+            if (!$column) {
                 $column = $field->dbField();
             }
 
             $query = $db
-                ->query( 'select', $table )
-                ->get( $column )
-                ->where( $column, $val );
+                ->query('select', $table)
+                ->get($column)
+                ->where($column, $val);
 
             // If doing an edit, then we need to also discount the current row,
             // since it is of course already validly unique
-            if ( $host['action'] === 'edit' ) {
-                $cond = $editor->pkeyToArray( $host['id'], true );
-                $query->where( $cond, null, '!=' );
+            if ($host['action'] === 'edit') {
+                $cond = $editor->pkeyToArray($host['id'], true);
+                $query->where($cond, null, '!=');
             }
 
             $res = $query->exec();
@@ -1005,53 +1005,53 @@ class Validate {
      *  @return string|true true if the value is valid, a string with an error
      *    message otherwise.
      */
-    public static function dbValues( $cfg=null, $column=null, $table=null, $db=null, $values=array() ) {
-        $opts = ValidateOptions::select( $cfg );
+    public static function dbValues($cfg = null, $column = null, $table = null, $db = null, $values = array()) {
+        $opts = ValidateOptions::select($cfg);
 
-        return function ( $val, $data, $field, $host ) use ( $opts, $column, $table, $db, $values ) {
-            $common = Validate::_common( $val, $opts );
+        return function ($val, $data, $field, $host) use ($opts, $column, $table, $db, $values) {
+            $common = Validate::_common($val, $opts);
 
-            if ( $common !== null ) {
+            if ($common !== null) {
                 return $common === false ?
                     $opts->message() :
                     $common;
             }
 
             // Allow local values to be defined - for example null
-            if ( in_array($val, $values) ) {
+            if (in_array($val, $values)) {
                 return true;
             }
 
             $editor = $host['editor'];
             $options = $field->options();
 
-            if ( ! $db ) {
+            if (!$db) {
                 $db = $host['db'];
             }
 
-            if ( ! $table ) {
+            if (!$table) {
                 $table = $options->table(); // Returns an array, but `select` will take an array
             }
 
-            if ( ! $column ) {
+            if (!$column) {
                 $column = $options->value();
             }
 
-            if ( ! $table ) {
-                throw new \Exception('Table for database value check is not defined for field '.$field->name());
+            if (!$table) {
+                throw new \Exception('Table for database value check is not defined for field ' . $field->name());
             }
 
-            if ( ! $column ) {
-                throw new \Exception('Value column for database value check is not defined for field '.$field->name());
+            if (!$column) {
+                throw new \Exception('Value column for database value check is not defined for field ' . $field->name());
             }
 
             // Try / catch in case the submitted value can't be represented as the
             // database type (e.g. an empty string as an integer)
             try {
                 $count = $db
-                    ->query( 'select', $table )
-                    ->get( $column )
-                    ->where( $column, $val )
+                    ->query('select', $table)
+                    ->get($column)
+                    ->where($column, $val)
                     ->exec()
                     ->count();
 
@@ -1070,12 +1070,12 @@ class Validate {
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     * File validation methods
     */
-    static function fileExtensions ( $extensions, $msg="This file type cannot be uploaded." ) {
-        return function ( $file ) use ( $extensions, $msg ) {
+    static function fileExtensions ($extensions, $msg = "This file type cannot be uploaded.") {
+        return function ($file) use ($extensions, $msg) {
             $extn = pathinfo($file['name'], PATHINFO_EXTENSION);
 
-            for ( $i=0, $ien=count($extensions) ; $i<$ien ; $i++ ) {
-                if ( strtolower( $extn ) === strtolower( $extensions[$i] ) ) {
+            for ($i = 0, $ien = count($extensions); $i < $ien; $i++) {
+                if (strtolower($extn) === strtolower($extensions[$i])) {
                     return true;
                 }
             }
@@ -1084,8 +1084,8 @@ class Validate {
         };
     }
 
-    static function fileSize ( $size, $msg="Uploaded file is too large." ) {
-        return function ( $file ) use ( $size, $msg ) {
+    static function fileSize ($size, $msg = "Uploaded file is too large.") {
+        return function ($file) use ($size, $msg) {
             return $file['size'] > $size ?
                 $msg :
                 true;
@@ -1097,9 +1097,9 @@ class Validate {
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     * Mjoin validation methods
     */
-    static function mjoinMinCount ( $count, $msg="Too few items." ) {
-        return function ( $editor, $action, $values ) use ( $count, $msg ) {
-            if ( $action === 'create' || $action === 'edit' ) {
+    static function mjoinMinCount ($count, $msg = "Too few items.") {
+        return function ($editor, $action, $values) use ($count, $msg) {
+            if ($action === 'create' || $action === 'edit') {
                 return count($values) < $count ?
                     $msg :
                     true;
@@ -1108,9 +1108,9 @@ class Validate {
         };
     }
 
-    static function mjoinMaxCount ( $count, $msg="Too many items." ) {
-        return function ( $editor, $action, $values ) use ( $count, $msg ) {
-            if ( $action === 'create' || $action === 'edit' ) {
+    static function mjoinMaxCount ($count, $msg = "Too many items.") {
+        return function ($editor, $action, $values) use ($count, $msg) {
+            if ($action === 'create' || $action === 'edit') {
                 return count($values) > $count ?
                     $msg :
                     true;
@@ -1129,266 +1129,266 @@ class Validate {
     /**
      * @internal
      */
-    static function noneLegacy( $legacyOpts ) {
+    static function noneLegacy($legacyOpts) {
         return Validate::none();
     }
 
     /**
      * @internal
      */
-    static function basicLegacy( $legacyOpts ) {
-        $cfg = Validate::_extend( $legacyOpts, null, array() );
-        $opts = Validate::_commonLegacy( $cfg );
+    static function basicLegacy($legacyOpts) {
+        $cfg = Validate::_extend($legacyOpts, null, array());
+        $opts = Validate::_commonLegacy($cfg);
 
-        return Validate::required( $opts );
+        return Validate::required($opts);
     }
 
     /**
      * @internal
      */
-    static function requiredLegacy( $legacyOpts ) {
-        $cfg = Validate::_extend( $legacyOpts, null, array(
+    static function requiredLegacy($legacyOpts) {
+        $cfg = Validate::_extend($legacyOpts, null, array(
             'message' => "This field is required."
-        ) );
-        $opts = Validate::_commonLegacy( $cfg );
+        ));
+        $opts = Validate::_commonLegacy($cfg);
 
-        return Validate::required( $opts );
+        return Validate::required($opts);
     }
 
     /**
      * @internal
      */
-    static function notEmptyLegacy( $legacyOpts ) {
-        $cfg = Validate::_extend( $legacyOpts, null, array(
+    static function notEmptyLegacy($legacyOpts) {
+        $cfg = Validate::_extend($legacyOpts, null, array(
             'message' => "This field is required."
-        ) );
-        $opts = Validate::_commonLegacy( $cfg );
+        ));
+        $opts = Validate::_commonLegacy($cfg);
 
-        return Validate::notEmpty( $opts );
+        return Validate::notEmpty($opts);
     }
 
     /**
      * @internal
      */
-    static function booleanLegacy( $legacyOpts ) {
-        $cfg = Validate::_extend( $legacyOpts, null, array(
+    static function booleanLegacy($legacyOpts) {
+        $cfg = Validate::_extend($legacyOpts, null, array(
             'message' => "Please enter true or false."
-        ) );
-        $opts = Validate::_commonLegacy( $cfg );
+        ));
+        $opts = Validate::_commonLegacy($cfg);
 
-        return Validate::notEmpty( $opts );
+        return Validate::notEmpty($opts);
     }
 
     /**
      * @internal
      */
-    static function numericLegacy( $legacyOpts ) {
-        $cfg = Validate::_extend( $legacyOpts, null, array(
+    static function numericLegacy($legacyOpts) {
+        $cfg = Validate::_extend($legacyOpts, null, array(
             'message' => "This input must be given as a number."
-        ) );
-        $opts = Validate::_commonLegacy( $cfg );
+        ));
+        $opts = Validate::_commonLegacy($cfg);
 
-        return isset( $legacyOpts['decimal'] ) ?
-            Validate::numeric( $legacyOpts['decimal'], $opts ) :
-            Validate::numeric( '.', $opts );
+        return isset($legacyOpts['decimal']) ?
+            Validate::numeric($legacyOpts['decimal'], $opts) :
+            Validate::numeric('.', $opts);
     }
 
     /**
      * @internal
      */
-    static function minNumLegacy( $legacyOpts ) {
+    static function minNumLegacy($legacyOpts) {
         $min = is_array($legacyOpts) ? $legacyOpts['min'] : $legacyOpts;
-        $cfg = Validate::_extend( $legacyOpts, null, array(
-            'message' => "Number is too small, must be ".$min." or larger."
-        ) );
-        $opts = Validate::_commonLegacy( $cfg );
+        $cfg = Validate::_extend($legacyOpts, null, array(
+            'message' => "Number is too small, must be " . $min . " or larger."
+        ));
+        $opts = Validate::_commonLegacy($cfg);
 
-        return isset( $legacyOpts['decimal'] ) ?
-            Validate::minNum( $min, $legacyOpts['decimal'], $opts ) :
-            Validate::minNum( $min, '.', $opts );
+        return isset($legacyOpts['decimal']) ?
+            Validate::minNum($min, $legacyOpts['decimal'], $opts) :
+            Validate::minNum($min, '.', $opts);
     }
 
     /**
      * @internal
      */
-    static function maxNumLegacy( $legacyOpts ) {
+    static function maxNumLegacy($legacyOpts) {
         $max = is_array($legacyOpts) ? $legacyOpts['max'] : $legacyOpts;
-        $cfg = Validate::_extend( $legacyOpts, null, array(
-            'message' => "Number is too large, must be ".$max." or smaller."
-        ) );
-        $opts = Validate::_commonLegacy( $cfg );
+        $cfg = Validate::_extend($legacyOpts, null, array(
+            'message' => "Number is too large, must be " . $max . " or smaller."
+        ));
+        $opts = Validate::_commonLegacy($cfg);
 
-        return isset( $legacyOpts['decimal'] ) ?
-            Validate::maxNum( $max, $legacyOpts['decimal'], $opts ) :
-            Validate::maxNum( $max, '.', $opts );
+        return isset($legacyOpts['decimal']) ?
+            Validate::maxNum($max, $legacyOpts['decimal'], $opts) :
+            Validate::maxNum($max, '.', $opts);
     }
 
     /**
      * @internal
      */
-    static function minMaxNumLegacy( $legacyOpts ) {
+    static function minMaxNumLegacy($legacyOpts) {
         $min = $legacyOpts['min'];
         $max = $legacyOpts['max'];
-        $cfg = Validate::_extend( $legacyOpts, null, array() );
-        $opts = Validate::_commonLegacy( $cfg );
+        $cfg = Validate::_extend($legacyOpts, null, array());
+        $opts = Validate::_commonLegacy($cfg);
 
-        return isset( $legacyOpts['decimal'] ) ?
-            Validate::minMaxNum( $min, $max, $legacyOpts['decimal'], $opts ) :
-            Validate::minMaxNum( $min, $max, '.', $opts );
+        return isset($legacyOpts['decimal']) ?
+            Validate::minMaxNum($min, $max, $legacyOpts['decimal'], $opts) :
+            Validate::minMaxNum($min, $max, '.', $opts);
     }
 
     /**
      * @internal
      */
-    static function emailLegacy( $legacyOpts ) {
-        $cfg = Validate::_extend( $legacyOpts, null, array(
+    static function emailLegacy($legacyOpts) {
+        $cfg = Validate::_extend($legacyOpts, null, array(
             'message' => "Please enter a valid e-mail address."
-        ) );
-        $opts = Validate::_commonLegacy( $cfg );
+        ));
+        $opts = Validate::_commonLegacy($cfg);
 
-        return Validate::email( $opts );
+        return Validate::email($opts);
     }
 
     /**
      * @internal
      */
-    static function minLenLegacy( $legacyOpts ) {
+    static function minLenLegacy($legacyOpts) {
         $min = is_array($legacyOpts) ? $legacyOpts['min'] : $legacyOpts;
-        $cfg = Validate::_extend( $legacyOpts, null, array(
-            'message' => "The input is too short. ".$min." characters required."
-        ) );
-        $opts = Validate::_commonLegacy( $cfg );
+        $cfg = Validate::_extend($legacyOpts, null, array(
+            'message' => "The input is too short. " . $min . " characters required."
+        ));
+        $opts = Validate::_commonLegacy($cfg);
 
-        return Validate::minLen( $min, $opts );
+        return Validate::minLen($min, $opts);
     }
 
     /**
      * @internal
      */
-    static function maxLenLegacy( $legacyOpts ) {
+    static function maxLenLegacy($legacyOpts) {
         $max = is_array($legacyOpts) ? $legacyOpts['max'] : $legacyOpts;
-        $cfg = Validate::_extend( $legacyOpts, null, array(
-            'message' => "The input is too long. ".$max." characters maximum."
-        ) );
-        $opts = Validate::_commonLegacy( $cfg );
+        $cfg = Validate::_extend($legacyOpts, null, array(
+            'message' => "The input is too long. " . $max . " characters maximum."
+        ));
+        $opts = Validate::_commonLegacy($cfg);
 
-        return Validate::maxLen( $max, $opts );
+        return Validate::maxLen($max, $opts);
     }
 
     /**
      * @internal
      */
-    static function minMaxLenLegacy( $legacyOpts ) {
+    static function minMaxLenLegacy($legacyOpts) {
         $min = $legacyOpts['min'];
         $max = $legacyOpts['max'];
-        $cfg = Validate::_extend( $legacyOpts, null, array() );
-        $opts = Validate::_commonLegacy( $cfg );
+        $cfg = Validate::_extend($legacyOpts, null, array());
+        $opts = Validate::_commonLegacy($cfg);
 
-        return Validate::minMaxLen( $min, $max, $opts );
+        return Validate::minMaxLen($min, $max, $opts);
     }
 
     /**
      * @internal
      */
-    static function ipLegacy( $legacyOpts ) {
-        $cfg = Validate::_extend( $legacyOpts, null, array(
+    static function ipLegacy($legacyOpts) {
+        $cfg = Validate::_extend($legacyOpts, null, array(
             'message' => "Please enter a valid IP address."
-        ) );
-        $opts = Validate::_commonLegacy( $cfg );
+        ));
+        $opts = Validate::_commonLegacy($cfg);
 
-        return Validate::ip( $opts );
+        return Validate::ip($opts);
     }
 
     /**
      * @internal
      */
-    static function urlLegacy( $legacyOpts ) {
-        $cfg = Validate::_extend( $legacyOpts, null, array(
+    static function urlLegacy($legacyOpts) {
+        $cfg = Validate::_extend($legacyOpts, null, array(
             'message' => "Please enter a valid URL."
-        ) );
-        $opts = Validate::_commonLegacy( $cfg );
+        ));
+        $opts = Validate::_commonLegacy($cfg);
 
-        return Validate::url( $opts );
+        return Validate::url($opts);
     }
 
     /**
      * @internal
      */
-    static function xssLegacy( $legacyOpts ) {
-        $cfg = Validate::_extend( $legacyOpts, null, array(
+    static function xssLegacy($legacyOpts) {
+        $cfg = Validate::_extend($legacyOpts, null, array(
             'message' => "This field contains potentially unsafe data."
-        ) );
-        $opts = Validate::_commonLegacy( $cfg );
+        ));
+        $opts = Validate::_commonLegacy($cfg);
 
-        return Validate::xss( $opts );
+        return Validate::xss($opts);
     }
 
     /**
      * @internal
      */
-    static function valuesLegacy( $legacyOpts ) {
+    static function valuesLegacy($legacyOpts) {
         $values = isset($legacyOpts['valid']) ? $legacyOpts['valid'] : $legacyOpts;
-        $cfg = Validate::_extend( $legacyOpts, null, array(
+        $cfg = Validate::_extend($legacyOpts, null, array(
             'message' => "This value is not valid."
-        ) );
-        $opts = Validate::_commonLegacy( $cfg );
+        ));
+        $opts = Validate::_commonLegacy($cfg);
 
-        return Validate::values( $values, $opts );
+        return Validate::values($values, $opts);
     }
 
     /**
      * @internal
      */
-    static function noTagsLegacy( $legacyOpts ) {
-        $cfg = Validate::_extend( $legacyOpts, null, array(
+    static function noTagsLegacy($legacyOpts) {
+        $cfg = Validate::_extend($legacyOpts, null, array(
             'message' => "This field may not contain HTML."
-        ) );
-        $opts = Validate::_commonLegacy( $cfg );
+        ));
+        $opts = Validate::_commonLegacy($cfg);
 
-        return Validate::noTags( $opts );
+        return Validate::noTags($opts);
     }
 
     /**
      * @internal
      */
-    static function dateFormatLegacy( $legacyOpts ) {
+    static function dateFormatLegacy($legacyOpts) {
         $format = is_array($legacyOpts) ? $legacyOpts['format'] : $legacyOpts;
-        $cfg = Validate::_extend( $legacyOpts, null, array(
+        $cfg = Validate::_extend($legacyOpts, null, array(
             'message' => "Date is not in the expected format."
-        ) );
-        $opts = Validate::_commonLegacy( $cfg );
+        ));
+        $opts = Validate::_commonLegacy($cfg);
 
-        return Validate::dateFormat( $format, $opts );
+        return Validate::dateFormat($format, $opts);
     }
 
     /**
      * @internal
      */
-    static function uniqueLegacy( $legacyOpts ) {
-        $table =  isset( $legacyOpts['table'] )  ? $legacyOpts['table']  : null;
-        $column = isset( $legacyOpts['column'] ) ? $legacyOpts['column'] : null;
-        $db =     isset( $legacyOpts['db'] )     ? $legacyOpts['db']     : null;
-        $cfg = Validate::_extend( $legacyOpts, null, array(
+    static function uniqueLegacy($legacyOpts) {
+        $table = isset($legacyOpts['table']) ? $legacyOpts['table'] : null;
+        $column = isset($legacyOpts['column']) ? $legacyOpts['column'] : null;
+        $db = isset($legacyOpts['db']) ? $legacyOpts['db'] : null;
+        $cfg = Validate::_extend($legacyOpts, null, array(
             'message' => "This field must have a unique value."
-        ) );
-        $opts = Validate::_commonLegacy( $cfg );
+        ));
+        $opts = Validate::_commonLegacy($cfg);
 
-        return Validate::unique( $opts, $column, $table, $db );
+        return Validate::unique($opts, $column, $table, $db);
     }
 
     /**
      * @internal
      */
-    static function dbValuesLegacy( $legacyOpts ) {
-        $table =  isset( $legacyOpts['table'] )  ? $legacyOpts['table']  : null;
-        $column = isset( $legacyOpts['column'] ) ? $legacyOpts['column'] : null;
-        $db =     isset( $legacyOpts['db'] )     ? $legacyOpts['db']     : null;
-        $values = isset( $legacyOpts['values'] ) ? $legacyOpts['values'] : array();
-        $cfg = Validate::_extend( $legacyOpts, null, array(
+    static function dbValuesLegacy($legacyOpts) {
+        $table = isset($legacyOpts['table']) ? $legacyOpts['table'] : null;
+        $column = isset($legacyOpts['column']) ? $legacyOpts['column'] : null;
+        $db = isset($legacyOpts['db']) ? $legacyOpts['db'] : null;
+        $values = isset($legacyOpts['values']) ? $legacyOpts['values'] : array();
+        $cfg = Validate::_extend($legacyOpts, null, array(
             'message' => "This value is not valid."
-        ) );
-        $opts = Validate::_commonLegacy( $cfg );
+        ));
+        $opts = Validate::_commonLegacy($cfg);
 
-        return Validate::dbValues( $opts, $column, $table, $db, $values );
+        return Validate::dbValues($opts, $column, $table, $db, $values);
     }
 }

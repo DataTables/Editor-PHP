@@ -25,36 +25,36 @@ class SqlserverQuery extends Query {
     private $_stmt;
 
 
-    protected $_identifier_limiter = array( '[', ']' );
+    protected $_identifier_limiter = array('[', ']');
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Public methods
      */
 
-    static function connect( $user, $pass='', $host='', $port='', $db='', $dsn='' )
+    static function connect($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '')
     {
-        if ( is_array( $user ) ) {
+        if (is_array($user)) {
             $opts = $user;
             $user = $opts['user'];
             $pass = $opts['pass'];
             $port = $opts['port'];
             $host = $opts['host'];
-            $db   = $opts['db'];
-            $dsn  = isset( $opts['dsn'] ) ? $opts['dsn'] : '';
-            $pdoAttr = isset( $opts['pdoAttr'] ) ? $opts['pdoAttr'] : array();
+            $db = $opts['db'];
+            $dsn = isset($opts['dsn']) ? $opts['dsn'] : '';
+            $pdoAttr = isset($opts['pdoAttr']) ? $opts['pdoAttr'] : array();
         }
 
         try {
-            $pdoAttr[ PDO::ATTR_ERRMODE ] = PDO::ERRMODE_EXCEPTION;
+            $pdoAttr[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 
-            if ( in_array( 'sqlsrv', PDO::getAvailableDrivers() ) ) {
+            if (in_array('sqlsrv', PDO::getAvailableDrivers())) {
                 // Windows
-                if ( $port !== "" ) {
+                if ($port !== "") {
                     $port = ",{$port}";
                 }
 
                 $pdo = new PDO(
-                    "sqlsrv:Server={$host}{$port};Database={$db}".self::dsnPostfix( $dsn ),
+                    "sqlsrv:Server={$host}{$port};Database={$db}" . self::dsnPostfix($dsn),
                     $user,
                     $pass,
                     $pdoAttr
@@ -62,12 +62,12 @@ class SqlserverQuery extends Query {
             }
             else {
                 // Linux
-                if ( $port !== "" ) {
+                if ($port !== "") {
                     $port = ":{$port}";
                 }
 
                 $pdo = new PDO(
-                    "dblib:host={$host}{$port};dbname={$db}".self::dsnPostfix( $dsn ),
+                    "dblib:host={$host}{$port};dbname={$db}" . self::dsnPostfix($dsn),
                     $user,
                     $pass,
                     $pdoAttr
@@ -77,10 +77,10 @@ class SqlserverQuery extends Query {
         } catch (\PDOException $e) {
             // If we can't establish a DB connection then we return a DataTables
             // error.
-            echo json_encode( array(
-                "error" => "An error occurred while connecting to the database ".
-                    "'{$db}'. The error reported by the server was: ".$e->getMessage()
-            ) );
+            echo json_encode(array(
+                "error" => "An error occurred while connecting to the database " .
+                    "'{$db}'. The error reported by the server was: " . $e->getMessage()
+            ));
             exit(1);
         }
 
@@ -93,15 +93,15 @@ class SqlserverQuery extends Query {
      * Protected methods
      */
 
-    protected function _prepare( $sql )
+    protected function _prepare($sql)
     {
-        $this->database()->debugInfo( $sql, $this->_bindings );
+        $this->database()->debugInfo($sql, $this->_bindings);
 
         $resource = $this->database()->resource();
-        $this->_stmt = $resource->prepare( $sql );
+        $this->_stmt = $resource->prepare($sql);
 
         // bind values
-        for ( $i=0 ; $i<count($this->_bindings) ; $i++ ) {
+        for ($i = 0; $i < count($this->_bindings); $i++) {
             $binding = $this->_bindings[$i];
 
             $this->_stmt->bindValue(
@@ -123,7 +123,7 @@ class SqlserverQuery extends Query {
         }
 
         $resource = $this->database()->resource();
-        return new SqlserverResult( $resource, $this->_stmt );
+        return new SqlserverResult($resource, $this->_stmt);
     }
 
 
@@ -132,15 +132,15 @@ class SqlserverQuery extends Query {
     {
         $out = '';
 
-        if ( $this->_offset ) {
-            $out .= ' OFFSET '.$this->_offset.' ROWS';
+        if ($this->_offset) {
+            $out .= ' OFFSET ' . $this->_offset . ' ROWS';
         }
 
-        if ( $this->_limit ) {
-            if ( ! $this->_offset ) {
+        if ($this->_limit) {
+            if (!$this->_offset) {
                 $out .= ' OFFSET 0 ROWS';
             }
-            $out .= ' FETCH NEXT '.$this->_limit. ' ROWS ONLY';
+            $out .= ' FETCH NEXT ' . $this->_limit . ' ROWS ONLY';
         }
 
         return $out;

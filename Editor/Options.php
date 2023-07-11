@@ -104,9 +104,9 @@ class Options extends DataTables\Ext {
      * @param string|null $value Value for the option. If not given, the label will be used
      * @return Options Self for chaining
      */
-    public function add ( $label, $value=null )
+    public function add ($label, $value = null)
     {
-        if ( $value === null ) {
+        if ($value === null) {
             $value = $label;
         }
 
@@ -126,13 +126,13 @@ class Options extends DataTables\Ext {
      * @return Options|string[] Self if setting for chaining, array of values if
      *   getting.
      */
-    public function label ( $_=null )
+    public function label ($_ = null)
     {
-        if ( $_ === null ) {
+        if ($_ === null) {
             return $this;
         }
-        else if ( is_string($_) ) {
-            $this->_label = array( $_ );
+        else if (is_string($_)) {
+            $this->_label = array($_);
         }
         else {
             $this->_label = $_;
@@ -150,12 +150,12 @@ class Options extends DataTables\Ext {
      * @param string $field2 the second field to get the information from
      * @return self
      */
-    public function leftJoin ( $table, $field1, $operator, $field2 )
+    public function leftJoin ($table, $field1, $operator, $field2)
     {
         $this->_leftJoin[] = array(
-            "table"    => $table,
-            "field1"   => $field1,
-            "field2"   => $field2,
+            "table" => $table,
+            "field1" => $field1,
+            "field2" => $field2,
             "operator" => $operator
         );
 
@@ -168,9 +168,9 @@ class Options extends DataTables\Ext {
      * @param  null|number $_ Number of rows to limit the result to
      * @return Options|string[] Self if setting for chaining, limit if getting.
      */
-    public function limit ( $_=null )
+    public function limit ($_ = null)
     {
-        return $this->_getSet( $this->_limit, $_ );
+        return $this->_getSet($this->_limit, $_);
     }
 
     /**
@@ -181,9 +181,9 @@ class Options extends DataTables\Ext {
      * @param  null|string $_ String to set, null to get current value
      * @return Options|string Self if setting for chaining, string if getting.
      */
-    public function order ( $_=null )
+    public function order ($_ = null)
     {
-        return $this->_getSet( $this->_order, $_ );
+        return $this->_getSet($this->_order, $_);
     }
 
     /**
@@ -195,9 +195,9 @@ class Options extends DataTables\Ext {
      * @return Options|callable Self if setting for chaining, callable if
      *   getting.
      */
-    public function render ( $_=null )
+    public function render ($_ = null)
     {
-        return $this->_getSet( $this->_renderer, $_ );
+        return $this->_getSet($this->_renderer, $_);
     }
 
     /**
@@ -207,9 +207,9 @@ class Options extends DataTables\Ext {
      * @param  null|string $_ String to set, null to get current value
      * @return Options|string Self if setting for chaining, string if getting.
      */
-    public function table ( $_=null )
+    public function table ($_ = null)
     {
-        return $this->_getSet( $this->_table, $_ );
+        return $this->_getSet($this->_table, $_);
     }
 
     /**
@@ -219,9 +219,9 @@ class Options extends DataTables\Ext {
      * @param  null|string $_ String to set, null to get current value
      * @return Options|string Self if setting for chaining, string if getting.
      */
-    public function value ( $_=null )
+    public function value ($_ = null)
     {
-        return $this->_getSet( $this->_value, $_ );
+        return $this->_getSet($this->_value, $_);
     }
 
     /**
@@ -232,9 +232,9 @@ class Options extends DataTables\Ext {
      * @return Options|callable Self if setting for chaining, callable if
      *   getting.
      */
-    public function where ( $_=null )
+    public function where ($_ = null)
     {
-        return $this->_getSet( $this->_where, $_ );
+        return $this->_getSet($this->_where, $_);
     }
 
 
@@ -250,7 +250,7 @@ class Options extends DataTables\Ext {
      * @return array        List of options
      * @internal
      */
-    public function exec ( $db )
+    public function exec ($db)
     {
         $label = $this->_label;
         $value = $this->_value;
@@ -259,15 +259,15 @@ class Options extends DataTables\Ext {
         // Create a list of the fields that we need to get from the db
         $fields = array();
         $fields[] = $value;
-        $fields = array_merge( $fields, $label );
+        $fields = array_merge($fields, $label);
 
         // We need a default formatter if one isn't provided
-        if ( ! $formatter ) {
-            $formatter = function ( $row ) use ( $label ) {
+        if (!$formatter) {
+            $formatter = function ($row) use ($label) {
                 $a = array();
 
-                for ( $i=0, $ien=count($label) ; $i<$ien ; $i++ ) {
-                    $a[] = $row[ $label[$i] ];
+                for ($i = 0, $ien = count($label); $i < $ien; $i++) {
+                    $a[] = $row[$label[$i]];
                 }
 
                 return implode(' ', $a);
@@ -277,34 +277,34 @@ class Options extends DataTables\Ext {
         // Get the data
         $q = $db
             ->query('select')
-            ->distinct( true )
-            ->table( $this->_table )
+            ->distinct(true)
+            ->table($this->_table)
             ->left_join($this->_leftJoin)
-            ->get( $fields )
-            ->where( $this->_where );
+            ->get($fields)
+            ->where($this->_where);
 
-        if ( $this->_order ) {
+        if ($this->_order) {
             // For cases where we are ordering by a field which isn't included in the list
             // of fields to display, we need to add the ordering field, due to the
             // select distinct.
-            $orderFields = explode( ',', $this->_order );
+            $orderFields = explode(',', $this->_order);
 
-            for ( $i=0, $ien=count($orderFields) ; $i<$ien ; $i++ ) {
-                $field = strtolower( $orderFields[$i] );
-                $field = str_replace( ' asc', '', $field );
-                $field = str_replace( ' desc', '', $field );
-                $field = trim( $field );
+            for ($i = 0, $ien = count($orderFields); $i < $ien; $i++) {
+                $field = strtolower($orderFields[$i]);
+                $field = str_replace(' asc', '', $field);
+                $field = str_replace(' desc', '', $field);
+                $field = trim($field);
 
-                if ( ! in_array( $field, $fields ) ) {
-                    $q->get( $field );
+                if (!in_array($field, $fields)) {
+                    $q->get($field);
                 }
             }
 
-            $q->order( $this->_order );
+            $q->order($this->_order);
         }
 
-        if ( $this->_limit !== null ) {
-            $q->limit( $this->_limit );
+        if ($this->_limit !== null) {
+            $q->limit($this->_limit);
         }
 
         $rows = $q
@@ -314,25 +314,25 @@ class Options extends DataTables\Ext {
         // Create the output array
         $out = array();
 
-        for ( $i=0, $ien=count($rows) ; $i<$ien ; $i++ ) {
+        for ($i = 0, $ien = count($rows); $i < $ien; $i++) {
             $out[] = array(
-                "label" => $formatter( $rows[$i] ),
+                "label" => $formatter($rows[$i]),
                 "value" => $rows[$i][$value]
             );
         }
 
         // Stick on any extra manually added options
-        if ( count( $this->_manualAdd ) ) {
-            $out = array_merge( $out, $this->_manualAdd );
+        if (count($this->_manualAdd)) {
+            $out = array_merge($out, $this->_manualAdd);
         }
 
         // Only sort if there was no SQL order field
-        if ( ! $this->_order ) {
-            usort( $out, function ( $a, $b ) {
+        if (!$this->_order) {
+            usort($out, function ($a, $b) {
                 return is_numeric($a['label']) && is_numeric($b['label']) ?
-                    ($a['label']*1) - ($b['label']*1) :
-                    strcmp( $a['label'], $b['label'] );
-            } );
+                    ($a['label'] * 1) - ($b['label'] * 1) :
+                    strcmp($a['label'], $b['label']);
+            });
         }
 
         return $out;

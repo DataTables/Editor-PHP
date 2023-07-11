@@ -31,16 +31,16 @@ class Db2Query extends Query {
      * Public methods
      */
 
-    static function connect( $user, $pass='', $host='', $port='', $db='', $dsn='' )
+    static function connect($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '')
     {
-        if ( is_array( $user ) ) {
+        if (is_array($user)) {
             $opts = $user;
             $user = $opts['user'];
             $pass = $opts['pass'];
             $port = $opts['port'];
             $host = $opts['host'];
-            $db   = $opts['db'];
-            $dsn  = isset( $opts['dsn'] ) ? $opts['dsn'] : '';
+            $db = $opts['db'];
+            $dsn = isset($opts['dsn']) ? $opts['dsn'] : '';
         }
 
         // $connStr = 'DATABASE='.$db.';HOSTNAME='.$host;
@@ -52,32 +52,32 @@ class Db2Query extends Query {
 
         $conn = db2_connect($connStr, $user, $pass);
 
-        if ( ! $conn ) {
+        if (!$conn) {
             // If we can't establish a DB connection then we returna DataTables
             // error.
-            $e = 'Connection failed: '.db2_conn_error().' : '.db2_conn_errormsg();
+            $e = 'Connection failed: ' . db2_conn_error() . ' : ' . db2_conn_errormsg();
 
-            echo json_encode( array(
-                "error" => "An error occurred while connecting to the database ".
-                    "'{$db}'. The error reported by the server was: ".$e
-            ) );
+            echo json_encode(array(
+                "error" => "An error occurred while connecting to the database " .
+                    "'{$db}'. The error reported by the server was: " . $e
+            ));
             exit(1);
         }
 
         return $conn;
     }
 
-    public static function transaction ( $conn )
+    public static function transaction ($conn)
     {
         // no op
     }
 
-    public static function commit ( $conn )
+    public static function commit ($conn)
     {
         // no op
     }
 
-    public static function rollback ( $conn )
+    public static function rollback ($conn)
     {
         // no op
     }
@@ -112,16 +112,16 @@ class Db2Query extends Query {
         //$allanTest = 65;
         //db2_bind_param( $stmt, 1, 'allanTest', DB2_PARAM_IN );
 
-        for ( $i=0, $ien=count($matches[0]) ; $i<$ien ; $i++ ) {
-            for ( $j=0, $jen=count($bindings) ; $j<$jen ; $j++ ) {
-                if ( $bindings[$j]['name'] === $matches[0][$i] ) {
+        for ($i = 0, $ien = count($matches[0]); $i < $ien; $i++) {
+            for ($j = 0, $jen = count($bindings); $j < $jen; $j++) {
+                if ($bindings[$j]['name'] === $matches[0][$i]) {
                     $name = str_replace(':', '', $matches[0][$i]);
                     $$name = $bindings[$j]['value'];
                     //$_GLOBALS[ $name ] = $bindings[$j]['value'];
 
                     //echo "bind $name as ".$$name."\n";
 
-                    db2_bind_param( $stmt, $i+1, $name, DB2_PARAM_IN );
+                    db2_bind_param($stmt, $i + 1, $name, DB2_PARAM_IN);
                 }
             }
         }
@@ -130,8 +130,8 @@ class Db2Query extends Query {
 
         $res = db2_execute($stmt);
 
-        if (! $res) {
-            throw new \Exception('DB2 SQL error = '.db2_stmt_error($this->_stmt));
+        if (!$res) {
+            throw new \Exception('DB2 SQL error = ' . db2_stmt_error($this->_stmt));
         }
 
         $resource = $this->database()->resource();
@@ -142,7 +142,7 @@ class Db2Query extends Query {
     {
         $out = array();
 
-        for ($i = 0, $ien = count($this->_table); $i < $ien; $i ++) {
+        for ($i = 0, $ien = count($this->_table); $i < $ien; $i++) {
             $t = $this->_table[$i];
 
             if (strpos($t, ' as ')) {

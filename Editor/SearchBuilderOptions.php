@@ -98,13 +98,13 @@ class SearchBuilderOptions extends DataTables\Ext {
      * @return Options|string[] Self if setting for chaining, array of values if
      *   getting.
      */
-    public function label ( $_=null )
+    public function label ($_ = null)
     {
-        if ( $_ === null ) {
+        if ($_ === null) {
             return $this;
         }
-        else if ( is_string($_) ) {
-            $this->_label = array( $_ );
+        else if (is_string($_)) {
+            $this->_label = array($_);
         }
         else {
             $this->_label = $_;
@@ -121,9 +121,9 @@ class SearchBuilderOptions extends DataTables\Ext {
      * @param  null|string $_ String to set, null to get current value
      * @return Options|string Self if setting for chaining, string if getting.
      */
-    public function order ( $_=null )
+    public function order ($_ = null)
     {
-        return $this->_getSet( $this->_order, $_ );
+        return $this->_getSet($this->_order, $_);
     }
 
     /**
@@ -135,9 +135,9 @@ class SearchBuilderOptions extends DataTables\Ext {
      * @return Options|callable Self if setting for chaining, callable if
      *   getting.
      */
-    public function render ( $_=null )
+    public function render ($_ = null)
     {
-        return $this->_getSet( $this->_renderer, $_ );
+        return $this->_getSet($this->_renderer, $_);
     }
 
     /**
@@ -147,9 +147,9 @@ class SearchBuilderOptions extends DataTables\Ext {
      * @param  null|string $_ String to set, null to get current value
      * @return Options|string Self if setting for chaining, string if getting.
      */
-    public function table ( $_=null )
+    public function table ($_ = null)
     {
-        return $this->_getSet( $this->_table, $_ );
+        return $this->_getSet($this->_table, $_);
     }
 
     /**
@@ -159,9 +159,9 @@ class SearchBuilderOptions extends DataTables\Ext {
      * @param  null|string $_ String to set, null to get current value
      * @return Options|string Self if setting for chaining, string if getting.
      */
-    public function value ( $_=null )
+    public function value ($_ = null)
     {
-        return $this->_getSet( $this->_value, $_ );
+        return $this->_getSet($this->_value, $_);
     }
 
     /**
@@ -172,9 +172,9 @@ class SearchBuilderOptions extends DataTables\Ext {
      * @return Options|callable Self if setting for chaining, callable if
      *   getting.
      */
-    public function where ( $_=null )
+    public function where ($_ = null)
     {
-        return $this->_getSet( $this->_where, $_ );
+        return $this->_getSet($this->_where, $_);
     }
 
     /**
@@ -187,12 +187,12 @@ class SearchBuilderOptions extends DataTables\Ext {
      * @param string $field2 the second field to get the information from
      * @return self
      */
-    public function leftJoin ( $table, $field1, $operator, $field2 )
+    public function leftJoin ($table, $field1, $operator, $field2)
     {
         $this->_leftJoin[] = array(
-            "table"    => $table,
-            "field1"   => $field1,
-            "field2"   => $field2,
+            "table" => $table,
+            "field1" => $field1,
+            "field2" => $field2,
             "operator" => $operator
         );
 
@@ -205,11 +205,11 @@ class SearchBuilderOptions extends DataTables\Ext {
      * @param string $query the query being built
      * @return self
      */
-    private function _get_where ( $query )
+    private function _get_where ($query)
     {
-        for ( $i=0 ; $i<count($this->_where) ; $i++ ) {
-            if ( is_callable( $this->_where[$i] ) ) {
-                $this->_where[$i]( $query );
+        for ($i = 0; $i < count($this->_where); $i++) {
+            if (is_callable($this->_where[$i])) {
+                $this->_where[$i]($query);
             }
             else {
                 $query->where(
@@ -233,10 +233,10 @@ class SearchBuilderOptions extends DataTables\Ext {
      * @return array        List of options
      * @internal
      */
-    public function exec ( $field, $editor, $http, $fields, $leftJoinIn )
+    public function exec ($field, $editor, $http, $fields, $leftJoinIn)
     {
         // If the value is not yet set then set the variable to be the field name
-        if ( $this->_value == null) {
+        if ($this->_value == null) {
             $value = $field->dbField();
         }
         else {
@@ -247,10 +247,10 @@ class SearchBuilderOptions extends DataTables\Ext {
 
         // If the table is not yet set then set the table variable to be the same as editor
         // This is not taking a value from the SearchBuilderOptions instance as the table should be defined in value/label. This throws up errors if not.
-        if($this->_table !== null) {
+        if ($this->_table !== null) {
             $table = $this->_table;
         }
-        else if(count($readTable) > 0) {
+        else if (count($readTable) > 0) {
             $table = $readTable;
         }
         else {
@@ -258,7 +258,7 @@ class SearchBuilderOptions extends DataTables\Ext {
         }
 
         // If the label value has not yet been set then just set it to be the same as value
-        if ( $this->_label == null ) {
+        if ($this->_label == null) {
             $label = $value;
         }
         else {
@@ -271,8 +271,8 @@ class SearchBuilderOptions extends DataTables\Ext {
         $formatter = $this->_renderer;
 
         // We need a default formatter if one isn't provided
-        if ( ! $formatter ) {
-            $formatter = function ( $str ) {
+        if (!$formatter) {
+            $formatter = function ($str) {
                 return $str;
             };
         }
@@ -282,14 +282,14 @@ class SearchBuilderOptions extends DataTables\Ext {
             $this->_leftJoin :
             array($this->_leftJoin);
 
-        foreach($leftJoinIn as $lj) {
+        foreach ($leftJoinIn as $lj) {
             $found = false;
-            foreach($leftJoin as $lje) {
-                if($lj['table'] === $lje['table']) {
+            foreach ($leftJoin as $lje) {
+                if ($lj['table'] === $lje['table']) {
                     $found = true;
                 }
             }
-            if(!$found) {
+            if (!$found) {
                 array_push($leftJoin, $lj);
             }
         }
@@ -297,12 +297,12 @@ class SearchBuilderOptions extends DataTables\Ext {
         // Set the query to get the current counts for viewTotal
         $query = $db
             ->query('select')
-            ->table( $table )
+            ->table($table)
             ->left_join($leftJoin);
 
-        if ( $field->apply('get') && $field->getValue() === null ) {
-            $query->get($value." as value", $label." as label");
-            $query->group_by( $value);
+        if ($field->apply('get') && $field->getValue() === null) {
+            $query->get($value . " as value", $label . " as label");
+            $query->group_by($value);
         }
 
         $res = $query
@@ -312,7 +312,7 @@ class SearchBuilderOptions extends DataTables\Ext {
         // Create the output array
         $out = array();
 
-        for( $j=0 ; $j<count($res) ; $j ++) {
+        for ($j = 0; $j < count($res); $j++) {
             $out[] = array(
             "value" => $res[$j]['value'],
             "label" => $res[$j]['label']
@@ -320,12 +320,12 @@ class SearchBuilderOptions extends DataTables\Ext {
         }
 
         // Only sort if there was no SQL order field
-        if ( ! $this->_order ) {
-            usort( $out, function ( $a, $b ) {
+        if (!$this->_order) {
+            usort($out, function ($a, $b) {
                 return is_numeric($a['label']) && is_numeric($b['label']) ?
-                    ($a['label']*1) - ($b['label']*1) :
-                    strcmp( $a['label'], $b['label'] );
-            } );
+                    ($a['label'] * 1) - ($b['label'] * 1) :
+                    strcmp($a['label'], $b['label']);
+            });
         }
 
         return $out;

@@ -29,12 +29,12 @@ class Ext {
      */
     public static function instantiate ()
     {
-        $rc = new \ReflectionClass( get_called_class() );
+        $rc = new \ReflectionClass(get_called_class());
         $args = func_get_args();
 
-        return count( $args ) === 0 ?
+        return count($args) === 0 ?
             $rc->newInstance() :
-            $rc->newInstanceArgs( $args );
+            $rc->newInstanceArgs($args);
     }
 
     /**
@@ -48,12 +48,12 @@ class Ext {
      */
     public static function inst ()
     {
-        $rc = new \ReflectionClass( get_called_class() );
+        $rc = new \ReflectionClass(get_called_class());
         $args = func_get_args();
 
-        return count( $args ) === 0 ?
+        return count($args) === 0 ?
             $rc->newInstance() :
-            $rc->newInstanceArgs( $args );
+            $rc->newInstanceArgs($args);
     }
 
     /**
@@ -70,18 +70,18 @@ class Ext {
      *  @return self|mixed Class instance if setting (allowing chaining), or
      *    the value requested if getting.
      */
-    protected function _getSet( &$prop, $val, $array=false )
+    protected function _getSet(&$prop, $val, $array = false)
     {
         // Get
-        if ( $val === null ) {
+        if ($val === null) {
             return $prop;
         }
 
         // Set
-        if ( $array ) {
+        if ($array) {
             // Property is an array, merge or add to array
-            is_array( $val ) ?
-                $prop = array_merge( $prop, $val ) :
+            is_array($val) ?
+                $prop = array_merge($prop, $val) :
                 $prop[] = $val;
         }
         else {
@@ -100,27 +100,27 @@ class Ext {
      * @return bool       true if present, false otherwise
      * @private
      */
-    protected function _propExists ( $name, $data )
+    protected function _propExists ($name, $data)
     {
-        if ( strpos($name, '.') === false ) {
-            return isset( $data[ $name ] );
+        if (strpos($name, '.') === false) {
+            return isset($data[$name]);
         }
 
-        $names = explode( '.', $name );
+        $names = explode('.', $name);
         $inner = $data;
 
-        for ( $i=0 ; $i<count($names)-1 ; $i++ ) {
-            if ( ! isset( $inner[ $names[$i] ] ) ) {
+        for ($i = 0; $i < count($names) - 1; $i++) {
+            if (!isset($inner[$names[$i]])) {
                 return false;
             }
 
-            $inner = $inner[ $names[$i] ];
+            $inner = $inner[$names[$i]];
         }
 
-        if ( isset( $names[count($names)-1] ) ) {
-            $idx = $names[count($names)-1];
+        if (isset($names[count($names) - 1])) {
+            $idx = $names[count($names) - 1];
 
-            return isset( $inner[ $idx ] );
+            return isset($inner[$idx]);
         }
 
         return false;
@@ -137,30 +137,30 @@ class Ext {
      * @return mixed         The read value, or null if no value found.
      * @private
      */
-    protected function _readProp ( $name, $data )
+    protected function _readProp ($name, $data)
     {
-        if ( strpos($name, '.') === false ) {
-            return isset( $data[ $name ] ) ?
-                $data[ $name ] :
+        if (strpos($name, '.') === false) {
+            return isset($data[$name]) ?
+                $data[$name] :
                 null;
         }
 
-        $names = explode( '.', $name );
+        $names = explode('.', $name);
         $inner = $data;
 
-        for ( $i=0 ; $i<count($names)-1 ; $i++ ) {
-            if ( ! isset( $inner[ $names[$i] ] ) ) {
+        for ($i = 0; $i < count($names) - 1; $i++) {
+            if (!isset($inner[$names[$i]])) {
                 return null;
             }
 
-            $inner = $inner[ $names[$i] ];
+            $inner = $inner[$names[$i]];
         }
 
-        if ( isset( $names[count($names)-1] ) ) {
-            $idx = $names[count($names)-1];
+        if (isset($names[count($names) - 1])) {
+            $idx = $names[count($names) - 1];
 
-            return isset( $inner[ $idx ] ) ?
-                $inner[ $idx ] :
+            return isset($inner[$idx]) ?
+                $inner[$idx] :
                 null;
         }
 
@@ -181,39 +181,39 @@ class Ext {
      * @throws \Exception Information about duplicate properties
      * @private
      */
-    protected function _writeProp( &$out, $name, $value )
+    protected function _writeProp(&$out, $name, $value)
     {
-        if ( strpos($name, '.') === false ) {
-            $out[ $name ] = $value;
+        if (strpos($name, '.') === false) {
+            $out[$name] = $value;
             return;
         }
 
-        $names = explode( '.', $name );
+        $names = explode('.', $name);
         $inner = &$out;
-        for ( $i=0 ; $i<count($names)-1 ; $i++ ) {
+        for ($i = 0; $i < count($names) - 1; $i++) {
             $loopName = $names[$i];
 
-            if ( ! isset( $inner[ $loopName ] ) ) {
-                $inner[ $loopName ] = array();
+            if (!isset($inner[$loopName])) {
+                $inner[$loopName] = array();
             }
-            else if ( ! is_array( $inner[ $loopName ] ) ) {
+            else if (!is_array($inner[$loopName])) {
                 throw new \Exception(
-                    'A property with the name `'.$name.'` already exists. This '.
-                    'can occur if you have properties which share a prefix - '.
+                    'A property with the name `' . $name . '` already exists. This ' .
+                    'can occur if you have properties which share a prefix - ' .
                     'for example `name` and `name.first`.'
                 );
             }
 
-            $inner = &$inner[ $loopName ];
+            $inner = &$inner[$loopName];
         }
 
-        if ( isset( $inner[ $names[count($names)-1] ] ) ) {
+        if (isset($inner[$names[count($names) - 1]])) {
             throw new \Exception(
-                'Duplicate field detected - a field with the name `'.$name.'` '.
+                'Duplicate field detected - a field with the name `' . $name . '` ' .
                 'already exists.'
             );
         }
 
-        $inner[ $names[count($names)-1] ] = $value;
+        $inner[$names[count($names) - 1]] = $value;
     }
 }

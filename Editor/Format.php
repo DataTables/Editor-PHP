@@ -59,15 +59,15 @@ class Format {
      *   @param string $opts Format to convert to using PHP date() options.
      *   @return string Formatted date or empty string on error.
      */
-    public static function dateSqlToFormat( $format ) {
-        return function ( $val, $data ) use ( $format ) {
-            if ( $val === null || $val === '' ) {
+    public static function dateSqlToFormat($format) {
+        return function ($val, $data) use ($format) {
+            if ($val === null || $val === '') {
                 return null;
             }
 
-            $date = new \DateTime( $val );
+            $date = new \DateTime($val);
 
-            return date_format( $date, $format );
+            return date_format($date, $format);
         };
     }
 
@@ -85,23 +85,23 @@ class Format {
      *   @param string $opts Format to convert from using PHP date() options.
      *   @return string Formatted date or null on error.
      */
-    public static function dateFormatToSql( $format ) {
-        return function ( $val, $data ) use ( $format ) {
-            if ( $val === null || $val === '' ) {
+    public static function dateFormatToSql($format) {
+        return function ($val, $data) use ($format) {
+            if ($val === null || $val === '') {
                 return null;
             }
 
             // Note that this assumes the date is in the correct format (should be
             // checked by validation before being used here!)
-            if ( substr($format, 0, 1) !== '!' ) {
-                $format = '!'.$format;
+            if (substr($format, 0, 1) !== '!') {
+                $format = '!' . $format;
             }
             $date = date_create_from_format($format, $val);
 
             // Invalid dates or empty string are replaced with null. Use the
             // validation to ensure the date given is valid if you don't want this!
-            if ( $date ) {
-                return date_format( $date, 'Y-m-d' );
+            if ($date) {
+                return date_format($date, 'Y-m-d');
             }
             return null;
         };
@@ -121,20 +121,20 @@ class Format {
      *     formats to convert from and to
      *   @return string Formatted date or null on error.
      */
-    public static function datetime( $from, $to ) {
-        return function ( $val, $data ) use ( $from, $to ) {
-            if ( $val === null || $val === '' ) {
+    public static function datetime($from, $to) {
+        return function ($val, $data) use ($from, $to) {
+            if ($val === null || $val === '') {
                 return null;
             }
 
-            if ( substr($from, 0, 1) !== '!' ) {
-                $from = '!'.$from;
+            if (substr($from, 0, 1) !== '!') {
+                $from = '!' . $from;
             }
-            $date = date_create_from_format( $from, $val );
+            $date = date_create_from_format($from, $val);
 
             // Allow empty strings or invalid dates
-            if ( $date ) {
-                return date_format( $date, $to );
+            if ($date) {
+                return date_format($date, $to);
             }
 
             return null;
@@ -149,8 +149,8 @@ class Format {
      *   @param string $opts Field delimiter
      *   @return string Formatted value or null on error.
      */
-    public static function explode( $char='|' ) {
-        return function ( $val, $data ) use ( $char ) {
+    public static function explode($char = '|') {
+        return function ($val, $data) use ($char) {
             if ($val === null) {
                 $val = '';
             }
@@ -168,8 +168,8 @@ class Format {
      *   @param string $opts Field delimiter
      *   @return string Formatted value or null on error.
      */
-    public static function implode( $char='|' ) {
-        return function ( $val, $data ) use ( $char ) {
+    public static function implode($char = '|') {
+        return function ($val, $data) use ($char) {
             return implode($char, $val);
         };
     }
@@ -187,7 +187,7 @@ class Format {
      */
     public static function nullEmpty () {
         // Legacy function - use `ifEmpty` now
-        return self::ifEmpty( null );
+        return self::ifEmpty(null);
     }
 
 
@@ -200,8 +200,8 @@ class Format {
      *   @param string $opts Empty value
      *   @return string Formatted value or null on error.
      */
-    public static function ifEmpty ( $ret ) {
-        return function ( $val, $data ) use ( $ret ) {
+    public static function ifEmpty ($ret) {
+        return function ($val, $data) use ($ret) {
             return $val === '' ?
                 $ret :
                 $val;
@@ -219,9 +219,9 @@ class Format {
      *   @param string $opts Decimal place character (default ',')
      *   @return string Formatted value or null on error.
      */
-    public static function fromDecimalChar ( $char=',' ) {
-        return function ( $val, $data ) use ( $char ) {
-            return str_replace( $char, '.', $val );
+    public static function fromDecimalChar ($char = ',') {
+        return function ($val, $data) use ($char) {
+            return str_replace($char, '.', $val);
         };
     }
 
@@ -234,9 +234,9 @@ class Format {
      *   @param string $opts Decimal place character (default ',')
      *   @return string Formatted value or null on error.
      */
-    public static function toDecimalChar ( $char=',' ) {
-        return function ( $val, $data ) use ( $char ) {
-            return str_replace( '.', $char, $val );
+    public static function toDecimalChar ($char = ',') {
+        return function ($val, $data) use ($char) {
+            return str_replace('.', $char, $val);
         };
     }
 
@@ -251,89 +251,89 @@ class Format {
     /**
      * @internal
      */
-    public static function date_sql_to_format ( $opts ) {
-        return self::dateSqlToFormat( $opts );
+    public static function date_sql_to_format ($opts) {
+        return self::dateSqlToFormat($opts);
     }
 
     /**
      * @internal
      */
-    public static function date_sql_to_formatLegacy ( $opts ) {
-        return self::dateSqlToFormat( $opts );
+    public static function date_sql_to_formatLegacy ($opts) {
+        return self::dateSqlToFormat($opts);
     }
 
     /**
      * @internal
      */
-    public static function date_format_to_sql ( $opts ) {
-        return self::dateFormatToSql( $opts );
+    public static function date_format_to_sql ($opts) {
+        return self::dateFormatToSql($opts);
     }
 
     /**
      * @internal
      */
-    public static function date_format_to_sqlLegacy ( $opts ) {
-        return self::dateFormatToSql( $opts );
+    public static function date_format_to_sqlLegacy ($opts) {
+        return self::dateFormatToSql($opts);
     }
 
     /**
      * @internal
      */
-    public static function datetimeLegacy ( $opts ) {
-        return self::datetime( $opts['from'], $opts['to'] );
+    public static function datetimeLegacy ($opts) {
+        return self::datetime($opts['from'], $opts['to']);
     }
 
     /**
      * @internal
      */
-    public static function explodeLegacy ( $opts ) {
-        if ( $opts === null ) {
+    public static function explodeLegacy ($opts) {
+        if ($opts === null) {
             $opts = '|';
         }
-        return self::explode( $opts );
+        return self::explode($opts);
     }
 
     /**
      * @internal
      */
-    public static function implodeLegacy ( $opts ) {
-        if ( $opts === null ) {
+    public static function implodeLegacy ($opts) {
+        if ($opts === null) {
             $opts = '|';
         }
-        return self::implode( $opts );
+        return self::implode($opts);
     }
 
     /**
      * @internal
      */
-    public static function nullEmptyLegacy ( $opts ) {
-        return self::nullEmpty( null );
+    public static function nullEmptyLegacy ($opts) {
+        return self::nullEmpty(null);
     }
 
     /**
      * @internal
      */
-    public static function ifEmptyLegacy ( $opts ) {
-        return self::ifEmpty( $opts );
+    public static function ifEmptyLegacy ($opts) {
+        return self::ifEmpty($opts);
     }
 
     /**
      * @internal
      */
-    public static function fromDecimalCharLegacy ( $opts ) {
-        if ( $opts === null ) {
+    public static function fromDecimalCharLegacy ($opts) {
+        if ($opts === null) {
             $opts = ',';
         }
-        return self::fromDecimalChar( $opts );
+        return self::fromDecimalChar($opts);
     }
 
     /**
      * @internal
      */
-    public static function toDecimalCharLegacy ( $opts ) {
-        if ( $opts === null ) {
+    public static function toDecimalCharLegacy ($opts) {
+        if ($opts === null) {
             $opts = ',';
         }
-        return self::toDecimalChar( $opts );
+        return self::toDecimalChar($opts);
     }
 }

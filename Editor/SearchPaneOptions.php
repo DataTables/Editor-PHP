@@ -98,13 +98,13 @@ class SearchPaneOptions extends DataTables\Ext {
      * @return Options|string[] Self if setting for chaining, array of values if
      *   getting.
      */
-    public function label ( $_=null )
+    public function label ($_ = null)
     {
-        if ( $_ === null ) {
+        if ($_ === null) {
             return $this;
         }
-        else if ( is_string($_) ) {
-            $this->_label = array( $_ );
+        else if (is_string($_)) {
+            $this->_label = array($_);
         }
         else {
             $this->_label = $_;
@@ -121,9 +121,9 @@ class SearchPaneOptions extends DataTables\Ext {
      * @param  null|string $_ String to set, null to get current value
      * @return Options|string Self if setting for chaining, string if getting.
      */
-    public function order ( $_=null )
+    public function order ($_ = null)
     {
-        return $this->_getSet( $this->_order, $_ );
+        return $this->_getSet($this->_order, $_);
     }
 
     /**
@@ -135,9 +135,9 @@ class SearchPaneOptions extends DataTables\Ext {
      * @return Options|callable Self if setting for chaining, callable if
      *   getting.
      */
-    public function render ( $_=null )
+    public function render ($_ = null)
     {
-        return $this->_getSet( $this->_renderer, $_ );
+        return $this->_getSet($this->_renderer, $_);
     }
 
     /**
@@ -147,9 +147,9 @@ class SearchPaneOptions extends DataTables\Ext {
      * @param  null|string $_ String to set, null to get current value
      * @return Options|string Self if setting for chaining, string if getting.
      */
-    public function table ( $_=null )
+    public function table ($_ = null)
     {
-        return $this->_getSet( $this->_table, $_ );
+        return $this->_getSet($this->_table, $_);
     }
 
     /**
@@ -159,9 +159,9 @@ class SearchPaneOptions extends DataTables\Ext {
      * @param  null|string $_ String to set, null to get current value
      * @return Options|string Self if setting for chaining, string if getting.
      */
-    public function value ( $_=null )
+    public function value ($_ = null)
     {
-        return $this->_getSet( $this->_value, $_ );
+        return $this->_getSet($this->_value, $_);
     }
 
     /**
@@ -172,9 +172,9 @@ class SearchPaneOptions extends DataTables\Ext {
      * @return Options|callable Self if setting for chaining, callable if
      *   getting.
      */
-    public function where ( $_=null )
+    public function where ($_ = null)
     {
-        return $this->_getSet( $this->_where, $_ );
+        return $this->_getSet($this->_where, $_);
     }
 
     /**
@@ -187,12 +187,12 @@ class SearchPaneOptions extends DataTables\Ext {
      * @param string $field2 the second field to get the information from
      * @return self
      */
-    public function leftJoin ( $table, $field1, $operator, $field2 )
+    public function leftJoin ($table, $field1, $operator, $field2)
     {
         $this->_leftJoin[] = array(
-            "table"    => $table,
-            "field1"   => $field1,
-            "field2"   => $field2,
+            "table" => $table,
+            "field1" => $field1,
+            "field2" => $field2,
             "operator" => $operator
         );
 
@@ -205,11 +205,11 @@ class SearchPaneOptions extends DataTables\Ext {
      * @param string $query the query being built
      * @return self
      */
-    private function _get_where ( $query )
+    private function _get_where ($query)
     {
-        for ( $i=0 ; $i<count($this->_where) ; $i++ ) {
-            if ( is_callable( $this->_where[$i] ) ) {
-                $this->_where[$i]( $query );
+        for ($i = 0; $i < count($this->_where); $i++) {
+            if (is_callable($this->_where[$i])) {
+                $this->_where[$i]($query);
             }
             else {
                 $query->where(
@@ -233,7 +233,7 @@ class SearchPaneOptions extends DataTables\Ext {
      * @return array        List of options
      * @internal
      */
-    public function exec ( $field, $editor, $http, $fields, $leftJoinIn )
+    public function exec ($field, $editor, $http, $fields, $leftJoinIn)
     {
         $db = $editor->db();
         $readTable = $editor->readTable();
@@ -257,10 +257,10 @@ class SearchPaneOptions extends DataTables\Ext {
 
         // If the table is not yet set then set the table variable to be the same as editor
         // This is not taking a value from the SearchPaneOptions instance as the table should be defined in value/label. This throws up errors if not.
-        if($this->_table !== null) {
+        if ($this->_table !== null) {
             $table = $this->_table;
         }
-        else if(count($readTable) > 0) {
+        else if (count($readTable) > 0) {
             $table = $readTable;
         }
         else {
@@ -274,7 +274,7 @@ class SearchPaneOptions extends DataTables\Ext {
 
         $formatter = $this->_renderer
             ? $this->_renderer
-            : function ( $str ) {
+            : function ($str) {
                 return $str;
             };
 
@@ -283,16 +283,16 @@ class SearchPaneOptions extends DataTables\Ext {
             $this->_leftJoin :
             array($this->_leftJoin);
 
-        foreach($leftJoinIn as $lj) {
+        foreach ($leftJoinIn as $lj) {
             $found = false;
 
-            foreach($leftJoin as $lje) {
-                if($lj['table'] === $lje['table']) {
+            foreach ($leftJoin as $lje) {
+                if ($lj['table'] === $lje['table']) {
                     $found = true;
                 }
             }
 
-            if(!$found) {
+            if (!$found) {
                 array_push($leftJoin, $lj);
             }
         }
@@ -301,35 +301,35 @@ class SearchPaneOptions extends DataTables\Ext {
         $q = $db
             ->query('select')
             ->distinct(true)
-            ->table( $table )
-            ->get( $label." as label", $value." as value" )
+            ->table($table)
+            ->get($label . " as label", $value . " as value")
             ->left_join($leftJoin)
-            ->group_by( $value )
-            ->where( $this->_where );
+            ->group_by($value)
+            ->where($this->_where);
 
         // If not cascading, then the total and count must be the same
         if ($viewTotal) {
             $q->get("COUNT(*) as total");
         }
 
-        if ( $this->_order ) {
+        if ($this->_order) {
             // For cases where we are ordering by a field which isn't included in the list
             // of fields to display, we need to add the ordering field, due to the
             // select distinct.
-            $orderFields = explode( ',', $this->_order );
+            $orderFields = explode(',', $this->_order);
 
-            for ( $i=0, $ien=count($orderFields) ; $i<$ien ; $i++ ) {
-                $orderField = strtolower( $orderFields[$i] );
-                $orderField = str_replace( ' asc', '', $orderField );
-                $orderField = str_replace( ' desc', '', $orderField );
-                $orderField = trim( $orderField );
+            for ($i = 0, $ien = count($orderFields); $i < $ien; $i++) {
+                $orderField = strtolower($orderFields[$i]);
+                $orderField = str_replace(' asc', '', $orderField);
+                $orderField = str_replace(' desc', '', $orderField);
+                $orderField = trim($orderField);
 
-                if ( ! in_array( $orderField, $fields ) ) {
-                    $q->get( $orderField );
+                if (!in_array($orderField, $fields)) {
+                    $q->get($orderField);
                 }
             }
 
-            $q->order( $this->_order );
+            $q->order($this->_order);
         }
 
         $rows = $q
@@ -341,7 +341,7 @@ class SearchPaneOptions extends DataTables\Ext {
             $values = array_column($rows, 'value');
             $selected = $http['searchPanes'][$field->name()];
 
-            for ($i=0 ; $i<count($selected) ; $i++) {
+            for ($i = 0; $i < count($selected); $i++) {
                 $idx = array_search($selected[$i], $values);
 
                 if ($idx === false) {
@@ -358,8 +358,8 @@ class SearchPaneOptions extends DataTables\Ext {
                 ->table($table)
                 ->left_join($leftJoin);
 
-            if ( $field->apply('get') && $field->getValue() === null ) {
-                $query->get($value." as value");
+            if ($field->apply('get') && $field->getValue() === null) {
+                $query->get($value . " as value");
                 $query->group_by($value);
 
                 // We viewTotal is enabled, we need to do a count to get the number of records,
@@ -389,8 +389,8 @@ class SearchPaneOptions extends DataTables\Ext {
                 }
 
                 if ($add) {
-                    $query->where( function ($q) use ($fieldOpt, $http, $fieldName) {
-                        for($j=0, $jen=count($http['searchPanes'][$fieldName]); $j < $jen ; $j++) {
+                    $query->where(function ($q) use ($fieldOpt, $http, $fieldName) {
+                        for ($j = 0, $jen = count($http['searchPanes'][$fieldName]); $j < $jen; $j++) {
                             $q->or_where(
                                 $fieldOpt->dbField(),
                                 isset($http['searchPanes_null'][$fieldName][$j])
@@ -414,7 +414,7 @@ class SearchPaneOptions extends DataTables\Ext {
 
         $out = array();
 
-        for ( $i=0, $ien=count($rows) ; $i<$ien ; $i++ ) {
+        for ($i = 0, $ien = count($rows); $i < $ien; $i++) {
             $row = $rows[$i];
             $value = $row['value'];
             $total = isset($row['total']) ? $row['total'] : null;
@@ -441,8 +441,8 @@ class SearchPaneOptions extends DataTables\Ext {
         }
 
         // Only sort if there was no SQL order field
-        if ( ! $this->_order ) {
-            usort( $out, function ( $a, $b ) {
+        if (!$this->_order) {
+            usort($out, function ($a, $b) {
                 $aLabel = $a['label'];
                 $bLabel = $b['label'];
 
@@ -455,9 +455,9 @@ class SearchPaneOptions extends DataTables\Ext {
                 }
 
                 return is_numeric($aLabel) && is_numeric($bLabel) ?
-                    ($aLabel*1) - ($bLabel*1) :
-                    strcmp( $aLabel, $bLabel );
-            } );
+                    ($aLabel * 1) - ($bLabel * 1) :
+                    strcmp($aLabel, $bLabel);
+            });
         }
 
         return $out;

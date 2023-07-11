@@ -84,36 +84,36 @@ class Upload extends DataTables\Ext {
      * system, but there are cases where it can be useful to store the file in
      * the database.
      */
-    const DB_CONTENT      = 'editor-content';
+    const DB_CONTENT = 'editor-content';
 
     /** Database value option (`Db()`) - Content type */
     const DB_CONTENT_TYPE = 'editor-contentType';
 
     /** Database value option (`Db()`) - File extension */
-    const DB_EXTN         = 'editor-extn';
+    const DB_EXTN = 'editor-extn';
 
     /** Database value option (`Db()`) - File name (with extension) */
-    const DB_FILE_NAME    = 'editor-fileName';
+    const DB_FILE_NAME = 'editor-fileName';
 
     /** Database value option (`Db()`) - File size (bytes) */
-    const DB_FILE_SIZE    = 'editor-fileSize';
+    const DB_FILE_SIZE = 'editor-fileSize';
 
     /** Database value option (`Db()`) - MIME type */
-    const DB_MIME_TYPE    = 'editor-mimeType';
+    const DB_MIME_TYPE = 'editor-mimeType';
 
     /** Database value option (`Db()`) - Full system path to the file */
-    const DB_SYSTEM_PATH  = 'editor-systemPath';
+    const DB_SYSTEM_PATH = 'editor-systemPath';
 
     /** Database value option (`Db()`) - HTTP path to the file. This is derived
      * from the system path by removing `$_SERVER['DOCUMENT_ROOT']`. If your
      * images live outside of the document root a custom value would be to be
      * used.
      */
-    const DB_WEB_PATH     = 'editor-webPath';
+    const DB_WEB_PATH = 'editor-webPath';
 
     /** Read from the database - don't write to it
      */
-    const DB_READ_ONLY    = 'editor-readOnly';
+    const DB_READ_ONLY = 'editor-readOnly';
 
 
     /*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
@@ -144,10 +144,10 @@ class Upload extends DataTables\Ext {
      * @param string|callable $action Action to take on upload - this is applied
      *     directly to {@see Upload->action()}.
      */
-    function __construct( $action=null )
+    function __construct($action = null)
     {
-        if ( $action ) {
-            $this->action( $action );
+        if ($action) {
+            $this->action($action);
         }
     }
 
@@ -174,7 +174,7 @@ class Upload extends DataTables\Ext {
      * @param  string|callable $action Action to take - see description above.
      * @return self Current instance, used for chaining
      */
-    public function action ( $action )
+    public function action ($action)
     {
         $this->_action = $action;
 
@@ -196,7 +196,7 @@ class Upload extends DataTables\Ext {
      * @return self Current instance, used for chaining
      * @deprecated Use Validate::fileExtensions
      */
-    public function allowedExtensions ( $extn, $error="This file type cannot be uploaded" )
+    public function allowedExtensions ($extn, $error = "This file type cannot be uploaded")
     {
         $this->_extns = $extn;
         $this->_extnError = $error;
@@ -226,7 +226,7 @@ class Upload extends DataTables\Ext {
      *     database row for the file that is read.
      * @return self Current instance, used for chaining
      */
-    public function db ( $table, $pkey, $fields, $format=null )
+    public function db ($table, $pkey, $fields, $format = null)
     {
         $this->_dbTable = $table;
         $this->_dbPKey = $pkey;
@@ -248,10 +248,10 @@ class Upload extends DataTables\Ext {
      *     will result in the records being retained.
      * @return self Current instance, used for chaining
      */
-    public function dbClean( $tableField, $callback=null )
+    public function dbClean($tableField, $callback = null)
     {
         // Argument swapping
-        if ( $callback === null ) {
+        if ($callback === null) {
             $callback = $tableField;
             $tableField = null;
         }
@@ -267,7 +267,7 @@ class Upload extends DataTables\Ext {
      * Set the permissions on the file after it has been uploaded using
      * chmod.
      */
-    public function mode( $m ) {
+    public function mode($m) {
         $this->_mode = $m;
 
         return $this;
@@ -284,7 +284,7 @@ class Upload extends DataTables\Ext {
      *     (validation failed and error message), or `null` (validation passed).
      * @return self Current instance, used for chaining
      */
-    public function validator ( $fn )
+    public function validator ($fn)
     {
         $this->_validators[] = $fn;
 
@@ -301,7 +301,7 @@ class Upload extends DataTables\Ext {
      * @param  callable $fn Where function.
      * @return self Current instance, used for chaining
      */
-    public function where ( $fn )
+    public function where ($fn)
     {
         $this->_where[] = $fn;
 
@@ -321,41 +321,41 @@ class Upload extends DataTables\Ext {
      * @return array Database information
      * @internal
      */
-    public function data ( $db, $ids=null )
+    public function data ($db, $ids = null)
     {
-        if ( ! $this->_dbTable ) {
+        if (!$this->_dbTable) {
             return null;
         }
 
         // Select the details requested, for the columns requested
         $q = $db
-            ->query( 'select' )
-            ->table( $this->_dbTable )
-            ->get( $this->_dbPKey );
+            ->query('select')
+            ->table($this->_dbTable)
+            ->get($this->_dbPKey);
 
-        foreach ( $this->_dbFields as $column => $prop ) {
-            if ( $prop !== self::DB_CONTENT ) {
-                $q->get( $column );
+        foreach ($this->_dbFields as $column => $prop) {
+            if ($prop !== self::DB_CONTENT) {
+                $q->get($column);
             }
         }
 
-        if ( $ids !== null ) {
-            $q->where_in( $this->_dbPKey, $ids );
+        if ($ids !== null) {
+            $q->where_in($this->_dbPKey, $ids);
         }
 
-        for ( $i=0, $ien=count($this->_where) ; $i<$ien ; $i++ ) {
-            $q->where( $this->_where[$i] );
+        for ($i = 0, $ien = count($this->_where); $i < $ien; $i++) {
+            $q->where($this->_where[$i]);
         }
 
         $result = $q->exec()->fetchAll();
         $out = array();
 
-        for ( $i=0, $ien=count($result) ; $i<$ien ; $i++ ) {
+        for ($i = 0, $ien = count($result); $i < $ien; $i++) {
             if ($this->_dbFormat) {
-                $this->_dbFormat( $result[$i] );
+                $this->_dbFormat($result[$i]);
             }
 
-            $out[ $result[$i][ $this->_dbPKey ] ] = $result[$i];
+            $out[$result[$i][$this->_dbPKey]] = $result[$i];
         }
 
         return $out;
@@ -368,12 +368,12 @@ class Upload extends DataTables\Ext {
      * @param  Field $field   Host field
      * @internal
      */
-    public function dbCleanExec ( $editor, $field )
+    public function dbCleanExec ($editor, $field)
     {
         // Database and file system clean up BEFORE adding the new file to
         // the db, otherwise it will be removed immediately
         $tables = $editor->table();
-        $this->_dbClean( $editor->db(), $tables[0], $field->dbField() );
+        $this->_dbClean($editor->db(), $tables[0], $field->dbField());
     }
 
 
@@ -396,51 +396,51 @@ class Upload extends DataTables\Ext {
      * @return int Primary key value
      * @internal
      */
-    public function exec ( $editor )
+    public function exec ($editor)
     {
         $id = null;
         $upload = $_FILES['upload'];
 
         // Validation - PHP standard validation
-        if ( $upload['error'] !== UPLOAD_ERR_OK ) {
-            if ( $upload['error'] === UPLOAD_ERR_INI_SIZE ) {
+        if ($upload['error'] !== UPLOAD_ERR_OK) {
+            if ($upload['error'] === UPLOAD_ERR_INI_SIZE) {
                 $this->_error = "File exceeds maximum file upload size";
             }
             else {
-                $this->_error = "There was an error uploading the file (".$upload['error'].")";
+                $this->_error = "There was an error uploading the file (" . $upload['error'] . ")";
             }
             return false;
         }
 
         // Validation - acceptable file extensions
-        if ( is_array( $this->_extns ) ) {
+        if (is_array($this->_extns)) {
             $extn = pathinfo($upload['name'], PATHINFO_EXTENSION);
 
-            if ( in_array( strtolower($extn), array_map( 'strtolower', $this->_extns ) ) === false ) {
+            if (in_array(strtolower($extn), array_map('strtolower', $this->_extns)) === false) {
                 $this->_error = $this->_extnError;
                 return false;
             }
         }
 
         // Validation - custom callback
-        for ( $i=0, $ien=count($this->_validators) ; $i<$ien ; $i++ ) {
-            $res = $this->_validators[$i]( $upload );
+        for ($i = 0, $ien = count($this->_validators); $i < $ien; $i++) {
+            $res = $this->_validators[$i]($upload);
 
-            if ( is_string( $res ) ) {
+            if (is_string($res)) {
                 $this->_error = $res;
                 return false;
             }
         }
 
         // Database
-        if ( $this->_dbTable ) {
-            foreach ( $this->_dbFields as $column => $prop ) {
+        if ($this->_dbTable) {
+            foreach ($this->_dbFields as $column => $prop) {
                 // We can't know what the path is, if it has moved into place
                 // by an external function - throw an error if this does happen
-                if ( ! is_string( $this->_action ) &&
-                        ($prop === self::DB_SYSTEM_PATH || $prop === self::DB_WEB_PATH )
+                if (!is_string($this->_action) &&
+                        ($prop === self::DB_SYSTEM_PATH || $prop === self::DB_WEB_PATH)
                 ) {
-                    $this->_error = "Cannot set path information in database ".
+                    $this->_error = "Cannot set path information in database " .
                         "if a custom method is used to save the file.";
 
                     return false;
@@ -448,11 +448,11 @@ class Upload extends DataTables\Ext {
             }
 
             // Commit to the database
-            $id = $this->_dbExec( $upload, $editor->db() );
+            $id = $this->_dbExec($upload, $editor->db());
         }
 
         // Perform file system actions
-        return $this->_actionExec( $upload, $id );
+        return $this->_actionExec($upload, $id);
     }
 
 
@@ -492,20 +492,20 @@ class Upload extends DataTables\Ext {
      * @param  int   $id     Primary key value
      * @return int   File    identifier - typically the primary key
      */
-    private function _actionExec ( $upload, $id )
+    private function _actionExec ($upload, $id)
     {
-        if ( ! is_string( $this->_action ) ) {
+        if (!is_string($this->_action)) {
             // Custom function
             $action = $this->_action;
-            return $action( $upload, $id );
+            return $action($upload, $id);
         }
 
         // Default action - move the file to the location specified by the
         // action string
-        $to  = $this->_path( $upload['name'], $id );
-        $res = rename( $upload['tmp_name'], $to );
+        $to = $this->_path($upload['name'], $id);
+        $res = rename($upload['tmp_name'], $to);
 
-        if ( $res === false ) {
+        if ($res === false) {
             $this->_error = "An error occurred while moving the uploaded file.";
             return false;
         }
@@ -528,27 +528,27 @@ class Upload extends DataTables\Ext {
      * @param  string $editorTable Editor Editor instance table name
      * @param  string $fieldName   Host field's name
      */
-    private function _dbClean ( $db, $editorTable, $fieldName )
+    private function _dbClean ($db, $editorTable, $fieldName)
     {
         $callback = $this->_dbCleanCallback;
 
-        if ( ! $this->_dbTable || ! $callback ) {
+        if (!$this->_dbTable || !$callback) {
             return;
         }
 
         // If there is a table / field that we should use to check if the value
         // is in use, then use that. Otherwise we'll try to use the information
         // from the Editor / Field instance.
-        if ( $this->_dbCleanTableField ) {
+        if ($this->_dbCleanTableField) {
             $fieldName = $this->_dbCleanTableField;
         }
 
         $a = explode('.', $fieldName);
-        if ( count($a) === 1 ) {
+        if (count($a) === 1) {
             $table = $editorTable;
             $field = $a[0];
         }
-        else if ( count($a) === 2 ) {
+        else if (count($a) === 2) {
             $table = $a[0];
             $field = $a[1];
         }
@@ -559,36 +559,36 @@ class Upload extends DataTables\Ext {
 
         // Select the details requested, for the columns requested
         $q = $db
-            ->query( 'select' )
-            ->table( $this->_dbTable )
-            ->get( $this->_dbPKey );
+            ->query('select')
+            ->table($this->_dbTable)
+            ->get($this->_dbPKey);
 
-        foreach ( $this->_dbFields as $column => $prop ) {
-            if ( $prop !== self::DB_CONTENT ) {
-                $q->get( $column );
+        foreach ($this->_dbFields as $column => $prop) {
+            if ($prop !== self::DB_CONTENT) {
+                $q->get($column);
             }
         }
 
-        $q->where( $this->_dbPKey, '(SELECT '.$field.' FROM '.$table.'  WHERE '.$field.' IS NOT NULL)', 'NOT IN', false );
+        $q->where($this->_dbPKey, '(SELECT ' . $field . ' FROM ' . $table . '  WHERE ' . $field . ' IS NOT NULL)', 'NOT IN', false);
 
         $data = $q->exec()->fetchAll();
 
-        if ( count( $data ) === 0 ) {
+        if (count($data) === 0) {
             return;
         }
 
-        $result = $callback( $data );
+        $result = $callback($data);
 
         // Delete the selected rows, iff the developer says to do so with the
         // returned value (i.e. acknowledge that the files have be removed from
         // the file system)
-        if ( $result === true ) {
+        if ($result === true) {
             $qDelete = $db
-                ->query( 'delete' )
-                ->table( $this->_dbTable );
+                ->query('delete')
+                ->table($this->_dbTable);
 
-            for ( $i=0, $ien=count( $data ) ; $i<$ien ; $i++ ) {
-                $qDelete->or_where( $this->_dbPKey, $data[$i][ $this->_dbPKey ] );
+            for ($i = 0, $ien = count($data); $i < $ien; $i++) {
+                $qDelete->or_where($this->_dbPKey, $data[$i][$this->_dbPKey]);
             }
 
             $qDelete->exec();
@@ -602,24 +602,24 @@ class Upload extends DataTables\Ext {
      * @param  \DataTables\Database $db     Database instance
      * @return int Primary key value for the newly uploaded file
      */
-    private function _dbExec ( $upload, $db )
+    private function _dbExec ($upload, $db)
     {
         $pathFields = array();
         $insertedId = null;
 
         // Insert the details requested, for the columns requested
         $q = $db
-            ->query( 'insert' )
-            ->table( $this->_dbTable )
-            ->pkey( $this->_dbPKey );
+            ->query('insert')
+            ->table($this->_dbTable)
+            ->pkey($this->_dbPKey);
 
-        foreach ( $this->_dbFields as $column => $prop ) {
-            switch ( $prop ) {
+        foreach ($this->_dbFields as $column => $prop) {
+            switch ($prop) {
                 case self::DB_READ_ONLY:
                     break;
 
                 case self::DB_CONTENT:
-                    $q->set( $column, file_get_contents($upload['tmp_name']) );
+                    $q->set($column, file_get_contents($upload['tmp_name']));
                     break;
 
                 case self::DB_CONTENT_TYPE:
@@ -628,52 +628,52 @@ class Upload extends DataTables\Ext {
                     $mime = finfo_file($finfo, $upload['tmp_name']);
                     finfo_close($finfo);
 
-                    $q->set( $column, $mime );
+                    $q->set($column, $mime);
                     break;
 
                 case self::DB_EXTN:
                     $extn = pathinfo($upload['name'], PATHINFO_EXTENSION);
-                    $q->set( $column, $extn );
+                    $q->set($column, $extn);
                     break;
 
                 case self::DB_FILE_NAME:
-                    $q->set( $column, $upload['name'] );
+                    $q->set($column, $upload['name']);
                     break;
 
                 case self::DB_FILE_SIZE:
-                    $q->set( $column, $upload['size'] );
+                    $q->set($column, $upload['size']);
                     break;
 
                 case self::DB_SYSTEM_PATH:
-                    $pathFields[ $column ] = self::DB_SYSTEM_PATH;
-                    $q->set( $column, '-' ); // Use a temporary value to avoid cases
+                    $pathFields[$column] = self::DB_SYSTEM_PATH;
+                    $q->set($column, '-'); // Use a temporary value to avoid cases
                     break;                   // where the db will reject empty values
 
                 case self::DB_WEB_PATH:
-                    $pathFields[ $column ] = self::DB_WEB_PATH;
-                    $q->set( $column, '-' ); // Use a temporary value (as above)
+                    $pathFields[$column] = self::DB_WEB_PATH;
+                    $q->set($column, '-'); // Use a temporary value (as above)
                     break;
 
                 default:
                     $val = $prop;
 
                     // Callable function - execute to get the value
-                    if ( is_callable($prop) && is_object($prop) ) {
-                        $val = $prop( $db, $upload );
+                    if (is_callable($prop) && is_object($prop)) {
+                        $val = $prop($db, $upload);
                     }
 
                     // If the primary key value was set - use that
-                    if ( $column === $this->_dbPKey ) {
+                    if ($column === $this->_dbPKey) {
                         $insertedId = $val;
                     }
 
-                    if (is_string($val) && ! empty($val)) {
+                    if (is_string($val) && !empty($val)) {
                         // Allow for replacement of __ID__, etc when the value is a string
-                        $pathFields[ $column ] = $val;
-                        $q->set( $column, '-' ); // Use a temporary value (as above)
+                        $pathFields[$column] = $val;
+                        $q->set($column, '-'); // Use a temporary value (as above)
                     }
                     else {
-                        $q->set( $column, $val );
+                        $q->set($column, $val);
                     }
 
                     break;
@@ -690,18 +690,18 @@ class Upload extends DataTables\Ext {
         // database schema is and don't want to prescribe that certain triggers
         // etc be created. It makes it a bit less efficient but much more
         // compatible
-        if ( count( $pathFields ) ) {
+        if (count($pathFields)) {
             // For this to operate the action must be a string, which is
             // validated in the `exec` method
-            $path = $this->_path( $upload['name'], $id );
+            $path = $this->_path($upload['name'], $id);
             $webPath = str_replace($_SERVER['DOCUMENT_ROOT'], '', $path);
             $q = $db
-                ->query( 'update' )
-                ->table( $this->_dbTable )
-                ->where( $this->_dbPKey, $id );
+                ->query('update')
+                ->table($this->_dbTable)
+                ->where($this->_dbPKey, $id);
 
-            foreach ( $pathFields as $column => $type ) {
-                $q->set( $column, $type === self::DB_WEB_PATH ? $webPath : $path );
+            foreach ($pathFields as $column => $type) {
+                $q->set($column, $type === self::DB_WEB_PATH ? $webPath : $path);
             }
 
             $q->exec();
@@ -718,14 +718,14 @@ class Upload extends DataTables\Ext {
      * @param  int $id Primary key value for the file
      * @return string Resolved path
      */
-    private function _path ( $name, $id )
+    private function _path ($name, $id)
     {
-        $extn = pathinfo( $name, PATHINFO_EXTENSION );
+        $extn = pathinfo($name, PATHINFO_EXTENSION);
 
         $to = $this->_action;
-        $to = str_replace( "__NAME__", $name, $to   );
-        $to = str_replace( "__ID__",   $id,   $to   );
-        $to = str_replace( "__EXTN__", $extn, $to );
+        $to = str_replace("__NAME__", $name, $to);
+        $to = str_replace("__ID__", $id, $to);
+        $to = str_replace("__EXTN__", $extn, $to);
 
         return $to;
     }

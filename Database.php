@@ -45,22 +45,22 @@ class Database {
      *      )
      *    ```
      */
-    function __construct( $opts )
+    function __construct($opts)
     {
-        $types = array( 'Mysql', 'Oracle', 'Postgres', 'Sqlite', 'Sqlserver', 'Db2', 'Firebird' );
+        $types = array('Mysql', 'Oracle', 'Postgres', 'Sqlite', 'Sqlserver', 'Db2', 'Firebird');
 
-        if ( ! in_array( $opts['type'], $types ) ) {
+        if (!in_array($opts['type'], $types)) {
             throw new \Exception(
-                "Unknown database driver type. Must be one of ".implode(', ', $types),
+                "Unknown database driver type. Must be one of " . implode(', ', $types),
                 1
             );
         }
 
         $this->_type = $opts['type'];
-        $this->query_driver = "DataTables\\Database\\Driver\\".$opts['type'].'Query';
-        $this->_dbResource = isset( $opts['pdo'] ) ?
+        $this->query_driver = "DataTables\\Database\\Driver\\" . $opts['type'] . 'Query';
+        $this->_dbResource = isset($opts['pdo']) ?
             $opts['pdo'] :
-            call_user_func($this->query_driver.'::connect', $opts );
+            call_user_func($this->query_driver . '::connect', $opts);
     }
 
 
@@ -92,12 +92,12 @@ class Database {
      *   Query->where()}.
      * @return bool Boolean flag - true if there were rows
      */
-    public function any( $table, $where=null )
+    public function any($table, $where = null)
     {
-        $res = $this->query( 'select' )
-            ->table( $table )
-            ->get( '*' )
-            ->where( $where )
+        $res = $this->query('select')
+            ->table($table)
+            ->get('*')
+            ->where($where)
             ->limit(1)
             ->exec();
 
@@ -113,7 +113,7 @@ class Database {
      */
     public function commit ()
     {
-        call_user_func($this->query_driver.'::commit', $this->_dbResource );
+        call_user_func($this->query_driver . '::commit', $this->_dbResource);
         return $this;
     }
 
@@ -126,12 +126,12 @@ class Database {
      *    Query->where()}.
      *  @return Number
      */
-    public function count ( $table, $field="id", $where=null )
+    public function count ($table, $field = "id", $where = null)
     {
-        $res = $this->query( 'count' )
-            ->table( $table )
-            ->get( $field )
-            ->where( $where )
+        $res = $this->query('count')
+            ->table($table)
+            ->get($field)
+            ->where($where)
             ->exec();
 
         $cnt = $res->fetch();
@@ -146,12 +146,12 @@ class Database {
      *  @return bool|self Debug mode state if no parameter is given, or
      *    self if used as a setter.
      */
-    public function debug ( $set=null )
+    public function debug ($set = null)
     {
-        if ( $set === null ) {
+        if ($set === null) {
             return $this->_debugCallback ? true : false;
         }
-        else if ( $set === false ) {
+        else if ($set === false) {
             $this->_debugCallback = null;
         }
         else {
@@ -172,11 +172,11 @@ class Database {
      *    Query->where()}.
      *  @return Result
      */
-    public function delete ( $table, $where=null )
+    public function delete ($table, $where = null)
     {
-        return $this->query( 'delete' )
-            ->table( $table )
-            ->where( $where )
+        return $this->query('delete')
+            ->table($table)
+            ->where($where)
             ->exec();
     }
 
@@ -195,12 +195,12 @@ class Database {
      *    the `Result->insertId()` method.
      *  @return Result
      */
-    public function insert ( $table, $set, $pkey='' )
+    public function insert ($table, $set, $pkey = '')
     {
-        return $this->query( 'insert' )
-            ->pkey( $pkey )
-            ->table( $table )
-            ->set( $set )
+        return $this->query('insert')
+            ->pkey($pkey)
+            ->table($table)
+            ->set($set)
             ->exec();
     }
 
@@ -219,29 +219,29 @@ class Database {
      *    the `Result->insertId()` method. Only used if an insert is performed.
      *  @return Result
      */
-    public function push ( $table, $set, $where=null, $pkey='' )
+    public function push ($table, $set, $where = null, $pkey = '')
     {
         $selectColumn = '*';
 
-        if ( $pkey ) {
+        if ($pkey) {
             $selectColumn = is_array($pkey) ?
                 $pkey[0] :
                 $pkey;
         }
 
         // Update or insert
-        if ( $this->select( $table, $selectColumn, $where )->count() > 0 ) {
-            return $this->update( $table, $set, $where );
+        if ($this->select($table, $selectColumn, $where)->count() > 0) {
+            return $this->update($table, $set, $where);
         }
 
         // Add the where condition to the values to set
         foreach ($where as $key => $value) {
-            if ( ! isset( $set[ $key ] ) ) {
-                $set[ $key ] = $value;
+            if (!isset($set[$key])) {
+                $set[$key] = $value;
             }
         }
 
-        return $this->insert( $table, $set, $pkey );
+        return $this->insert($table, $set, $pkey);
     }
 
 
@@ -251,9 +251,9 @@ class Database {
      *  @param string|string[] $table Table name(s) to act upon.
      *  @return Query
      */
-    public function query ( $type, $table=null )
+    public function query ($type, $table = null)
     {
-        return new $this->query_driver( $this, $type, $table );
+        return new $this->query_driver($this, $type, $table);
     }
 
 
@@ -263,9 +263,9 @@ class Database {
      *  @param string $type Value type
      *  @return string
      */
-    public function quote ( $val, $type=\PDO::PARAM_STR )
+    public function quote ($val, $type = \PDO::PARAM_STR)
     {
-        return $this->_dbResource->quote( $val, $type );
+        return $this->_dbResource->quote($val, $type);
     }
 
 
@@ -289,7 +289,7 @@ class Database {
      */
     public function raw ()
     {
-        return $this->query( 'raw' );
+        return $this->query('raw');
     }
 
 
@@ -311,7 +311,7 @@ class Database {
      */
     public function rollback ()
     {
-        call_user_func($this->query_driver.'::rollback', $this->_dbResource );
+        call_user_func($this->query_driver . '::rollback', $this->_dbResource);
         return $this;
     }
 
@@ -330,13 +330,13 @@ class Database {
      *    Query->order()}.
      *  @return Result
      */
-    public function select ( $table, $field="*", $where=null, $orderBy=null )
+    public function select ($table, $field = "*", $where = null, $orderBy = null)
     {
-        return $this->query( 'select' )
-            ->table( $table )
-            ->get( $field )
-            ->where( $where )
-            ->order( $orderBy )
+        return $this->query('select')
+            ->table($table)
+            ->get($field)
+            ->where($where)
+            ->order($orderBy)
             ->exec();
     }
 
@@ -356,14 +356,14 @@ class Database {
      *    Query->order()}.
      *  @return Result
      */
-    public function selectDistinct ( $table, $field="*", $where=null, $orderBy=null )
+    public function selectDistinct ($table, $field = "*", $where = null, $orderBy = null)
     {
-        return $this->query( 'select' )
-            ->table( $table )
-            ->distinct( true )
-            ->get( $field )
-            ->where( $where )
-            ->order( $orderBy )
+        return $this->query('select')
+            ->table($table)
+            ->distinct(true)
+            ->get($field)
+            ->where($where)
+            ->order($orderBy)
             ->exec();
     }
 
@@ -391,10 +391,10 @@ class Database {
      *    $db->sql("SET character_set_results=utf8");
      *    ```
      */
-    public function sql ( $sql )
+    public function sql ($sql)
     {
-        return $this->query( 'raw' )
-            ->exec( $sql );
+        return $this->query('raw')
+            ->exec($sql);
     }
 
 
@@ -406,7 +406,7 @@ class Database {
      */
     public function transaction ()
     {
-        call_user_func($this->query_driver.'::transaction', $this->_dbResource );
+        call_user_func($this->query_driver . '::transaction', $this->_dbResource);
         return $this;
     }
 
@@ -432,12 +432,12 @@ class Database {
      *    Query->where()}.
      *  @return Result
      */
-    public function update ( $table, $set=null, $where=null )
+    public function update ($table, $set = null, $where = null)
     {
-        return $this->query( 'update' )
-            ->table( $table )
-            ->set( $set )
-            ->where( $where )
+        return $this->query('update')
+            ->table($table)
+            ->set($set)
+            ->where($where)
             ->exec();
     }
 
@@ -453,15 +453,15 @@ class Database {
      *    called it will reset the query cache.
      *  @internal
      */
-    public function debugInfo ( $query=null, $bindings=null )
+    public function debugInfo ($query = null, $bindings = null)
     {
         $callback = $this->_debugCallback;
 
-        if ( $callback ) {
-            $callback( array(
-                "query"    => $query,
+        if ($callback) {
+            $callback(array(
+                "query" => $query,
                 "bindings" => $bindings
-            ) );
+            ));
         }
 
         return $this;

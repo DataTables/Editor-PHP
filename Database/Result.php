@@ -45,7 +45,7 @@ abstract class Result {
      *  @param int $fetchType PDO row fetch style - PDO::FETCH_ASSOC is the default
      *  @return array
      */
-    abstract public function fetch ( $fetchType=\PDO::FETCH_ASSOC );
+    abstract public function fetch ($fetchType = \PDO::FETCH_ASSOC);
 
 
     /**
@@ -53,7 +53,7 @@ abstract class Result {
      *  @param int $fetchType PDO row fetch style - PDO::FETCH_ASSOC is the default
      *  @return array
      */
-    abstract public function fetchAll ( $fetchType=\PDO::FETCH_ASSOC );
+    abstract public function fetchAll ($fetchType = \PDO::FETCH_ASSOC);
 
 
     /**

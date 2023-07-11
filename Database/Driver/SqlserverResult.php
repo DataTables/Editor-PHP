@@ -22,7 +22,7 @@ class SqlserverResult extends Result {
      * Constructor
      */
 
-    function __construct( $dbh, $stmt )
+    function __construct($dbh, $stmt)
     {
         $this->_dbh = $dbh;
         $this->_stmt = $stmt;
@@ -49,15 +49,15 @@ class SqlserverResult extends Result {
     }
 
 
-    public function fetch ( $fetchType=\PDO::FETCH_ASSOC )
+    public function fetch ($fetchType = \PDO::FETCH_ASSOC)
     {
-        return $this->_stmt->fetch( $fetchType );
+        return $this->_stmt->fetch($fetchType);
     }
 
 
-    public function fetchAll ( $fetchType=\PDO::FETCH_ASSOC )
+    public function fetchAll ($fetchType = \PDO::FETCH_ASSOC)
     {
-        return $this->_stmt->fetchAll( $fetchType );
+        return $this->_stmt->fetchAll($fetchType);
     }
 
 

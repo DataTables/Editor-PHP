@@ -24,8 +24,8 @@ use DataTables\Editor\Join;
  */
 class Mjoin extends Join
 {
-    function __construct( $table=null )
+    function __construct($table = null)
     {
-        parent::__construct( $table, 'array' );
+        parent::__construct($table, 'array');
     }
 }
