@@ -119,11 +119,6 @@ parameters:
 			path: Database/Result.php
 
 		-
-			message: "#^Anonymous function has an unused use \\$fields\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
 			message: "#^PHPDoc tag @param has invalid value \\(int         JSON encode option https\\://www\\.php\\.net/manual/en/json\\.constants\\.php\\)\\: Unexpected token \"JSON\", expected variable at offset 315$#"
 			count: 1
 			path: Editor.php

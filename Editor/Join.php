@@ -724,7 +724,6 @@ class Join extends DataTables\Ext {
 			return;
 		}
 
-		$that = $this;
 		$this->_prep( $editor );
 		$db = $editor->db();
 		
@@ -739,8 +738,8 @@ class Join extends DataTables\Ext {
 			$stmt = $db
 				->query( 'delete' )
 				->table( $this->_table )
-				->where_group( function ( $q ) use ( $that, $ids ) {
-					$q->or_where( $that->_join['child'], $ids );
+				->where_group( function ( $q ) use ( $ids ) {
+					$q->or_where( $this->_join['child'], $ids );
 				} );
 
 			$this->_apply_where( $stmt );

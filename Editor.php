@@ -1931,18 +1931,16 @@ class Editor extends Ext {
 	 */
 	private function _ssp_filter ( $query, $http )
 	{
-		$that = $this;
-
 		// Global filter
 		$fields = $this->_fields;
 
 		// Global search, add a ( ... or ... ) set of filters for each column
 		// in the table (not the fields, just the columns submitted)
 		if ( $http['search']['value'] ) {
-			$query->where( function ($q) use (&$that, &$fields, $http) {
+			$query->where( function ($q) use ($http) {
 				for ( $i=0 ; $i<count($http['columns']) ; $i++ ) {
 					if ( $http['columns'][$i]['searchable'] == 'true' ) {
-						$fieldName = $that->_ssp_field( $http, $i );
+						$fieldName = $this->_ssp_field( $http, $i );
 
 						if ( $fieldName ) {
 							$q->or_where( $fieldName, '%'.$http['search']['value'].'%', 'like' );
@@ -2018,14 +2016,14 @@ class Editor extends Ext {
 		// if ( $http['search']['value'] ) {
 		// 	$words = explode(" ", $http['search']['value']);
 
-		// 	$query->where( function ($q) use (&$that, &$fields, $http, $words) {
+		// 	$query->where( function ($q) use ($http, $words) {
 		// 		for ( $j=0, $jen=count($words) ; $j<$jen ; $j++ ) {
 		// 			if ( $words[$j] ) {
 		// 				$q->where_group( true );
 
 		// 				for ( $i=0, $ien=count($http['columns']) ; $i<$ien ; $i++ ) {
 		// 					if ( $http['columns'][$i]['searchable'] == 'true' ) {
-		// 						$field = $that->_ssp_field( $http, $i );
+		// 						$field = $this->_ssp_field( $http, $i );
 
 		// 						$q->or_where( $field, $words[$j].'%', 'like' );
 		// 						$q->or_where( $field, '% '.$words[$j].'%', 'like' );
