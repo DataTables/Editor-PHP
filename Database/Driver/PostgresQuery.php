@@ -67,7 +67,7 @@ class PostgresQuery extends Query {
 				"error" => "An error occurred while connecting to the database ".
 					"'{$db}'. The error reported by the server was: ".$e->getMessage()
 			) );
-			exit(0);
+			exit(1);
 		}
 
 		return $pdo;

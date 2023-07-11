@@ -61,7 +61,7 @@ class Db2Query extends Query {
 				"error" => "An error occurred while connecting to the database ".
 					"'{$db}'. The error reported by the server was: ".$e
 			) );
-			exit(0);
+			exit(1);
 		}
 
 		return $conn;
