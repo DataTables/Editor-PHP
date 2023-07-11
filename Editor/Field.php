@@ -13,11 +13,9 @@
 namespace DataTables\Editor;
 if (!defined('DATATABLES')) exit();
 
-use
-	DataTables,
-	DataTables\Editor,
-	DataTables\Editor\Options,
-	DataTables\Editor\Join;
+use DataTables;
+use DataTables\Editor;
+use DataTables\Editor\Options;
 use DataTables\HtmLawed\Htmlaw;
 
 

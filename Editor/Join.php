@@ -13,10 +13,9 @@
 namespace DataTables\Editor;
 if (!defined('DATATABLES')) exit();
 
-use
-	DataTables,
-	DataTables\Editor,
-	DataTables\Editor\Field;
+use DataTables;
+use DataTables\Editor;
+use DataTables\Editor\Field;
 
 
 /**

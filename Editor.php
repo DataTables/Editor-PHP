@@ -14,10 +14,9 @@
 namespace DataTables;
 if (!defined('DATATABLES')) exit();
 
-use
-	DataTables,
-	DataTables\Editor\Join,
-	DataTables\Editor\Field;
+use DataTables;
+use DataTables\Editor\Join;
+use DataTables\Editor\Field;
 
 
 /**

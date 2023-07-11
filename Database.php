@@ -13,9 +13,8 @@
 namespace DataTables;
 if (!defined('DATATABLES')) exit();
 
-use
-	DataTables\Database\Query,
-	DataTables\Database\Result;
+use DataTables\Database\Query;
+use DataTables\Database\Result;
 
 
 /**

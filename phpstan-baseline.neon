@@ -352,16 +352,6 @@ parameters:
 			path: Editor/Join.php
 
 		-
-			message: "#^Call to method query\\(\\) on an unknown class DataTables\\\\Editor\\\\Database\\.$#"
-			count: 1
-			path: Editor/Options.php
-
-		-
-			message: "#^Parameter \\$db of method DataTables\\\\Editor\\\\Options\\:\\:exec\\(\\) has invalid type DataTables\\\\Editor\\\\Database\\.$#"
-			count: 1
-			path: Editor/Options.php
-
-		-
 			message: "#^Property DataTables\\\\Editor\\\\Options\\:\\:\\$_where has unknown class DataTables\\\\Editor\\\\callback as its type\\.$#"
 			count: 1
 			path: Editor/Options.php

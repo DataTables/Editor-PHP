@@ -14,6 +14,7 @@ namespace DataTables\Editor;
 if (!defined('DATATABLES')) exit();
 
 use DataTables;
+use DataTables\Database;
 
 /**
  * The Options class provides a convenient method of specifying where Editor
