@@ -44,17 +44,17 @@ class OracleResult extends Result
 	 * Public methods
 	 */
 
-	public function count ()
+	public function count()
 	{
 		return count($this->fetchAll());
 	}
 
-	public function fetch ($fetchType = \PDO::FETCH_ASSOC /* irrelevant for oci8 */)
+	public function fetch($fetchType = \PDO::FETCH_ASSOC /* irrelevant for oci8 */)
 	{
 		return oci_fetch_assoc($this->_stmt);
 	}
 
-	public function fetchAll ($fetchType = \PDO::FETCH_ASSOC /* irrelevant for oci8 */)
+	public function fetchAll($fetchType = \PDO::FETCH_ASSOC /* irrelevant for oci8 */)
 	{
 		if (!$this->_rows) {
 			$out = array();
@@ -67,7 +67,7 @@ class OracleResult extends Result
 		return $this->_rows;
 	}
 
-	public function insertId ()
+	public function insertId()
 	{
 		return $this->_pkey_val;
 	}

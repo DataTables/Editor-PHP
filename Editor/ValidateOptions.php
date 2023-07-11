@@ -49,7 +49,7 @@ class ValidateOptions extends DataTables\Ext
 	 *
 	 * @return ValidateOptions|string Self if setting, message if getting.
 	 */
-	public function message ($msg = null)
+	public function message($msg = null)
 	{
 		if ($msg === null) {
 			return $this->_message;
@@ -68,7 +68,7 @@ class ValidateOptions extends DataTables\Ext
 	 *
 	 * @return ValidateOptions|bool Self if setting, current value if getting.
 	 */
-	public function allowEmpty ($empty = null)
+	public function allowEmpty($empty = null)
 	{
 		if ($empty === null) {
 			return $this->_empty;
@@ -87,7 +87,7 @@ class ValidateOptions extends DataTables\Ext
 	 *
 	 * @return ValidateOptions|bool Self if setting, current value if getting.
 	 */
-	public function optional ($optional = null)
+	public function optional($optional = null)
 	{
 		if ($optional === null) {
 			return $this->_optional;
@@ -101,7 +101,7 @@ class ValidateOptions extends DataTables\Ext
 	/**
 	 * @internal
 	 */
-	public static function select ($user)
+	public static function select($user)
 	{
 		if ($user) {
 			return $user;

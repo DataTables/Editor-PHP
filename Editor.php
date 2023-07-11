@@ -90,7 +90,7 @@ class Editor extends Ext
 	 *                `Editor::ACTION_EDIT` or `Editor::ACTION_DELETE` indicating the request
 	 *                type.
 	 */
-	public static function action ($http, $name = 'action')
+	public static function action($http, $name = 'action')
 	{
 		if (!isset($http[$name])) {
 			return self::ACTION_READ;
@@ -226,7 +226,7 @@ class Editor extends Ext
 	 *
 	 * @return string|self Value, or self if used as a setter.
 	 */
-	public function actionName ($_ = null)
+	public function actionName($_ = null)
 	{
 		return $this->_getSet($this->_actionName, $_);
 	}
@@ -240,7 +240,7 @@ class Editor extends Ext
 	 *
 	 * @return array Processed data array.
 	 */
-	public function data ()
+	public function data()
 	{
 		return $this->_out;
 	}
@@ -254,7 +254,7 @@ class Editor extends Ext
 	 * @return Database|self The Database connection instance if no parameter
 	 *                       is given, or self if used as a setter.
 	 */
-	public function db ($_ = null)
+	public function db($_ = null)
 	{
 		return $this->_getSet($this->_db, $_);
 	}
@@ -279,7 +279,7 @@ class Editor extends Ext
 	 * @return bool|self Debug mode state if no parameter is given, or
 	 *                   self if used as a setter or when adding a debug message.
 	 */
-	public function debug ($_ = null, $path = null)
+	public function debug($_ = null, $path = null)
 	{
 		if (!is_bool($_)) {
 			$this->_debugInfo[] = $_;
@@ -318,7 +318,7 @@ class Editor extends Ext
 	 *
 	 * @see {@see Field} for field documentation.
 	 */
-	public function field ($_ = null)
+	public function field($_ = null)
 	{
 		$args = func_get_args();
 
@@ -352,7 +352,7 @@ class Editor extends Ext
 	 *
 	 * @see {@see Field} for field documentation.
 	 */
-	public function fields ($_ = null)
+	public function fields($_ = null)
 	{
 		$args = func_get_args();
 
@@ -377,7 +377,7 @@ class Editor extends Ext
 	 * @return string|self Primary key value if no parameter is given, or
 	 *                     self if used as a setter.
 	 */
-	public function idPrefix ($_ = null)
+	public function idPrefix($_ = null)
 	{
 		return $this->_getSet($this->_idPrefix, $_);
 	}
@@ -389,7 +389,7 @@ class Editor extends Ext
 	 *
 	 * @return array Data given to `process()`.
 	 */
-	public function inData ()
+	public function inData()
 	{
 		return $this->_processData;
 	}
@@ -409,7 +409,7 @@ class Editor extends Ext
 	 *
 	 * @return Join[]|self Array of joins, or self if used as a setter.
 	 */
-	public function join ($_ = null)
+	public function join($_ = null)
 	{
 		$args = func_get_args();
 
@@ -433,7 +433,7 @@ class Editor extends Ext
 	 * @return string|self self if printing the JSON, or JSON representation of
 	 *                     the processed data if false is given as the first parameter.
 	 */
-	public function json ($print = true, $options = 0)
+	public function json($print = true, $options = 0)
 	{
 		if ($print) {
 			$json = json_encode($this->_out, $options);
@@ -464,7 +464,7 @@ class Editor extends Ext
 	 *
 	 * @throws \Exception JSONP function name validation
 	 */
-	public function jsonp ($callback = null)
+	public function jsonp($callback = null)
 	{
 		if (!$callback) {
 			$callback = $_GET['callback'];
@@ -536,7 +536,7 @@ class Editor extends Ext
 	 *      LEFT JOIN dept ON users.dept_id = dept.id
 	 *    ```
 	 */
-	public function leftJoin ($table, $field1, $operator = null, $field2 = null)
+	public function leftJoin($table, $field1, $operator = null, $field2 = null)
 	{
 		$this->_leftJoin[] = array(
 			'table' => $table,
@@ -560,7 +560,7 @@ class Editor extends Ext
 	 * @return bool|self Value if no parameter is given, or
 	 *                   self if used as a setter.
 	 */
-	public function leftJoinRemove ($_ = null)
+	public function leftJoinRemove($_ = null)
 	{
 		return $this->_getSet($this->_leftJoinRemove, $_);
 	}
@@ -575,7 +575,7 @@ class Editor extends Ext
 	 *
 	 * @return self Self for chaining.
 	 */
-	public function on ($name, $callback)
+	public function on($name, $callback)
 	{
 		if (!isset($this->_events[$name])) {
 			$this->_events[$name] = array();
@@ -599,7 +599,7 @@ class Editor extends Ext
 	 * @return string[]|self Primary key value if no parameter is given, or
 	 *                       self if used as a setter.
 	 */
-	public function pkey ($_ = null)
+	public function pkey($_ = null)
 	{
 		if (is_string($_)) {
 			$this->_pkey = array($_);
@@ -623,7 +623,7 @@ class Editor extends Ext
 	 * @throws \Exception If one of the values that the primary key is made up
 	 *                    of cannot be found in the data set given, an Exception will be thrown.
 	 */
-	public function pkeyToValue ($row, $flat = false)
+	public function pkeyToValue($row, $flat = false)
 	{
 		$pkey = $this->_pkey;
 		$id = array();
@@ -669,7 +669,7 @@ class Editor extends Ext
 	 *                    length based on the primary key configuration, an exception will be
 	 *                    thrown.
 	 */
-	public function pkeyToArray ($value, $flat = false, $pkey = null)
+	public function pkeyToArray($value, $flat = false, $pkey = null)
 	{
 		$arr = array();
 		$value = str_replace($this->idPrefix(), '', $value);
@@ -702,7 +702,7 @@ class Editor extends Ext
 	 *
 	 * @return self
 	 */
-	public function process ($data)
+	public function process($data)
 	{
 		if ($this->_debug) {
 			$debugInfo = &$this->_debugInfo;
@@ -753,7 +753,7 @@ class Editor extends Ext
 	 *
 	 * @return string[]|self Array of read tables names, or self if used as a setter.
 	 */
-	public function readTable ($_ = null)
+	public function readTable($_ = null)
 	{
 		$args = func_get_args();
 
@@ -778,7 +778,7 @@ class Editor extends Ext
 	 *
 	 * @return string[]|self Array of tables names, or self if used as a setter.
 	 */
-	public function table ($_ = null)
+	public function table($_ = null)
 	{
 		$args = func_get_args();
 
@@ -803,7 +803,7 @@ class Editor extends Ext
 	 * @return bool|self Transactions enabled flag, or self if used as a
 	 *                   setter.
 	 */
-	public function transaction ($_ = null)
+	public function transaction($_ = null)
 	{
 		return $this->_getSet($this->_transaction, $_);
 	}
@@ -817,7 +817,7 @@ class Editor extends Ext
 	 * @return bool|Editor Value if used as a getter, otherwise `$this` when
 	 *                     used as a setter.
 	 */
-	public function tryCatch ($_ = null)
+	public function tryCatch($_ = null)
 	{
 		return $this->_getSet($this->_tryCatch, $_);
 	}
@@ -839,7 +839,7 @@ class Editor extends Ext
 	 *
 	 * @return bool `true` if the data is valid, `false` if not.
 	 */
-	public function validate (&$errors, $data)
+	public function validate(&$errors, $data)
 	{
 		// Validation is only performed on create and edit
 		if ($data[$this->_actionName] != 'create' && $data[$this->_actionName] != 'edit') {
@@ -884,7 +884,7 @@ class Editor extends Ext
 	 * @return Editor|callable Editor instance if called as a setter, or the
 	 *                         validator function if not.
 	 */
-	public function validator ($_ = null)
+	public function validator($_ = null)
 	{
 		return $this->_getSet($this->_validator, $_, true);
 	}
@@ -915,7 +915,7 @@ class Editor extends Ext
 	 *
 	 * @return string[]|self Where condition array, or self if used as a setter.
 	 */
-	public function where ($key = null, $value = null, $op = '=')
+	public function where($key = null, $value = null, $op = '=')
 	{
 		if ($key === null) {
 			return $this->_where;
@@ -946,12 +946,12 @@ class Editor extends Ext
 	 *              ability to set values for columns on create and edit. The C# libraries
 	 *              do not support this option at all.
 	 */
-	public function whereSet ($_ = null)
+	public function whereSet($_ = null)
 	{
 		return $this->_getSet($this->_whereSet, $_);
 	}
 
-	public function write ($_writeVal = null)
+	public function write($_writeVal = null)
 	{
 		return $this->_getSet($this->_write, $_writeVal);
 	}
@@ -1484,7 +1484,7 @@ class Editor extends Ext
 	 *
 	 * @private
 	 */
-	private function _fileData ($limitTable = null, $ids = null, $data = null)
+	private function _fileData($limitTable = null, $ids = null, $data = null)
 	{
 		$files = array();
 
@@ -1521,7 +1521,7 @@ class Editor extends Ext
 	 *
 	 * @private
 	 */
-	private function _fileDataFields (&$files, $fields, $limitTable, $idsIn = null, $data = null)
+	private function _fileDataFields(&$files, $fields, $limitTable, $idsIn = null, $data = null)
 	{
 		foreach ($fields as $field) {
 			$upload = $field->upload();
@@ -1581,7 +1581,7 @@ class Editor extends Ext
 	 *
 	 * @private
 	 */
-	private function _fileClean ()
+	private function _fileClean()
 	{
 		foreach ($this->_fields as $field) {
 			$upload = $field->upload();
@@ -1617,7 +1617,7 @@ class Editor extends Ext
 	 *
 	 * @private
 	 */
-	private function _ssp_query ($query, $http)
+	private function _ssp_query($query, $http)
 	{
 		if (!isset($http['draw'])) {
 			return array();
@@ -1694,7 +1694,7 @@ class Editor extends Ext
 	 *
 	 * @private
 	 */
-	private function _ssp_sort ($query, $http)
+	private function _ssp_sort($query, $http)
 	{
 		if (isset($http['order'])) {
 			for ($i = 0; $i < count($http['order']); $i++) {
@@ -1941,7 +1941,7 @@ class Editor extends Ext
 	 *
 	 * @private
 	 */
-	private function _ssp_filter ($query, $http)
+	private function _ssp_filter($query, $http)
 	{
 		// Global filter
 		$fields = $this->_fields;
@@ -2066,7 +2066,7 @@ class Editor extends Ext
 	 *
 	 * @private
 	 */
-	private function _ssp_limit ($query, $http)
+	private function _ssp_limit($query, $http)
 	{
 		if ($http['length'] != -1) { // -1 is 'show all' in DataTables
 			$query
@@ -2086,7 +2086,7 @@ class Editor extends Ext
 	 *
 	 * @private
 	 */
-	private function _get_where ($query)
+	private function _get_where($query)
 	{
 		for ($i = 0; $i < count($this->_where); $i++) {
 			if (is_callable($this->_where[$i])) {
@@ -2111,7 +2111,7 @@ class Editor extends Ext
 	 *
 	 * @private
 	 */
-	private function _find_field ($name, $type)
+	private function _find_field($name, $type)
 	{
 		for ($i = 0, $ien = count($this->_fields); $i < $ien; $i++) {
 			$field = $this->_fields[$i];
@@ -2140,7 +2140,7 @@ class Editor extends Ext
 	 *
 	 * @private
 	 */
-	private function _insert_or_update ($id, $values)
+	private function _insert_or_update($id, $values)
 	{
 		// Loop over all tables in _table, doing the insert or update as needed
 		for ($i = 0, $ien = count($this->_table); $i < $ien; $i++) {
@@ -2230,7 +2230,7 @@ class Editor extends Ext
 	 *
 	 * @private
 	 */
-	private function _insert_or_update_table ($table, $values, $where = null)
+	private function _insert_or_update_table($table, $values, $where = null)
 	{
 		$set = array();
 		$action = ($where === null) ? 'create' : 'edit';
@@ -2320,7 +2320,7 @@ class Editor extends Ext
 	 *
 	 * @private
 	 */
-	private function _remove_table ($table, $ids, $pkey = null)
+	private function _remove_table($table, $ids, $pkey = null)
 	{
 		if ($pkey === null) {
 			$pkey = $this->_pkey;
@@ -2392,7 +2392,7 @@ class Editor extends Ext
 	 *
 	 *  @private
 	 */
-	private function _prepJoin ()
+	private function _prepJoin()
 	{
 		if (count($this->_leftJoin) === 0) {
 			return;
@@ -2434,7 +2434,7 @@ class Editor extends Ext
 	 *
 	 * @private
 	 */
-	private function _alias ($name, $type = 'alias')
+	private function _alias($name, $type = 'alias')
 	{
 		if (stripos($name, ' as ') !== false) {
 			$a = preg_split('/ as /i', $name);
@@ -2467,7 +2467,7 @@ class Editor extends Ext
 	 *
 	 * @private
 	 */
-	private function _part ($name, $type = 'table')
+	private function _part($name, $type = 'table')
 	{
 		$db = null;
 		$table = null;
@@ -2502,7 +2502,7 @@ class Editor extends Ext
 	 *
 	 * @private
 	 */
-	private function _trigger ($eventName, &$arg1 = null, &$arg2 = null, &$arg3 = null, &$arg4 = null, &$arg5 = null)
+	private function _trigger($eventName, &$arg1 = null, &$arg2 = null, &$arg3 = null, &$arg4 = null, &$arg5 = null)
 	{
 		$out = null;
 		$argc = func_num_args();
@@ -2539,7 +2539,7 @@ class Editor extends Ext
 	 *
 	 * @return string Merged value
 	 */
-	private function _pkey_submit_merge ($pkeyVal, $row)
+	private function _pkey_submit_merge($pkeyVal, $row)
 	{
 		$pkey = $this->_pkey;
 		$arr = $this->pkeyToArray($pkeyVal, true);
@@ -2563,7 +2563,7 @@ class Editor extends Ext
 	 *
 	 * @return bool `true` if valid, `false` otherwise
 	 */
-	private function _pkey_validate_insert ($row)
+	private function _pkey_validate_insert($row)
 	{
 		$pkey = $this->_pkey;
 
@@ -2593,14 +2593,14 @@ class Editor extends Ext
 	 *
 	 * @return non-empty-string Calculated separator
 	 */
-	private function _pkey_separator ()
+	private function _pkey_separator()
 	{
 		$str = implode(',', $this->_pkey);
 
 		return hash('crc32', $str);
 	}
 
-	private function _read_table ()
+	private function _read_table()
 	{
 		return count($this->_readTableNames) ?
 			$this->_readTableNames :

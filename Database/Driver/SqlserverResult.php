@@ -41,22 +41,22 @@ class SqlserverResult extends Result
 	 * Public methods
 	 */
 
-	public function count ()
+	public function count()
 	{
 		return count($this->fetchAll());
 	}
 
-	public function fetch ($fetchType = \PDO::FETCH_ASSOC)
+	public function fetch($fetchType = \PDO::FETCH_ASSOC)
 	{
 		return $this->_stmt->fetch($fetchType);
 	}
 
-	public function fetchAll ($fetchType = \PDO::FETCH_ASSOC)
+	public function fetchAll($fetchType = \PDO::FETCH_ASSOC)
 	{
 		return $this->_stmt->fetchAll($fetchType);
 	}
 
-	public function insertId ()
+	public function insertId()
 	{
 		return $this->_dbh->lastInsertId();
 	}

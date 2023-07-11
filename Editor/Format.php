@@ -199,7 +199,7 @@ class Format
 	 *
 	 * @return string Formatted value or null on error.
 	 */
-	public static function nullEmpty ()
+	public static function nullEmpty()
 	{
 		// Legacy function - use `ifEmpty` now
 		return self::ifEmpty(null);
@@ -216,7 +216,7 @@ class Format
 	 *
 	 * @return string Formatted value or null on error.
 	 */
-	public static function ifEmpty ($ret)
+	public static function ifEmpty($ret)
 	{
 		return function ($val, $data) use ($ret) {
 			return $val === '' ?
@@ -237,7 +237,7 @@ class Format
 	 *
 	 * @return string Formatted value or null on error.
 	 */
-	public static function fromDecimalChar ($char = ',')
+	public static function fromDecimalChar($char = ',')
 	{
 		return function ($val, $data) use ($char) {
 			return str_replace($char, '.', $val);
@@ -254,7 +254,7 @@ class Format
 	 *
 	 * @return string Formatted value or null on error.
 	 */
-	public static function toDecimalChar ($char = ',')
+	public static function toDecimalChar($char = ',')
 	{
 		return function ($val, $data) use ($char) {
 			return str_replace('.', $char, $val);
@@ -270,7 +270,7 @@ class Format
 	/**
 	 * @internal
 	 */
-	public static function date_sql_to_format ($opts)
+	public static function date_sql_to_format($opts)
 	{
 		return self::dateSqlToFormat($opts);
 	}
@@ -278,7 +278,7 @@ class Format
 	/**
 	 * @internal
 	 */
-	public static function date_sql_to_formatLegacy ($opts)
+	public static function date_sql_to_formatLegacy($opts)
 	{
 		return self::dateSqlToFormat($opts);
 	}
@@ -286,7 +286,7 @@ class Format
 	/**
 	 * @internal
 	 */
-	public static function date_format_to_sql ($opts)
+	public static function date_format_to_sql($opts)
 	{
 		return self::dateFormatToSql($opts);
 	}
@@ -294,7 +294,7 @@ class Format
 	/**
 	 * @internal
 	 */
-	public static function date_format_to_sqlLegacy ($opts)
+	public static function date_format_to_sqlLegacy($opts)
 	{
 		return self::dateFormatToSql($opts);
 	}
@@ -302,7 +302,7 @@ class Format
 	/**
 	 * @internal
 	 */
-	public static function datetimeLegacy ($opts)
+	public static function datetimeLegacy($opts)
 	{
 		return self::datetime($opts['from'], $opts['to']);
 	}
@@ -310,7 +310,7 @@ class Format
 	/**
 	 * @internal
 	 */
-	public static function explodeLegacy ($opts)
+	public static function explodeLegacy($opts)
 	{
 		if ($opts === null) {
 			$opts = '|';
@@ -322,7 +322,7 @@ class Format
 	/**
 	 * @internal
 	 */
-	public static function implodeLegacy ($opts)
+	public static function implodeLegacy($opts)
 	{
 		if ($opts === null) {
 			$opts = '|';
@@ -334,7 +334,7 @@ class Format
 	/**
 	 * @internal
 	 */
-	public static function nullEmptyLegacy ($opts)
+	public static function nullEmptyLegacy($opts)
 	{
 		return self::nullEmpty(null);
 	}
@@ -342,7 +342,7 @@ class Format
 	/**
 	 * @internal
 	 */
-	public static function ifEmptyLegacy ($opts)
+	public static function ifEmptyLegacy($opts)
 	{
 		return self::ifEmpty($opts);
 	}
@@ -350,7 +350,7 @@ class Format
 	/**
 	 * @internal
 	 */
-	public static function fromDecimalCharLegacy ($opts)
+	public static function fromDecimalCharLegacy($opts)
 	{
 		if ($opts === null) {
 			$opts = ',';
@@ -362,7 +362,7 @@ class Format
 	/**
 	 * @internal
 	 */
-	public static function toDecimalCharLegacy ($opts)
+	public static function toDecimalCharLegacy($opts)
 	{
 		if ($opts === null) {
 			$opts = ',';

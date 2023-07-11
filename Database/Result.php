@@ -40,7 +40,7 @@ abstract class Result
 	 *
 	 * @return int
 	 */
-	abstract public function count ();
+	abstract public function count();
 
 	/**
 	 * Get the next row in a result set
@@ -49,7 +49,7 @@ abstract class Result
 	 *
 	 * @return array
 	 */
-	abstract public function fetch ($fetchType = \PDO::FETCH_ASSOC);
+	abstract public function fetch($fetchType = \PDO::FETCH_ASSOC);
 
 	/**
 	 * Get all rows in the result set
@@ -58,12 +58,12 @@ abstract class Result
 	 *
 	 * @return array
 	 */
-	abstract public function fetchAll ($fetchType = \PDO::FETCH_ASSOC);
+	abstract public function fetchAll($fetchType = \PDO::FETCH_ASSOC);
 
 	/**
 	 * After an INSERT query, get the ID that was inserted.
 	 *
 	 * @return int
 	 */
-	abstract public function insertId ();
+	abstract public function insertId();
 }

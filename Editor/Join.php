@@ -148,7 +148,7 @@ class Join extends DataTables\Ext
 	 * @return string|self Table alias set (which is null by default), or self if used as
 	 *                     a setter.
 	 */
-	public function aliasParentTable ($_ = null)
+	public function aliasParentTable($_ = null)
 	{
 		return $this->_getSet($this->_aliasParentTable, $_);
 	}
@@ -167,7 +167,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @see {@see Field} for field documentation.
 	 */
-	public function field ($_ = null)
+	public function field($_ = null)
 	{
 		$args = func_get_args();
 
@@ -191,7 +191,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @see {@see Field} for field documentation.
 	 */
-	public function fields ($_ = null)
+	public function fields($_ = null)
 	{
 		$args = func_get_args();
 
@@ -211,7 +211,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @return bool|self Name
 	 */
-	public function get ($_ = null)
+	public function get($_ = null)
 	{
 		return $this->_getSet($this->_get, $_);
 	}
@@ -245,7 +245,7 @@ class Join extends DataTables\Ext
 	 * @deprecated 1.5 Please use the {@see Join->link()} method rather than this
 	 *                                method now.
 	 */
-	public function join ($parent = null, $child = null, $table = null)
+	public function join($parent = null, $child = null, $table = null)
 	{
 		if ($parent === null && $child === null) {
 			return $this->_join;
@@ -268,7 +268,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @return self
 	 */
-	public function leftJoin ($table, $field1, $operator, $field2)
+	public function leftJoin($table, $field1, $operator, $field2)
 	{
 		$this->_leftJoin[] = array(
 			'table' => $table,
@@ -301,7 +301,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @throws \Exception Link limitations
 	 */
-	public function link ($field1, $field2)
+	public function link($field1, $field2)
 	{
 		if (strpos($field1, '.') === false || strpos($field2, '.') === false) {
 			throw new \Exception('Link fields must contain both the table name and the column name');
@@ -324,7 +324,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @return Join Self for chaining
 	 */
-	public function order ($_ = null)
+	public function order($_ = null)
 	{
 		// How this works is by setting the SQL order by clause, and since the
 		// join that is done in PHP is always done sequentially, the order is
@@ -344,7 +344,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @return string|self Name
 	 */
-	public function name ($_ = null)
+	public function name($_ = null)
 	{
 		return $this->_getSet($this->_name, $_);
 	}
@@ -360,7 +360,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @return bool|self Name
 	 */
-	public function set ($_ = null)
+	public function set($_ = null)
 	{
 		return $this->_getSet($this->_set, $_);
 	}
@@ -377,7 +377,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @return string|self Name of the join table, or self if used as a setter.
 	 */
-	public function table ($_ = null)
+	public function table($_ = null)
 	{
 		if ($_ !== null) {
 			$this->_name = $_;
@@ -399,7 +399,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @return string|self Join type, or self if used as a setter.
 	 */
-	public function type ($_ = null)
+	public function type($_ = null)
 	{
 		return $this->_getSet($this->_type, $_);
 	}
@@ -413,7 +413,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @return self Chainable
 	 */
-	public function validator ($fieldName, $fn)
+	public function validator($fieldName, $fn)
 	{
 		$this->_validators[] = array(
 			'fieldName' => $fieldName,
@@ -438,7 +438,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @return string[]|self Where condition array, or self if used as a setter.
 	 */
-	public function where ($key = null, $value = null, $op = '=')
+	public function where($key = null, $value = null, $op = '=')
 	{
 		if ($key === null) {
 			return $this->_where;
@@ -471,7 +471,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @return bool Current value
 	 */
-	public function whereSet ($_ = null)
+	public function whereSet($_ = null)
 	{
 		return $this->_getSet($this->_whereSet, $_);
 	}
@@ -664,7 +664,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function create ($editor, $parentId, $data)
+	public function create($editor, $parentId, $data)
 	{
 		// If not settable, or the many count for the join was not submitted
 		// there we do nothing
@@ -697,7 +697,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function update ($editor, $parentId, $data)
+	public function update($editor, $parentId, $data)
 	{
 		// If not settable, or the many count for the join was not submitted
 		// there we do nothing
@@ -728,7 +728,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function remove ($editor, $ids)
+	public function remove($editor, $ids)
 	{
 		if (!$this->_set) {
 			return;
@@ -767,7 +767,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function validate (&$errors, $editor, $data, $action)
+	public function validate(&$errors, $editor, $data, $action)
 	{
 		if (!$this->_set && !isset($data[$this->_name . '-many-count'])) {
 			return;
@@ -812,7 +812,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @private
 	 */
-	private function _apply_where ($query)
+	private function _apply_where($query)
 	{
 		for ($i = 0; $i < count($this->_where); $i++) {
 			if (is_callable($this->_where[$i])) {
@@ -882,7 +882,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @private
 	 */
-	private function _prep ($editor)
+	private function _prep($editor)
 	{
 		$links = $this->_links;
 
@@ -947,7 +947,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @private
 	 */
-	private function _update_row ($db, $parentId, $data)
+	private function _update_row($db, $parentId, $data)
 	{
 		if (isset($this->_join['table'])) {
 			// Got a link table, just insert the pkey references
@@ -1003,7 +1003,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @private
 	 */
-	private function _fields ($direction)
+	private function _fields($direction)
 	{
 		$fields = array();
 
@@ -1033,7 +1033,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	private function _validateFields (&$errors, $editor, $data, $prefix)
+	private function _validateFields(&$errors, $editor, $data, $prefix)
 	{
 		for ($i = 0; $i < count($this->_fields); $i++) {
 			$field = $this->_fields[$i];

@@ -174,7 +174,7 @@ class Upload extends DataTables\Ext
 	 *
 	 * @return self Current instance, used for chaining
 	 */
-	public function action ($action)
+	public function action($action)
 	{
 		$this->_action = $action;
 
@@ -197,7 +197,7 @@ class Upload extends DataTables\Ext
 	 *
 	 * @deprecated Use Validate::fileExtensions
 	 */
-	public function allowedExtensions ($extn, $error = 'This file type cannot be uploaded')
+	public function allowedExtensions($extn, $error = 'This file type cannot be uploaded')
 	{
 		$this->_extns = $extn;
 		$this->_extnError = $error;
@@ -227,7 +227,7 @@ class Upload extends DataTables\Ext
 	 *
 	 * @return self Current instance, used for chaining
 	 */
-	public function db ($table, $pkey, $fields, $format = null)
+	public function db($table, $pkey, $fields, $format = null)
 	{
 		$this->_dbTable = $table;
 		$this->_dbPKey = $pkey;
@@ -285,7 +285,7 @@ class Upload extends DataTables\Ext
 	 *
 	 * @return self Current instance, used for chaining
 	 */
-	public function validator ($fn)
+	public function validator($fn)
 	{
 		$this->_validators[] = $fn;
 
@@ -302,7 +302,7 @@ class Upload extends DataTables\Ext
 	 *
 	 * @return self Current instance, used for chaining
 	 */
-	public function where ($fn)
+	public function where($fn)
 	{
 		$this->_where[] = $fn;
 
@@ -323,7 +323,7 @@ class Upload extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function data ($db, $ids = null)
+	public function data($db, $ids = null)
 	{
 		if (!$this->_dbTable) {
 			return null;
@@ -371,7 +371,7 @@ class Upload extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function dbCleanExec ($editor, $field)
+	public function dbCleanExec($editor, $field)
 	{
 		// Database and file system clean up BEFORE adding the new file to
 		// the db, otherwise it will be removed immediately
@@ -386,7 +386,7 @@ class Upload extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function error ()
+	public function error()
 	{
 		return $this->_error;
 	}
@@ -400,7 +400,7 @@ class Upload extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function exec ($editor)
+	public function exec($editor)
 	{
 		$id = null;
 		$upload = $_FILES['upload'];
@@ -468,7 +468,7 @@ class Upload extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function pkey ()
+	public function pkey()
 	{
 		return $this->_dbPKey;
 	}
@@ -480,7 +480,7 @@ class Upload extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function table ()
+	public function table()
 	{
 		return $this->_dbTable;
 	}
@@ -497,7 +497,7 @@ class Upload extends DataTables\Ext
 	 *
 	 * @return int File    identifier - typically the primary key
 	 */
-	private function _actionExec ($upload, $id)
+	private function _actionExec($upload, $id)
 	{
 		if (!is_string($this->_action)) {
 			// Custom function
@@ -535,7 +535,7 @@ class Upload extends DataTables\Ext
 	 * @param string               $editorTable Editor Editor instance table name
 	 * @param string               $fieldName   Host field's name
 	 */
-	private function _dbClean ($db, $editorTable, $fieldName)
+	private function _dbClean($db, $editorTable, $fieldName)
 	{
 		$callback = $this->_dbCleanCallback;
 
@@ -608,7 +608,7 @@ class Upload extends DataTables\Ext
 	 *
 	 * @return int Primary key value for the newly uploaded file
 	 */
-	private function _dbExec ($upload, $db)
+	private function _dbExec($upload, $db)
 	{
 		$pathFields = array();
 		$insertedId = null;
@@ -722,7 +722,7 @@ class Upload extends DataTables\Ext
 	 *
 	 * @return string Resolved path
 	 */
-	private function _path ($name, $id)
+	private function _path($name, $id)
 	{
 		$extn = pathinfo($name, \PATHINFO_EXTENSION);
 

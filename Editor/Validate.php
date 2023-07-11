@@ -406,7 +406,7 @@ class Validate
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
 	 */
-	public static function numeric ($decimal = '.', $cfg = null)
+	public static function numeric($decimal = '.', $cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
@@ -446,7 +446,7 @@ class Validate
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
 	 */
-	public static function minNum ($min, $decimal = '.', $cfg = null)
+	public static function minNum($min, $decimal = '.', $cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
@@ -492,7 +492,7 @@ class Validate
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
 	 */
-	public static function maxNum ($max, $decimal = '.', $cfg = null)
+	public static function maxNum($max, $decimal = '.', $cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
@@ -538,7 +538,7 @@ class Validate
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
 	 */
-	public static function minMaxNum ($min, $max, $decimal = '.', $cfg = null)
+	public static function minMaxNum($min, $max, $decimal = '.', $cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
@@ -808,7 +808,7 @@ class Validate
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
 	 */
-	public static function xss ($cfg = null)
+	public static function xss($cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
@@ -876,7 +876,7 @@ class Validate
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
 	 */
-	public static function noTags ($cfg = null)
+	public static function noTags($cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
@@ -1086,7 +1086,7 @@ class Validate
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	* File validation methods
 	*/
-	public static function fileExtensions ($extensions, $msg = 'This file type cannot be uploaded.')
+	public static function fileExtensions($extensions, $msg = 'This file type cannot be uploaded.')
 	{
 		return function ($file) use ($extensions, $msg) {
 			$extn = pathinfo($file['name'], \PATHINFO_EXTENSION);
@@ -1101,7 +1101,7 @@ class Validate
 		};
 	}
 
-	public static function fileSize ($size, $msg = 'Uploaded file is too large.')
+	public static function fileSize($size, $msg = 'Uploaded file is too large.')
 	{
 		return function ($file) use ($size, $msg) {
 			return $file['size'] > $size ?
@@ -1113,7 +1113,7 @@ class Validate
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	* Mjoin validation methods
 	*/
-	public static function mjoinMinCount ($count, $msg = 'Too few items.')
+	public static function mjoinMinCount($count, $msg = 'Too few items.')
 	{
 		return function ($editor, $action, $values) use ($count, $msg) {
 			if ($action === 'create' || $action === 'edit') {
@@ -1126,7 +1126,7 @@ class Validate
 		};
 	}
 
-	public static function mjoinMaxCount ($count, $msg = 'Too many items.')
+	public static function mjoinMaxCount($count, $msg = 'Too many items.')
 	{
 		return function ($editor, $action, $values) use ($count, $msg) {
 			if ($action === 'create' || $action === 'edit') {

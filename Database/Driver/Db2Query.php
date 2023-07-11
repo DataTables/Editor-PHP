@@ -69,17 +69,17 @@ class Db2Query extends Query
 		return $conn;
 	}
 
-	public static function transaction ($conn)
+	public static function transaction($conn)
 	{
 		// no op
 	}
 
-	public static function commit ($conn)
+	public static function commit($conn)
 	{
 		// no op
 	}
 
-	public static function rollback ($conn)
+	public static function rollback($conn)
 	{
 		// no op
 	}

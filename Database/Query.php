@@ -183,7 +183,7 @@ abstract class Query
 	 *
 	 * @param \PDO $dbh The Database handle (typically a PDO object, but not always).
 	 */
-	public static function commit ($dbh)
+	public static function commit($dbh)
 	{
 		$dbh->commit();
 	}
@@ -198,7 +198,7 @@ abstract class Query
 	 *
 	 * @return Query
 	 */
-	public static function connect ($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '')
+	public static function connect($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '')
 	{
 		// noop - PHP <7 can't have an abstract static without causing
 		// an error in strict mode. This should technically be an
@@ -210,7 +210,7 @@ abstract class Query
 	 *
 	 * @param \PDO $dbh The Database handle (typically a PDO object, but not always).
 	 */
-	public static function transaction ($dbh)
+	public static function transaction($dbh)
 	{
 		$dbh->beginTransaction();
 	}
@@ -220,7 +220,7 @@ abstract class Query
 	 *
 	 * @param \PDO $dbh The Database handle (typically a PDO object, but not always).
 	 */
-	public static function rollback ($dbh)
+	public static function rollback($dbh)
 	{
 		$dbh->rollBack();
 	}
@@ -234,7 +234,7 @@ abstract class Query
 	 *
 	 * @internal
 	 */
-	public static function dsnPostfix ($dsn)
+	public static function dsnPostfix($dsn)
 	{
 		if (!$dsn) {
 			return '';
@@ -264,7 +264,7 @@ abstract class Query
 	 *
 	 * @return Query
 	 */
-	public function bind ($name, $value, $type = null)
+	public function bind($name, $value, $type = null)
 	{
 		$this->_bindings[] = array(
 			'name' => $this->_safe_bind($name),
@@ -280,7 +280,7 @@ abstract class Query
 	 *
 	 * @return Database Database class instance
 	 */
-	public function database ()
+	public function database()
 	{
 		return $this->_dbHost;
 	}
@@ -293,7 +293,7 @@ abstract class Query
 	 *
 	 * @return Query
 	 */
-	public function distinct ($dis)
+	public function distinct($dis)
 	{
 		$this->_distinct = $dis;
 
@@ -307,7 +307,7 @@ abstract class Query
 	 *
 	 * @return Result
 	 */
-	public function exec ($sql = null)
+	public function exec($sql = null)
 	{
 		$type = strtolower($this->_type);
 
@@ -336,7 +336,7 @@ abstract class Query
 	 *
 	 * @return self
 	 */
-	public function get ($get)
+	public function get($get)
 	{
 		$args = func_get_args();
 
@@ -376,7 +376,7 @@ abstract class Query
 	 *
 	 * @return self
 	 */
-	public function join ($table, $condition, $type = '', $bind = true)
+	public function join($table, $condition, $type = '', $bind = true)
 	{
 		// Tidy and check we know what the join type is
 		if ($type !== '') {
@@ -441,7 +441,7 @@ abstract class Query
 	 *
 	 * @return self
 	 */
-	public function limit ($lim)
+	public function limit($lim)
 	{
 		$this->_limit = $lim;
 
@@ -455,7 +455,7 @@ abstract class Query
 	 *
 	 * @return self
 	 */
-	public function group_by ($group_by)
+	public function group_by($group_by)
 	{
 		$this->_group_by = $group_by;
 
@@ -470,7 +470,7 @@ abstract class Query
 	 *
 	 * @return Query|string[]
 	 */
-	public function pkey ($pkey = null)
+	public function pkey($pkey = null)
 	{
 		if ($pkey === null) {
 			return $this->_pkey;
@@ -490,7 +490,7 @@ abstract class Query
 	 *
 	 * @return self
 	 */
-	public function table ($table)
+	public function table($table)
 	{
 		if ($table === null) {
 			return $this;
@@ -520,7 +520,7 @@ abstract class Query
 	 *
 	 * @return self
 	 */
-	public function offset ($off)
+	public function offset($off)
 	{
 		$this->_offset = $off;
 
@@ -536,7 +536,7 @@ abstract class Query
 	 *
 	 * @return self
 	 */
-	public function order ($order)
+	public function order($order)
 	{
 		if ($order === null) {
 			return $this;
@@ -579,7 +579,7 @@ abstract class Query
 	 *
 	 * @return self
 	 */
-	public function set ($set, $val = null, $bind = true)
+	public function set($set, $val = null, $bind = true)
 	{
 		if ($set === null) {
 			return $this;
@@ -633,7 +633,7 @@ abstract class Query
 	 *         } );
 	 *     ```
 	 */
-	public function where ($key, $value = null, $op = '=', $bind = true)
+	public function where($key, $value = null, $op = '=', $bind = true)
 	{
 		if ($key === null) {
 			return $this;
@@ -671,7 +671,7 @@ abstract class Query
 	 *
 	 * @return self
 	 */
-	public function and_where ($key, $value = null, $op = '=', $bind = true)
+	public function and_where($key, $value = null, $op = '=', $bind = true)
 	{
 		return $this->where($key, $value, $op, $bind);
 	}
@@ -694,7 +694,7 @@ abstract class Query
 	 *
 	 * @return self
 	 */
-	public function or_where ($key, $value = null, $op = '=', $bind = true)
+	public function or_where($key, $value = null, $op = '=', $bind = true)
 	{
 		if ($key === null) {
 			return $this;
@@ -741,7 +741,7 @@ abstract class Query
 	 *     } );
 	 *     ```
 	 */
-	public function where_group ($inOut, $op = 'AND')
+	public function where_group($inOut, $op = 'AND')
 	{
 		if (is_callable($inOut) && is_object($inOut)) {
 			$this->_where_group(true, $op);
@@ -768,7 +768,7 @@ abstract class Query
 	 *
 	 * @return self
 	 */
-	public function where_in ($field, $arr, $operator = 'AND')
+	public function where_in($field, $arr, $operator = 'AND')
 	{
 		if (count($arr) === 0) {
 			return $this;
@@ -1169,7 +1169,7 @@ abstract class Query
 	 *
 	 * @internal
 	 */
-	protected function _safe_bind ($name)
+	protected function _safe_bind($name)
 	{
 		$name = str_replace('.', '_1_', $name);
 		$name = str_replace('-', '_2_', $name);
@@ -1257,7 +1257,7 @@ abstract class Query
 	 * @param string       $op
 	 * @param bool         $bind
 	 */
-	protected function _where ($where, $value = null, $type = 'AND ', $op = '=', $bind = true)
+	protected function _where($where, $value = null, $type = 'AND ', $op = '=', $bind = true)
 	{
 		if ($where === null) {
 			return;
@@ -1316,7 +1316,7 @@ abstract class Query
 	 *
 	 * @internal
 	 */
-	protected function _where_group ($inOut, $op)
+	protected function _where_group($inOut, $op)
 	{
 		$this->_where[] = array(
 			'group' => $inOut ? '(' : ')',

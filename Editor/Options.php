@@ -104,7 +104,7 @@ class Options extends DataTables\Ext
 	 *
 	 * @return Options Self for chaining
 	 */
-	public function add ($label, $value = null)
+	public function add($label, $value = null)
 	{
 		if ($value === null) {
 			$value = $label;
@@ -127,7 +127,7 @@ class Options extends DataTables\Ext
 	 * @return Options|string[] Self if setting for chaining, array of values if
 	 *                          getting.
 	 */
-	public function label ($_ = null)
+	public function label($_ = null)
 	{
 		if ($_ === null) {
 			return $this;
@@ -150,7 +150,7 @@ class Options extends DataTables\Ext
 	 *
 	 * @return self
 	 */
-	public function leftJoin ($table, $field1, $operator, $field2)
+	public function leftJoin($table, $field1, $operator, $field2)
 	{
 		$this->_leftJoin[] = array(
 			'table' => $table,
@@ -169,7 +169,7 @@ class Options extends DataTables\Ext
 	 *
 	 * @return Options|string[] Self if setting for chaining, limit if getting.
 	 */
-	public function limit ($_ = null)
+	public function limit($_ = null)
 	{
 		return $this->_getSet($this->_limit, $_);
 	}
@@ -183,7 +183,7 @@ class Options extends DataTables\Ext
 	 *
 	 * @return Options|string Self if setting for chaining, string if getting.
 	 */
-	public function order ($_ = null)
+	public function order($_ = null)
 	{
 		return $this->_getSet($this->_order, $_);
 	}
@@ -198,7 +198,7 @@ class Options extends DataTables\Ext
 	 * @return Options|callable Self if setting for chaining, callable if
 	 *                          getting.
 	 */
-	public function render ($_ = null)
+	public function render($_ = null)
 	{
 		return $this->_getSet($this->_renderer, $_);
 	}
@@ -211,7 +211,7 @@ class Options extends DataTables\Ext
 	 *
 	 * @return Options|string Self if setting for chaining, string if getting.
 	 */
-	public function table ($_ = null)
+	public function table($_ = null)
 	{
 		return $this->_getSet($this->_table, $_);
 	}
@@ -224,7 +224,7 @@ class Options extends DataTables\Ext
 	 *
 	 * @return Options|string Self if setting for chaining, string if getting.
 	 */
-	public function value ($_ = null)
+	public function value($_ = null)
 	{
 		return $this->_getSet($this->_value, $_);
 	}
@@ -238,7 +238,7 @@ class Options extends DataTables\Ext
 	 * @return Options|callable Self if setting for chaining, callable if
 	 *                          getting.
 	 */
-	public function where ($_ = null)
+	public function where($_ = null)
 	{
 		return $this->_getSet($this->_where, $_);
 	}
@@ -256,7 +256,7 @@ class Options extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function exec ($db)
+	public function exec($db)
 	{
 		$label = $this->_label;
 		$value = $this->_value;

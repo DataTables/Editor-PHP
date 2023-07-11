@@ -99,7 +99,7 @@ class SearchPaneOptions extends DataTables\Ext
 	 * @return Options|string[] Self if setting for chaining, array of values if
 	 *                          getting.
 	 */
-	public function label ($_ = null)
+	public function label($_ = null)
 	{
 		if ($_ === null) {
 			return $this;
@@ -121,7 +121,7 @@ class SearchPaneOptions extends DataTables\Ext
 	 *
 	 * @return Options|string Self if setting for chaining, string if getting.
 	 */
-	public function order ($_ = null)
+	public function order($_ = null)
 	{
 		return $this->_getSet($this->_order, $_);
 	}
@@ -136,7 +136,7 @@ class SearchPaneOptions extends DataTables\Ext
 	 * @return Options|callable Self if setting for chaining, callable if
 	 *                          getting.
 	 */
-	public function render ($_ = null)
+	public function render($_ = null)
 	{
 		return $this->_getSet($this->_renderer, $_);
 	}
@@ -149,7 +149,7 @@ class SearchPaneOptions extends DataTables\Ext
 	 *
 	 * @return Options|string Self if setting for chaining, string if getting.
 	 */
-	public function table ($_ = null)
+	public function table($_ = null)
 	{
 		return $this->_getSet($this->_table, $_);
 	}
@@ -162,7 +162,7 @@ class SearchPaneOptions extends DataTables\Ext
 	 *
 	 * @return Options|string Self if setting for chaining, string if getting.
 	 */
-	public function value ($_ = null)
+	public function value($_ = null)
 	{
 		return $this->_getSet($this->_value, $_);
 	}
@@ -176,7 +176,7 @@ class SearchPaneOptions extends DataTables\Ext
 	 * @return Options|callable Self if setting for chaining, callable if
 	 *                          getting.
 	 */
-	public function where ($_ = null)
+	public function where($_ = null)
 	{
 		return $this->_getSet($this->_where, $_);
 	}
@@ -192,7 +192,7 @@ class SearchPaneOptions extends DataTables\Ext
 	 *
 	 * @return self
 	 */
-	public function leftJoin ($table, $field1, $operator, $field2)
+	public function leftJoin($table, $field1, $operator, $field2)
 	{
 		$this->_leftJoin[] = array(
 			'table' => $table,
@@ -211,7 +211,7 @@ class SearchPaneOptions extends DataTables\Ext
 	 *
 	 * @return self
 	 */
-	private function _get_where ($query)
+	private function _get_where($query)
 	{
 		for ($i = 0; $i < count($this->_where); $i++) {
 			if (is_callable($this->_where[$i])) {
@@ -239,7 +239,7 @@ class SearchPaneOptions extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function exec ($field, $editor, $http, $fields, $leftJoinIn)
+	public function exec($field, $editor, $http, $fields, $leftJoinIn)
 	{
 		$db = $editor->db();
 		$readTable = $editor->readTable();

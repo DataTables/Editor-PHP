@@ -31,7 +31,7 @@ class Ext
 	 *
 	 * @static
 	 */
-	public static function instantiate ()
+	public static function instantiate()
 	{
 		$rc = new \ReflectionClass(get_called_class());
 		$args = func_get_args();
@@ -52,7 +52,7 @@ class Ext
 	 *
 	 * @static
 	 */
-	public static function inst ()
+	public static function inst()
 	{
 		$rc = new \ReflectionClass(get_called_class());
 		$args = func_get_args();
@@ -110,7 +110,7 @@ class Ext
 	 *
 	 * @private
 	 */
-	protected function _propExists ($name, $data)
+	protected function _propExists($name, $data)
 	{
 		if (strpos($name, '.') === false) {
 			return isset($data[$name]);
@@ -149,7 +149,7 @@ class Ext
 	 *
 	 * @private
 	 */
-	protected function _readProp ($name, $data)
+	protected function _readProp($name, $data)
 	{
 		if (strpos($name, '.') === false) {
 			return isset($data[$name]) ?

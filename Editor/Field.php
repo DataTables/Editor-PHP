@@ -185,7 +185,7 @@ class Field extends DataTables\Ext
 	 * @return string|self The name of the db field if no parameter is given,
 	 *                     or self if used as a setter.
 	 */
-	public function dbField ($_ = null)
+	public function dbField($_ = null)
 	{
 		if ($_ === null) {
 			return $this->_dbField;
@@ -214,7 +214,7 @@ class Field extends DataTables\Ext
 	 * @return bool|self The get property if no parameter is given, or self
 	 *                   if used as a setter.
 	 */
-	public function get ($_ = null)
+	public function get($_ = null)
 	{
 		return $this->_getSet($this->_get, $_);
 	}
@@ -241,7 +241,7 @@ class Field extends DataTables\Ext
 	 * @return callable|string|self The get formatter if no parameter is given, or
 	 *                              self if used as a setter.
 	 */
-	public function getFormatter ($_ = null, $opts = null)
+	public function getFormatter($_ = null, $opts = null)
 	{
 		if ($opts !== null) {
 			$this->_getFormatterOpts = $opts;
@@ -260,7 +260,7 @@ class Field extends DataTables\Ext
 	 * @return callable|string|self Value if used as a getter, or self if used
 	 *                              as a setter.
 	 */
-	public function getValue ($_ = null)
+	public function getValue($_ = null)
 	{
 		return $this->_getSet($this->_getValue, $_);
 	}
@@ -278,7 +278,7 @@ class Field extends DataTables\Ext
 	 * @return string|self The name property if no parameter is given, or self
 	 *                     if used as a setter.
 	 */
-	public function name ($_ = null)
+	public function name($_ = null)
 	{
 		return $this->_getSet($this->_name, $_);
 	}
@@ -304,7 +304,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @return Field Self for chaining
 	 */
-	public function options ($table = null, $value = null, $label = null, $condition = null, $format = null, $order = null)
+	public function options($table = null, $value = null, $label = null, $condition = null, $format = null, $order = null)
 	{
 		if ($table === null) {
 			return $this->_opts;
@@ -349,7 +349,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @return self
 	 */
-	public function searchPaneOptions ($spInput = null)
+	public function searchPaneOptions($spInput = null)
 	{
 		if ($spInput === null) {
 			return $this->_spopts;
@@ -376,7 +376,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @return self
 	 */
-	public function searchBuilderOptions ($sbInput = null)
+	public function searchBuilderOptions($sbInput = null)
 	{
 		if ($sbInput === null) {
 			return $this->_sbopts;
@@ -418,7 +418,7 @@ class Field extends DataTables\Ext
 	 * @return string|self The set property if no parameter is given, or self
 	 *                     if used as a setter.
 	 */
-	public function set ($_ = null)
+	public function set($_ = null)
 	{
 		if ($_ === true) {
 			$_ = Field::SET_BOTH;
@@ -451,7 +451,7 @@ class Field extends DataTables\Ext
 	 * @return callable|string|self The set formatter if no parameter is given, or
 	 *                              self if used as a setter.
 	 */
-	public function setFormatter ($_ = null, $opts = null)
+	public function setFormatter($_ = null, $opts = null)
 	{
 		if ($opts !== null) {
 			$this->_setFormatterOpts = $opts;
@@ -470,7 +470,7 @@ class Field extends DataTables\Ext
 	 * @return callable|string|self Value if used as a getter, or self if used
 	 *                              as a setter.
 	 */
-	public function setValue ($_ = null)
+	public function setValue($_ = null)
 	{
 		return $this->_getSet($this->_setValue, $_);
 	}
@@ -483,7 +483,7 @@ class Field extends DataTables\Ext
 	 * @return Upload|self Value if used as a getter, or self if used
 	 *                     as a setter.
 	 */
-	public function upload ($_ = null)
+	public function upload($_ = null)
 	{
 		return $this->_getSet($this->_upload, $_);
 	}
@@ -512,7 +512,7 @@ class Field extends DataTables\Ext
 	 * @return callable|string|self The validation method if no parameter is given,
 	 *                              or self if used as a setter.
 	 */
-	public function validator ($_ = null, $opts = null)
+	public function validator($_ = null, $opts = null)
 	{
 		if ($_ === null) {
 			return $this->_validator;
@@ -546,7 +546,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @return Field Self for chaining.
 	 */
-	public function xss ($xssFormatter)
+	public function xss($xssFormatter)
 	{
 		if ($xssFormatter === true || $xssFormatter === false || $xssFormatter === null) {
 			$this->_xssFormat = $xssFormatter;
@@ -576,7 +576,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function apply ($action, $data = null)
+	public function apply($action, $data = null)
 	{
 		if ($action === 'get') {
 			// Get action - can we get this field
@@ -618,7 +618,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function optionsExec ($db)
+	public function optionsExec($db)
 	{
 		if ($this->_optsFn) {
 			$fn = $this->_optsFn;
@@ -645,7 +645,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function searchPaneOptionsExec ($field, $editor, $http, $fields, $leftJoin)
+	public function searchPaneOptionsExec($field, $editor, $http, $fields, $leftJoin)
 	{
 		if ($this->_spoptsFn) {
 			$fn = $this->_spoptsFn;
@@ -672,7 +672,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function searchBuilderOptionsExec ($field, $editor, $http, $fields, $leftJoin)
+	public function searchBuilderOptionsExec($field, $editor, $http, $fields, $leftJoin)
 	{
 		if ($this->_sboptsFn) {
 			$fn = $this->_sboptsFn;
@@ -702,7 +702,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function val ($direction, $data)
+	public function val($direction, $data)
 	{
 		if ($direction === 'get') {
 			if ($this->_getValue !== null) {
@@ -762,7 +762,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function validate ($data, $editor, $id = null)
+	public function validate($data, $editor, $id = null)
 	{
 		// Three cases for the validator - closure, string or null
 		if (!count($this->_validator)) {
@@ -841,7 +841,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @return string Safe value
 	 */
-	public function xssSafety ($val)
+	public function xssSafety($val)
 	{
 		$xss = $this->_xss;
 
@@ -916,7 +916,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @return mixed Value assigned, or returned from the function
 	 */
-	private function _getAssignedValue ($val)
+	private function _getAssignedValue($val)
 	{
 		return is_callable($val) && is_object($val) ?
 			$val() :
@@ -935,7 +935,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @private
 	 */
-	private function _inData ($name, $data)
+	private function _inData($name, $data)
 	{
 		if (strpos($name, '.') === false) {
 			return isset($data[$name]) ?
