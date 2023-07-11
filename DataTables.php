@@ -22,6 +22,7 @@ if (version_compare(PHP_VERSION, '5.3.0', '<')) {
 			'great new features that the Editor libraries take advantage of to ' .
 			'present an easy to use and flexible API.'
 	));
+
 	exit(1);
 }
 

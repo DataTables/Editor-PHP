@@ -80,6 +80,7 @@ class FirebirdQuery extends Query
 				'error' => 'An error occurred while connecting to the database ' .
 					"'{$db}'. The error reported by the server was: " . $e->getMessage()
 			));
+
 			exit(1);
 		}
 
@@ -126,6 +127,7 @@ class FirebirdQuery extends Query
 		}
 
 		$resource = $this->database()->resource();
+
 		return new FirebirdResult($resource, $this->_stmt, $this->_pkeyInsertedTo);
 	}
 }

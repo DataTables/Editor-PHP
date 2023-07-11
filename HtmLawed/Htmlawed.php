@@ -248,6 +248,7 @@ class Htmlawed
 		if (isset($oldS)) {
 			$GLOBALS['S'] = $oldS;
 		}
+
 		return $t;
 	}
 
@@ -286,41 +287,49 @@ class Htmlawed
 						if ($lengthVal > $ruleVal) {
 							$ok = 0;
 						}
+
 						break;
 					case 'minlen':
 						if ($lengthVal < $ruleVal) {
 							$ok = 0;
 						}
+
 						break;
 					case 'maxval':
 						if ((float) ($v) > $ruleVal) {
 							$ok = 0;
 						}
+
 						break;
 					case 'minval':
 						if ((float) ($v) < $ruleVal) {
 							$ok = 0;
 						}
+
 						break;
 					case 'match':
 						if (!preg_match($ruleVal, $v)) {
 							$ok = 0;
 						}
+
 						break;
 					case 'nomatch':
 						if (preg_match($ruleVal, $v)) {
 							$ok = 0;
 						}
+
 						break;
 					case 'oneof':
 						if (!in_array($v, explode('|', $ruleVal))) {
 							$ok = 0;
 						}
+
 						break;
 					case 'noneof':
 						if (in_array($v, explode('|', $ruleVal))) {
 							$ok = 0;
 						}
+
 						break;
 					default:
 						break;
@@ -334,6 +343,7 @@ class Htmlawed
 			}
 		}
 		$out = implode($valSep == ',' ? ', ' : ' ', $out);
+
 		return (isset($out[0]) ? $out : (isset($ruleAr['default']) ? $ruleAr['default'] : 0));
 	}
 
@@ -487,6 +497,7 @@ class Htmlawed
 
 			if (!preg_match('`^(/?)([a-z][^ >]*)([^>]*)>(.*)`sm', $t[$i], $m)) {
 				$content = $t[$i];
+
 				continue;
 			}
 			$slash = null; // Closing tag's slash
@@ -505,6 +516,7 @@ class Htmlawed
 					array_pop($openEleQueue);
 					echo '</', $ele, '>';
 					unset($ele);
+
 					continue;
 				}
 				$closedTags = ''; // Nesting, so close open elements as necessary
@@ -517,6 +529,7 @@ class Htmlawed
 				}
 				echo $closedTags, '</', $ele, '>';
 				unset($ele);
+
 				continue;
 			}
 
@@ -528,6 +541,7 @@ class Htmlawed
 				unset($ele, $content);
 				++$eleCount;
 				--$i;
+
 				continue;
 			}
 			if (strpos($ele, '-')) { // Custom element
@@ -543,6 +557,7 @@ class Htmlawed
 				unset($ele, $content);
 				++$eleCount;
 				--$i;
+
 				continue;
 			}
 			if (
@@ -556,6 +571,7 @@ class Htmlawed
 						unset($ele, $content);
 						--$i;
 					}
+
 					continue;
 				}
 				if (!isset($noKidEleAr[$ele])) {
@@ -563,6 +579,7 @@ class Htmlawed
 				}
 				echo '<', $ele, $attrs, '>';
 				unset($ele);
+
 				continue;
 			}
 			if (isset($validMomKidAr[$eleNow][$ele])) { // Specific parent-child relation
@@ -571,6 +588,7 @@ class Htmlawed
 				}
 				echo '<', $ele, $attrs, '>';
 				unset($ele);
+
 				continue;
 			}
 			$closedTags = ''; // Nesting, so close open elements as needed
@@ -580,6 +598,7 @@ class Htmlawed
 				$validKids2 = array();
 				if (isset($validMomKidAr[$closableEle])) {
 					$openEleQueue2[] = $closableEle;
+
 					continue;
 				}
 				$validKids2 = isset($inlineKidEleAr[$closableEle]) ? $inlineEleAr : $flowEleAr;
@@ -597,6 +616,7 @@ class Htmlawed
 					for (; ++$k < $kc;) {
 						$closedTags = "</{$openEleQueue[$k]}>{$closedTags}";
 					}
+
 					break;
 				} else {
 					$openEleQueue2[] = $closableEle;
@@ -608,6 +628,7 @@ class Htmlawed
 			}
 			echo $closedTags, '<', $ele, $attrs, '>';
 			unset($ele);
+
 			continue;
 		} // End of For: loop over elements
 
@@ -685,6 +706,7 @@ class Htmlawed
 		}
 		$o = ob_get_contents();
 		ob_end_clean();
+
 		return $o;
 	}
 
@@ -715,6 +737,7 @@ class Htmlawed
 			$t = substr($t, 1, -1);
 		}
 		$t = $rule == 2 ? str_replace(array('&', '<', '>'), array('&amp;', '&lt;', '&gt;'), $t) : $t;
+
 		return
 		  str_replace(
 		  	array('&', '<', '>'),
@@ -736,18 +759,22 @@ class Htmlawed
 	{
 		if ($ele == 'big') {
 			$ele = 'span';
+
 			return 'font-size: larger;';
 		}
 		if ($ele == 's' || $ele == 'strike') {
 			$ele = 'span';
+
 			return 'text-decoration: line-through;';
 		}
 		if ($ele == 'tt') {
 			$ele = 'code';
+
 			return '';
 		}
 		if ($ele == 'center') {
 			$ele = 'div';
+
 			return 'text-align: center;';
 		}
 		static $fontSizeAr = array('0' => 'xx-small', '1' => 'xx-small', '2' => 'small', '3' => 'medium', '4' => 'large', '5' => 'x-large', '6' => 'xx-large', '7' => '300%', '-1' => 'smaller', '-2' => '60%', '+1' => 'larger', '+2' => '150%', '+3' => '200%', '+4' => '300%');
@@ -770,20 +797,25 @@ class Htmlawed
 				$attrStrNew .= ' font-family: ' . str_replace(array('"', ';', ':'), '\'', trim($m[3])) . ';';
 			}
 			$ele = 'span';
+
 			return ltrim(str_replace('<', '', $attrStrNew));
 		}
 		if ($ele == 'acronym') {
 			$ele = 'abbr';
+
 			return '';
 		}
 		if ($ele == 'dir') {
 			$ele = 'ul';
+
 			return '';
 		}
 		if ($act == 2) {
 			$ele = 0;
+
 			return 0;
 		}
+
 		return '';
 	}
 
@@ -838,6 +870,7 @@ class Htmlawed
 		) {
 			return ($C['and_mark'] ? "\x06" : '&') . "amp;#{$t};";
 		}
+
 		return
 		  ($C['and_mark'] ? "\x06" : '&')
 		  . '#'
@@ -887,6 +920,7 @@ class Htmlawed
 		if ($valShowErr) {
 			ini_set('display_errors', '1');
 		}
+
 		return $out;
 	}
 
@@ -944,14 +978,17 @@ class Htmlawed
 				}
 				if (($attr = strtolower($m[1])) == '-*') {
 					$denyAttrAr['*'] = 1;
+
 					continue;
 				}
 				if ($attr[0] == '-') {
 					$denyAttrAr[substr($attr, 1)] = 1;
+
 					continue;
 				}
 				if (!isset($m[2])) {
 					$ruleAr[$attr] = 1;
+
 					continue;
 				}
 				foreach (explode('/', $m[2]) as $m) {
@@ -960,6 +997,7 @@ class Htmlawed
 						|| $rulePos < 5 // Shortest rule: oneof
 					) {
 						$ruleAr[$attr] = 1;
+
 						continue;
 					}
 					$rule = strtolower(substr($m, 0, $rulePos));
@@ -1134,6 +1172,7 @@ class Htmlawed
 						$ok = $state = 1;
 						$attrStr = ltrim(substr_replace($attrStr, '', 0, strlen($m[0])));
 					}
+
 					break;
 				case 1:
 					if ($attrStr[0] == '=') {
@@ -1146,6 +1185,7 @@ class Htmlawed
 						$attrStr = ltrim($attrStr);
 						$attrAr[$attr] = '';
 					}
+
 					break;
 				case 2:
 					if (preg_match('`^((?:"[^"]*")|(?:\'[^\']*\')|(?:\s*[^\s"\']+))(.*)`', $attrStr, $m)) { // Value
@@ -1164,6 +1204,7 @@ class Htmlawed
 						  	)
 						  );
 					}
+
 					break;
 			}
 			if (!$ok) {
@@ -1456,6 +1497,7 @@ class Htmlawed
 			foreach ($filtAttrAr as $k => $v) {
 				$attrStr .= " {$k}=\"{$v}\"";
 			}
+
 			return "<{$ele}{$attrStr}" . (isset($emptyEleAr[$ele]) ? ' /' : '') . '>';
 		} else {
 			return call_user_func($C['hook_tag'], $ele, $filtAttrAr);
@@ -1544,12 +1586,14 @@ class Htmlawed
 						} else {
 							++$leadN;
 							ob_end_clean();
+
 							continue 2;
 						}
 					} else {
 						echo "\n", str_repeat($padStr, $n), "$tag\n", str_repeat($padStr, ($open != 1 ? ++$n : $n));
 					}
 					echo $rest;
+
 					continue;
 				}
 				$pad = "\n" . str_repeat($padStr, $n);
@@ -1576,6 +1620,7 @@ class Htmlawed
 		if (($newline = strpos(" $format", 'r') ? (strpos(" $format", 'n') ? "\r\n" : "\r") : 0)) {
 			$t = str_replace("\n", $newline, $t);
 		}
+
 		return str_replace(array("\x01", "\x02", "\x03", "\x04", "\x05", "\x07"), array('<', '>', "\n", "\r", "\t", ' '), $t);
 	}
 
@@ -1634,6 +1679,7 @@ class Htmlawed
 				}
 			}
 		}
+
 		return "{$preUrl}{$url}{$postUrl}";
 	}
 

@@ -56,6 +56,7 @@ class ValidateOptions extends DataTables\Ext
 		}
 
 		$this->_message = $msg;
+
 		return $this;
 	}
 
@@ -74,6 +75,7 @@ class ValidateOptions extends DataTables\Ext
 		}
 
 		$this->_empty = $empty;
+
 		return $this;
 	}
 
@@ -92,6 +94,7 @@ class ValidateOptions extends DataTables\Ext
 		}
 
 		$this->_optional = $optional;
+
 		return $this;
 	}
 

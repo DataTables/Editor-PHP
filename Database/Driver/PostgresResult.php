@@ -63,6 +63,7 @@ class PostgresResult extends Result
 	{
 		// Only useful after an insert of course...
 		$rows = $this->_stmt->fetchAll();
+
 		return $rows[0]['dt_pkey'];
 	}
 }

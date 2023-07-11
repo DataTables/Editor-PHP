@@ -109,6 +109,7 @@ class Format
 			if ($date) {
 				return date_format($date, 'Y-m-d');
 			}
+
 			return null;
 		};
 	}
@@ -314,6 +315,7 @@ class Format
 		if ($opts === null) {
 			$opts = '|';
 		}
+
 		return self::explode($opts);
 	}
 
@@ -325,6 +327,7 @@ class Format
 		if ($opts === null) {
 			$opts = '|';
 		}
+
 		return self::implode($opts);
 	}
 
@@ -352,6 +355,7 @@ class Format
 		if ($opts === null) {
 			$opts = ',';
 		}
+
 		return self::fromDecimalChar($opts);
 	}
 
@@ -363,6 +367,7 @@ class Format
 		if ($opts === null) {
 			$opts = ',';
 		}
+
 		return self::toDecimalChar($opts);
 	}
 }

@@ -335,6 +335,7 @@ class Editor extends Ext
 		if ($_ !== null && !is_array($_)) {
 			$_ = $args;
 		}
+
 		return $this->_getSet($this->_fields, $_, true);
 	}
 
@@ -358,6 +359,7 @@ class Editor extends Ext
 		if ($_ !== null && !is_array($_)) {
 			$_ = $args;
 		}
+
 		return $this->_getSet($this->_fields, $_, true);
 	}
 
@@ -414,6 +416,7 @@ class Editor extends Ext
 		if ($_ !== null && !is_array($_)) {
 			$_ = $args;
 		}
+
 		return $this->_getSet($this->_join, $_, true);
 	}
 
@@ -445,6 +448,7 @@ class Editor extends Ext
 
 			return $this;
 		}
+
 		return json_encode($this->_out);
 	}
 
@@ -471,6 +475,7 @@ class Editor extends Ext
 		}
 
 		echo $callback . '(' . json_encode($this->_out) . ');';
+
 		return $this;
 	}
 
@@ -598,8 +603,10 @@ class Editor extends Ext
 	{
 		if (is_string($_)) {
 			$this->_pkey = array($_);
+
 			return $this;
 		}
+
 		return $this->_getSet($this->_pkey, $_);
 	}
 
@@ -753,6 +760,7 @@ class Editor extends Ext
 		if ($_ !== null && !is_array($_)) {
 			$_ = $args;
 		}
+
 		return $this->_getSet($this->_readTableNames, $_, true);
 	}
 
@@ -777,6 +785,7 @@ class Editor extends Ext
 		if ($_ !== null && !is_array($_)) {
 			$_ = $args;
 		}
+
 		return $this->_getSet($this->_table, $_, true);
 	}
 
@@ -992,6 +1001,7 @@ class Editor extends Ext
 
 					if (is_string($ret)) {
 						$this->_out['error'] = $ret;
+
 						break;
 					}
 				}
@@ -1748,6 +1758,7 @@ class Editor extends Ext
 							// Call the or_where function - has to be or logic in this block
 							$query->or_where($crit['origData'], $val1, '=');
 						}
+
 						break;
 					case '!=':
 						if ($data['logic'] === 'AND' || $first) {
@@ -1756,6 +1767,7 @@ class Editor extends Ext
 						} else {
 							$query->or_where($crit['origData'], $val1, '<>');
 						}
+
 						break;
 					case 'contains':
 						if ($data['logic'] === 'AND' || $first) {
@@ -1764,6 +1776,7 @@ class Editor extends Ext
 						} else {
 							$query->or_where($crit['origData'], '%' . $val1 . '%', 'LIKE');
 						}
+
 						break;
 					case '!contains':
 						if ($data['logic'] === 'AND' || $first) {
@@ -1772,6 +1785,7 @@ class Editor extends Ext
 						} else {
 							$query->or_where($crit['origData'], '%' . $val1 . '%', 'NOT LIKE');
 						}
+
 						break;
 					case 'starts':
 						if ($data['logic'] === 'AND' || $first) {
@@ -1780,6 +1794,7 @@ class Editor extends Ext
 						} else {
 							$query->or_where($crit['origData'], $val1 . '%', 'LIKE');
 						}
+
 						break;
 					case '!starts':
 						if ($data['logic'] === 'AND' || $first) {
@@ -1788,6 +1803,7 @@ class Editor extends Ext
 						} else {
 							$query->or_where($crit['origData'], $val1 . '%', 'NOT LIKE');
 						}
+
 						break;
 					case 'ends':
 						if ($data['logic'] === 'AND' || $first) {
@@ -1796,6 +1812,7 @@ class Editor extends Ext
 						} else {
 							$query->or_where($crit['origData'], '%' . $val1, 'LIKE');
 						}
+
 						break;
 					case '!ends':
 						if ($data['logic'] === 'AND' || $first) {
@@ -1804,6 +1821,7 @@ class Editor extends Ext
 						} else {
 							$query->or_where($crit['origData'], '%' . $val1, 'NOT LIKE');
 						}
+
 						break;
 					case '<':
 						if ($data['logic'] === 'AND' || $first) {
@@ -1812,6 +1830,7 @@ class Editor extends Ext
 						} else {
 							$query->or_where($crit['origData'], $val1, '<');
 						}
+
 						break;
 					case '<=':
 						if ($data['logic'] === 'AND' || $first) {
@@ -1820,6 +1839,7 @@ class Editor extends Ext
 						} else {
 							$query->or_where($crit['origData'], $val1, '<=');
 						}
+
 						break;
 					case '>=':
 						if ($data['logic'] === 'AND' || $first) {
@@ -1828,6 +1848,7 @@ class Editor extends Ext
 						} else {
 							$query->or_where($crit['origData'], $val1, '>=');
 						}
+
 						break;
 					case '>':
 						if ($data['logic'] === 'AND' || $first) {
@@ -1836,6 +1857,7 @@ class Editor extends Ext
 						} else {
 							$query->or_where($crit['origData'], $val1, '>');
 						}
+
 						break;
 					case 'between':
 						if ($data['logic'] === 'AND' || $first) {
@@ -1850,6 +1872,7 @@ class Editor extends Ext
 								->or_where($crit['origData'], is_numeric($val1) ? intval($val1) : $val1, '>=')
 								->where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '<=');
 						}
+
 						break;
 					case '!between':
 						if ($data['logic'] === 'AND' || $first) {
@@ -1860,6 +1883,7 @@ class Editor extends Ext
 						} else {
 							$query->or_where($crit['origData'], is_numeric($val1) ? intval($val1) : $val1, '<')->or_where($crit['origData'], is_numeric($val2) ? intval($val2) : $val2, '>');
 						}
+
 						break;
 					case 'null':
 						if ($data['logic'] === 'AND' || $first) {
@@ -1878,6 +1902,7 @@ class Editor extends Ext
 								}
 							}, 'OR');
 						}
+
 						break;
 					case '!null':
 						if ($data['logic'] === 'AND' || $first) {
@@ -1896,12 +1921,14 @@ class Editor extends Ext
 								}
 							}, 'OR');
 						}
+
 						break;
 					default:
 						break;
 				}
 			}
 		}
+
 		return $query;
 	}
 
@@ -2411,6 +2438,7 @@ class Editor extends Ext
 	{
 		if (stripos($name, ' as ') !== false) {
 			$a = preg_split('/ as /i', $name);
+
 			return $type === 'alias' ?
 				$a[1] :
 				$a[0];
@@ -2418,6 +2446,7 @@ class Editor extends Ext
 
 		if (stripos($name, ' ') !== false) {
 			$a = preg_split('/ /i', $name);
+
 			return $type === 'alias' ?
 				$a[1] :
 				$a[0];
@@ -2464,6 +2493,7 @@ class Editor extends Ext
 		} else if ($type === 'table') {
 			return $table;
 		}
+
 		return $column;
 	}
 

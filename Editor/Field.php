@@ -247,6 +247,7 @@ class Field extends DataTables\Ext
 		if ($opts !== null) {
 			$this->_getFormatterOpts = $opts;
 		}
+
 		return $this->_getSet($this->_getFormatter, $_);
 	}
 
@@ -456,6 +457,7 @@ class Field extends DataTables\Ext
 		if ($opts !== null) {
 			$this->_setFormatterOpts = $opts;
 		}
+
 		return $this->_getSet($this->_setFormatter, $_);
 	}
 
@@ -621,6 +623,7 @@ class Field extends DataTables\Ext
 	{
 		if ($this->_optsFn) {
 			$fn = $this->_optsFn;
+
 			return $fn($db);
 		} else if ($this->_opts) {
 			return $this->_opts->exec($db);
@@ -647,6 +650,7 @@ class Field extends DataTables\Ext
 	{
 		if ($this->_spoptsFn) {
 			$fn = $this->_spoptsFn;
+
 			return $fn($editor->db(), $editor);
 		} else if ($this->_spopts) {
 			return $this->_spopts->exec($field, $editor, $http, $fields, $leftJoin);
@@ -673,6 +677,7 @@ class Field extends DataTables\Ext
 	{
 		if ($this->_sboptsFn) {
 			$fn = $this->_sboptsFn;
+
 			return $fn($editor->db(), $editor);
 		} else if ($this->_sbopts) {
 			return $this->_sbopts->exec($field, $editor, $http, $fields, $leftJoin);

@@ -70,6 +70,7 @@ class PostgresQuery extends Query
 				'error' => 'An error occurred while connecting to the database ' .
 					"'{$db}'. The error reported by the server was: " . $e->getMessage()
 			));
+
 			exit(1);
 		}
 
@@ -135,6 +136,7 @@ class PostgresQuery extends Query
 		}
 
 		$resource = $this->database()->resource();
+
 		return new PostgresResult($resource, $this->_stmt);
 	}
 }

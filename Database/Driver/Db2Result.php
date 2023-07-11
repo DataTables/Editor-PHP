@@ -47,6 +47,7 @@ class Db2Result extends Result
 	public function count ()
 	{
 		$all = $this->_fetchAll();
+
 		return count($all);
 	}
 
@@ -58,6 +59,7 @@ class Db2Result extends Result
 	public function fetchAll ($fetchType = \PDO::FETCH_ASSOC)
 	{
 		$all = $this->_fetchAll();
+
 		return $all;
 	}
 
@@ -72,6 +74,7 @@ class Db2Result extends Result
 		while ($row = db2_fetch_assoc($this->_stmt)) {
 			$a[] = $row;
 		}
+
 		return $a;
 	}
 }

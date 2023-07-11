@@ -81,7 +81,6 @@ return $config
 
 		// TODO
 		'array_syntax' => false,
-		'blank_line_before_statement' => false,
 		'class_attributes_separation' => false,
 		'class_definition' => false,
 		'constant_case' => false,

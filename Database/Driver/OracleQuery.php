@@ -62,6 +62,7 @@ class OracleQuery extends Query
 			echo json_encode(array(
 				'error' => 'oci methods are not available in this PHP install to connect to Oracle'
 			));
+
 			exit(1);
 		}
 
@@ -76,6 +77,7 @@ class OracleQuery extends Query
 				'error' => 'An error occurred while connecting to the database ' .
 					"'{$db}'. The error reported by the server was: " . $e['message']
 			));
+
 			exit(1);
 		}
 
@@ -155,10 +157,12 @@ class OracleQuery extends Query
 
 		if (!$res) {
 			$e = oci_error($this->_stmt);
+
 			throw new \Exception('Oracle SQL error: ' . $e['message']);
 		}
 
 		$resource = $this->database()->resource();
+
 		return new OracleResult($resource, $this->_stmt, $this->_editor_pkey_value);
 	}
 

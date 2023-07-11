@@ -412,6 +412,7 @@ class Upload extends DataTables\Ext
 			} else {
 				$this->_error = 'There was an error uploading the file (' . $upload['error'] . ')';
 			}
+
 			return false;
 		}
 
@@ -421,6 +422,7 @@ class Upload extends DataTables\Ext
 
 			if (in_array(strtolower($extn), array_map('strtolower', $this->_extns)) === false) {
 				$this->_error = $this->_extnError;
+
 				return false;
 			}
 		}
@@ -431,6 +433,7 @@ class Upload extends DataTables\Ext
 
 			if (is_string($res)) {
 				$this->_error = $res;
+
 				return false;
 			}
 		}
@@ -499,6 +502,7 @@ class Upload extends DataTables\Ext
 		if (!is_string($this->_action)) {
 			// Custom function
 			$action = $this->_action;
+
 			return $action($upload, $id);
 		}
 
@@ -509,6 +513,7 @@ class Upload extends DataTables\Ext
 
 		if ($res === false) {
 			$this->_error = 'An error occurred while moving the uploaded file.';
+
 			return false;
 		}
 
@@ -620,6 +625,7 @@ class Upload extends DataTables\Ext
 					break;
 				case self::DB_CONTENT:
 					$q->set($column, file_get_contents($upload['tmp_name']));
+
 					break;
 				case self::DB_CONTENT_TYPE:
 				case self::DB_MIME_TYPE:
@@ -628,24 +634,30 @@ class Upload extends DataTables\Ext
 					finfo_close($finfo);
 
 					$q->set($column, $mime);
+
 					break;
 				case self::DB_EXTN:
 					$extn = pathinfo($upload['name'], PATHINFO_EXTENSION);
 					$q->set($column, $extn);
+
 					break;
 				case self::DB_FILE_NAME:
 					$q->set($column, $upload['name']);
+
 					break;
 				case self::DB_FILE_SIZE:
 					$q->set($column, $upload['size']);
+
 					break;
 				case self::DB_SYSTEM_PATH:
 					$pathFields[$column] = self::DB_SYSTEM_PATH;
 					$q->set($column, '-'); // Use a temporary value to avoid cases
+
 					break;                   // where the db will reject empty values
 				case self::DB_WEB_PATH:
 					$pathFields[$column] = self::DB_WEB_PATH;
 					$q->set($column, '-'); // Use a temporary value (as above)
+
 					break;
 				default:
 					$val = $prop;

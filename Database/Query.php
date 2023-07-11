@@ -299,6 +299,7 @@ abstract class Query
 	public function distinct ($dis)
 	{
 		$this->_distinct = $dis;
+
 		return $this;
 	}
 
@@ -709,6 +710,7 @@ abstract class Query
 				for ($i = 0; $i < count($value); $i++) {
 					$this->or_where($key, $value[$i], $op, $bind);
 				}
+
 				return $this;
 			}
 
@@ -912,6 +914,7 @@ abstract class Query
 		if (count($this->_order) > 0) {
 			return ' ORDER BY ' . implode(', ', $this->_order) . ' ';
 		}
+
 		return '';
 	}
 
@@ -1140,6 +1143,7 @@ abstract class Query
 		}
 
 		$a = explode('.', $identifier);
+
 		return $left . implode($right . '.' . $left, $a) . $right . $alias;
 	}
 

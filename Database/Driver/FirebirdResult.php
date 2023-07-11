@@ -65,6 +65,7 @@ class FirebirdResult extends Result
 	{
 		// Only useful after an insert of course...
 		$rows = $this->_stmt->fetchAll();
+
 		return $rows[0][$this->_pkey];
 	}
 }

@@ -175,6 +175,7 @@ class Join extends DataTables\Ext
 		if ($_ !== null && !is_array($_)) {
 			$_ = $args;
 		}
+
 		return $this->_getSet($this->_fields, $_, true);
 	}
 
@@ -198,6 +199,7 @@ class Join extends DataTables\Ext
 		if ($_ !== null && !is_array($_)) {
 			$_ = $args;
 		}
+
 		return $this->_getSet($this->_fields, $_, true);
 	}
 
@@ -253,6 +255,7 @@ class Join extends DataTables\Ext
 		$this->_join['parent'] = $parent;
 		$this->_join['child'] = $child;
 		$this->_join['table'] = $table;
+
 		return $this;
 	}
 
@@ -380,6 +383,7 @@ class Join extends DataTables\Ext
 		if ($_ !== null) {
 			$this->_name = $_;
 		}
+
 		return $this->_getSet($this->_table, $_);
 	}
 
@@ -574,6 +578,7 @@ class Join extends DataTables\Ext
 						. 'included in the Editor field list. The join field must be included '
 						. 'as a regular field in the Editor instance.'
 				));
+
 				exit(1);
 			}
 

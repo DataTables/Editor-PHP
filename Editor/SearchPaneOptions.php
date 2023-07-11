@@ -224,6 +224,7 @@ class SearchPaneOptions extends DataTables\Ext
 				);
 			}
 		}
+
 		return $this;
 	}
 

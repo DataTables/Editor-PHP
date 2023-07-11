@@ -224,6 +224,7 @@ class SearchBuilderOptions extends DataTables\Ext
 				);
 			}
 		}
+
 		return $this;
 	}
 

@@ -386,6 +386,7 @@ class Validate
 			if (filter_var($val, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) === null) {
 				return $opts->message();
 			}
+
 			return true;
 		};
 	}
@@ -1122,6 +1123,7 @@ class Validate
 					$msg :
 					true;
 			}
+
 			return true;
 		};
 	}
@@ -1134,6 +1136,7 @@ class Validate
 					$msg :
 					true;
 			}
+
 			return true;
 		};
 	}

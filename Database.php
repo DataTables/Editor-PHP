@@ -114,6 +114,7 @@ class Database
 	public function commit ()
 	{
 		call_user_func($this->query_driver . '::commit', $this->_dbResource);
+
 		return $this;
 	}
 
@@ -136,6 +137,7 @@ class Database
 			->exec();
 
 		$cnt = $res->fetch();
+
 		return $cnt['cnt'];
 	}
 
@@ -315,6 +317,7 @@ class Database
 	public function rollback ()
 	{
 		call_user_func($this->query_driver . '::rollback', $this->_dbResource);
+
 		return $this;
 	}
 
@@ -412,6 +415,7 @@ class Database
 	public function transaction ()
 	{
 		call_user_func($this->query_driver . '::transaction', $this->_dbResource);
+
 		return $this;
 	}
 

@@ -63,6 +63,7 @@ class Db2Query extends Query
 				'error' => 'An error occurred while connecting to the database ' .
 					"'{$db}'. The error reported by the server was: " . $e
 			));
+
 			exit(1);
 		}
 
@@ -136,6 +137,7 @@ class Db2Query extends Query
 		}
 
 		$resource = $this->database()->resource();
+
 		return new Db2Result($resource, $this->_stmt, $this->_editor_pkey_value);
 	}
 

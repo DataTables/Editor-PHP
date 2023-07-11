@@ -199,6 +199,7 @@ class Ext
 	{
 		if (strpos($name, '.') === false) {
 			$out[$name] = $value;
+
 			return;
 		}
 
