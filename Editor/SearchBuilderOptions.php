@@ -65,7 +65,7 @@ class SearchBuilderOptions extends DataTables\Ext {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private parameters
 	 */
-	
+
 	/** @var string Table to get the information from */
 	private $_table = null;
 
@@ -81,7 +81,7 @@ class SearchBuilderOptions extends DataTables\Ext {
 	/** @var callable Callback function to do rendering of labels */
 	private $_renderer = null;
 
-	/** @var callback Callback function to add where conditions */
+	/** @var array Callback function to add where conditions */
 	private $_where = null;
 
 	/** @var string ORDER BY clause */
@@ -226,7 +226,7 @@ class SearchBuilderOptions extends DataTables\Ext {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Internal methods
 	 */
-	
+
 	/**
 	 * Execute the options (i.e. get them)
 	 *
@@ -305,7 +305,7 @@ class SearchBuilderOptions extends DataTables\Ext {
 			$query->get($value." as value", $label." as label");
 			$query->group_by( $value);
 		}
-		
+
 		$res = $query
 			->exec()
 			->fetchAll();

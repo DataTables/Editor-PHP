@@ -185,7 +185,7 @@ class Validate {
 			// Value must not be empty
 			return false;
 		}
-		
+
 		// Validation passed states
 		if ( $optional && $val === null ) {
 			return true;
@@ -380,7 +380,7 @@ class Validate {
 					$opts->message() :
 					$common;
 			}
-	
+
 			if ( filter_var($val, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) === null ) {
 				return $opts->message();
 			}
@@ -417,11 +417,11 @@ class Validate {
 					$opts->message() :
 					$common;
 			}
-	
+
 			if ( $decimal !== '.' ) {
 				$val = str_replace( $decimal, '.', $val );
 			}
-	
+
 			return ! is_numeric( $val ) ?
 				$opts->message() :
 				true;
@@ -449,24 +449,24 @@ class Validate {
 
 		return function ( $val, $data, $field, $host ) use ( $opts, $min, $decimal ) {
 			$common = Validate::_common( $val, $opts );
-			
+
 			if ( $common !== null ) {
 				return $common === false ?
 					$opts->message() :
 					$common;
 			}
-			
+
 			$fn = Validate::numeric( $decimal, $opts );
 			$numeric = $fn( $val, $data, $field, $host );
 
 			if ( $numeric !== true ) {
 				return $numeric;
 			}
-	
+
 			if ( $decimal !== '.' ) {
 				$val = str_replace( $decimal, '.', $val );
 			}
-	
+
 			return $val < $min ?
 				$opts->message() :
 				true;
@@ -493,24 +493,24 @@ class Validate {
 
 		return function ( $val, $data, $field, $host ) use ( $opts, $max, $decimal ) {
 			$common = Validate::_common( $val, $opts );
-			
+
 			if ( $common !== null ) {
 				return $common === false ?
 					$opts->message() :
 					$common;
 			}
-			
+
 			$fn = Validate::numeric( $decimal, $opts );
 			$numeric = $fn( $val, $data, $field, $host );
 
 			if ( $numeric !== true ) {
 				return $numeric;
 			}
-	
+
 			if ( $decimal !== '.' ) {
 				$val = str_replace( $decimal, '.', $val );
 			}
-	
+
 			return $val > $max ?
 				$opts->message() :
 				true;
@@ -535,16 +535,16 @@ class Validate {
 	 */
 	public static function minMaxNum ( $min, $max, $decimal='.', $cfg=null ) {
 		$opts = ValidateOptions::select( $cfg );
-		
+
 		return function ( $val, $data, $field, $host ) use ( $opts, $min, $max, $decimal ) {
 			$common = Validate::_common( $val, $opts );
-			
+
 			if ( $common !== null ) {
 				return $common === false ?
 					$opts->message() :
 					$common;
 			}
-			
+
 			$fn = Validate::numeric( $decimal, $opts );
 			$numeric = $fn( $val, $data, $field, $host );
 
@@ -558,7 +558,7 @@ class Validate {
 			if ( $numeric !== true ) {
 				return $numeric;
 			}
-			
+
 			$fn = Validate::maxNum( $max, $decimal, $opts );
 			$numeric = $fn( $val, $data, $field, $host );
 
@@ -589,7 +589,7 @@ class Validate {
 	 */
 	public static function email( $cfg=null ) {
 		$opts = ValidateOptions::select( $cfg );
-		
+
 		return function ( $val, $data, $field, $host ) use ( $opts ) {
 			$common = Validate::_common( $val, $opts );
 
@@ -622,7 +622,7 @@ class Validate {
 	 */
 	public static function minLen( $min, $cfg=null ) {
 		$opts = ValidateOptions::select( $cfg );
-		
+
 		return function ( $val, $data, $field, $host ) use ( $min, $opts ) {
 			$common = Validate::_common( $val, $opts );
 
@@ -659,7 +659,7 @@ class Validate {
 	 */
 	public static function maxLen( $max, $cfg=null ) {
 		$opts = ValidateOptions::select( $cfg );
-		
+
 		return function ( $val, $data, $field, $host ) use ( $max, $opts ) {
 			$common = Validate::_common( $val, $opts );
 
@@ -693,23 +693,23 @@ class Validate {
 	 */
 	public static function minMaxLen( $min, $max, $cfg=null ) {
 		$opts = ValidateOptions::select( $cfg );
-		
+
 		return function ( $val, $data, $field, $host ) use ( $opts, $min, $max ) {
 			$common = Validate::_common( $val, $opts );
-			
+
 			if ( $common !== null ) {
 				return $common === false ?
 					$opts->message() :
 					$common;
 			}
-			
+
 			$fn = Validate::minLen( $min, $opts );
 			$res = $fn( $val, $data, $field, $host );
 
 			if ( $res !== true ) {
 				return $res;
 			}
-			
+
 			$fn = Validate::maxLen( $max, $opts );
 			$res = $fn( $val, $data, $field, $host );
 
@@ -735,7 +735,7 @@ class Validate {
 	 */
 	public static function ip( $cfg=null ) {
 		$opts = ValidateOptions::select( $cfg );
-		
+
 		return function ( $val, $data, $field, $host ) use ( $opts ) {
 			$common = Validate::_common( $val, $opts );
 
@@ -765,7 +765,7 @@ class Validate {
 	 */
 	public static function url( $cfg=null ) {
 		$opts = ValidateOptions::select( $cfg );
-		
+
 		return function ( $val, $data, $field, $host ) use ( $opts ) {
 			$common = Validate::_common( $val, $opts );
 
@@ -798,7 +798,7 @@ class Validate {
 	 */
 	public static function xss ( $cfg=null ) {
 		$opts = ValidateOptions::select( $cfg );
-		
+
 		return function ( $val, $data, $field, $host ) use ( $opts ) {
 			$common = Validate::_common( $val, $opts );
 
@@ -831,7 +831,7 @@ class Validate {
 	 */
 	public static function values( $values, $cfg=null ) {
 		$opts = ValidateOptions::select( $cfg );
-		
+
 		return function ( $val, $data, $field, $host ) use ( $values, $opts ) {
 			$common = Validate::_common( $val, $opts );
 
@@ -864,7 +864,7 @@ class Validate {
 	 */
 	public static function noTags ( $cfg=null ) {
 		$opts = ValidateOptions::select( $cfg );
-		
+
 		return function ( $val, $data, $field, $host ) use ( $opts ) {
 			$common = Validate::_common( $val, $opts );
 
@@ -901,7 +901,7 @@ class Validate {
 	 */
 	public static function dateFormat( $format, $cfg=null ) {
 		$opts = ValidateOptions::select( $cfg );
-		
+
 		return function ( $val, $data, $field, $host ) use ( $format, $opts ) {
 			$common = Validate::_common( $val, $opts );
 
@@ -944,7 +944,7 @@ class Validate {
 	 */
 	public static function unique( $cfg=null, $column=null, $table=null, $db=null ) {
 		$opts = ValidateOptions::select( $cfg );
-		
+
 		return function ( $val, $data, $field, $host ) use ( $opts, $column, $table, $db ) {
 			$common = Validate::_common( $val, $opts );
 
@@ -1008,7 +1008,7 @@ class Validate {
 	 */
 	public static function dbValues( $cfg=null, $column=null, $table=null, $db=null, $values=array() ) {
 		$opts = ValidateOptions::select( $cfg );
-		
+
 		return function ( $val, $data, $field, $host ) use ( $opts, $column, $table, $db, $values ) {
 			$common = Validate::_common( $val, $opts );
 
@@ -1065,8 +1065,8 @@ class Validate {
 			}
 		};
 	}
-	
-	
+
+
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	* File validation methods
@@ -1133,7 +1133,7 @@ class Validate {
 	static function noneLegacy( $legacyOpts ) {
 		return Validate::none();
 	}
-	
+
 	/**
 	 * @internal
 	 */
@@ -1143,7 +1143,7 @@ class Validate {
 
 		return Validate::required( $opts );
 	}
-	
+
 	/**
 	 * @internal
 	 */
@@ -1155,7 +1155,7 @@ class Validate {
 
 		return Validate::required( $opts );
 	}
-	
+
 	/**
 	 * @internal
 	 */
@@ -1167,7 +1167,7 @@ class Validate {
 
 		return Validate::notEmpty( $opts );
 	}
-	
+
 	/**
 	 * @internal
 	 */
@@ -1179,7 +1179,7 @@ class Validate {
 
 		return Validate::notEmpty( $opts );
 	}
-	
+
 	/**
 	 * @internal
 	 */
@@ -1193,7 +1193,7 @@ class Validate {
 			Validate::numeric( $legacyOpts['decimal'], $opts ) :
 			Validate::numeric( '.', $opts );
 	}
-	
+
 	/**
 	 * @internal
 	 */
@@ -1208,7 +1208,7 @@ class Validate {
 			Validate::minNum( $min, $legacyOpts['decimal'], $opts ) :
 			Validate::minNum( $min, '.', $opts );
 	}
-	
+
 	/**
 	 * @internal
 	 */
@@ -1223,7 +1223,7 @@ class Validate {
 			Validate::maxNum( $max, $legacyOpts['decimal'], $opts ) :
 			Validate::maxNum( $max, '.', $opts );
 	}
-	
+
 	/**
 	 * @internal
 	 */
@@ -1237,7 +1237,7 @@ class Validate {
 			Validate::minMaxNum( $min, $max, $legacyOpts['decimal'], $opts ) :
 			Validate::minMaxNum( $min, $max, '.', $opts );
 	}
-	
+
 	/**
 	 * @internal
 	 */
@@ -1249,7 +1249,7 @@ class Validate {
 
 		return Validate::email( $opts );
 	}
-	
+
 	/**
 	 * @internal
 	 */
@@ -1262,7 +1262,7 @@ class Validate {
 
 		return Validate::minLen( $min, $opts );
 	}
-	
+
 	/**
 	 * @internal
 	 */
@@ -1275,7 +1275,7 @@ class Validate {
 
 		return Validate::maxLen( $max, $opts );
 	}
-	
+
 	/**
 	 * @internal
 	 */
@@ -1287,7 +1287,7 @@ class Validate {
 
 		return Validate::minMaxLen( $min, $max, $opts );
 	}
-	
+
 	/**
 	 * @internal
 	 */
@@ -1299,7 +1299,7 @@ class Validate {
 
 		return Validate::ip( $opts );
 	}
-	
+
 	/**
 	 * @internal
 	 */
@@ -1311,7 +1311,7 @@ class Validate {
 
 		return Validate::url( $opts );
 	}
-	
+
 	/**
 	 * @internal
 	 */
@@ -1323,7 +1323,7 @@ class Validate {
 
 		return Validate::xss( $opts );
 	}
-	
+
 	/**
 	 * @internal
 	 */
@@ -1336,7 +1336,7 @@ class Validate {
 
 		return Validate::values( $values, $opts );
 	}
-	
+
 	/**
 	 * @internal
 	 */
@@ -1348,7 +1348,7 @@ class Validate {
 
 		return Validate::noTags( $opts );
 	}
-	
+
 	/**
 	 * @internal
 	 */
@@ -1361,7 +1361,7 @@ class Validate {
 
 		return Validate::dateFormat( $format, $opts );
 	}
-	
+
 	/**
 	 * @internal
 	 */
@@ -1376,7 +1376,7 @@ class Validate {
 
 		return Validate::unique( $opts, $column, $table, $db );
 	}
-	
+
 	/**
 	 * @internal
 	 */

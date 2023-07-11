@@ -13,10 +13,9 @@
 namespace DataTables\Editor;
 if (!defined('DATATABLES')) exit();
 
-use
-	DataTables,
-	DataTables\Editor,
-	DataTables\Editor\Field;
+use DataTables;
+use DataTables\Editor;
+use DataTables\Editor\Field;
 
 
 /**
@@ -130,7 +129,7 @@ class Join extends DataTables\Ext {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
 	 */
-	
+
 	/**
 	 * Get / set parent table alias.
 	 *
@@ -496,7 +495,7 @@ class Join extends DataTables\Ext {
 			$dteTable = $arr[0];
 			$this->_aliasParentTable = $arr[1];
 		}
-		
+
 		$dteTableLocal = $this->_aliasParentTable ? // Can be aliased to allow a self join
 			$this->_aliasParentTable :
 			$dteTable;
@@ -651,8 +650,8 @@ class Join extends DataTables\Ext {
 	/**
 	 * Create a row.
 	 *  @param Editor $editor Host Editor instance
-	 *  @param int $parentId Parent row's primary key value
-	 *  @param string[] $data Data to be set for the join
+	 *  @param int    $parentId Parent row's primary key value
+	 *  @param array  $data Data to be set for the join
 	 *  @internal
 	 */
 	public function create ( $editor, $parentId, $data )
@@ -669,7 +668,7 @@ class Join extends DataTables\Ext {
 
 		$this->_prep( $editor );
 		$db = $editor->db();
-		
+
 		if ( $this->_type === 'object' ) {
 			$this->_insert( $db, $parentId, $data[$this->_name] );
 		}
@@ -698,7 +697,7 @@ class Join extends DataTables\Ext {
 
 		$this->_prep( $editor );
 		$db = $editor->db();
-		
+
 		if ( $this->_type === 'object' ) {
 			// update or insert
 			$this->_update_row( $db, $parentId, $data[$this->_name] );
@@ -725,10 +724,9 @@ class Join extends DataTables\Ext {
 			return;
 		}
 
-		$that = $this;
 		$this->_prep( $editor );
 		$db = $editor->db();
-		
+
 		if ( isset($this->_join['table']) ) {
 			$stmt = $db
 				->query( 'delete' )
@@ -740,8 +738,8 @@ class Join extends DataTables\Ext {
 			$stmt = $db
 				->query( 'delete' )
 				->table( $this->_table )
-				->where_group( function ( $q ) use ( $that, $ids ) {
-					$q->or_where( $that->_join['child'], $ids );
+				->where_group( function ( $q ) use ( $ids ) {
+					$q->or_where( $this->_join['child'], $ids );
 				} );
 
 			$this->_apply_where( $stmt );
@@ -800,7 +798,7 @@ class Join extends DataTables\Ext {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private methods
 	 */
-	
+
 	/**
 	 * Add local WHERE condition to query
 	 *  @param \DataTables\Database\Query $query Query instance to apply the WHERE conditions to

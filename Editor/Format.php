@@ -25,25 +25,25 @@ class Format {
 
 	/** Date format: Fri, 9 Mar 12. jQuery UI equivalent format: D, d M y */
 	const DATE_ISO_822 = "D, j M y";
-	
+
 	/** Date format: Friday, 09-Mar-12.  jQuery UI equivalent format: DD, dd-M-y */
 	const DATE_ISO_850 = "l, d-M-y";
-	
+
 	/** Date format: Fri, 9 Mar 12. jQuery UI equivalent format: D, d M y */
 	const DATE_ISO_1036 = "D, j M y";
-	
+
 	/** Date format: Fri, 9 Mar 2012. jQuery UI equivalent format: D, d M yy */
 	const DATE_ISO_1123 = "D, j M Y";
-	
+
 	/** Date format: Fri, 9 Mar 2012. jQuery UI equivalent format: D, d M yy */
 	const DATE_ISO_2822 = "D, j M Y";
 
 	/** Date format: March-. jQuery UI equivalent format: D, d M yy */
 	const DATE_USA = "m-d-Y";
-	
+
 	/** Date format: 1331251200. jQuery UI equivalent format: @ */
 	const DATE_TIMESTAMP = "U";
-	
+
 	/** Date format: 1331251200. jQuery UI equivalent format: @ */
 	const DATE_EPOCH = "U";
 
@@ -69,11 +69,7 @@ class Format {
 
 			$date = new \DateTime( $val );
 
-			// Allow empty strings or invalid dates
-			if ( $date ) {
-				return date_format( $date, $format );
-			}
-			return null;
+			return date_format( $date, $format );
 		};
 	}
 
@@ -281,14 +277,14 @@ class Format {
 	public static function date_format_to_sqlLegacy ( $opts ) {
 		return self::dateFormatToSql( $opts );
 	}
-	
+
 	/**
 	 * @internal
 	 */
 	public static function datetimeLegacy ( $opts ) {
 		return self::datetime( $opts['from'], $opts['to'] );
 	}
-	
+
 	/**
 	 * @internal
 	 */
@@ -315,7 +311,7 @@ class Format {
 	public static function nullEmptyLegacy ( $opts ) {
 		return self::nullEmpty( null );
 	}
-	
+
 	/**
 	 * @internal
 	 */
@@ -332,7 +328,7 @@ class Format {
 		}
 		return self::fromDecimalChar( $opts );
 	}
-	
+
 	/**
 	 * @internal
 	 */

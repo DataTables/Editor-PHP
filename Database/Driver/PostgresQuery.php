@@ -84,9 +84,9 @@ class PostgresQuery extends Query {
 	protected function _prepare( $sql )
 	{
 		$this->database()->debugInfo( $sql, $this->_bindings );
-	
+
 		$resource = $this->database()->resource();
-		
+
 		// Add a RETURNING command to postgres insert queries so we can get the
 		// pkey value from the query reliably
 		if ( $this->_type === 'insert' ) {
@@ -134,9 +134,7 @@ class PostgresQuery extends Query {
 			$this->_stmt->execute();
 		}
 		catch (\PDOException $e) {
-			throw new \Exception( "An SQL error occurred: ".$e->getMessage() );
-			error_log( "An SQL error occurred: ".$e->getMessage() );
-			return false;
+			throw new \Exception('An SQL error occurred: ' . $e->getMessage(), 0, $e);
 		}
 
 		$resource = $this->database()->resource();

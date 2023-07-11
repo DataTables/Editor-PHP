@@ -13,9 +13,8 @@
 namespace DataTables;
 if (!defined('DATATABLES')) exit();
 
-use
-	DataTables\Database\Query,
-	DataTables\Database\Result;
+use DataTables\Database\Query;
+use DataTables\Database\Result;
 
 
 /**
@@ -36,7 +35,7 @@ class Database {
 
 	/**
 	 * Database instance constructor.
-	 *  @param string[] $opts Array of connection parameters for the database:
+	 *  @param array<string, string|\PDO> $opts Array of connection parameters for the database:
 	 *    ```php
 	 *      array(
 	 *          "user" => "", // User name
@@ -72,7 +71,7 @@ class Database {
 	 * Private properties
 	 */
 
-	/** @var resource */
+	/** @var \PDO */
 	private $_dbResource = null;
 
 	/** @var callable */
@@ -225,7 +224,7 @@ class Database {
 	public function push ( $table, $set, $where=null, $pkey='' )
 	{
 		$selectColumn = '*';
-		
+
 		if ( $pkey ) {
 			$selectColumn = is_array($pkey) ?
 				$pkey[0] :
@@ -298,7 +297,7 @@ class Database {
 
 	/**
 	 * Get the database resource connector. This is typically a PDO object.
-	 * @return resource PDO connection resource (driver dependent)
+	 * @return \PDO PDO connection resource (driver dependent)
 	 */
 	public function resource ()
 	{

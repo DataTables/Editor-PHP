@@ -14,6 +14,7 @@ namespace DataTables\Editor;
 if (!defined('DATATABLES')) exit();
 
 use DataTables;
+use DataTables\Database;
 
 /**
  * The Options class provides a convenient method of specifying where Editor
@@ -65,7 +66,7 @@ class Options extends DataTables\Ext {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private parameters
 	 */
-	
+
 	/** @var string Table to get the information from */
 	private $_table = null;
 
@@ -84,7 +85,7 @@ class Options extends DataTables\Ext {
 	/** @var callable Callback function to do rendering of labels */
 	private $_renderer = null;
 
-	/** @var callback Callback function to add where conditions */
+	/** @var callable Callback function to add where conditions */
 	private $_where = null;
 
 	/** @var string ORDER BY clause */
@@ -242,7 +243,7 @@ class Options extends DataTables\Ext {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Internal methods
 	 */
-	
+
 	/**
 	 * Execute the options (i.e. get them)
 	 *

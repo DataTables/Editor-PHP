@@ -161,8 +161,6 @@ class OracleQuery extends Query {
 		if ( ! $res ) {
 			$e = oci_error( $this->_stmt );
 			throw new \Exception( "Oracle SQL error: ".$e['message'] );
-
-			return false;
 		}
 
 		$resource = $this->database()->resource();

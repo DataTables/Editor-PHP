@@ -64,7 +64,7 @@ class OracleResult extends Result {
 	{
 		if ( ! $this->_rows ) {
 			$out = array();
-		
+
 			oci_fetch_all( $this->_stmt, $out, 0, -1, OCI_FETCHSTATEMENT_BY_ROW + OCI_ASSOC );
 
 			$this->_rows = $out;

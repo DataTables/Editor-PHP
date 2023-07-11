@@ -120,10 +120,8 @@ class SqlserverQuery extends Query {
 		try {
 			$this->_stmt->execute();
 		}
-		catch (PDOException $e) {
-			throw new \Exception( "An SQL error occurred: ".$e->getMessage() );
-			error_log( "An SQL error occurred: ".$e->getMessage() );
-			return false;
+		catch (\PDOException $e) {
+			throw new \Exception('An SQL error occurred: ' . $e->getMessage(), 0, $e);
 		}
 
 		$resource = $this->database()->resource();
@@ -139,7 +137,7 @@ class SqlserverQuery extends Query {
 		if ( $this->_offset ) {
 			$out .= ' OFFSET '.$this->_offset.' ROWS';
 		}
-		
+
 		if ( $this->_limit ) {
 			if ( ! $this->_offset ) {
 				$out .= ' OFFSET 0 ROWS';

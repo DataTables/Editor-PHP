@@ -13,11 +13,9 @@
 namespace DataTables\Editor;
 if (!defined('DATATABLES')) exit();
 
-use
-	DataTables,
-	DataTables\Editor,
-	DataTables\Editor\Options,
-	DataTables\Editor\Join;
+use DataTables;
+use DataTables\Editor;
+use DataTables\Editor\Options;
 use DataTables\HtmLawed\Htmlaw;
 
 
@@ -66,7 +64,7 @@ class Field extends DataTables\Ext {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Statics
 	 */
-	
+
 	/** Set option flag (`set()`) - do not set data */
 	const SET_NONE = 'none';
 
@@ -126,22 +124,22 @@ class Field extends DataTables\Ext {
 	/** @var mixed */
 	private $_getValue = null;
 
-	/** @var Options */
+	/** @var Options|null */
 	private $_opts = null;
 
-	/** @var SearchPaneOptions */
+	/** @var SearchPaneOptions|null */
 	private $_spopts = null;
-	
-	/** @var SearchBuilderOptions */
+
+	/** @var SearchBuilderOptions|null */
 	private $_sbopts = null;
 
-	/** @var callable */
+	/** @var callable|null */
 	private $_optsFn = null;
 
-	/** @var callable */
+	/** @var callable|null */
 	private $_spoptsFn = null;
 
-	/** @var callable */
+	/** @var callable|null */
 	private $_sboptsFn = null;
 
 	/** @var string */
@@ -644,12 +642,12 @@ class Field extends DataTables\Ext {
 	 * Execute the spopts to get the list of options for SearchPanes to return
 	 * to the client-side
 	 *
-	 * @param DataTables\Field $field The field to retrieve the data from
-	 * @param DataTables\Editor $editor The editor instance
-	 * @param DataTables\DTRequest $http The http request sent to the server
-	 * @param DataTables\Field[] $fields All of the fields
-	 * @param any $leftJoin Info for a leftJoin if required
-	 * @return Promise<IOption[]> | bool
+	 * @param Editor\Field $field The field to retrieve the data from
+	 * @param Editor $editor The editor instance
+	 * @param array $http The http request sent to the server
+	 * @param Editor\Field[] $fields All of the fields
+	 * @param array $leftJoin Info for a leftJoin if required
+	 * @return array | bool
 	 * @internal
 	 */
 	public function searchPaneOptionsExec ( $field, $editor, $http, $fields, $leftJoin)
@@ -690,7 +688,7 @@ class Field extends DataTables\Ext {
 		return false;
 	}
 
-	
+
 	/**
 	 * Get the value of the field, taking into account if it is coming from the
 	 * DB or from a POST. If formatting has been specified for this field, it

@@ -14,10 +14,9 @@
 namespace DataTables;
 if (!defined('DATATABLES')) exit();
 
-use
-	DataTables,
-	DataTables\Editor\Join,
-	DataTables\Editor\Field;
+use DataTables;
+use DataTables\Editor\Join;
+use DataTables\Editor\Field;
 
 
 /**
@@ -168,7 +167,7 @@ class Editor extends Ext {
 	/** @var DataTables\Editor\Join[] */
 	private $_join = array();
 
-	/** @var array */
+	/** @var string[] */
 	private $_pkey = array('id');
 
 	/** @var string[] */
@@ -207,7 +206,7 @@ class Editor extends Ext {
 	/** @var string Log output path */
 	private $_debugLog = '';
 
-	/** @var callback */
+	/** @var callable */
 	private $_validator = array();
 
 	/** @var bool Enable true / catch when processing */
@@ -229,7 +228,7 @@ class Editor extends Ext {
 	 * Get / set the action name to read in HTTP parameters. This can be useful
 	 * to set if you are using a framework that uses the default name of `action`
 	 * for something else (e.g. WordPress).
-	 *  @param string Value to set. If not given, then used as a getter.
+	 *  @param string $_ Value to set. If not given, then used as a getter.
 	 *  @return string|self Value, or self if used as a setter.
 	 */
 	public function actionName ( $_=null )
@@ -277,10 +276,10 @@ class Editor extends Ext {
 	 * added to the debug information sent back to the client-side. This can
 	 * be useful when debugging event listeners, etc.
 	 *
-	 *  @param bool|mixed $_ Debug mode state. If not given, then used as a
+	 *  @param bool|mixed $_    Debug mode state. If not given, then used as a
 	 *    getter. If given as anything other than a boolean, it will be added
 	 *    to the debug information sent back to the client.
-	 *  @param string     [$path=null] Set an output path to log debug information
+	 *  @param string     $path Set an output path to log debug information
 	 *  @return bool|self Debug mode state if no parameter is given, or
 	 *    self if used as a setter or when adding a debug message.
 	 */
@@ -345,7 +344,7 @@ class Editor extends Ext {
 	 * Get / set field instances.
 	 *
 	 * An alias of {@see field}, for convenience.
-	 *  @param Field $_... Instances of the {@see Field} class, given as a single
+	 *  @param Field|Field[] $_... Instances of the {@see Field} class, given as a single
 	 *    instance of {@see Field}, an array of {@see Field} instances, or multiple
 	 *    {@see Field} instance parameters for the function.
 	 *  @return Field[]|self Array of fields, or self if used as a setter.
@@ -422,9 +421,9 @@ class Editor extends Ext {
 	 *
 	 * Basically the same as the {@see Editor->data()} method, but in this case we echo, or
 	 * return the JSON string of the data.
-	 *  @param bool $print Echo the JSON string out (true, default) or return it
+	 *  @param bool $print  Echo the JSON string out (true, default) or return it
 	 *    (false).
-	 *  @param int         JSON encode option https://www.php.net/manual/en/json.constants.php
+	 *  @param int $options JSON encode option https://www.php.net/manual/en/json.constants.php
 	 *  @return string|self self if printing the JSON, or JSON representation of
 	 *    the processed data if false is given as the first parameter.
 	 */
@@ -585,10 +584,10 @@ class Editor extends Ext {
 	 * The primary key must be known to Editor so it will know which rows are being
 	 * edited / deleted upon those actions. The default value is ['id'].
 	 *
-	 *  @param string|array $_ Primary key's name. If not given, then used as a
+	 *  @param string|string[] $_ Primary key's name. If not given, then used as a
 	 *    getter. An array of column names can be given to allow composite keys to
 	 *    be used.
-	 *  @return string|self Primary key value if no parameter is given, or
+	 *  @return string[]|self Primary key value if no parameter is given, or
 	 *    self if used as a setter.
 	 */
 	public function pkey ( $_=null )
@@ -604,7 +603,7 @@ class Editor extends Ext {
 	/**
 	 * Convert a primary key array of field values to a combined value.
 	 *
-	 * @param  string  $row   The row of data that the primary key value should
+	 * @param  array  $row   The row of data that the primary key value should
 	 *   be extracted from.
 	 * @param  bool    $flat  Flag to indicate if the given array is flat
 	 *   (useful for `where` conditions) or nested for join tables.
@@ -711,7 +710,7 @@ class Editor extends Ext {
 			catch (\Exception $e) {
 				// Error feedback
 				$this->_out['error'] = $e->getMessage();
-				
+
 				if ( $this->_transaction ) {
 					$this->_db->rollback();
 				}
@@ -870,7 +869,7 @@ class Editor extends Ext {
 	 * @param  callable $_ Function to execute when validating the input data.
 	 *   It is passed three parameters: 1. The editor instance, 2. The action
 	 *   and 3. The values.
-	 * @return Editor|callback Editor instance if called as a setter, or the
+	 * @return Editor|callable Editor instance if called as a setter, or the
 	 *   validator function if not.
 	 */
 	public function validator ( $_=null )
@@ -1121,7 +1120,7 @@ class Editor extends Ext {
 		$this->_get_where( $query );
 		$query->left_join($this->_leftJoin);
 		$ssp = $this->_ssp_query( $query, $http );
-		
+
 		if ( $id !== null ) {
 			$query->where( $this->pkeyToArray( $id, true ) );
 		}
@@ -1437,7 +1436,7 @@ class Editor extends Ext {
 		}
 
 		$res = $this->_trigger( 'preUpload', $data );
-		
+
 		// Allow the event to be cancelled and inform the client-side
 		if ( $res === false ) {
 			return;
@@ -1461,7 +1460,7 @@ class Editor extends Ext {
 
 			$this->_out['files'] = $files;
 			$this->_out['upload']['id'] = $res;
-		
+
 			$this->_trigger( 'postUpload', $res, $files, $data );
 		}
 	}
@@ -1471,9 +1470,9 @@ class Editor extends Ext {
 	 * Get information about the files that are detailed in the database for
 	 * the fields which have an upload method defined on them.
 	 *
-	 * @param  string [$limitTable=null] Limit the data gathering to a single
+	 * @param  string  $limitTable Limit the data gathering to a single
 	 *     table only
-	 * @param number[] [$id=null] Limit to a specific set of ids
+	 * @param number[] $id Limit to a specific set of ids
 	 * @return array File information
 	 * @private
 	 */
@@ -1483,7 +1482,7 @@ class Editor extends Ext {
 
 		// The fields in this instance
 		$this->_fileDataFields( $files, $this->_fields, $limitTable, $ids, $data );
-		
+
 		// From joined tables
 		for ( $i=0 ; $i<count($this->_join) ; $i++ ) {
 			$joinData = null;
@@ -1509,7 +1508,7 @@ class Editor extends Ext {
 	 * Common file get method for any array of fields
 	 * @param  array &$files File output array
 	 * @param  Field[] $fields Fields to get file information about
-	 * @param  string[] $limitTable Limit the data gathering to a single table
+	 * @param  string  $limitTable Limit the data gathering to a single table
 	 *     only
 	 * @private
 	 */
@@ -1932,18 +1931,16 @@ class Editor extends Ext {
 	 */
 	private function _ssp_filter ( $query, $http )
 	{
-		$that = $this;
-
 		// Global filter
 		$fields = $this->_fields;
 
 		// Global search, add a ( ... or ... ) set of filters for each column
 		// in the table (not the fields, just the columns submitted)
 		if ( $http['search']['value'] ) {
-			$query->where( function ($q) use (&$that, &$fields, $http) {
+			$query->where( function ($q) use ($http) {
 				for ( $i=0 ; $i<count($http['columns']) ; $i++ ) {
 					if ( $http['columns'][$i]['searchable'] == 'true' ) {
-						$fieldName = $that->_ssp_field( $http, $i );
+						$fieldName = $this->_ssp_field( $http, $i );
 
 						if ( $fieldName ) {
 							$q->or_where( $fieldName, '%'.$http['search']['value'].'%', 'like' );
@@ -2019,14 +2016,14 @@ class Editor extends Ext {
 		// if ( $http['search']['value'] ) {
 		// 	$words = explode(" ", $http['search']['value']);
 
-		// 	$query->where( function ($q) use (&$that, &$fields, $http, $words) {
+		// 	$query->where( function ($q) use ($http, $words) {
 		// 		for ( $j=0, $jen=count($words) ; $j<$jen ; $j++ ) {
 		// 			if ( $words[$j] ) {
 		// 				$q->where_group( true );
 
 		// 				for ( $i=0, $ien=count($http['columns']) ; $i<$ien ; $i++ ) {
 		// 					if ( $http['columns'][$i]['searchable'] == 'true' ) {
-		// 						$field = $that->_ssp_field( $http, $i );
+		// 						$field = $this->_ssp_field( $http, $i );
 
 		// 						$q->or_where( $field, $words[$j].'%', 'like' );
 		// 						$q->or_where( $field, '% '.$words[$j].'%', 'like' );
@@ -2342,7 +2339,7 @@ class Editor extends Ext {
 			$fieldDots = substr_count( $fieldName, '.' );
 
 			if ( $fieldDots === 0 ) {
-				$count++;	
+				$count++;
 			}
 			else if ( $fieldDots === 1 ) {
 				if (
@@ -2585,7 +2582,7 @@ class Editor extends Ext {
 	/**
 	 * Create the separator value for a compound primary key.
 	 *
-	 * @return string Calculated separator
+	 * @return non-empty-string Calculated separator
 	 */
 	private function _pkey_separator ()
 	{

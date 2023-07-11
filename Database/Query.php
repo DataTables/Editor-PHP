@@ -13,11 +13,10 @@
 namespace DataTables\Database;
 if (!defined('DATATABLES')) exit();
 
-use
-	DataTables,
-	DataTables\Database,
-	DataTables\Database\Query,
-	DataTables\Database\Result;
+use DataTables;
+use DataTables\Database;
+use DataTables\Database\Query;
+use DataTables\Database\Result;
 
 
 //
@@ -123,7 +122,7 @@ abstract class Query {
 	protected $_limit = null;
 
 	/**
-	 * @var int
+	 * @var string
 	 * @internal
 	 */
 	protected $_group_by = null;
@@ -263,7 +262,7 @@ abstract class Query {
 
 	/**
 	 * Get the Database host for this query instance
-	 * @return DataTable Database class instance
+	 * @return Database Database class instance
 	 */
 	public function database ()
 	{
@@ -311,7 +310,7 @@ abstract class Query {
 		else if ( $type === 'raw' ) {
 			return $this->_raw( $sql );
 		}
-		
+
 		throw new \Exception("Unknown database command or not supported: ".$type, 1);
 	}
 
@@ -438,7 +437,7 @@ abstract class Query {
 
 	/**
 	 * Group the results by the values in a field
-	 * @param string The field of which the values are to be grouped
+	 * @param string $group_by The field of which the values are to be grouped
 	 * @return self
 	 */
 	public function group_by ( $group_by )
@@ -748,9 +747,9 @@ abstract class Query {
 	 * Note this is only suitable for local values, not a sub-query. For that use
 	 * `->where()` with an unbound value.
 	 *
-	 *  @param string Field name
-	 *  @param array Values
-	 *  @param string Conditional operator to use to join to the
+	 *  @param string $field    Field name
+	 *  @param array  $arr      Values
+	 *  @param string $operator Conditional operator to use to join to the
 	 *      preceding condition. Default `AND`.
 	 *  @return self
 	 */
@@ -853,7 +852,7 @@ abstract class Query {
 		$out = '';
 		$limit = intval($this->_limit);
 		$offset = intval($this->_offset);
-		
+
 		if ( $limit ) {
 			$out .= ' LIMIT '.$limit;
 		}
@@ -928,14 +927,14 @@ abstract class Query {
 		if ( $this->_type === 'insert' ) {
 			// insert, update and delete statements don't need or want aliases in the table name
 			$a = array();
-	
+
 			for ( $i=0, $ien=count($this->_table) ; $i<$ien ; $i++ ) {
 				$table = str_ireplace( ' as ', ' ', $this->_table[$i] );
 				$tableParts = explode( ' ', $table );
-	
+
 				$a[] = $tableParts[0];
 			}
-	
+
 			return ' '.implode(', ', $a).' ';
 		}
 
@@ -1204,7 +1203,7 @@ abstract class Query {
 	/**
 	 * Add an individual where condition to the query.
 	 * @internal
-	 * @param $where
+	 * @param string|array $where
 	 * @param null $value
 	 * @param string $type
 	 * @param string $op

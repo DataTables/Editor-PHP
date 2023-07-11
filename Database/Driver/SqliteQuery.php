@@ -99,10 +99,8 @@ class SqliteQuery extends Query {
 		try {
 			$this->_stmt->execute();
 		}
-		catch (PDOException $e) {
-			throw new \Exception( "An SQL error occurred: ".$e->getMessage() );
-			error_log( "An SQL error occurred: ".$e->getMessage() );
-			return false;
+		catch (\PDOException $e) {
+			throw new \Exception('An SQL error occurred: ' . $e->getMessage(), 0, $e);
 		}
 
 		$resource = $this->database()->resource();
