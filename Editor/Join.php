@@ -8,14 +8,13 @@
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @link      http://editor.datatables.net
+ *  @see      http://editor.datatables.net
  */
 
 namespace DataTables\Editor;
 
 use DataTables;
 use DataTables\Editor;
-use DataTables\Editor\Field;
 
 /**
  * Join table class for DataTables Editor.
@@ -68,7 +67,7 @@ class Join extends DataTables\Ext
 	 * @param string $type  Work with a single result ('object') or an array of
 	 *                      results ('array') for the join.
 	 */
-	function __construct($table = null, $type = 'object')
+	public function __construct($table = null, $type = 'object')
 	{
 		$this->table($table);
 		$this->type($type);
@@ -85,20 +84,20 @@ class Join extends DataTables\Ext
 	private $_join = array(
 		'parent' => null,
 		'child' => null,
-		'table' => null
+		'table' => null,
 	);
 
 	/** @var array */
 	private $_leftJoin = array();
 
 	/** @var string */
-	private $_table = null;
+	private $_table;
 
 	/** @var string */
-	private $_type = null;
+	private $_type;
 
 	/** @var string */
-	private $_name = null;
+	private $_name;
 
 	/** @var bool */
 	private $_get = true;
@@ -107,7 +106,7 @@ class Join extends DataTables\Ext
 	private $_set = true;
 
 	/** @var string */
-	private $_aliasParentTable = null;
+	private $_aliasParentTable;
 
 	/** @var array */
 	private $_where = array();
@@ -119,7 +118,7 @@ class Join extends DataTables\Ext
 	private $_links = array();
 
 	/** @var string */
-	private $_customOrder = null;
+	private $_customOrder;
 
 	/** @var callable[] */
 	private $_validators = array();
@@ -149,7 +148,7 @@ class Join extends DataTables\Ext
 	 * @return string|self Table alias set (which is null by default), or self if used as
 	 *                     a setter.
 	 */
-	public function aliasParentTable ($_ = null)
+	public function aliasParentTable($_ = null)
 	{
 		return $this->_getSet($this->_aliasParentTable, $_);
 	}
@@ -160,7 +159,7 @@ class Join extends DataTables\Ext
 	 * The list of fields designates which columns in the table that will be read
 	 * from the joined table.
 	 *
-	 * @param Field $_... Instances of the {@see Field} class, given as a single
+	 * @param Field ...$_ Instances of the {@see Field} class, given as a single
 	 *                    instance of {@see Field}, an array of {@see Field} instances, or multiple
 	 *                    {@see Field} instance parameters for the function.
 	 *
@@ -168,13 +167,14 @@ class Join extends DataTables\Ext
 	 *
 	 * @see {@see Field} for field documentation.
 	 */
-	public function field ($_ = null)
+	public function field($_ = null)
 	{
 		$args = func_get_args();
 
 		if ($_ !== null && !is_array($_)) {
 			$_ = $args;
 		}
+
 		return $this->_getSet($this->_fields, $_, true);
 	}
 
@@ -183,7 +183,7 @@ class Join extends DataTables\Ext
 	 *
 	 * An alias of {@see field}, for convenience.
 	 *
-	 * @param Field $_... Instances of the {@see Field} class, given as a single
+	 * @param Field ...$_ Instances of the {@see Field} class, given as a single
 	 *                    instance of {@see Field}, an array of {@see Field} instances, or multiple
 	 *                    {@see Field} instance parameters for the function.
 	 *
@@ -191,13 +191,14 @@ class Join extends DataTables\Ext
 	 *
 	 * @see {@see Field} for field documentation.
 	 */
-	public function fields ($_ = null)
+	public function fields($_ = null)
 	{
 		$args = func_get_args();
 
 		if ($_ !== null && !is_array($_)) {
 			$_ = $args;
 		}
+
 		return $this->_getSet($this->_fields, $_, true);
 	}
 
@@ -210,7 +211,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @return bool|self Name
 	 */
-	public function get ($_ = null)
+	public function get($_ = null)
 	{
 		return $this->_getSet($this->_get, $_);
 	}
@@ -244,7 +245,7 @@ class Join extends DataTables\Ext
 	 * @deprecated 1.5 Please use the {@see Join->link()} method rather than this
 	 *                                method now.
 	 */
-	public function join ($parent = null, $child = null, $table = null)
+	public function join($parent = null, $child = null, $table = null)
 	{
 		if ($parent === null && $child === null) {
 			return $this->_join;
@@ -253,11 +254,12 @@ class Join extends DataTables\Ext
 		$this->_join['parent'] = $parent;
 		$this->_join['child'] = $child;
 		$this->_join['table'] = $table;
+
 		return $this;
 	}
 
 	/**
-	 * Set up a left join operation for the Mjoined data
+	 * Set up a left join operation for the Mjoined data.
 	 *
 	 * @param string $table    to get the information from
 	 * @param string $field1   the first field to get the information from
@@ -266,13 +268,13 @@ class Join extends DataTables\Ext
 	 *
 	 * @return self
 	 */
-	public function leftJoin ($table, $field1, $operator, $field2)
+	public function leftJoin($table, $field1, $operator, $field2)
 	{
 		$this->_leftJoin[] = array(
 			'table' => $table,
 			'field1' => $field1,
 			'field2' => $field2,
-			'operator' => $operator
+			'operator' => $operator,
 		);
 
 		return $this;
@@ -296,10 +298,8 @@ class Join extends DataTables\Ext
 	 * @param string $field2 Table and field name
 	 *
 	 * @return Join Self for chaining
-	 *
-	 * @throws \Exception Link limitations
 	 */
-	public function link ($field1, $field2)
+	public function link($field1, $field2)
 	{
 		if (strpos($field1, '.') === false || strpos($field2, '.') === false) {
 			throw new \Exception('Link fields must contain both the table name and the column name');
@@ -318,11 +318,11 @@ class Join extends DataTables\Ext
 	/**
 	 * Specify the property that the data will be sorted by.
 	 *
-	 * @param string $order SQL column name to order the data by
+	 * @param string $_ SQL column name to order the data by
 	 *
 	 * @return Join Self for chaining
 	 */
-	public function order ($_ = null)
+	public function order($_ = null)
 	{
 		// How this works is by setting the SQL order by clause, and since the
 		// join that is done in PHP is always done sequentially, the order is
@@ -340,9 +340,9 @@ class Join extends DataTables\Ext
 	 *
 	 * @param string $_ Field name
 	 *
-	 * @return String|self Name
+	 * @return string|self Name
 	 */
-	public function name ($_ = null)
+	public function name($_ = null)
 	{
 		return $this->_getSet($this->_name, $_);
 	}
@@ -358,7 +358,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @return bool|self Name
 	 */
-	public function set ($_ = null)
+	public function set($_ = null)
 	{
 		return $this->_getSet($this->_set, $_);
 	}
@@ -373,13 +373,14 @@ class Join extends DataTables\Ext
 	 *
 	 * @param string $_ Name of the table to read the join data from
 	 *
-	 * @return String|self Name of the join table, or self if used as a setter.
+	 * @return string|self Name of the join table, or self if used as a setter.
 	 */
-	public function table ($_ = null)
+	public function table($_ = null)
 	{
 		if ($_ !== null) {
 			$this->_name = $_;
 		}
+
 		return $this->_getSet($this->_table, $_);
 	}
 
@@ -394,15 +395,15 @@ class Join extends DataTables\Ext
 	 * @param string $_ Join type ('object') or an array of
 	 *                  results ('array') for the join.
 	 *
-	 * @return String|self Join type, or self if used as a setter.
+	 * @return string|self Join type, or self if used as a setter.
 	 */
-	public function type ($_ = null)
+	public function type($_ = null)
 	{
 		return $this->_getSet($this->_type, $_);
 	}
 
 	/**
-	 * Set a validator for the array of data (not on a field basis)
+	 * Set a validator for the array of data (not on a field basis).
 	 *
 	 * @param string   $fieldName Name of the field that any error should be shown
 	 *                            against on the client-side
@@ -410,11 +411,11 @@ class Join extends DataTables\Ext
 	 *
 	 * @return self Chainable
 	 */
-	public function validator ($fieldName, $fn)
+	public function validator($fieldName, $fn)
 	{
 		$this->_validators[] = array(
 			'fieldName' => $fieldName,
-			'fn' => $fn
+			'fn' => $fn,
 		);
 
 		return $this;
@@ -435,7 +436,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @return string[]|self Where condition array, or self if used as a setter.
 	 */
-	public function where ($key = null, $value = null, $op = '=')
+	public function where($key = null, $value = null, $op = '=')
 	{
 		if ($key === null) {
 			return $this->_where;
@@ -447,7 +448,7 @@ class Join extends DataTables\Ext
 			$this->_where[] = array(
 				'key' => $key,
 				'value' => $value,
-				'op' => $op
+				'op' => $op,
 			);
 		}
 
@@ -468,7 +469,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @return bool Current value
 	 */
-	public function whereSet ($_ = null)
+	public function whereSet($_ = null)
 	{
 		return $this->_getSet($this->_whereSet, $_);
 	}
@@ -478,7 +479,7 @@ class Join extends DataTables\Ext
 	 */
 
 	/**
-	 * Get data
+	 * Get data.
 	 *
 	 * @param Editor   $editor  Host Editor instance
 	 * @param string[] $data    Data from the parent table's get and were we need
@@ -506,9 +507,8 @@ class Join extends DataTables\Ext
 			$this->_aliasParentTable = $arr[1];
 		}
 
-		$dteTableLocal = $this->_aliasParentTable ? // Can be aliased to allow a self join
-			$this->_aliasParentTable :
-			$dteTable;
+		$dteTableLocal = $this->_aliasParentTable ?: $dteTable;  // Can be aliased to allow a self join
+
 		$joinField = isset($this->_join['table']) ?
 			$this->_join['parent'][0] :
 			$this->_join['parent'];
@@ -566,14 +566,15 @@ class Join extends DataTables\Ext
 			// use that. Otherwise, the key must be in the field list.
 			if ($this->_propExists($dteTable . '.' . $joinField, $data[0])) {
 				$readField = $dteTable . '.' . $joinField;
-			} else if ($this->_propExists($joinField, $data[0])) {
+			} elseif ($this->_propExists($joinField, $data[0])) {
 				$readField = $joinField;
-			} else if (!$pkeyIsJoin) {
+			} elseif (!$pkeyIsJoin) {
 				echo json_encode(array(
 					'sError' => "Join was performed on the field '{$joinField}' which was not "
 						. 'included in the Editor field list. The join field must be included '
-						. 'as a regular field in the Editor instance.'
+						. 'as a regular field in the Editor instance.',
 				));
+
 				exit(1);
 			}
 
@@ -586,7 +587,7 @@ class Join extends DataTables\Ext
 			if (count($data) < 1000) {
 				$whereIn = array();
 
-				for ($i = 0; $i < count($data); $i++) {
+				for ($i = 0; $i < count($data); ++$i) {
 					$whereIn[] = $pkeyIsJoin ?
 						str_replace($idPrefix, '', $data[$i]['DT_RowId']) :
 						$this->_readProp($readField, $data[$i]);
@@ -606,7 +607,7 @@ class Join extends DataTables\Ext
 			while ($row = $res->fetch()) {
 				$inner = array();
 
-				for ($j = 0; $j < count($this->_fields); $j++) {
+				for ($j = 0; $j < count($this->_fields); ++$j) {
 					$field = $this->_fields[$j];
 					if ($field->apply('get')) {
 						$field->write($inner, $row);
@@ -624,7 +625,7 @@ class Join extends DataTables\Ext
 			}
 
 			// Loop over the data and do a join based on the data available
-			for ($i = 0; $i < count($data); $i++) {
+			for ($i = 0; $i < count($data); ++$i) {
 				$rowPKey = $pkeyIsJoin ?
 					str_replace($idPrefix, '', $data[$i]['DT_RowId']) :
 					$this->_readProp($readField, $data[$i]);
@@ -660,14 +661,14 @@ class Join extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function create ($editor, $parentId, $data)
+	public function create($editor, $parentId, $data)
 	{
 		// If not settable, or the many count for the join was not submitted
 		// there we do nothing
 		if (
-			!$this->_set ||
-			!isset($data[$this->_name]) ||
-			!isset($data[$this->_name . '-many-count'])
+			!$this->_set
+			|| !isset($data[$this->_name])
+			|| !isset($data[$this->_name . '-many-count'])
 		) {
 			return;
 		}
@@ -678,7 +679,7 @@ class Join extends DataTables\Ext
 		if ($this->_type === 'object') {
 			$this->_insert($db, $parentId, $data[$this->_name]);
 		} else {
-			for ($i = 0; $i < count($data[$this->_name]); $i++) {
+			for ($i = 0; $i < count($data[$this->_name]); ++$i) {
 				$this->_insert($db, $parentId, $data[$this->_name][$i]);
 			}
 		}
@@ -693,7 +694,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function update ($editor, $parentId, $data)
+	public function update($editor, $parentId, $data)
 	{
 		// If not settable, or the many count for the join was not submitted
 		// there we do nothing
@@ -717,14 +718,14 @@ class Join extends DataTables\Ext
 	}
 
 	/**
-	 * Delete rows
+	 * Delete rows.
 	 *
 	 * @param Editor $editor Host Editor instance
 	 * @param int[]  $ids    Parent row IDs to delete
 	 *
 	 * @internal
 	 */
-	public function remove ($editor, $ids)
+	public function remove($editor, $ids)
 	{
 		if (!$this->_set) {
 			return;
@@ -754,7 +755,7 @@ class Join extends DataTables\Ext
 	}
 
 	/**
-	 * Validate input data
+	 * Validate input data.
 	 *
 	 * @param array    $errors Errors array
 	 * @param Editor   $editor Editor instance
@@ -763,7 +764,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function validate (&$errors, $editor, $data, $action)
+	public function validate(&$errors, $editor, $data, $action)
 	{
 		if (!$this->_set && !isset($data[$this->_name . '-many-count'])) {
 			return;
@@ -775,7 +776,7 @@ class Join extends DataTables\Ext
 			$data[$this->_name] :
 			array();
 
-		for ($i = 0; $i < count($this->_validators); $i++) {
+		for ($i = 0; $i < count($this->_validators); ++$i) {
 			$validator = $this->_validators[$i];
 			$fn = $validator['fn'];
 			$res = $fn($editor, $action, $joinData);
@@ -783,7 +784,7 @@ class Join extends DataTables\Ext
 			if (is_string($res)) {
 				$errors[] = array(
 					'name' => $validator['fieldName'],
-					'status' => $res
+					'status' => $res,
 				);
 			}
 		}
@@ -791,7 +792,7 @@ class Join extends DataTables\Ext
 		if ($this->_type === 'object') {
 			$this->_validateFields($errors, $editor, $joinData, $this->_name . '.');
 		} else {
-			for ($i = 0; $i < count($joinData); $i++) {
+			for ($i = 0; $i < count($joinData); ++$i) {
 				$this->_validateFields($errors, $editor, $joinData[$i], $this->_name . '[].');
 			}
 		}
@@ -802,15 +803,15 @@ class Join extends DataTables\Ext
 	 */
 
 	/**
-	 * Add local WHERE condition to query
+	 * Add local WHERE condition to query.
 	 *
 	 * @param \DataTables\Database\Query $query Query instance to apply the WHERE conditions to
 	 *
 	 * @private
 	 */
-	private function _apply_where ($query)
+	private function _apply_where($query)
 	{
-		for ($i = 0; $i < count($this->_where); $i++) {
+		for ($i = 0; $i < count($this->_where); ++$i) {
 			if (is_callable($this->_where[$i])) {
 				$this->_where[$i]($query);
 			} else {
@@ -849,7 +850,7 @@ class Join extends DataTables\Ext
 				->table($this->_table)
 				->set($this->_join['child'], $parentId);
 
-			for ($i = 0; $i < count($this->_fields); $i++) {
+			for ($i = 0; $i < count($this->_fields); ++$i) {
 				$field = $this->_fields[$i];
 
 				if ($field->apply('set', $data)) { // TODO should be create or edit
@@ -860,7 +861,7 @@ class Join extends DataTables\Ext
 			// If the where condition variables should also be added to the database
 			// Note that `whereSet` is now deprecated
 			if ($this->_whereSet) {
-				for ($i = 0, $ien = count($this->_where); $i < $ien; $i++) {
+				for ($i = 0, $ien = count($this->_where); $i < $ien; ++$i) {
 					if (!is_callable($this->_where[$i])) {
 						$stmt->set($this->_where[$i]['key'], $this->_where[$i]['value']);
 					}
@@ -878,7 +879,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @private
 	 */
-	private function _prep ($editor)
+	private function _prep($editor)
 	{
 		$links = $this->_links;
 
@@ -920,9 +921,9 @@ class Join extends DataTables\Ext
 				// Discover the name of the link table
 				if ($f1[0] !== $editorTable && $f1[0] !== $joinTable) {
 					$this->_join['table'] = $f1[0];
-				} else if ($f2[0] !== $editorTable && $f2[0] !== $joinTable) {
+				} elseif ($f2[0] !== $editorTable && $f2[0] !== $joinTable) {
 					$this->_join['table'] = $f2[0];
-				} else if ($f3[0] !== $editorTable && $f3[0] !== $joinTable) {
+				} elseif ($f3[0] !== $editorTable && $f3[0] !== $joinTable) {
 					$this->_join['table'] = $f3[0];
 				} else {
 					$this->_join['table'] = $f4[0];
@@ -943,7 +944,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @private
 	 */
-	private function _update_row ($db, $parentId, $data)
+	private function _update_row($db, $parentId, $data)
 	{
 		if (isset($this->_join['table'])) {
 			// Got a link table, just insert the pkey references
@@ -951,19 +952,19 @@ class Join extends DataTables\Ext
 				$this->_join['table'],
 				array(
 					$this->_join['parent'][1] => $parentId,
-					$this->_join['child'][1] => $data[$this->_join['child'][0]]
+					$this->_join['child'][1] => $data[$this->_join['child'][0]],
 				),
 				array(
-					$this->_join['parent'][1] => $parentId
+					$this->_join['parent'][1] => $parentId,
 				)
 			);
 		} else {
 			// No link table, just a direct reference
 			$set = array(
-				$this->_join['child'] => $parentId
+				$this->_join['child'] => $parentId,
 			);
 
-			for ($i = 0; $i < count($this->_fields); $i++) {
+			for ($i = 0; $i < count($this->_fields); ++$i) {
 				$field = $this->_fields[$i];
 
 				if ($field->apply('set', $data)) {
@@ -973,7 +974,7 @@ class Join extends DataTables\Ext
 
 			// Add WHERE conditions
 			$where = array($this->_join['child'] => $parentId);
-			for ($i = 0, $ien = count($this->_where); $i < $ien; $i++) {
+			for ($i = 0, $ien = count($this->_where); $i < $ien; ++$i) {
 				$where[$this->_where[$i]['key']] = $this->_where[$i]['value'];
 
 				// Is there any point in this? Is there any harm?
@@ -991,7 +992,7 @@ class Join extends DataTables\Ext
 
 	/**
 	 * Create an SQL string from the fields that this instance knows about for
-	 * using in queries
+	 * using in queries.
 	 *
 	 * @param string $direction Direction: 'get' or 'set'.
 	 *
@@ -999,17 +1000,16 @@ class Join extends DataTables\Ext
 	 *
 	 * @private
 	 */
-	private function _fields ($direction)
+	private function _fields($direction)
 	{
 		$fields = array();
 
-		for ($i = 0; $i < count($this->_fields); $i++) {
+		for ($i = 0; $i < count($this->_fields); ++$i) {
 			$field = $this->_fields[$i];
 
 			if ($field->apply($direction, null)) {
 				if (strpos($field->dbField(), '.') === false) {
 					$fields[] = $this->_table . '.' . $field->dbField() . ' as ' . $field->dbField();
-					;
 				} else {
 					$fields[] = $field->dbField(); // ." as ".$field->dbField();
 				}
@@ -1020,7 +1020,7 @@ class Join extends DataTables\Ext
 	}
 
 	/**
-	 * Validate input data
+	 * Validate input data.
 	 *
 	 * @param array    $errors Errors array
 	 * @param Editor   $editor Editor instance
@@ -1030,16 +1030,16 @@ class Join extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	private function _validateFields (&$errors, $editor, $data, $prefix)
+	private function _validateFields(&$errors, $editor, $data, $prefix)
 	{
-		for ($i = 0; $i < count($this->_fields); $i++) {
+		for ($i = 0; $i < count($this->_fields); ++$i) {
 			$field = $this->_fields[$i];
 			$validation = $field->validate($data, $editor);
 
 			if ($validation !== true) {
 				$errors[] = array(
 					'name' => $prefix . $field->name(),
-					'status' => $validation
+					'status' => $validation,
 				);
 			}
 		}

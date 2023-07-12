@@ -8,13 +8,13 @@
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @link      http://editor.datatables.net
+ *  @see      http://editor.datatables.net
  */
 
 namespace DataTables\Editor;
 
 /**
- * Formatter methods for the DataTables Editor
+ * Formatter methods for the DataTables Editor.
  *
  * All methods in this class are static with common inputs and returns.
  */
@@ -56,9 +56,9 @@ class Format
 	 * {@see Field} where the parameters required for this method will be
 	 * automatically satisfied.
 	 *
-	 * @param string   $val  Value to convert from MySQL date format
-	 * @param string[] $data Data for the whole row / submitted data
-	 * @param string   $opts Format to convert to using PHP date() options.
+	 * @callback-param string   $val  Value to convert from MySQL date format
+	 * @callback-param string[] $data Data for the whole row / submitted data
+	 * @callback-param string   $opts Format to convert to using PHP date() options.
 	 *
 	 * @return string Formatted date or empty string on error.
 	 */
@@ -84,9 +84,9 @@ class Format
 	 * {@see Field} where the parameters required for this method will be
 	 * automatically satisfied.
 	 *
-	 * @param string   $val  Value to convert to SQL date format
-	 * @param string[] $data Data for the whole row / submitted data
-	 * @param string   $opts Format to convert from using PHP date() options.
+	 * @callback-param string   $val  Value to convert to SQL date format
+	 * @callback-param string[] $data Data for the whole row / submitted data
+	 * @callback-param string   $opts Format to convert from using PHP date() options.
 	 *
 	 * @return string Formatted date or null on error.
 	 */
@@ -109,22 +109,23 @@ class Format
 			if ($date) {
 				return date_format($date, 'Y-m-d');
 			}
+
 			return null;
 		};
 	}
 
 	/**
-	 * Convert from one date time format to another
+	 * Convert from one date time format to another.
 	 *
 	 * Typical use of this method is to use it with the
 	 * {@see Field::getFormatter()} and {@see Field::setFormatter()} methods of
 	 * {@see Field} where the parameters required for this method will be
 	 * automatically satisfied.
 	 *
-	 * @param string   $val  Value to convert
-	 * @param string[] $data Data for the whole row / submitted data
-	 * @param string   $opts Array with `from` and `to` properties which are the
-	 *                       formats to convert from and to
+	 * @callback-param string   $val  Value to convert
+	 * @callback-param string[] $data Data for the whole row / submitted data
+	 * @callback-param string   $opts Array with `from` and `to` properties which are the
+	 *                                formats to convert from and to
 	 *
 	 * @return string Formatted date or null on error.
 	 */
@@ -152,9 +153,9 @@ class Format
 	/**
 	 * Convert a string of values into an array for use with checkboxes.
 	 *
-	 * @param string   $val  Value to convert to from a string to an array
-	 * @param string[] $data Data for the whole row / submitted data
-	 * @param string   $opts Field delimiter
+	 * @callback-param string   $val  Value to convert to from a string to an array
+	 * @callback-param string[] $data Data for the whole row / submitted data
+	 * @callback-param string   $opts Field delimiter
 	 *
 	 * @return string Formatted value or null on error.
 	 */
@@ -173,9 +174,9 @@ class Format
 	 * Convert an array of values from a checkbox into a string which can be
 	 * used to store in a text field in a database.
 	 *
-	 * @param string   $val  Value to convert to from an array to a string
-	 * @param string[] $data Data for the whole row / submitted data
-	 * @param string   $opts Field delimiter
+	 * @callback-param string   $val  Value to convert to from an array to a string
+	 * @callback-param string[] $data Data for the whole row / submitted data
+	 * @callback-param string   $opts Field delimiter
 	 *
 	 * @return string Formatted value or null on error.
 	 */
@@ -192,13 +193,13 @@ class Format
 	 * value, often leading to an empty string and null overlapping. This method
 	 * will check the value to operate on and return null if it is empty.
 	 *
-	 * @param string   $val  Value to convert to from a string to an array
-	 * @param string[] $data Data for the whole row / submitted data
-	 * @param string   $opts Field delimiter
+	 * @callback-param string   $val  Value to convert to from a string to an array
+	 * @callback-param string[] $data Data for the whole row / submitted data
+	 * @callback-param string   $opts Field delimiter
 	 *
 	 * @return string Formatted value or null on error.
 	 */
-	public static function nullEmpty ()
+	public static function nullEmpty()
 	{
 		// Legacy function - use `ifEmpty` now
 		return self::ifEmpty(null);
@@ -207,15 +208,15 @@ class Format
 	/**
 	 * Formatter that can be used to specify what value should be used if an
 	 * empty value is submitted by the client-side (e.g. null, 0, 'Not set',
-	 * etc)
+	 * etc).
 	 *
-	 * @param string   $val  Value to convert to from a string to an array
-	 * @param string[] $data Data for the whole row / submitted data
-	 * @param string   $opts Empty value
+	 * @callback-param string   $val  Value to convert to from a string to an array
+	 * @callback-param string[] $data Data for the whole row / submitted data
+	 * @callback-param string   $opts Empty value
 	 *
 	 * @return string Formatted value or null on error.
 	 */
-	public static function ifEmpty ($ret)
+	public static function ifEmpty($ret)
 	{
 		return function ($val, $data) use ($ret) {
 			return $val === '' ?
@@ -230,13 +231,13 @@ class Format
 	 * input in regions where a comma is used as the decimal character. Use with
 	 * a set formatter.
 	 *
-	 * @param string   $val  Value to convert to from a string to an array
-	 * @param string[] $data Data for the whole row / submitted data
-	 * @param string   $opts Decimal place character (default ',')
+	 * @callback-param string   $val  Value to convert to from a string to an array
+	 * @callback-param string[] $data Data for the whole row / submitted data
+	 * @callback-param string   $opts Decimal place character (default ',')
 	 *
 	 * @return string Formatted value or null on error.
 	 */
-	public static function fromDecimalChar ($char = ',')
+	public static function fromDecimalChar($char = ',')
 	{
 		return function ($val, $data) use ($char) {
 			return str_replace($char, '.', $val);
@@ -247,13 +248,13 @@ class Format
 	 * Convert a number with a period (dot) as the decimal character to use
 	 * a different character (typically a comma). Use with a get formatter.
 	 *
-	 * @param string   $val  Value to convert to from a string to an array
-	 * @param string[] $data Data for the whole row / submitted data
-	 * @param string   $opts Decimal place character (default ',')
+	 * @callback-param string   $val  Value to convert to from a string to an array
+	 * @callback-param string[] $data Data for the whole row / submitted data
+	 * @callback-param string   $opts Decimal place character (default ',')
 	 *
 	 * @return string Formatted value or null on error.
 	 */
-	public static function toDecimalChar ($char = ',')
+	public static function toDecimalChar($char = ',')
 	{
 		return function ($val, $data) use ($char) {
 			return str_replace('.', $char, $val);
@@ -269,7 +270,7 @@ class Format
 	/**
 	 * @internal
 	 */
-	public static function date_sql_to_format ($opts)
+	public static function date_sql_to_format($opts)
 	{
 		return self::dateSqlToFormat($opts);
 	}
@@ -277,7 +278,7 @@ class Format
 	/**
 	 * @internal
 	 */
-	public static function date_sql_to_formatLegacy ($opts)
+	public static function date_sql_to_formatLegacy($opts)
 	{
 		return self::dateSqlToFormat($opts);
 	}
@@ -285,7 +286,7 @@ class Format
 	/**
 	 * @internal
 	 */
-	public static function date_format_to_sql ($opts)
+	public static function date_format_to_sql($opts)
 	{
 		return self::dateFormatToSql($opts);
 	}
@@ -293,7 +294,7 @@ class Format
 	/**
 	 * @internal
 	 */
-	public static function date_format_to_sqlLegacy ($opts)
+	public static function date_format_to_sqlLegacy($opts)
 	{
 		return self::dateFormatToSql($opts);
 	}
@@ -301,7 +302,7 @@ class Format
 	/**
 	 * @internal
 	 */
-	public static function datetimeLegacy ($opts)
+	public static function datetimeLegacy($opts)
 	{
 		return self::datetime($opts['from'], $opts['to']);
 	}
@@ -309,29 +310,31 @@ class Format
 	/**
 	 * @internal
 	 */
-	public static function explodeLegacy ($opts)
+	public static function explodeLegacy($opts)
 	{
 		if ($opts === null) {
 			$opts = '|';
 		}
+
 		return self::explode($opts);
 	}
 
 	/**
 	 * @internal
 	 */
-	public static function implodeLegacy ($opts)
+	public static function implodeLegacy($opts)
 	{
 		if ($opts === null) {
 			$opts = '|';
 		}
+
 		return self::implode($opts);
 	}
 
 	/**
 	 * @internal
 	 */
-	public static function nullEmptyLegacy ($opts)
+	public static function nullEmptyLegacy($opts)
 	{
 		return self::nullEmpty(null);
 	}
@@ -339,7 +342,7 @@ class Format
 	/**
 	 * @internal
 	 */
-	public static function ifEmptyLegacy ($opts)
+	public static function ifEmptyLegacy($opts)
 	{
 		return self::ifEmpty($opts);
 	}
@@ -347,22 +350,24 @@ class Format
 	/**
 	 * @internal
 	 */
-	public static function fromDecimalCharLegacy ($opts)
+	public static function fromDecimalCharLegacy($opts)
 	{
 		if ($opts === null) {
 			$opts = ',';
 		}
+
 		return self::fromDecimalChar($opts);
 	}
 
 	/**
 	 * @internal
 	 */
-	public static function toDecimalCharLegacy ($opts)
+	public static function toDecimalCharLegacy($opts)
 	{
 		if ($opts === null) {
 			$opts = ',';
 		}
+
 		return self::toDecimalChar($opts);
 	}
 }

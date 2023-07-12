@@ -8,14 +8,13 @@
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @link      http://editor.datatables.net
+ *  @see      http://editor.datatables.net
  */
 
 namespace DataTables\Editor;
 
 use DataTables;
 use DataTables\Editor;
-use DataTables\Editor\Options;
 use DataTables\HtmLawed\Htmlaw;
 
 /**
@@ -86,7 +85,7 @@ class Field extends DataTables\Ext
 	 *                        HTTP submit from the client-side when editing. If not given then the
 	 *                        $dbField name is used.
 	 */
-	function __construct($dbField = null, $name = null)
+	public function __construct($dbField = null, $name = null)
 	{
 		if ($dbField !== null && $name === null) {
 			// Allow just a single parameter to be passed - each can be
@@ -104,61 +103,61 @@ class Field extends DataTables\Ext
 	 */
 
 	/** @var string */
-	private $_dbField = null;
+	private $_dbField;
 
 	/** @var bool */
 	private $_get = true;
 
 	/** @var mixed */
-	private $_getFormatter = null;
+	private $_getFormatter;
 
 	/** @var mixed */
-	private $_getFormatterOpts = null;
+	private $_getFormatterOpts;
 
 	/** @var mixed */
-	private $_getValue = null;
+	private $_getValue;
 
 	/** @var Options|null */
-	private $_opts = null;
+	private $_opts;
 
 	/** @var SearchPaneOptions|null */
-	private $_spopts = null;
+	private $_spopts;
 
 	/** @var SearchBuilderOptions|null */
-	private $_sbopts = null;
+	private $_sbopts;
 
 	/** @var callable|null */
-	private $_optsFn = null;
+	private $_optsFn;
 
 	/** @var callable|null */
-	private $_spoptsFn = null;
+	private $_spoptsFn;
 
 	/** @var callable|null */
-	private $_sboptsFn = null;
+	private $_sboptsFn;
 
 	/** @var string */
-	private $_name = null;
+	private $_name;
 
 	/** @var string */
 	private $_set = Field::SET_BOTH;
 
 	/** @var mixed */
-	private $_setFormatter = null;
+	private $_setFormatter;
 
 	/** @var mixed */
-	private $_setFormatterOpts = null;
+	private $_setFormatterOpts;
 
 	/** @var mixed */
-	private $_setValue = null;
+	private $_setValue;
 
 	/** @var mixed */
 	private $_validator = array();
 
 	/** @var Upload */
-	private $_upload = null;
+	private $_upload;
 
 	/** @var callable */
-	private $_xss = null;
+	private $_xss;
 
 	/** @var bool */
 	private $_xssFormat = true;
@@ -186,7 +185,7 @@ class Field extends DataTables\Ext
 	 * @return string|self The name of the db field if no parameter is given,
 	 *                     or self if used as a setter.
 	 */
-	public function dbField ($_ = null)
+	public function dbField($_ = null)
 	{
 		if ($_ === null) {
 			return $this->_dbField;
@@ -215,7 +214,7 @@ class Field extends DataTables\Ext
 	 * @return bool|self The get property if no parameter is given, or self
 	 *                   if used as a setter.
 	 */
-	public function get ($_ = null)
+	public function get($_ = null)
 	{
 		return $this->_getSet($this->_get, $_);
 	}
@@ -242,11 +241,12 @@ class Field extends DataTables\Ext
 	 * @return callable|string|self The get formatter if no parameter is given, or
 	 *                              self if used as a setter.
 	 */
-	public function getFormatter ($_ = null, $opts = null)
+	public function getFormatter($_ = null, $opts = null)
 	{
 		if ($opts !== null) {
 			$this->_getFormatterOpts = $opts;
 		}
+
 		return $this->_getSet($this->_getFormatter, $_);
 	}
 
@@ -260,7 +260,7 @@ class Field extends DataTables\Ext
 	 * @return callable|string|self Value if used as a getter, or self if used
 	 *                              as a setter.
 	 */
-	public function getValue ($_ = null)
+	public function getValue($_ = null)
 	{
 		return $this->_getSet($this->_getValue, $_);
 	}
@@ -278,7 +278,7 @@ class Field extends DataTables\Ext
 	 * @return string|self The name property if no parameter is given, or self
 	 *                     if used as a setter.
 	 */
-	public function name ($_ = null)
+	public function name($_ = null)
 	{
 		return $this->_getSet($this->_name, $_);
 	}
@@ -304,7 +304,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @return Field Self for chaining
 	 */
-	public function options ($table = null, $value = null, $label = null, $condition = null, $format = null, $order = null)
+	public function options($table = null, $value = null, $label = null, $condition = null, $format = null, $order = null)
 	{
 		if ($table === null) {
 			return $this->_opts;
@@ -315,7 +315,7 @@ class Field extends DataTables\Ext
 			// Options class
 			$this->_optsFn = null;
 			$this->_opts = $table;
-		} else if (is_callable($table) && is_object($table)) {
+		} elseif (is_callable($table) && is_object($table)) {
 			// Function
 			$this->_opts = null;
 			$this->_optsFn = $table;
@@ -343,13 +343,13 @@ class Field extends DataTables\Ext
 	}
 
 	/**
-	 * Get a list of values that can be used for the options list in SearchPanes
+	 * Get a list of values that can be used for the options list in SearchPanes.
 	 *
 	 * @param SearchPaneOptions|callable $spInput SearchPaneOptions instance or a closure function if providing a method
 	 *
 	 * @return self
 	 */
-	public function searchPaneOptions ($spInput = null)
+	public function searchPaneOptions($spInput = null)
 	{
 		if ($spInput === null) {
 			return $this->_spopts;
@@ -360,7 +360,7 @@ class Field extends DataTables\Ext
 			// Options class
 			$this->_spoptsFn = null;
 			$this->_spopts = $spInput;
-		} else if (is_callable($spInput) && is_object($spInput)) {
+		} elseif (is_callable($spInput) && is_object($spInput)) {
 			// Function
 			$this->_spopts = null;
 			$this->_spoptsFn = $spInput;
@@ -370,13 +370,13 @@ class Field extends DataTables\Ext
 	}
 
 	/**
-	 * Get a list of values that can be used for the options list in SearchBuilder
+	 * Get a list of values that can be used for the options list in SearchBuilder.
 	 *
 	 * @param SearchBuilderOptions|callable $sbInput SearchBuilderOptions instance or a closure function if providing a method
 	 *
 	 * @return self
 	 */
-	public function searchBuilderOptions ($sbInput = null)
+	public function searchBuilderOptions($sbInput = null)
 	{
 		if ($sbInput === null) {
 			return $this->_sbopts;
@@ -387,7 +387,7 @@ class Field extends DataTables\Ext
 			// Options class
 			$this->_sboptsFn = null;
 			$this->_sbopts = $sbInput;
-		} else if (is_callable($sbInput) && is_object($sbInput)) {
+		} elseif (is_callable($sbInput) && is_object($sbInput)) {
 			// Function
 			$this->_sbopts = null;
 			$this->_sboptsFn = $sbInput;
@@ -418,11 +418,11 @@ class Field extends DataTables\Ext
 	 * @return string|self The set property if no parameter is given, or self
 	 *                     if used as a setter.
 	 */
-	public function set ($_ = null)
+	public function set($_ = null)
 	{
 		if ($_ === true) {
 			$_ = Field::SET_BOTH;
-		} else if ($_ === false) {
+		} elseif ($_ === false) {
 			$_ = Field::SET_NONE;
 		}
 
@@ -451,11 +451,12 @@ class Field extends DataTables\Ext
 	 * @return callable|string|self The set formatter if no parameter is given, or
 	 *                              self if used as a setter.
 	 */
-	public function setFormatter ($_ = null, $opts = null)
+	public function setFormatter($_ = null, $opts = null)
 	{
 		if ($opts !== null) {
 			$this->_setFormatterOpts = $opts;
 		}
+
 		return $this->_getSet($this->_setFormatter, $_);
 	}
 
@@ -469,7 +470,7 @@ class Field extends DataTables\Ext
 	 * @return callable|string|self Value if used as a getter, or self if used
 	 *                              as a setter.
 	 */
-	public function setValue ($_ = null)
+	public function setValue($_ = null)
 	{
 		return $this->_getSet($this->_setValue, $_);
 	}
@@ -482,7 +483,7 @@ class Field extends DataTables\Ext
 	 * @return Upload|self Value if used as a getter, or self if used
 	 *                     as a setter.
 	 */
-	public function upload ($_ = null)
+	public function upload($_ = null)
 	{
 		return $this->_getSet($this->_upload, $_);
 	}
@@ -511,16 +512,16 @@ class Field extends DataTables\Ext
 	 * @return callable|string|self The validation method if no parameter is given,
 	 *                              or self if used as a setter.
 	 */
-	public function validator ($_ = null, $opts = null)
+	public function validator($_ = null, $opts = null)
 	{
 		if ($_ === null) {
 			return $this->_validator;
-		} else {
-			$this->_validator[] = array(
-				'func' => $_,
-				'opts' => $opts
-			);
 		}
+
+		$this->_validator[] = array(
+			'func' => $_,
+			'opts' => $opts,
+		);
 
 		return $this;
 	}
@@ -545,7 +546,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @return Field Self for chaining.
 	 */
-	public function xss ($xssFormatter)
+	public function xss($xssFormatter)
 	{
 		if ($xssFormatter === true || $xssFormatter === false || $xssFormatter === null) {
 			$this->_xssFormat = $xssFormatter;
@@ -575,54 +576,55 @@ class Field extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function apply ($action, $data = null)
+	public function apply($action, $data = null)
 	{
 		if ($action === 'get') {
 			// Get action - can we get this field
 			return $this->_get;
-		} else {
-			// Note that validation must be done on input data before we get here
-
-			// Create or edit action, are we configured to use this field
-			if ($action === 'create' &&
-				($this->_set === Field::SET_NONE || $this->_set === Field::SET_EDIT)
-			) {
-				return false;
-			} else if ($action === 'edit' &&
-				($this->_set === Field::SET_NONE || $this->_set === Field::SET_CREATE)
-			) {
-				return false;
-			}
-
-			// Check it was in the submitted data. If not, then not required
-			// (validation would have failed if it was) and therefore we don't
-			// set it. Check for a value as well, as it can format data from
-			// some other source
-			if ($this->_setValue === null && !$this->_inData($this->name(), $data)) {
-				return false;
-			}
-
-			// In the data set, so use it
-			return true;
 		}
+
+		// Note that validation must be done on input data before we get here
+
+		// Create or edit action, are we configured to use this field
+		if ($action === 'create'
+			&& ($this->_set === Field::SET_NONE || $this->_set === Field::SET_EDIT)
+		) {
+			return false;
+		} elseif ($action === 'edit'
+			&& ($this->_set === Field::SET_NONE || $this->_set === Field::SET_CREATE)
+		) {
+			return false;
+		}
+
+		// Check it was in the submitted data. If not, then not required
+		// (validation would have failed if it was) and therefore we don't
+		// set it. Check for a value as well, as it can format data from
+		// some other source
+		if ($this->_setValue === null && !$this->_inData($this->name(), $data)) {
+			return false;
+		}
+
+		// In the data set, so use it
+		return true;
 	}
 
 	/**
 	 * Execute the ipOpts to get the list of options to return to the client-
-	 * side
+	 * side.
 	 *
 	 * @param \DataTables\Database $db Database instance
 	 *
-	 * @return Array Array of value / label options for the list
+	 * @return array Array of value / label options for the list
 	 *
 	 * @internal
 	 */
-	public function optionsExec ($db)
+	public function optionsExec($db)
 	{
 		if ($this->_optsFn) {
 			$fn = $this->_optsFn;
+
 			return $fn($db);
-		} else if ($this->_opts) {
+		} elseif ($this->_opts) {
 			return $this->_opts->exec($db);
 		}
 
@@ -631,7 +633,7 @@ class Field extends DataTables\Ext
 
 	/**
 	 * Execute the spopts to get the list of options for SearchPanes to return
-	 * to the client-side
+	 * to the client-side.
 	 *
 	 * @param Editor\Field   $field    The field to retrieve the data from
 	 * @param Editor         $editor   The editor instance
@@ -639,16 +641,17 @@ class Field extends DataTables\Ext
 	 * @param Editor\Field[] $fields   All of the fields
 	 * @param array          $leftJoin Info for a leftJoin if required
 	 *
-	 * @return array | bool
+	 * @return array|bool
 	 *
 	 * @internal
 	 */
-	public function searchPaneOptionsExec ($field, $editor, $http, $fields, $leftJoin)
+	public function searchPaneOptionsExec($field, $editor, $http, $fields, $leftJoin)
 	{
 		if ($this->_spoptsFn) {
 			$fn = $this->_spoptsFn;
+
 			return $fn($editor->db(), $editor);
-		} else if ($this->_spopts) {
+		} elseif ($this->_spopts) {
 			return $this->_spopts->exec($field, $editor, $http, $fields, $leftJoin);
 		}
 
@@ -657,7 +660,7 @@ class Field extends DataTables\Ext
 
 	/**
 	 * Execute the spopts to get the list of options for SearchBuilder to return
-	 * to the client-side
+	 * to the client-side.
 	 *
 	 * @param DataTables\Field     $field    The field to retrieve the data from
 	 * @param DataTables\Editor    $editor   The editor instance
@@ -665,16 +668,17 @@ class Field extends DataTables\Ext
 	 * @param DataTables\Field[]   $fields   All of the fields
 	 * @param any                  $leftJoin Info for a leftJoin if required
 	 *
-	 * @return Promise<IOption[]> | bool
+	 * @return Promise<IOption[]>|bool
 	 *
 	 * @internal
 	 */
-	public function searchBuilderOptionsExec ($field, $editor, $http, $fields, $leftJoin)
+	public function searchBuilderOptionsExec($field, $editor, $http, $fields, $leftJoin)
 	{
 		if ($this->_sboptsFn) {
 			$fn = $this->_sboptsFn;
+
 			return $fn($editor->db(), $editor);
-		} else if ($this->_sbopts) {
+		} elseif ($this->_sbopts) {
 			return $this->_sbopts->exec($field, $editor, $http, $fields, $leftJoin);
 		}
 
@@ -698,7 +702,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function val ($direction, $data)
+	public function val($direction, $data)
 	{
 		if ($direction === 'get') {
 			if ($this->_getValue !== null) {
@@ -716,36 +720,36 @@ class Field extends DataTables\Ext
 				$this->_getFormatter,
 				$this->_getFormatterOpts
 			);
-		} else {
-			// Sanity check that we aren't operating on a function
-			if (strpos($this->dbField(), '(') !== false) {
-				throw new \Exception('Cannot set the value for an SQL function field. These fields are read only: ' . $this->name());
-			}
-
-			// Setting data, so using from the payload (POST usually) and thus
-			// use the 'name'
-			$val = $this->_setValue !== null ?
-				$this->_getAssignedValue($this->_setValue) :
-				$this->_readProp($this->name(), $data);
-
-			// XSS removal / checker
-			if ($this->_xssFormat && $val) {
-				$val = $this->xssSafety($val);
-			}
-
-			return $this->_format(
-				$val,
-				$data,
-				$this->_setFormatter,
-				$this->_setFormatterOpts
-			);
 		}
+
+		// Sanity check that we aren't operating on a function
+		if (strpos($this->dbField(), '(') !== false) {
+			throw new \Exception('Cannot set the value for an SQL function field. These fields are read only: ' . $this->name());
+		}
+
+		// Setting data, so using from the payload (POST usually) and thus
+		// use the 'name'
+		$val = $this->_setValue !== null ?
+			$this->_getAssignedValue($this->_setValue) :
+			$this->_readProp($this->name(), $data);
+
+		// XSS removal / checker
+		if ($this->_xssFormat && $val) {
+			$val = $this->xssSafety($val);
+		}
+
+		return $this->_format(
+			$val,
+			$data,
+			$this->_setFormatter,
+			$this->_setFormatterOpts
+		);
 	}
 
 	/**
 	 * Check the validity of the field based on the data submitted. Note that
 	 * this validation is performed on the wire data - i.e. that which is
-	 * submitted, before any setFormatter is run
+	 * submitted, before any setFormatter is run.
 	 *
 	 * Called by the Editor / Join class instances - not expected for general
 	 * consumption - internal.
@@ -758,7 +762,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @internal
 	 */
-	public function validate ($data, $editor, $id = null)
+	public function validate($data, $editor, $id = null)
 	{
 		// Three cases for the validator - closure, string or null
 		if (!count($this->_validator)) {
@@ -776,10 +780,10 @@ class Field extends DataTables\Ext
 			'id' => $id,
 			'field' => $this,
 			'editor' => $editor,
-			'db' => $editor->db()
+			'db' => $editor->db(),
 		);
 
-		for ($i = 0, $ien = count($this->_validator); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($this->_validator); $i < $ien; ++$i) {
 			$validator = $this->_validator[$i];
 
 			// Backwards compatibility
@@ -818,7 +822,7 @@ class Field extends DataTables\Ext
 	}
 
 	/**
-	 * Write the value for this field to the output array for a read operation
+	 * Write the value for this field to the output array for a read operation.
 	 *
 	 * @param array $out     Row output data (to the JSON)
 	 * @param mixed $srcData Row input data (raw, from the database)
@@ -837,7 +841,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @return string Safe value
 	 */
-	public function xssSafety ($val)
+	public function xssSafety($val)
 	{
 		$xss = $this->_xss;
 
@@ -864,7 +868,7 @@ class Field extends DataTables\Ext
 
 	/**
 	 * Apply a formatter to data. The caller will decide what formatter to apply
-	 * (get or set)
+	 * (get or set).
 	 *
 	 * @param mixed    $val       Value to be formatted
 	 * @param mixed    $data      Full row data
@@ -894,10 +898,10 @@ class Field extends DataTables\Ext
 				$func = call_user_func('\\DataTables\\Editor\\' . $formatter . 'Legacy', $opts);
 
 				return $func($val, $data);
-			} else {
-				// User added old style methods
-				return call_user_func('\\DataTables\\Editor\\' . $formatter, $val, $data, $opts);
 			}
+
+			// User added old style methods
+			return call_user_func('\\DataTables\\Editor\\' . $formatter, $val, $data, $opts);
 		}
 
 		// User function (string identifier)
@@ -906,13 +910,13 @@ class Field extends DataTables\Ext
 
 	/**
 	 * Get the value from `_[gs]etValue` - taking into account if it is callable
-	 * function or not
+	 * function or not.
 	 *
 	 * @param mixed $val Value to be evaluated
 	 *
 	 * @return mixed Value assigned, or returned from the function
 	 */
-	private function _getAssignedValue ($val)
+	private function _getAssignedValue($val)
 	{
 		return is_callable($val) && is_object($val) ?
 			$val() :
@@ -931,7 +935,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @private
 	 */
-	private function _inData ($name, $data)
+	private function _inData($name, $data)
 	{
 		if (strpos($name, '.') === false) {
 			return isset($data[$name]) ?
@@ -942,7 +946,7 @@ class Field extends DataTables\Ext
 		$names = explode('.', $name);
 		$inner = $data;
 
-		for ($i = 0; $i < count($names) - 1; $i++) {
+		for ($i = 0; $i < count($names) - 1; ++$i) {
 			if (!isset($inner[$names[$i]])) {
 				return false;
 			}

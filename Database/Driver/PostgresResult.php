@@ -8,16 +8,15 @@
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @link      http://editor.datatables.net
+ *  @see      http://editor.datatables.net
  */
 
 namespace DataTables\Database\Driver;
 
-use PDO;
 use DataTables\Database\Result;
 
 /**
- * Postgres driver for DataTables Database Result class
+ * Postgres driver for DataTables Database Result class.
  *
  *  @internal
  */
@@ -27,7 +26,7 @@ class PostgresResult extends Result
 	 * Constructor
 	 */
 
-	function __construct($dbh, $stmt)
+	public function __construct($dbh, $stmt)
 	{
 		$this->_dbh = $dbh;
 		$this->_stmt = $stmt;
@@ -44,25 +43,26 @@ class PostgresResult extends Result
 	 * Public methods
 	 */
 
-	public function count ()
+	public function count()
 	{
 		return count($this->fetchAll());
 	}
 
-	public function fetch ($fetchType = \PDO::FETCH_ASSOC)
+	public function fetch($fetchType = \PDO::FETCH_ASSOC)
 	{
 		return $this->_stmt->fetch($fetchType);
 	}
 
-	public function fetchAll ($fetchType = \PDO::FETCH_ASSOC)
+	public function fetchAll($fetchType = \PDO::FETCH_ASSOC)
 	{
 		return $this->_stmt->fetchAll($fetchType);
 	}
 
-	public function insertId ()
+	public function insertId()
 	{
 		// Only useful after an insert of course...
 		$rows = $this->_stmt->fetchAll();
+
 		return $rows[0]['dt_pkey'];
 	}
 }

@@ -9,17 +9,15 @@
  *  @copyright 2014 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @link      http://editor.datatables.net
+ *  @see      http://editor.datatables.net
  */
 
 namespace DataTables\Database\Driver;
 
-use PDO;
 use DataTables\Database\Query;
-use DataTables\Database\Driver\OracleResult;
 
 /**
- * Oracle driver for DataTables Database Query class
+ * Oracle driver for DataTables Database Query class.
  *
  *  @internal
  */
@@ -42,7 +40,7 @@ class OracleQuery extends Query
 	 * Public methods
 	 */
 
-	static function connect($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '')
+	public static function connect($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '')
 	{
 		if (is_array($user)) {
 			$opts = $user;
@@ -60,8 +58,9 @@ class OracleQuery extends Query
 
 		if (!is_callable('oci_connect')) {
 			echo json_encode(array(
-				'error' => 'oci methods are not available in this PHP install to connect to Oracle'
+				'error' => 'oci methods are not available in this PHP install to connect to Oracle',
 			));
+
 			exit(1);
 		}
 
@@ -74,8 +73,9 @@ class OracleQuery extends Query
 
 			echo json_encode(array(
 				'error' => 'An error occurred while connecting to the database ' .
-					"'{$db}'. The error reported by the server was: " . $e['message']
+					"'{$db}'. The error reported by the server was: " . $e['message'],
 			));
+
 			exit(1);
 		}
 
@@ -89,17 +89,17 @@ class OracleQuery extends Query
 		return $conn;
 	}
 
-	public static function transaction ($conn)
+	public static function transaction($conn)
 	{
 		// no op
 	}
 
-	public static function commit ($conn)
+	public static function commit($conn)
 	{
 		oci_commit($conn);
 	}
 
-	public static function rollback ($conn)
+	public static function rollback($conn)
 	{
 		oci_rollback($conn);
 	}
@@ -116,7 +116,7 @@ class OracleQuery extends Query
 		// If insert, add the pkey column
 		if ($this->_type === 'insert' && $pkey) {
 			$sql .= ' RETURNING ' . $this->_protect_identifiers(is_array($pkey) ? $pkey[0] : $pkey) . ' INTO :editor_pkey_value';
-		} else if ($this->_type === 'select' && $this->_oracle_offset !== null) {
+		} elseif ($this->_type === 'select' && $this->_oracle_offset !== null) {
 			$sql = '
 				select * from (select rownum rnum, a.*
 				from (' . $sql . ') a where rownum <= ' . ($this->_oracle_offset + $this->_oracle_limit) . ')
@@ -138,7 +138,7 @@ class OracleQuery extends Query
 		}
 
 		// Bind values
-		for ($i = 0; $i < count($this->_bindings); $i++) {
+		for ($i = 0; $i < count($this->_bindings); ++$i) {
 			$binding = $this->_bindings[$i];
 
 			oci_bind_by_name(
@@ -155,10 +155,12 @@ class OracleQuery extends Query
 
 		if (!$res) {
 			$e = oci_error($this->_stmt);
+
 			throw new \Exception('Oracle SQL error: ' . $e['message']);
 		}
 
 		$resource = $this->database()->resource();
+
 		return new OracleResult($resource, $this->_stmt, $this->_editor_pkey_value);
 	}
 
@@ -166,7 +168,7 @@ class OracleQuery extends Query
 	{
 		$out = array();
 
-		for ($i = 0, $ien = count($this->_table); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($this->_table); $i < $ien; ++$i) {
 			$t = $this->_table[$i];
 
 			if (strpos($t, ' as ')) {
@@ -180,8 +182,8 @@ class OracleQuery extends Query
 		return ' ' . implode(', ', $out) . ' ';
 	}
 
-	private $_oracle_offset = null;
-	private $_oracle_limit = null;
+	private $_oracle_offset;
+	private $_oracle_limit;
 
 	protected function _build_limit()
 	{

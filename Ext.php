@@ -8,7 +8,7 @@
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @link      http://editor.datatables.net
+ *  @see      http://editor.datatables.net
  */
 
 namespace DataTables;
@@ -31,7 +31,7 @@ class Ext
 	 *
 	 * @static
 	 */
-	public static function instantiate ()
+	public static function instantiate()
 	{
 		$rc = new \ReflectionClass(get_called_class());
 		$args = func_get_args();
@@ -52,7 +52,7 @@ class Ext
 	 *
 	 * @static
 	 */
-	public static function inst ()
+	public static function inst()
 	{
 		$rc = new \ReflectionClass(get_called_class());
 		$args = func_get_args();
@@ -101,7 +101,7 @@ class Ext
 
 	/**
 	 * Determine if a property is available in a data set (allowing `null` to be
-	 * a valid value)
+	 * a valid value).
 	 *
 	 * @param string $name Javascript dotted object name to write to
 	 * @param array  $data Data source array to read from
@@ -110,7 +110,7 @@ class Ext
 	 *
 	 * @private
 	 */
-	protected function _propExists ($name, $data)
+	protected function _propExists($name, $data)
 	{
 		if (strpos($name, '.') === false) {
 			return isset($data[$name]);
@@ -119,7 +119,7 @@ class Ext
 		$names = explode('.', $name);
 		$inner = $data;
 
-		for ($i = 0; $i < count($names) - 1; $i++) {
+		for ($i = 0; $i < count($names) - 1; ++$i) {
 			if (!isset($inner[$names[$i]])) {
 				return false;
 			}
@@ -149,7 +149,7 @@ class Ext
 	 *
 	 * @private
 	 */
-	protected function _readProp ($name, $data)
+	protected function _readProp($name, $data)
 	{
 		if (strpos($name, '.') === false) {
 			return isset($data[$name]) ?
@@ -160,7 +160,7 @@ class Ext
 		$names = explode('.', $name);
 		$inner = $data;
 
-		for ($i = 0; $i < count($names) - 1; $i++) {
+		for ($i = 0; $i < count($names) - 1; ++$i) {
 			if (!isset($inner[$names[$i]])) {
 				return null;
 			}
@@ -191,25 +191,24 @@ class Ext
 	 * @param string $name  Javascript dotted object name to write to
 	 * @param mixed  $value Value to write
 	 *
-	 * @throws \Exception Information about duplicate properties
-	 *
 	 * @private
 	 */
 	protected function _writeProp(&$out, $name, $value)
 	{
 		if (strpos($name, '.') === false) {
 			$out[$name] = $value;
+
 			return;
 		}
 
 		$names = explode('.', $name);
 		$inner = &$out;
-		for ($i = 0; $i < count($names) - 1; $i++) {
+		for ($i = 0; $i < count($names) - 1; ++$i) {
 			$loopName = $names[$i];
 
 			if (!isset($inner[$loopName])) {
 				$inner[$loopName] = array();
-			} else if (!is_array($inner[$loopName])) {
+			} elseif (!is_array($inner[$loopName])) {
 				throw new \Exception(
 					'A property with the name `' . $name . '` already exists. This ' .
 					'can occur if you have properties which share a prefix - ' .

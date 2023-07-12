@@ -8,7 +8,7 @@
  *  @copyright 2012-2014 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @link      http://editor.datatables.net
+ *  @see      http://editor.datatables.net
  */
 
 namespace DataTables\Editor;
@@ -24,7 +24,7 @@ class ValidateOptions extends DataTables\Ext
 	private $_message = 'Input not valid';
 	private $_optional = true;
 
-	function __construct($opts = null)
+	public function __construct($opts = null)
 	{
 		if ($opts) {
 			if (isset($opts['empty'])) {
@@ -42,63 +42,66 @@ class ValidateOptions extends DataTables\Ext
 	}
 
 	/**
-	 * Get / set the error message to use if validation fails
+	 * Get / set the error message to use if validation fails.
 	 *
 	 * @param string $msg Error message to use. If not given, the currently
 	 *                    set message will be returned.
 	 *
 	 * @return ValidateOptions|string Self if setting, message if getting.
 	 */
-	public function message ($msg = null)
+	public function message($msg = null)
 	{
 		if ($msg === null) {
 			return $this->_message;
 		}
 
 		$this->_message = $msg;
+
 		return $this;
 	}
 
 	/**
-	 * Get / set the field empty option
+	 * Get / set the field empty option.
 	 *
 	 * @param bool $empty `false` if the field is not allowed to be
 	 *                    empty. `true` if it can be.
 	 *
 	 * @return ValidateOptions|bool Self if setting, current value if getting.
 	 */
-	public function allowEmpty ($empty = null)
+	public function allowEmpty($empty = null)
 	{
 		if ($empty === null) {
 			return $this->_empty;
 		}
 
 		$this->_empty = $empty;
+
 		return $this;
 	}
 
 	/**
-	 * Get / set the field optional option
+	 * Get / set the field optional option.
 	 *
 	 * @param bool $optional `false` if the field does not need to be
 	 *                       submitted. `true` if it must be.
 	 *
 	 * @return ValidateOptions|bool Self if setting, current value if getting.
 	 */
-	public function optional ($optional = null)
+	public function optional($optional = null)
 	{
 		if ($optional === null) {
 			return $this->_optional;
 		}
 
 		$this->_optional = $optional;
+
 		return $this;
 	}
 
 	/**
 	 * @internal
 	 */
-	static public function select ($user)
+	public static function select($user)
 	{
 		if ($user) {
 			return $user;

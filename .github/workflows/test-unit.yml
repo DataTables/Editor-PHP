@@ -15,9 +15,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['5.3', '5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', 'latest']
+        php: ['5.3', '5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', 'latest']
         type: ['Lint']
-#        php: ['7.4', '8.0', '8.1']
+#        php: ['7.4', '8.0', '8.1', 'latest']
 #        type: ['Phpunit']
         include:
           - php: 'latest'
@@ -35,7 +35,7 @@ jobs:
           echo 'deb [trusted=yes] http://archive.debian.org/debian jessie main' > /etc/apt/sources.list
           apt-get -y update
           apt-get -y install ca-certificates wget
-          wget -q -O composer https://getcomposer.org/download/latest-1.x/composer.phar && chmod +x composer && mv composer /usr/bin
+          wget -q -O composer https://getcomposer.org/download/latest-2.2.x/composer.phar && chmod +x composer && mv composer /usr/bin
           composer --version
           composer config -g disable-tls true
           sed -i 's/require-dev/require-xxx/g' composer.json

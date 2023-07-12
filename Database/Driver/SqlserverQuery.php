@@ -1,22 +1,20 @@
 <?php
 /**
- * SQL Server driver for DataTables PHP libraries
+ * SQL Server driver for DataTables PHP libraries.
  *
  *  @author    SpryMedia
  *  @copyright 2013 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @link      http://editor.datatables.net
+ *  @see      http://editor.datatables.net
  */
 
 namespace DataTables\Database\Driver;
 
-use PDO;
 use DataTables\Database\Query;
-use DataTables\Database\Driver\PostgresResult;
 
 /**
- * SQL Server driver for DataTables Database Query class
+ * SQL Server driver for DataTables Database Query class.
  *
  *  @internal
  */
@@ -33,7 +31,7 @@ class SqlserverQuery extends Query
 	 * Public methods
 	 */
 
-	static function connect($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '')
+	public static function connect($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '')
 	{
 		if (is_array($user)) {
 			$opts = $user;
@@ -47,15 +45,15 @@ class SqlserverQuery extends Query
 		}
 
 		try {
-			$pdoAttr[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+			$pdoAttr[\PDO::ATTR_ERRMODE] = \PDO::ERRMODE_EXCEPTION;
 
-			if (in_array('sqlsrv', PDO::getAvailableDrivers())) {
+			if (in_array('sqlsrv', \PDO::getAvailableDrivers())) {
 				// Windows
 				if ($port !== '') {
 					$port = ",{$port}";
 				}
 
-				$pdo = new PDO(
+				$pdo = new \PDO(
 					"sqlsrv:Server={$host}{$port};Database={$db}" . self::dsnPostfix($dsn),
 					$user,
 					$pass,
@@ -67,7 +65,7 @@ class SqlserverQuery extends Query
 					$port = ":{$port}";
 				}
 
-				$pdo = new PDO(
+				$pdo = new \PDO(
 					"dblib:host={$host}{$port};dbname={$db}" . self::dsnPostfix($dsn),
 					$user,
 					$pass,
@@ -79,8 +77,9 @@ class SqlserverQuery extends Query
 			// error.
 			echo json_encode(array(
 				'error' => 'An error occurred while connecting to the database ' .
-					"'{$db}'. The error reported by the server was: " . $e->getMessage()
+					"'{$db}'. The error reported by the server was: " . $e->getMessage(),
 			));
+
 			exit(1);
 		}
 
@@ -99,13 +98,13 @@ class SqlserverQuery extends Query
 		$this->_stmt = $resource->prepare($sql);
 
 		// bind values
-		for ($i = 0; $i < count($this->_bindings); $i++) {
+		for ($i = 0; $i < count($this->_bindings); ++$i) {
 			$binding = $this->_bindings[$i];
 
 			$this->_stmt->bindValue(
 				$binding['name'],
 				$binding['value'],
-				$binding['type'] ? $binding['type'] : \PDO::PARAM_STR
+				$binding['type'] ?: \PDO::PARAM_STR
 			);
 		}
 	}
@@ -119,6 +118,7 @@ class SqlserverQuery extends Query
 		}
 
 		$resource = $this->database()->resource();
+
 		return new SqlserverResult($resource, $this->_stmt);
 	}
 

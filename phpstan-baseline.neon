@@ -76,7 +76,7 @@ parameters:
 			path: Database/Driver/Db2Result.php
 
 		-
-			message: "#^Property DataTables\\\\Database\\\\Driver\\\\Db2Result\\:\\:\\$_allRows is never read, only written\\.$#"
+			message: "#^Property DataTables\\\\Database\\\\Driver\\\\Db2Result\\:\\:\\$_allRows is unused\\.$#"
 			count: 1
 			path: Database/Driver/Db2Result.php
 
@@ -296,6 +296,11 @@ parameters:
 			path: Editor.php
 
 		-
+			message: "#^Parameter \\#1 \\$set of method DataTables\\\\Database\\:\\:debug\\(\\) expects bool\\|null, Closure given\\.$#"
+			count: 1
+			path: Editor.php
+
+		-
 			message: "#^Parameter \\#2 \\$parentId of method DataTables\\\\Editor\\\\Join\\:\\:create\\(\\) expects int, string given\\.$#"
 			count: 1
 			path: Editor.php
@@ -317,6 +322,11 @@ parameters:
 
 		-
 			message: "#^Parameter \\#5 \\$leftJoin of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) expects DataTables\\\\Editor\\\\any, array given\\.$#"
+			count: 1
+			path: Editor.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\:\\:\\$_db is never written, only read\\.$#"
 			count: 1
 			path: Editor.php
 
@@ -427,6 +437,31 @@ parameters:
 
 		-
 			message: "#^Parameter \\$leftJoin of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) has invalid type DataTables\\\\Editor\\\\any\\.$#"
+			count: 1
+			path: Editor/Field.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\Field\\:\\:\\$_getFormatter is never written, only read\\.$#"
+			count: 1
+			path: Editor/Field.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\Field\\:\\:\\$_getValue is never written, only read\\.$#"
+			count: 1
+			path: Editor/Field.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\Field\\:\\:\\$_setFormatter is never written, only read\\.$#"
+			count: 1
+			path: Editor/Field.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\Field\\:\\:\\$_setValue is never written, only read\\.$#"
+			count: 1
+			path: Editor/Field.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\Field\\:\\:\\$_upload is never written, only read\\.$#"
 			count: 1
 			path: Editor/Field.php
 
@@ -546,12 +581,57 @@ parameters:
 			path: Editor/Join.php
 
 		-
+			message: "#^Property DataTables\\\\Editor\\\\Join\\:\\:\\$_customOrder is never written, only read\\.$#"
+			count: 1
+			path: Editor/Join.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\Join\\:\\:\\$_table is never written, only read\\.$#"
+			count: 1
+			path: Editor/Join.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\Join\\:\\:\\$_type is never written, only read\\.$#"
+			count: 1
+			path: Editor/Join.php
+
+		-
 			message: "#^Variable \\$readField might not be defined\\.$#"
 			count: 2
 			path: Editor/Join.php
 
 		-
 			message: "#^Negated boolean expression is always false\\.$#"
+			count: 1
+			path: Editor/Options.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\Options\\:\\:\\$_limit is never written, only read\\.$#"
+			count: 1
+			path: Editor/Options.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\Options\\:\\:\\$_order is never written, only read\\.$#"
+			count: 1
+			path: Editor/Options.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\Options\\:\\:\\$_renderer is never written, only read\\.$#"
+			count: 1
+			path: Editor/Options.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\Options\\:\\:\\$_table is never written, only read\\.$#"
+			count: 1
+			path: Editor/Options.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\Options\\:\\:\\$_value is never written, only read\\.$#"
+			count: 1
+			path: Editor/Options.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\Options\\:\\:\\$_where is never written, only read\\.$#"
 			count: 1
 			path: Editor/Options.php
 
@@ -576,6 +656,31 @@ parameters:
 			path: Editor/SearchBuilderOptions.php
 
 		-
+			message: "#^Property DataTables\\\\Editor\\\\SearchBuilderOptions\\:\\:\\$_order is never written, only read\\.$#"
+			count: 1
+			path: Editor/SearchBuilderOptions.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\SearchBuilderOptions\\:\\:\\$_renderer is never written, only read\\.$#"
+			count: 1
+			path: Editor/SearchBuilderOptions.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\SearchBuilderOptions\\:\\:\\$_table is never written, only read\\.$#"
+			count: 1
+			path: Editor/SearchBuilderOptions.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\SearchBuilderOptions\\:\\:\\$_value is never written, only read\\.$#"
+			count: 1
+			path: Editor/SearchBuilderOptions.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\SearchBuilderOptions\\:\\:\\$_where is never written, only read\\.$#"
+			count: 1
+			path: Editor/SearchBuilderOptions.php
+
+		-
 			message: "#^Cannot call method where\\(\\) on string\\.$#"
 			count: 1
 			path: Editor/SearchPaneOptions.php
@@ -588,6 +693,31 @@ parameters:
 		-
 			message: "#^Method DataTables\\\\Editor\\\\SearchPaneOptions\\:\\:label\\(\\) should return array\\<string\\>\\|DataTables\\\\Editor\\\\Options but returns \\$this\\(DataTables\\\\Editor\\\\SearchPaneOptions\\)\\.$#"
 			count: 2
+			path: Editor/SearchPaneOptions.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\SearchPaneOptions\\:\\:\\$_order is never written, only read\\.$#"
+			count: 1
+			path: Editor/SearchPaneOptions.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\SearchPaneOptions\\:\\:\\$_renderer is never written, only read\\.$#"
+			count: 1
+			path: Editor/SearchPaneOptions.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\SearchPaneOptions\\:\\:\\$_table is never written, only read\\.$#"
+			count: 1
+			path: Editor/SearchPaneOptions.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\SearchPaneOptions\\:\\:\\$_value is never written, only read\\.$#"
+			count: 1
+			path: Editor/SearchPaneOptions.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\SearchPaneOptions\\:\\:\\$_where is never written, only read\\.$#"
+			count: 1
 			path: Editor/SearchPaneOptions.php
 
 		-

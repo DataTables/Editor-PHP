@@ -14,9 +14,6 @@ parameters:
             message: '~^.+$~'
             path: HtmLawed/Htmlawed.php
 
-        # TODO asap
-        - '~^PHPDoc tag @param references unknown parameter: \$\w+$~'
-
         # TODO
         - '~Property .+ has no type specified~'
         - '~has parameter \$\w+ with no type specified~'

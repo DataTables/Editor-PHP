@@ -8,7 +8,7 @@
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @link      http://editor.datatables.net
+ *  @see      http://editor.datatables.net
  */
 
 namespace DataTables\Database;
@@ -40,30 +40,30 @@ abstract class Result
 	 *
 	 * @return int
 	 */
-	abstract public function count ();
+	abstract public function count();
 
 	/**
-	 * Get the next row in a result set
+	 * Get the next row in a result set.
 	 *
 	 * @param int $fetchType PDO row fetch style - PDO::FETCH_ASSOC is the default
 	 *
 	 * @return array
 	 */
-	abstract public function fetch ($fetchType = \PDO::FETCH_ASSOC);
+	abstract public function fetch($fetchType = \PDO::FETCH_ASSOC);
 
 	/**
-	 * Get all rows in the result set
+	 * Get all rows in the result set.
 	 *
 	 * @param int $fetchType PDO row fetch style - PDO::FETCH_ASSOC is the default
 	 *
 	 * @return array
 	 */
-	abstract public function fetchAll ($fetchType = \PDO::FETCH_ASSOC);
+	abstract public function fetchAll($fetchType = \PDO::FETCH_ASSOC);
 
 	/**
 	 * After an INSERT query, get the ID that was inserted.
 	 *
 	 * @return int
 	 */
-	abstract public function insertId ();
-};
+	abstract public function insertId();
+}

@@ -8,12 +8,10 @@
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @link      http://editor.datatables.net
+ *  @see      http://editor.datatables.net
  */
 
 namespace DataTables\Editor;
-
-use DataTables\Editor\Join;
 
 /**
  * The `Mjoin` class extends the `Join` class with the join data type set to
@@ -25,7 +23,7 @@ use DataTables\Editor\Join;
  */
 class Mjoin extends Join
 {
-	function __construct($table = null)
+	public function __construct($table = null)
 	{
 		parent::__construct($table, 'array');
 	}

@@ -1,21 +1,20 @@
 <?php
 /**
- * Oracle database driver for Editor
+ * Oracle database driver for Editor.
  *
  *  @author    SpryMedia
  *  @copyright 2014 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @link      http://editor.datatables.net
+ *  @see      http://editor.datatables.net
  */
 
 namespace DataTables\Database\Driver;
 
-use PDO;
 use DataTables\Database\Result;
 
 /**
- * MySQL driver for DataTables Database Result class
+ * MySQL driver for DataTables Database Result class.
  *
  *  @internal
  */
@@ -25,7 +24,7 @@ class OracleResult extends Result
 	 * Constructor
 	 */
 
-	function __construct($dbh, $stmt, $pkey_val)
+	public function __construct($dbh, $stmt, $pkey_val)
 	{
 		$this->_dbh = $dbh;
 		$this->_stmt = $stmt;
@@ -38,24 +37,24 @@ class OracleResult extends Result
 
 	private $_stmt; // Result from oci_parse
 	private $_dbh; // Result from oci_connect
-	private $_rows = null;
+	private $_rows;
 	private $_pkey_val;
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
 	 */
 
-	public function count ()
+	public function count()
 	{
 		return count($this->fetchAll());
 	}
 
-	public function fetch ($fetchType = \PDO::FETCH_ASSOC /* irrelevant for oci8 */)
+	public function fetch($fetchType = \PDO::FETCH_ASSOC /* irrelevant for oci8 */)
 	{
 		return oci_fetch_assoc($this->_stmt);
 	}
 
-	public function fetchAll ($fetchType = \PDO::FETCH_ASSOC /* irrelevant for oci8 */)
+	public function fetchAll($fetchType = \PDO::FETCH_ASSOC /* irrelevant for oci8 */)
 	{
 		if (!$this->_rows) {
 			$out = array();
@@ -68,7 +67,7 @@ class OracleResult extends Result
 		return $this->_rows;
 	}
 
-	public function insertId ()
+	public function insertId()
 	{
 		return $this->_pkey_val;
 	}

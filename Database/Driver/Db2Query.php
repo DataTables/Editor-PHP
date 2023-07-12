@@ -1,16 +1,15 @@
 <?php
 /**
  * DB2 database driver for DataTables libraries.
- * BETA! Feedback welcome
+ * BETA! Feedback welcome.
  */
 
 namespace DataTables\Database\Driver;
 
 use DataTables\Database\Query;
-use DataTables\Database\Driver\Db2Result;
 
 /**
- * DB2 driver for DataTables Database Query class
+ * DB2 driver for DataTables Database Query class.
  *
  *  @internal
  */
@@ -25,7 +24,7 @@ class Db2Query extends Query
 
 	private $_sql;
 
-	protected $_identifier_limiter = null;
+	protected $_identifier_limiter;
 
 	protected $_field_quote = '"';
 
@@ -33,7 +32,7 @@ class Db2Query extends Query
 	 * Public methods
 	 */
 
-	static function connect($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '')
+	public static function connect($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '')
 	{
 		if (is_array($user)) {
 			$opts = $user;
@@ -61,25 +60,26 @@ class Db2Query extends Query
 
 			echo json_encode(array(
 				'error' => 'An error occurred while connecting to the database ' .
-					"'{$db}'. The error reported by the server was: " . $e
+					"'{$db}'. The error reported by the server was: " . $e,
 			));
+
 			exit(1);
 		}
 
 		return $conn;
 	}
 
-	public static function transaction ($conn)
+	public static function transaction($conn)
 	{
 		// no op
 	}
 
-	public static function commit ($conn)
+	public static function commit($conn)
 	{
 		// no op
 	}
 
-	public static function rollback ($conn)
+	public static function rollback($conn)
 	{
 		// no op
 	}
@@ -113,11 +113,11 @@ class Db2Query extends Query
 		// $allanTest = 65;
 		// db2_bind_param( $stmt, 1, 'allanTest', DB2_PARAM_IN );
 
-		for ($i = 0, $ien = count($matches[0]); $i < $ien; $i++) {
-			for ($j = 0, $jen = count($bindings); $j < $jen; $j++) {
+		for ($i = 0, $ien = count($matches[0]); $i < $ien; ++$i) {
+			for ($j = 0, $jen = count($bindings); $j < $jen; ++$j) {
 				if ($bindings[$j]['name'] === $matches[0][$i]) {
 					$name = str_replace(':', '', $matches[0][$i]);
-					$$name = $bindings[$j]['value'];
+					${$name} = $bindings[$j]['value'];
 					// $_GLOBALS[ $name ] = $bindings[$j]['value'];
 
 					// echo "bind $name as ".$$name."\n";
@@ -136,6 +136,7 @@ class Db2Query extends Query
 		}
 
 		$resource = $this->database()->resource();
+
 		return new Db2Result($resource, $this->_stmt, $this->_editor_pkey_value);
 	}
 
@@ -143,7 +144,7 @@ class Db2Query extends Query
 	{
 		$out = array();
 
-		for ($i = 0, $ien = count($this->_table); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($this->_table); $i < $ien; ++$i) {
 			$t = $this->_table[$i];
 
 			if (strpos($t, ' as ')) {

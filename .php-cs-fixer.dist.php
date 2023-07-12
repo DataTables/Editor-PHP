@@ -3,7 +3,8 @@
 $finder = PhpCsFixer\Finder::create()
 	->in(array(__DIR__))
 	->ignoreDotFiles(false)
-	->exclude(array('.git', 'vendor'));
+	->ignoreVCS(true)
+	->exclude(array('vendor'));
 
 $config = new PhpCsFixer\Config();
 
@@ -12,7 +13,9 @@ return $config
 	->setIndent("\t")
 	->setRules(array(
 		'@PhpCsFixer' => true,
+		'@PhpCsFixer:risky' => true,
 		'@PHP74Migration' => true,
+		'@PHP74Migration:risky' => true,
 
 		// required by PSR-12
 		'concat_space' => array(
@@ -46,7 +49,7 @@ return $config
 		'return_assignment' => false,
 		'comment_to_phpdoc' => false,
 		'general_phpdoc_annotation_remove' => array(
-			'annotations' => array('author', 'copyright', 'throws'),
+			'annotations' => array(/* 'author', 'copyright', */ 'throws'),
 		),
 		'nullable_type_declaration_for_default_null_value' => array(
 			'use_nullable_type_declaration' => false,
@@ -57,66 +60,18 @@ return $config
 		'use_arrow_functions' => false,
 
 		// disable too destructive formating for now
-		'list_syntax' => array('syntax' => 'long'),
-		'escape_implicit_backslashes' => false,
-		'heredoc_to_nowdoc' => false,
-		'no_useless_else' => false,
-		'no_useless_return' => false,
-		'phpdoc_no_empty_return' => false,
-		'phpdoc_order' => false,
-		'phpdoc_var_annotation_correct_order' => false,
-		'protected_to_private' => false,
-		'simple_to_complex_string_variable' => false,
+		'list_syntax' => array('syntax' => 'long'), // needs PHP 5.4+
+		'array_syntax' => array('syntax' => 'long'), // needs PHP 5.4+
+		'ternary_to_null_coalescing' => false, // needs PHP 7.0+
 		'single_line_comment_style' => false,
-
-		// enable some safe rules from @PHP71Migration:risky
-		'pow_to_exponentiation' => true,
-		'is_null' => true,
-		'modernize_types_casting' => true,
-		'dir_constant' => true,
-		'combine_nested_dirname' => true,
-		'non_printable_character' => array(
-			'use_escape_sequences_in_strings' => true,
-		),
-
-		// TODO
-		'array_syntax' => false,
-		'blank_line_before_statement' => false,
-		'class_attributes_separation' => false,
-		'class_definition' => false,
-		'constant_case' => false,
-		'dir_constant' => false,
-		'elseif' => false,
-		'explicit_indirect_variable' => false,
-		'explicit_string_variable' => false,
-		'function_declaration' => false,
-		'general_phpdoc_annotation_remove' => false,
-		'global_namespace_import' => false,
-		'include' => false,
-		'increment_style' => false,
-		'method_chaining_indentation' => false,
-		'modernize_types_casting' => false,
-		'native_constant_invocation' => false,
-		'no_empty_statement' => false,
-		'no_null_property_initialization' => false,
-		'no_superfluous_phpdoc_tags' => false,
-		'no_unneeded_control_parentheses' => false,
-		'no_unused_imports' => false,
-		'no_useless_concat_operator' => false,
-		'operator_linebreak' => false,
-		'ordered_imports' => false,
 		'phpdoc_annotation_without_dot' => false,
-		'phpdoc_indent' => false,
-		'phpdoc_no_alias_tag' => false,
-		'phpdoc_no_package' => false,
-		'phpdoc_scalar' => false,
-		'phpdoc_summary' => false,
-		'phpdoc_types' => false,
-		'phpdoc_types_order' => false,
-		'ternary_to_null_coalescing' => false,
-		'trailing_comma_in_multiline' => false,
-		'visibility_required' => false,
-		'yoda_style' => false,
+		'declare_strict_types' => false,
+		'strict_comparison' => false,
+		'strict_param' => false, // TODO
+		'final_internal_class' => false,
+		'function_to_constant' => false, // needs PHP 5.5+
+		'self_accessor' => false, // TODO some should be converted to static:: probably
+		'visibility_required' => array('elements' => array('property', 'method')), // needs PHP 7.1+
 	))
 	->setFinder($finder)
 	->setCacheFile(sys_get_temp_dir() . '/php-cs-fixer.' . md5(__DIR__) . '.cache');

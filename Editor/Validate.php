@@ -8,12 +8,10 @@
  *  @copyright 2012-2014 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @link      http://editor.datatables.net
+ *  @see      http://editor.datatables.net
  */
 
 namespace DataTables\Editor;
-
-use DataTables\Editor\ValidateOptions;
 
 /**
  * Validation methods for DataTables Editor fields.
@@ -144,7 +142,7 @@ class Validate
 			'message' => 'Input not valid',
 			'required' => false,
 			'empty' => true,
-			'optional' => true
+			'optional' => true,
 		);
 
 		if (!is_array($userOpts)) {
@@ -166,7 +164,7 @@ class Validate
 	}
 
 	/**
-	 * Perform common validation using the configuration parameters
+	 * Perform common validation using the configuration parameters.
 	 *
 	 *  @internal
 	 */
@@ -179,7 +177,7 @@ class Validate
 		if (!$optional && $val === null) {
 			// Value must be given
 			return false;
-		} else if ($empty === false && $val === '') {
+		} elseif ($empty === false && $val === '') {
 			// Value must not be empty
 			return false;
 		}
@@ -187,7 +185,7 @@ class Validate
 		// Validation passed states
 		if ($optional && $val === null) {
 			return true;
-		} else if ($empty === true && $val === '') {
+		} elseif ($empty === true && $val === '') {
 			return true;
 		}
 
@@ -196,7 +194,7 @@ class Validate
 	}
 
 	/**
-	 * Convert the old style validation parameters into ValidateOptions
+	 * Convert the old style validation parameters into ValidateOptions.
 	 *
 	 *  @internal
 	 */
@@ -272,16 +270,16 @@ class Validate
 	 * );
 	 * ```
 	 *
-	 * @param string   $val  The value to check for validity
-	 * @param string[] $data The full data set submitted
-	 * @param array    $opts Validation options. No additional options are
-	 *                       available or required for this validation method.
-	 * @param array    $host Host information
+	 * @callback-param string   $val  The value to check for validity
+	 * @callback-param string[] $data The full data set submitted
+	 * @callback-param array    $opts Validation options. No additional options are
+	 *                                available or required for this validation method.
+	 * @callback-param array    $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
 	 */
-	static function basic($cfg = null)
+	public static function basic($cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
@@ -295,7 +293,7 @@ class Validate
 	}
 
 	/**
-	 * Required field - there must be a value and it must be a non-empty value
+	 * Required field - there must be a value and it must be a non-empty value.
 	 *
 	 * This is a helper short-cut method which is the same as:
 	 *
@@ -305,16 +303,16 @@ class Validate
 	 * );
 	 * ```
 	 *
-	 * @param string   $val  The value to check for validity
-	 * @param string[] $data The full data set submitted
-	 * @param array    $opts Validation options. No additional options are
-	 *                       available or required for this validation method.
-	 * @param array    $host Host information
+	 * @callback-param string   $val  The value to check for validity
+	 * @callback-param string[] $data The full data set submitted
+	 * @callback-param array    $opts Validation options. No additional options are
+	 *                                available or required for this validation method.
+	 * @callback-param array    $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
 	 */
-	static function required($cfg = null)
+	public static function required($cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 		$opts->allowEmpty(false);
@@ -330,7 +328,7 @@ class Validate
 	}
 
 	/**
-	 * Optional field, but if given there must be a non-empty value
+	 * Optional field, but if given there must be a non-empty value.
 	 *
 	 * This is a helper short-cut method which is the same as:
 	 *
@@ -344,7 +342,7 @@ class Validate
 	 *
 	 * @return callable Validation function
 	 */
-	static function notEmpty($cfg = null)
+	public static function notEmpty($cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 		$opts->allowEmpty(false);
@@ -361,11 +359,11 @@ class Validate
 	/**
 	 * Validate an input as a boolean value.
 	 *
-	 * @param string   $val  The value to check for validity
-	 * @param string[] $data The full data set submitted
-	 * @param array    $opts Validation options. No additional options are
-	 *                       available or required for this validation method.
-	 * @param array    $host Host information
+	 * @callback-param string   $val  The value to check for validity
+	 * @callback-param string[] $data The full data set submitted
+	 * @callback-param array    $opts Validation options. No additional options are
+	 *                                available or required for this validation method.
+	 * @callback-param array    $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -383,9 +381,10 @@ class Validate
 					$common;
 			}
 
-			if (filter_var($val, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) === null) {
+			if (filter_var($val, \FILTER_VALIDATE_BOOLEAN, \FILTER_NULL_ON_FAILURE) === null) {
 				return $opts->message();
 			}
+
 			return true;
 		};
 	}
@@ -397,17 +396,17 @@ class Validate
 	/**
 	 * Check that any input is numeric.
 	 *
-	 * @param string   $val  The value to check for validity
-	 * @param string[] $data The full data set submitted
-	 * @param array    $opts Validation options. Additional options:
-	 *                       * `decimal`: is available to indicate what character should be used
-	 *                       as the decimal
-	 * @param array    $host Host information
+	 * @callback-param string   $val  The value to check for validity
+	 * @callback-param string[] $data The full data set submitted
+	 * @callback-param array    $opts Validation options. Additional options:
+	 *                                * `decimal`: is available to indicate what character should be used
+	 *                                as the decimal
+	 * @callback-param array    $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
 	 */
-	public static function numeric ($decimal = '.', $cfg = null)
+	public static function numeric($decimal = '.', $cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
@@ -433,21 +432,21 @@ class Validate
 	/**
 	 * Check for a numeric input and that it is greater than a given value.
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options. Additional options:
-	 *                        * `min`: indicate the minimum value. If only the default validation
-	 *                        options are required, this parameter can be given as an integer
-	 *                        value, which will be used as the minimum value.
-	 *                        * `decimal`: is available to indicate what character should be used
-	 *                        as the decimal
-	 *                        separator (default '.').
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options. Additional options:
+	 *                                 * `min`: indicate the minimum value. If only the default validation
+	 *                                 options are required, this parameter can be given as an integer
+	 *                                 value, which will be used as the minimum value.
+	 *                                 * `decimal`: is available to indicate what character should be used
+	 *                                 as the decimal
+	 *                                 separator (default '.').
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
 	 */
-	public static function minNum ($min, $decimal = '.', $cfg = null)
+	public static function minNum($min, $decimal = '.', $cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
@@ -480,20 +479,20 @@ class Validate
 	/**
 	 * Check for a numeric input and that it is less than a given value.
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options.
-	 *                        * `max`: indicate the maximum value. If only the default validation
-	 *                        options are required, this parameter can be given as an integer
-	 *                        value, which will be used as the maximum value.
-	 *                        * `decimal`: is available to indicate what character should be used
-	 *                        as the decimal
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options.
+	 *                                 * `max`: indicate the maximum value. If only the default validation
+	 *                                 options are required, this parameter can be given as an integer
+	 *                                 value, which will be used as the maximum value.
+	 *                                 * `decimal`: is available to indicate what character should be used
+	 *                                 as the decimal
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
 	 */
-	public static function maxNum ($max, $decimal = '.', $cfg = null)
+	public static function maxNum($max, $decimal = '.', $cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
@@ -527,19 +526,19 @@ class Validate
 	 * Check for a numeric input and that it is both greater and smaller than
 	 * given numbers.
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options. Additional options:
-	 *                        * `min`: indicate the minimum value.
-	 *                        * `max`: indicate the maximum value.
-	 *                        * `decimal`: is available to indicate what character should be used
-	 *                        as the decimal
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options. Additional options:
+	 *                                 * `min`: indicate the minimum value.
+	 *                                 * `max`: indicate the maximum value.
+	 *                                 * `decimal`: is available to indicate what character should be used
+	 *                                 as the decimal
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
 	 */
-	public static function minMaxNum ($min, $max, $decimal = '.', $cfg = null)
+	public static function minMaxNum($min, $max, $decimal = '.', $cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
@@ -584,11 +583,11 @@ class Validate
 	/**
 	 * Validate an input as an e-mail address.
 	 *
-	 * @param string   $val  The value to check for validity
-	 * @param string[] $data The full data set submitted
-	 * @param array    $opts Validation options. No additional options are
-	 *                       available or required for this validation method.
-	 * @param array    $host Host information
+	 * @callback-param string   $val  The value to check for validity
+	 * @callback-param string[] $data The full data set submitted
+	 * @callback-param array    $opts Validation options. No additional options are
+	 *                                available or required for this validation method.
+	 * @callback-param array    $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -606,7 +605,7 @@ class Validate
 					$common;
 			}
 
-			return filter_var($val, FILTER_VALIDATE_EMAIL) !== false ?
+			return filter_var($val, \FILTER_VALIDATE_EMAIL) !== false ?
 				true :
 				$opts->message();
 		};
@@ -615,14 +614,14 @@ class Validate
 	/**
 	 * Validate a string has a minimum length.
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options. The additional option of
-	 *                        `min` is available for this method to indicate the minimum string
-	 *                        length. If only the default validation options are required, this
-	 *                        parameter can be given as an integer value, which will be used as the
-	 *                        minimum string length.
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options. The additional option of
+	 *                                 `min` is available for this method to indicate the minimum string
+	 *                                 length. If only the default validation options are required, this
+	 *                                 parameter can be given as an integer value, which will be used as the
+	 *                                 minimum string length.
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -653,14 +652,14 @@ class Validate
 	/**
 	 * Validate a string does not exceed a maximum length.
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options. The additional option of
-	 *                        `max` is available for this method to indicate the maximum string
-	 *                        length. If only the default validation options are required, this
-	 *                        parameter can be given as an integer value, which will be used as the
-	 *                        maximum string length.
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options. The additional option of
+	 *                                 `max` is available for this method to indicate the maximum string
+	 *                                 length. If only the default validation options are required, this
+	 *                                 parameter can be given as an integer value, which will be used as the
+	 *                                 maximum string length.
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -691,12 +690,12 @@ class Validate
 	/**
 	 * Require a string with a certain minimum or maximum number of characters.
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options. The additional options of
-	 *                        `min` and `max` are available for this method to indicate the minimum
-	 *                        and maximum string lengths, respectively.
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options. The additional options of
+	 *                                 `min` and `max` are available for this method to indicate the minimum
+	 *                                 and maximum string lengths, respectively.
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -735,11 +734,11 @@ class Validate
 	/**
 	 * Validate as an IP address.
 	 *
-	 * @param string   $val  The value to check for validity
-	 * @param string[] $data The full data set submitted
-	 * @param array    $opts Validation options. No additional options are
-	 *                       available or required for this validation method.
-	 * @param array    $host Host information
+	 * @callback-param string   $val  The value to check for validity
+	 * @callback-param string[] $data The full data set submitted
+	 * @callback-param array    $opts Validation options. No additional options are
+	 *                                available or required for this validation method.
+	 * @callback-param array    $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -757,7 +756,7 @@ class Validate
 					$common;
 			}
 
-			return filter_var($val, FILTER_VALIDATE_IP) !== false ?
+			return filter_var($val, \FILTER_VALIDATE_IP) !== false ?
 				true :
 				$opts->message();
 		};
@@ -766,11 +765,11 @@ class Validate
 	/**
 	 * Validate as an URL address.
 	 *
-	 * @param string   $val  The value to check for validity
-	 * @param string[] $data The full data set submitted
-	 * @param array    $opts Validation options. No additional options are
-	 *                       available or required for this validation method.
-	 * @param array    $host Host information
+	 * @callback-param string   $val  The value to check for validity
+	 * @callback-param string[] $data The full data set submitted
+	 * @callback-param array    $opts Validation options. No additional options are
+	 *                                available or required for this validation method.
+	 * @callback-param array    $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -788,28 +787,28 @@ class Validate
 					$common;
 			}
 
-			return filter_var($val, FILTER_VALIDATE_URL) !== false ?
+			return filter_var($val, \FILTER_VALIDATE_URL) !== false ?
 				true :
 				$opts->message();
 		};
 	}
 
 	/**
-	 * Check if string could contain an XSS attack string
+	 * Check if string could contain an XSS attack string.
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options. The additional options of
-	 *                        `db` - database connection object, `table` - database table to use and
-	 *                        `column` - the column to check this value against as value, are also
-	 *                        available. These options are not required and if not given are
-	 *                        automatically derived from the Editor and Field instances.
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options. The additional options of
+	 *                                 `db` - database connection object, `table` - database table to use and
+	 *                                 `column` - the column to check this value against as value, are also
+	 *                                 available. These options are not required and if not given are
+	 *                                 automatically derived from the Editor and Field instances.
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
 	 */
-	public static function xss ($cfg = null)
+	public static function xss($cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
@@ -829,16 +828,16 @@ class Validate
 	}
 
 	/**
-	 * Confirm that the value submitted is in a list of allowable values
+	 * Confirm that the value submitted is in a list of allowable values.
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options. The additional options of
-	 *                        `db` - database connection object, `table` - database table to use and
-	 *                        `column` - the column to check this value against as value, are also
-	 *                        available. These options are not required and if not given are
-	 *                        automatically derived from the Editor and Field instances.
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options. The additional options of
+	 *                                 `db` - database connection object, `table` - database table to use and
+	 *                                 `column` - the column to check this value against as value, are also
+	 *                                 available. These options are not required and if not given are
+	 *                                 automatically derived from the Editor and Field instances.
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -863,21 +862,21 @@ class Validate
 	}
 
 	/**
-	 * Check if there are any tags in the submitted value
+	 * Check if there are any tags in the submitted value.
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options. The additional options of
-	 *                        `db` - database connection object, `table` - database table to use and
-	 *                        `column` - the column to check this value against as value, are also
-	 *                        available. These options are not required and if not given are
-	 *                        automatically derived from the Editor and Field instances.
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options. The additional options of
+	 *                                 `db` - database connection object, `table` - database table to use and
+	 *                                 `column` - the column to check this value against as value, are also
+	 *                                 available. These options are not required and if not given are
+	 *                                 automatically derived from the Editor and Field instances.
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
 	 */
-	public static function noTags ($cfg = null)
+	public static function noTags($cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
@@ -901,15 +900,15 @@ class Validate
 	 */
 
 	/**
-	 * Check that a valid date input is given
+	 * Check that a valid date input is given.
 	 *
-	 * @param string       $val  The value to check for validity
-	 * @param string[]     $data The full data set submitted
-	 * @param array|string $opts If given as a string, then $opts is the date
-	 *                           format to check the validity of. If given as an array, then the
-	 *                           date format is in the 'format' parameter, and the return error
-	 *                           message in the 'message' parameter.
-	 * @param array        $host Host information
+	 * @callback-param string       $val  The value to check for validity
+	 * @callback-param string[]     $data The full data set submitted
+	 * @callback-param array|string $opts If given as a string, then $opts is the date
+	 *                                    format to check the validity of. If given as an array, then the
+	 *                                    date format is in the 'format' parameter, and the return error
+	 *                                    message in the 'message' parameter.
+	 * @callback-param array        $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -944,16 +943,16 @@ class Validate
 	 */
 
 	/**
-	 * Check that the given value is unique in the database
+	 * Check that the given value is unique in the database.
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options. The additional options of
-	 *                        `db` - database connection object, `table` - database table to use and
-	 *                        `column` - the column to check this value against as value, are also
-	 *                        available. These options are not required and if not given are
-	 *                        automatically derived from the Editor and Field instances.
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options. The additional options of
+	 *                                 `db` - database connection object, `table` - database table to use and
+	 *                                 `column` - the column to check this value against as value, are also
+	 *                                 available. These options are not required and if not given are
+	 *                                 automatically derived from the Editor and Field instances.
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -1012,14 +1011,14 @@ class Validate
 	 * assumption that it will typically be used with a joined field), but the
 	 * table and field can also be specified via the options.
 	 *
-	 * @param string    $val  The value to check for validity
-	 * @param string[]  $data The full data set submitted
-	 * @param int|array $opts Validation options. The additional options of
-	 *                        `db` - database connection object, `table` - database table to use and
-	 *                        `column` - the column to check this value against as value, are also
-	 *                        available. These options are not required and if not given are
-	 *                        automatically derived from the Editor and Field instances.
-	 * @param array     $host Host information
+	 * @callback-param string    $val  The value to check for validity
+	 * @callback-param string[]  $data The full data set submitted
+	 * @callback-param int|array $opts Validation options. The additional options of
+	 *                                 `db` - database connection object, `table` - database table to use and
+	 *                                 `column` - the column to check this value against as value, are also
+	 *                                 available. These options are not required and if not given are
+	 *                                 automatically derived from the Editor and Field instances.
+	 * @callback-param array     $host Host information
 	 *
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
@@ -1087,12 +1086,12 @@ class Validate
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	* File validation methods
 	*/
-	static function fileExtensions ($extensions, $msg = 'This file type cannot be uploaded.')
+	public static function fileExtensions($extensions, $msg = 'This file type cannot be uploaded.')
 	{
 		return function ($file) use ($extensions, $msg) {
-			$extn = pathinfo($file['name'], PATHINFO_EXTENSION);
+			$extn = pathinfo($file['name'], \PATHINFO_EXTENSION);
 
-			for ($i = 0, $ien = count($extensions); $i < $ien; $i++) {
+			for ($i = 0, $ien = count($extensions); $i < $ien; ++$i) {
 				if (strtolower($extn) === strtolower($extensions[$i])) {
 					return true;
 				}
@@ -1102,7 +1101,7 @@ class Validate
 		};
 	}
 
-	static function fileSize ($size, $msg = 'Uploaded file is too large.')
+	public static function fileSize($size, $msg = 'Uploaded file is too large.')
 	{
 		return function ($file) use ($size, $msg) {
 			return $file['size'] > $size ?
@@ -1114,7 +1113,7 @@ class Validate
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	* Mjoin validation methods
 	*/
-	static function mjoinMinCount ($count, $msg = 'Too few items.')
+	public static function mjoinMinCount($count, $msg = 'Too few items.')
 	{
 		return function ($editor, $action, $values) use ($count, $msg) {
 			if ($action === 'create' || $action === 'edit') {
@@ -1122,11 +1121,12 @@ class Validate
 					$msg :
 					true;
 			}
+
 			return true;
 		};
 	}
 
-	static function mjoinMaxCount ($count, $msg = 'Too many items.')
+	public static function mjoinMaxCount($count, $msg = 'Too many items.')
 	{
 		return function ($editor, $action, $values) use ($count, $msg) {
 			if ($action === 'create' || $action === 'edit') {
@@ -1134,6 +1134,7 @@ class Validate
 					$msg :
 					true;
 			}
+
 			return true;
 		};
 	}
@@ -1147,7 +1148,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function noneLegacy($legacyOpts)
+	public static function noneLegacy($legacyOpts)
 	{
 		return Validate::none();
 	}
@@ -1155,7 +1156,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function basicLegacy($legacyOpts)
+	public static function basicLegacy($legacyOpts)
 	{
 		$cfg = Validate::_extend($legacyOpts, null, array());
 		$opts = Validate::_commonLegacy($cfg);
@@ -1166,10 +1167,10 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function requiredLegacy($legacyOpts)
+	public static function requiredLegacy($legacyOpts)
 	{
 		$cfg = Validate::_extend($legacyOpts, null, array(
-			'message' => 'This field is required.'
+			'message' => 'This field is required.',
 		));
 		$opts = Validate::_commonLegacy($cfg);
 
@@ -1179,10 +1180,10 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function notEmptyLegacy($legacyOpts)
+	public static function notEmptyLegacy($legacyOpts)
 	{
 		$cfg = Validate::_extend($legacyOpts, null, array(
-			'message' => 'This field is required.'
+			'message' => 'This field is required.',
 		));
 		$opts = Validate::_commonLegacy($cfg);
 
@@ -1192,10 +1193,10 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function booleanLegacy($legacyOpts)
+	public static function booleanLegacy($legacyOpts)
 	{
 		$cfg = Validate::_extend($legacyOpts, null, array(
-			'message' => 'Please enter true or false.'
+			'message' => 'Please enter true or false.',
 		));
 		$opts = Validate::_commonLegacy($cfg);
 
@@ -1205,10 +1206,10 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function numericLegacy($legacyOpts)
+	public static function numericLegacy($legacyOpts)
 	{
 		$cfg = Validate::_extend($legacyOpts, null, array(
-			'message' => 'This input must be given as a number.'
+			'message' => 'This input must be given as a number.',
 		));
 		$opts = Validate::_commonLegacy($cfg);
 
@@ -1220,11 +1221,11 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function minNumLegacy($legacyOpts)
+	public static function minNumLegacy($legacyOpts)
 	{
 		$min = is_array($legacyOpts) ? $legacyOpts['min'] : $legacyOpts;
 		$cfg = Validate::_extend($legacyOpts, null, array(
-			'message' => 'Number is too small, must be ' . $min . ' or larger.'
+			'message' => 'Number is too small, must be ' . $min . ' or larger.',
 		));
 		$opts = Validate::_commonLegacy($cfg);
 
@@ -1236,11 +1237,11 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function maxNumLegacy($legacyOpts)
+	public static function maxNumLegacy($legacyOpts)
 	{
 		$max = is_array($legacyOpts) ? $legacyOpts['max'] : $legacyOpts;
 		$cfg = Validate::_extend($legacyOpts, null, array(
-			'message' => 'Number is too large, must be ' . $max . ' or smaller.'
+			'message' => 'Number is too large, must be ' . $max . ' or smaller.',
 		));
 		$opts = Validate::_commonLegacy($cfg);
 
@@ -1252,7 +1253,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function minMaxNumLegacy($legacyOpts)
+	public static function minMaxNumLegacy($legacyOpts)
 	{
 		$min = $legacyOpts['min'];
 		$max = $legacyOpts['max'];
@@ -1267,10 +1268,10 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function emailLegacy($legacyOpts)
+	public static function emailLegacy($legacyOpts)
 	{
 		$cfg = Validate::_extend($legacyOpts, null, array(
-			'message' => 'Please enter a valid e-mail address.'
+			'message' => 'Please enter a valid e-mail address.',
 		));
 		$opts = Validate::_commonLegacy($cfg);
 
@@ -1280,11 +1281,11 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function minLenLegacy($legacyOpts)
+	public static function minLenLegacy($legacyOpts)
 	{
 		$min = is_array($legacyOpts) ? $legacyOpts['min'] : $legacyOpts;
 		$cfg = Validate::_extend($legacyOpts, null, array(
-			'message' => 'The input is too short. ' . $min . ' characters required.'
+			'message' => 'The input is too short. ' . $min . ' characters required.',
 		));
 		$opts = Validate::_commonLegacy($cfg);
 
@@ -1294,11 +1295,11 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function maxLenLegacy($legacyOpts)
+	public static function maxLenLegacy($legacyOpts)
 	{
 		$max = is_array($legacyOpts) ? $legacyOpts['max'] : $legacyOpts;
 		$cfg = Validate::_extend($legacyOpts, null, array(
-			'message' => 'The input is too long. ' . $max . ' characters maximum.'
+			'message' => 'The input is too long. ' . $max . ' characters maximum.',
 		));
 		$opts = Validate::_commonLegacy($cfg);
 
@@ -1308,7 +1309,7 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function minMaxLenLegacy($legacyOpts)
+	public static function minMaxLenLegacy($legacyOpts)
 	{
 		$min = $legacyOpts['min'];
 		$max = $legacyOpts['max'];
@@ -1321,10 +1322,10 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function ipLegacy($legacyOpts)
+	public static function ipLegacy($legacyOpts)
 	{
 		$cfg = Validate::_extend($legacyOpts, null, array(
-			'message' => 'Please enter a valid IP address.'
+			'message' => 'Please enter a valid IP address.',
 		));
 		$opts = Validate::_commonLegacy($cfg);
 
@@ -1334,10 +1335,10 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function urlLegacy($legacyOpts)
+	public static function urlLegacy($legacyOpts)
 	{
 		$cfg = Validate::_extend($legacyOpts, null, array(
-			'message' => 'Please enter a valid URL.'
+			'message' => 'Please enter a valid URL.',
 		));
 		$opts = Validate::_commonLegacy($cfg);
 
@@ -1347,10 +1348,10 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function xssLegacy($legacyOpts)
+	public static function xssLegacy($legacyOpts)
 	{
 		$cfg = Validate::_extend($legacyOpts, null, array(
-			'message' => 'This field contains potentially unsafe data.'
+			'message' => 'This field contains potentially unsafe data.',
 		));
 		$opts = Validate::_commonLegacy($cfg);
 
@@ -1360,11 +1361,11 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function valuesLegacy($legacyOpts)
+	public static function valuesLegacy($legacyOpts)
 	{
 		$values = isset($legacyOpts['valid']) ? $legacyOpts['valid'] : $legacyOpts;
 		$cfg = Validate::_extend($legacyOpts, null, array(
-			'message' => 'This value is not valid.'
+			'message' => 'This value is not valid.',
 		));
 		$opts = Validate::_commonLegacy($cfg);
 
@@ -1374,10 +1375,10 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function noTagsLegacy($legacyOpts)
+	public static function noTagsLegacy($legacyOpts)
 	{
 		$cfg = Validate::_extend($legacyOpts, null, array(
-			'message' => 'This field may not contain HTML.'
+			'message' => 'This field may not contain HTML.',
 		));
 		$opts = Validate::_commonLegacy($cfg);
 
@@ -1387,11 +1388,11 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function dateFormatLegacy($legacyOpts)
+	public static function dateFormatLegacy($legacyOpts)
 	{
 		$format = is_array($legacyOpts) ? $legacyOpts['format'] : $legacyOpts;
 		$cfg = Validate::_extend($legacyOpts, null, array(
-			'message' => 'Date is not in the expected format.'
+			'message' => 'Date is not in the expected format.',
 		));
 		$opts = Validate::_commonLegacy($cfg);
 
@@ -1401,13 +1402,13 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function uniqueLegacy($legacyOpts)
+	public static function uniqueLegacy($legacyOpts)
 	{
 		$table = isset($legacyOpts['table']) ? $legacyOpts['table'] : null;
 		$column = isset($legacyOpts['column']) ? $legacyOpts['column'] : null;
 		$db = isset($legacyOpts['db']) ? $legacyOpts['db'] : null;
 		$cfg = Validate::_extend($legacyOpts, null, array(
-			'message' => 'This field must have a unique value.'
+			'message' => 'This field must have a unique value.',
 		));
 		$opts = Validate::_commonLegacy($cfg);
 
@@ -1417,14 +1418,14 @@ class Validate
 	/**
 	 * @internal
 	 */
-	static function dbValuesLegacy($legacyOpts)
+	public static function dbValuesLegacy($legacyOpts)
 	{
 		$table = isset($legacyOpts['table']) ? $legacyOpts['table'] : null;
 		$column = isset($legacyOpts['column']) ? $legacyOpts['column'] : null;
 		$db = isset($legacyOpts['db']) ? $legacyOpts['db'] : null;
 		$values = isset($legacyOpts['values']) ? $legacyOpts['values'] : array();
 		$cfg = Validate::_extend($legacyOpts, null, array(
-			'message' => 'This value is not valid.'
+			'message' => 'This value is not valid.',
 		));
 		$opts = Validate::_commonLegacy($cfg);
 

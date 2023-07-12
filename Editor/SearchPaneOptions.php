@@ -8,7 +8,7 @@
  *  @copyright 2016 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @link      http://editor.datatables.net
+ *  @see      http://editor.datatables.net
  */
 
 namespace DataTables\Editor;
@@ -66,10 +66,10 @@ class SearchPaneOptions extends DataTables\Ext
 	 */
 
 	/** @var string Table to get the information from */
-	private $_table = null;
+	private $_table;
 
 	/** @var string Column name containing the value */
-	private $_value = null;
+	private $_value;
 
 	/** @var string[] Column names for the label(s) */
 	private $_label = array();
@@ -78,32 +78,32 @@ class SearchPaneOptions extends DataTables\Ext
 	private $_leftJoin = array();
 
 	/** @var callable Callback function to do rendering of labels */
-	private $_renderer = null;
+	private $_renderer;
 
 	/** @var callable Callback function to add where conditions */
-	private $_where = null;
+	private $_where;
 
 	/** @var string ORDER BY clause */
-	private $_order = null;
+	private $_order;
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
 	 */
 
 	/**
-	 * Get / set the column(s) to use as the label value of the options
+	 * Get / set the column(s) to use as the label value of the options.
 	 *
-	 * @param null|string|string[] $_ null to get the current value, string or
+	 * @param string|string[]|null $_ null to get the current value, string or
 	 *                                array to get.
 	 *
 	 * @return Options|string[] Self if setting for chaining, array of values if
 	 *                          getting.
 	 */
-	public function label ($_ = null)
+	public function label($_ = null)
 	{
 		if ($_ === null) {
 			return $this;
-		} else if (is_string($_)) {
+		} elseif (is_string($_)) {
 			$this->_label = array($_);
 		} else {
 			$this->_label = $_;
@@ -117,11 +117,11 @@ class SearchPaneOptions extends DataTables\Ext
 	 * provided the ordering will be based on the rendered output, either
 	 * numerically or alphabetically based on the data returned by the renderer.
 	 *
-	 * @param null|string $_ String to set, null to get current value
+	 * @param string|null $_ String to set, null to get current value
 	 *
 	 * @return Options|string Self if setting for chaining, string if getting.
 	 */
-	public function order ($_ = null)
+	public function order($_ = null)
 	{
 		return $this->_getSet($this->_order, $_);
 	}
@@ -131,12 +131,12 @@ class SearchPaneOptions extends DataTables\Ext
 	 * multiple database columns into a single string that is shown as the label
 	 * to the end user in the list of options.
 	 *
-	 * @param null|callable $_ Function to set, null to get current value
+	 * @param callable|null $_ Function to set, null to get current value
 	 *
 	 * @return Options|callable Self if setting for chaining, callable if
 	 *                          getting.
 	 */
-	public function render ($_ = null)
+	public function render($_ = null)
 	{
 		return $this->_getSet($this->_renderer, $_);
 	}
@@ -145,11 +145,11 @@ class SearchPaneOptions extends DataTables\Ext
 	 * Get / set the database table from which to gather the options for the
 	 * list.
 	 *
-	 * @param null|string $_ String to set, null to get current value
+	 * @param string|null $_ String to set, null to get current value
 	 *
 	 * @return Options|string Self if setting for chaining, string if getting.
 	 */
-	public function table ($_ = null)
+	public function table($_ = null)
 	{
 		return $this->_getSet($this->_table, $_);
 	}
@@ -158,11 +158,11 @@ class SearchPaneOptions extends DataTables\Ext
 	 * Get / set the column name to use for the value in the options list. This
 	 * would normally be the primary key for the table.
 	 *
-	 * @param null|string $_ String to set, null to get current value
+	 * @param string|null $_ String to set, null to get current value
 	 *
 	 * @return Options|string Self if setting for chaining, string if getting.
 	 */
-	public function value ($_ = null)
+	public function value($_ = null)
 	{
 		return $this->_getSet($this->_value, $_);
 	}
@@ -171,12 +171,12 @@ class SearchPaneOptions extends DataTables\Ext
 	 * Get / set the method to use for a WHERE condition if it is to be
 	 * applied to the query to get the options.
 	 *
-	 * @param null|callable $_ Function to set, null to get current value
+	 * @param callable|null $_ Function to set, null to get current value
 	 *
 	 * @return Options|callable Self if setting for chaining, callable if
 	 *                          getting.
 	 */
-	public function where ($_ = null)
+	public function where($_ = null)
 	{
 		return $this->_getSet($this->_where, $_);
 	}
@@ -192,28 +192,28 @@ class SearchPaneOptions extends DataTables\Ext
 	 *
 	 * @return self
 	 */
-	public function leftJoin ($table, $field1, $operator, $field2)
+	public function leftJoin($table, $field1, $operator, $field2)
 	{
 		$this->_leftJoin[] = array(
 			'table' => $table,
 			'field1' => $field1,
 			'field2' => $field2,
-			'operator' => $operator
+			'operator' => $operator,
 		);
 
 		return $this;
 	}
 
 	/**
-	 * Adds all of the where conditions to the desired query
+	 * Adds all of the where conditions to the desired query.
 	 *
 	 * @param string $query the query being built
 	 *
 	 * @return self
 	 */
-	private function _get_where ($query)
+	private function _get_where($query)
 	{
-		for ($i = 0; $i < count($this->_where); $i++) {
+		for ($i = 0; $i < count($this->_where); ++$i) {
 			if (is_callable($this->_where[$i])) {
 				$this->_where[$i]($query);
 			} else {
@@ -224,6 +224,7 @@ class SearchPaneOptions extends DataTables\Ext
 				);
 			}
 		}
+
 		return $this;
 	}
 
@@ -232,27 +233,25 @@ class SearchPaneOptions extends DataTables\Ext
 	 */
 
 	/**
-	 * Execute the options (i.e. get them)
-	 *
-	 * @param Database $db Database connection
+	 * Execute the options (i.e. get them).
 	 *
 	 * @return array List of options
 	 *
 	 * @internal
 	 */
-	public function exec ($field, $editor, $http, $fields, $leftJoinIn)
+	public function exec($field, $editor, $http, $fields, $leftJoinIn)
 	{
 		$db = $editor->db();
 		$readTable = $editor->readTable();
 		$filteringActive = isset($http['searchPanes']);
 		$viewCount = isset($http['searchPanes_options'])
-			? filter_var($http['searchPanes_options']['viewCount'], FILTER_VALIDATE_BOOLEAN)
+			? filter_var($http['searchPanes_options']['viewCount'], \FILTER_VALIDATE_BOOLEAN)
 			: true;
 		$viewTotal = isset($http['searchPanes_options'])
-			? filter_var($http['searchPanes_options']['viewTotal'], FILTER_VALIDATE_BOOLEAN)
+			? filter_var($http['searchPanes_options']['viewTotal'], \FILTER_VALIDATE_BOOLEAN)
 			: false;
 		$cascade = isset($http['searchPanes_options'])
-			? filter_var($http['searchPanes_options']['cascade'], FILTER_VALIDATE_BOOLEAN)
+			? filter_var($http['searchPanes_options']['cascade'], \FILTER_VALIDATE_BOOLEAN)
 			: false;
 		$entries = null;
 
@@ -265,7 +264,7 @@ class SearchPaneOptions extends DataTables\Ext
 		// This is not taking a value from the SearchPaneOptions instance as the table should be defined in value/label. This throws up errors if not.
 		if ($this->_table !== null) {
 			$table = $this->_table;
-		} else if (count($readTable) > 0) {
+		} elseif (count($readTable) > 0) {
 			$table = $readTable;
 		} else {
 			$table = $editor->table();
@@ -276,11 +275,9 @@ class SearchPaneOptions extends DataTables\Ext
 			? $value
 			: $this->_label[0];
 
-		$formatter = $this->_renderer
-			? $this->_renderer
-			: function ($str) {
-				return $str;
-			};
+		$formatter = $this->_renderer ?: function ($str) {
+			return $str;
+		};
 
 		// Set up the join variable so that it will fit nicely later
 		$leftJoin = gettype($this->_leftJoin) === 'array' ?
@@ -297,7 +294,7 @@ class SearchPaneOptions extends DataTables\Ext
 			}
 
 			if (!$found) {
-				array_push($leftJoin, $lj);
+				$leftJoin[] = $lj;
 			}
 		}
 
@@ -322,7 +319,7 @@ class SearchPaneOptions extends DataTables\Ext
 			// select distinct.
 			$orderFields = explode(',', $this->_order);
 
-			for ($i = 0, $ien = count($orderFields); $i < $ien; $i++) {
+			for ($i = 0, $ien = count($orderFields); $i < $ien; ++$i) {
 				$orderField = strtolower($orderFields[$i]);
 				$orderField = str_replace(' asc', '', $orderField);
 				$orderField = str_replace(' desc', '', $orderField);
@@ -345,7 +342,7 @@ class SearchPaneOptions extends DataTables\Ext
 			$values = array_column($rows, 'value');
 			$selected = $http['searchPanes'][$field->name()];
 
-			for ($i = 0; $i < count($selected); $i++) {
+			for ($i = 0; $i < count($selected); ++$i) {
 				$idx = array_search($selected[$i], $values);
 
 				if ($idx === false) {
@@ -386,13 +383,13 @@ class SearchPaneOptions extends DataTables\Ext
 					if (isset($http['searchPanes'][$fieldName]) && $fieldName !== $http['searchPanesLast']) {
 						$add = true;
 					}
-				} else if (isset($http['searchPanes']) && isset($http['searchPanes'][$fieldName])) {
+				} elseif (isset($http['searchPanes']) && isset($http['searchPanes'][$fieldName])) {
 					$add = true;
 				}
 
 				if ($add) {
 					$query->where(function ($q) use ($fieldOpt, $http, $fieldName) {
-						for ($j = 0, $jen = count($http['searchPanes'][$fieldName]); $j < $jen; $j++) {
+						for ($j = 0, $jen = count($http['searchPanes'][$fieldName]); $j < $jen; ++$j) {
 							$q->or_where(
 								$fieldOpt->dbField(),
 								isset($http['searchPanes_null'][$fieldName][$j])
@@ -416,7 +413,7 @@ class SearchPaneOptions extends DataTables\Ext
 
 		$out = array();
 
-		for ($i = 0, $ien = count($rows); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($rows); $i < $ien; ++$i) {
 			$row = $rows[$i];
 			$value = $row['value'];
 			$total = isset($row['total']) ? $row['total'] : null;
@@ -438,7 +435,7 @@ class SearchPaneOptions extends DataTables\Ext
 				'label' => $formatter($row['label']),
 				'total' => $total,
 				'value' => $value,
-				'count' => $count
+				'count' => $count,
 			);
 		}
 

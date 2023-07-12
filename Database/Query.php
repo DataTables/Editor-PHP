@@ -8,15 +8,12 @@
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @link      http://editor.datatables.net
+ *  @see      http://editor.datatables.net
  */
 
 namespace DataTables\Database;
 
-use DataTables;
 use DataTables\Database;
-use DataTables\Database\Query;
-use DataTables\Database\Result;
 
 //
 // This is a stub class that a driver must extend and complete
@@ -46,9 +43,9 @@ abstract class Query
 	 * Note that typically instances of this class will be automatically created
 	 * through the {@see \DataTables\Database->query()} method.
 	 *
-	 * @param Database        $db    Database instance
-	 * @param string          $type  Query type - 'select', 'insert', 'update' or 'delete'
-	 * @param string|string[] $table Tables to operate on - see {@see Query->table()}.
+	 * @param Database        $dbHost Database instance
+	 * @param string          $type   Query type - 'select', 'insert', 'update' or 'delete'
+	 * @param string|string[] $table  Tables to operate on - see {@see Query->table()}.
 	 */
 	public function __construct($dbHost, $type, $table = null)
 	{
@@ -129,21 +126,21 @@ abstract class Query
 	 *
 	 * @internal
 	 */
-	protected $_limit = null;
+	protected $_limit;
 
 	/**
 	 * @var string
 	 *
 	 * @internal
 	 */
-	protected $_group_by = null;
+	protected $_group_by;
 
 	/**
 	 * @var int
 	 *
 	 * @internal
 	 */
-	protected $_offset = null;
+	protected $_offset;
 
 	/**
 	 * @var string
@@ -171,7 +168,7 @@ abstract class Query
 	 *
 	 * @internal
 	 */
-	protected $_pkey = null;
+	protected $_pkey;
 
 	protected $_supportsAsAlias = true;
 
@@ -186,7 +183,7 @@ abstract class Query
 	 *
 	 * @param \PDO $dbh The Database handle (typically a PDO object, but not always).
 	 */
-	public static function commit ($dbh)
+	public static function commit($dbh)
 	{
 		$dbh->commit();
 	}
@@ -201,7 +198,7 @@ abstract class Query
 	 *
 	 * @return Query
 	 */
-	public static function connect ($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '')
+	public static function connect($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '')
 	{
 		// noop - PHP <7 can't have an abstract static without causing
 		// an error in strict mode. This should technically be an
@@ -209,11 +206,11 @@ abstract class Query
 	}
 
 	/**
-	 * Start a database transaction
+	 * Start a database transaction.
 	 *
 	 * @param \PDO $dbh The Database handle (typically a PDO object, but not always).
 	 */
-	public static function transaction ($dbh)
+	public static function transaction($dbh)
 	{
 		$dbh->beginTransaction();
 	}
@@ -223,13 +220,13 @@ abstract class Query
 	 *
 	 * @param \PDO $dbh The Database handle (typically a PDO object, but not always).
 	 */
-	public static function rollback ($dbh)
+	public static function rollback($dbh)
 	{
 		$dbh->rollBack();
 	}
 
 	/**
-	 * Common helper for the drivers to handle a PDO DSN postfix
+	 * Common helper for the drivers to handle a PDO DSN postfix.
 	 *
 	 * @param string $dsn DSN postfix to use
 	 *
@@ -237,7 +234,7 @@ abstract class Query
 	 *
 	 * @internal
 	 */
-	static function dsnPostfix ($dsn)
+	public static function dsnPostfix($dsn)
 	{
 		if (!$dsn) {
 			return '';
@@ -267,23 +264,23 @@ abstract class Query
 	 *
 	 * @return Query
 	 */
-	public function bind ($name, $value, $type = null)
+	public function bind($name, $value, $type = null)
 	{
 		$this->_bindings[] = array(
 			'name' => $this->_safe_bind($name),
 			'value' => $value,
-			'type' => $type
+			'type' => $type,
 		);
 
 		return $this;
 	}
 
 	/**
-	 * Get the Database host for this query instance
+	 * Get the Database host for this query instance.
 	 *
 	 * @return Database Database class instance
 	 */
-	public function database ()
+	public function database()
 	{
 		return $this->_dbHost;
 	}
@@ -296,9 +293,10 @@ abstract class Query
 	 *
 	 * @return Query
 	 */
-	public function distinct ($dis)
+	public function distinct($dis)
 	{
 		$this->_distinct = $dis;
+
 		return $this;
 	}
 
@@ -309,21 +307,21 @@ abstract class Query
 	 *
 	 * @return Result
 	 */
-	public function exec ($sql = null)
+	public function exec($sql = null)
 	{
 		$type = strtolower($this->_type);
 
 		if ($type === 'select') {
 			return $this->_select();
-		} else if ($type === 'insert') {
+		} elseif ($type === 'insert') {
 			return $this->_insert();
-		} else if ($type === 'update') {
+		} elseif ($type === 'update') {
 			return $this->_update();
-		} else if ($type === 'delete') {
+		} elseif ($type === 'delete') {
 			return $this->_delete();
-		} else if ($type === 'count') {
+		} elseif ($type === 'count') {
 			return $this->_count();
-		} else if ($type === 'raw') {
+		} elseif ($type === 'raw') {
 			return $this->_raw($sql);
 		}
 
@@ -333,12 +331,12 @@ abstract class Query
 	/**
 	 * Get fields.
 	 *
-	 * @param string|string[] $get,... Fields to get - can be specified as
-	 *                                 individual fields or an array of fields.
+	 * @param string|string[] ...$get Fields to get - can be specified as
+	 *                                individual fields or an array of fields.
 	 *
 	 * @return self
 	 */
-	public function get ($get)
+	public function get($get)
 	{
 		$args = func_get_args();
 
@@ -346,19 +344,19 @@ abstract class Query
 			return $this;
 		}
 
-		for ($i = 0; $i < count($args); $i++) {
+		for ($i = 0; $i < count($args); ++$i) {
 			// If argument is an array then we loop over and add each using a
 			// recursive call
 			if (is_array($args[$i])) {
-				for ($j = 0; $j < count($args[$i]); $j++) {
+				for ($j = 0; $j < count($args[$i]); ++$j) {
 					$this->get($args[$i][$j]);
 				}
-			} else if (strpos($args[$i], ',') !== false && strpos($args[$i], '(') === false) {
+			} elseif (strpos($args[$i], ',') !== false && strpos($args[$i], '(') === false) {
 				// Comma delimited set of fields - legacy. Recommended that fields be split into
 				// an array on input
 				$a = explode(',', $args[$i]);
 
-				for ($j = 0; $j < count($a); $j++) {
+				for ($j = 0; $j < count($a); ++$j) {
 					$this->get($a[$j]);
 				}
 			} else {
@@ -370,7 +368,7 @@ abstract class Query
 	}
 
 	/**
-	 * Perform a JOIN operation
+	 * Perform a JOIN operation.
 	 *
 	 * @param string $table     Table name to do the JOIN on
 	 * @param string $condition JOIN condition
@@ -378,7 +376,7 @@ abstract class Query
 	 *
 	 * @return self
 	 */
-	public function join ($table, $condition, $type = '', $bind = true)
+	public function join($table, $condition, $type = '', $bind = true)
 	{
 		// Tidy and check we know what the join type is
 		if ($type !== '') {
@@ -403,18 +401,18 @@ abstract class Query
 	}
 
 	/**
-	 * Add a left join, with common logic for handling binding or not
+	 * Add a left join, with common logic for handling binding or not.
 	 */
 	public function left_join($joins)
 	{
 		// Allow a single associative array
 		if ($this->_is_assoc($joins)) {
 			$joins = array(
-				$joins
+				$joins,
 			);
 		}
 
-		for ($i = 0, $ien = count($joins); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($joins); $i < $ien; ++$i) {
 			$join = $joins[$i];
 
 			if ($join['field2'] === null && $join['operator'] === null) {
@@ -443,7 +441,7 @@ abstract class Query
 	 *
 	 * @return self
 	 */
-	public function limit ($lim)
+	public function limit($lim)
 	{
 		$this->_limit = $lim;
 
@@ -451,13 +449,13 @@ abstract class Query
 	}
 
 	/**
-	 * Group the results by the values in a field
+	 * Group the results by the values in a field.
 	 *
 	 * @param string $group_by The field of which the values are to be grouped
 	 *
 	 * @return self
 	 */
-	public function group_by ($group_by)
+	public function group_by($group_by)
 	{
 		$this->_group_by = $group_by;
 
@@ -472,7 +470,7 @@ abstract class Query
 	 *
 	 * @return Query|string[]
 	 */
-	public function pkey ($pkey = null)
+	public function pkey($pkey = null)
 	{
 		if ($pkey === null) {
 			return $this->_pkey;
@@ -486,13 +484,13 @@ abstract class Query
 	/**
 	 * Set table(s) to perform the query on.
 	 *
-	 * @param string|string[] $table,... Table(s) to use - can be specified as
-	 *                                   individual names, an array of names, a string of comma separated
-	 *                                   names or any combination of those.
+	 * @param string|string[] ...$table Table(s) to use - can be specified as
+	 *                                  individual names, an array of names, a string of comma separated
+	 *                                  names or any combination of those.
 	 *
 	 * @return self
 	 */
-	public function table ($table)
+	public function table($table)
 	{
 		if ($table === null) {
 			return $this;
@@ -500,14 +498,14 @@ abstract class Query
 
 		if (is_array($table)) {
 			// Array so loop internally
-			for ($i = 0; $i < count($table); $i++) {
+			for ($i = 0; $i < count($table); ++$i) {
 				$this->table($table[$i]);
 			}
 		} else {
 			// String based, explode for multiple tables
 			$tables = explode(',', $table);
 
-			for ($i = 0; $i < count($tables); $i++) {
+			for ($i = 0; $i < count($tables); ++$i) {
 				$this->_table[] = $this->_protect_identifiers(trim($tables[$i]));
 			}
 		}
@@ -522,7 +520,7 @@ abstract class Query
 	 *
 	 * @return self
 	 */
-	public function offset ($off)
+	public function offset($off)
 	{
 		$this->_offset = $off;
 
@@ -530,7 +528,7 @@ abstract class Query
 	}
 
 	/**
-	 * Order by
+	 * Order by.
 	 *
 	 * @param string|string[] $order Columns and direction to order by - can
 	 *                               be specified as individual names, an array of names, a string of comma
@@ -538,7 +536,7 @@ abstract class Query
 	 *
 	 * @return self
 	 */
-	public function order ($order)
+	public function order($order)
 	{
 		if ($order === null) {
 			return $this;
@@ -548,7 +546,7 @@ abstract class Query
 			$order = preg_split('/\,(?![^\(]*\))/', $order);
 		}
 
-		for ($i = 0; $i < count($order); $i++) {
+		for ($i = 0; $i < count($order); ++$i) {
 			// Simplify the white-space
 			$order[$i] = trim(preg_replace('/[\t ]+/', ' ', $order[$i]));
 
@@ -581,7 +579,7 @@ abstract class Query
 	 *
 	 * @return self
 	 */
-	public function set ($set, $val = null, $bind = true)
+	public function set($set, $val = null, $bind = true)
 	{
 		if ($set === null) {
 			return $this;
@@ -635,16 +633,16 @@ abstract class Query
 	 *         } );
 	 *     ```
 	 */
-	public function where ($key, $value = null, $op = '=', $bind = true)
+	public function where($key, $value = null, $op = '=', $bind = true)
 	{
 		if ($key === null) {
 			return $this;
-		} else if (is_callable($key) && is_object($key)) { // is a closure
+		} elseif (is_callable($key) && is_object($key)) { // is a closure
 			$this->_where_group(true, 'AND');
 			$key($this);
 			$this->_where_group(false, 'OR');
-		} else if (!is_array($key) && is_array($value)) {
-			for ($i = 0; $i < count($value); $i++) {
+		} elseif (!is_array($key) && is_array($value)) {
+			for ($i = 0; $i < count($value); ++$i) {
 				$this->where($key, $value[$i], $op, $bind);
 			}
 		} else {
@@ -673,7 +671,7 @@ abstract class Query
 	 *
 	 * @return self
 	 */
-	public function and_where ($key, $value = null, $op = '=', $bind = true)
+	public function and_where($key, $value = null, $op = '=', $bind = true)
 	{
 		return $this->where($key, $value, $op, $bind);
 	}
@@ -696,19 +694,20 @@ abstract class Query
 	 *
 	 * @return self
 	 */
-	public function or_where ($key, $value = null, $op = '=', $bind = true)
+	public function or_where($key, $value = null, $op = '=', $bind = true)
 	{
 		if ($key === null) {
 			return $this;
-		} else if (is_callable($key) && is_object($key)) {
+		} elseif (is_callable($key) && is_object($key)) {
 			$this->_where_group(true, 'OR');
 			$key($this);
 			$this->_where_group(false, 'OR');
 		} else {
 			if (!is_array($key) && is_array($value)) {
-				for ($i = 0; $i < count($value); $i++) {
+				for ($i = 0; $i < count($value); ++$i) {
 					$this->or_where($key, $value[$i], $op, $bind);
 				}
+
 				return $this;
 			}
 
@@ -742,7 +741,7 @@ abstract class Query
 	 *     } );
 	 *     ```
 	 */
-	public function where_group ($inOut, $op = 'AND')
+	public function where_group($inOut, $op = 'AND')
 	{
 		if (is_callable($inOut) && is_object($inOut)) {
 			$this->_where_group(true, $op);
@@ -769,7 +768,7 @@ abstract class Query
 	 *
 	 * @return self
 	 */
-	public function where_in ($field, $arr, $operator = 'AND')
+	public function where_in($field, $arr, $operator = 'AND')
 	{
 		if (count($arr) === 0) {
 			return $this;
@@ -780,20 +779,20 @@ abstract class Query
 
 		// Need to build an array of the binders (having bound the values) so
 		// the query can be constructed
-		for ($i = 0, $ien = count($arr); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($arr); $i < $ien; ++$i) {
 			$binder = $prefix . $this->_whereInCnt;
 
 			$this->bind($binder, $arr[$i]);
 
 			$binders[] = $binder;
-			$this->_whereInCnt++;
+			++$this->_whereInCnt;
 		}
 
 		$this->_where[] = array(
 			'operator' => $operator,
 			'group' => null,
 			'field' => $this->_protect_identifiers($field),
-			'query' => $this->_protect_identifiers($field) . ' IN (' . implode(', ', $binders) . ')'
+			'query' => $this->_protect_identifiers($field) . ' IN (' . implode(', ', $binders) . ')',
 		);
 
 		return $this;
@@ -804,7 +803,7 @@ abstract class Query
 	 */
 
 	/**
-	 * Create a comma separated field list
+	 * Create a comma separated field list.
 	 *
 	 * @param bool $addAlias Flag to add an alias
 	 *
@@ -819,7 +818,7 @@ abstract class Query
 			' as ' :
 			' ';
 
-		for ($i = 0; $i < count($this->_field); $i++) {
+		for ($i = 0; $i < count($this->_field); ++$i) {
 			$field = $this->_field[$i];
 
 			// Keep the name when referring to a table
@@ -833,7 +832,7 @@ abstract class Query
 					$a[] = $this->_protect_identifiers($field) . $asAlias .
 						$this->_field_quote . $this->_escape_field($field) . $this->_field_quote;
 				}
-			} else if ($addAlias && strpos($field, '(') !== false && !strpos($field, ' as ')) {
+			} elseif ($addAlias && strpos($field, '(') !== false && !strpos($field, ' as ')) {
 				$a[] = $this->_protect_identifiers($field) . $asAlias .
 					$this->_field_quote . $this->_escape_field($field) . $this->_field_quote;
 			} else {
@@ -845,7 +844,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create a JOIN statement list
+	 * Create a JOIN statement list.
 	 *
 	 * @return string
 	 *
@@ -857,7 +856,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create the LIMIT / OFFSET string
+	 * Create the LIMIT / OFFSET string.
 	 *
 	 * MySQL and Postgres style - anything else can have the driver override
 	 *
@@ -868,8 +867,8 @@ abstract class Query
 	protected function _build_limit()
 	{
 		$out = '';
-		$limit = intval($this->_limit);
-		$offset = intval($this->_offset);
+		$limit = (int) $this->_limit;
+		$offset = (int) $this->_offset;
 
 		if ($limit) {
 			$out .= ' LIMIT ' . $limit;
@@ -883,7 +882,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create the GROUP BY string
+	 * Create the GROUP BY string.
 	 *
 	 * @return string
 	 *
@@ -901,7 +900,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create the ORDER BY string
+	 * Create the ORDER BY string.
 	 *
 	 * @return string
 	 *
@@ -912,11 +911,12 @@ abstract class Query
 		if (count($this->_order) > 0) {
 			return ' ORDER BY ' . implode(', ', $this->_order) . ' ';
 		}
+
 		return '';
 	}
 
 	/**
-	 * Create a set list
+	 * Create a set list.
 	 *
 	 * @return string
 	 *
@@ -926,7 +926,7 @@ abstract class Query
 	{
 		$a = array();
 
-		for ($i = 0; $i < count($this->_field); $i++) {
+		for ($i = 0; $i < count($this->_field); ++$i) {
 			$field = $this->_field[$i];
 
 			if (isset($this->_noBind[$field])) {
@@ -940,7 +940,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create the TABLE list
+	 * Create the TABLE list.
 	 *
 	 * @return string
 	 *
@@ -952,7 +952,7 @@ abstract class Query
 			// insert, update and delete statements don't need or want aliases in the table name
 			$a = array();
 
-			for ($i = 0, $ien = count($this->_table); $i < $ien; $i++) {
+			for ($i = 0, $ien = count($this->_table); $i < $ien; ++$i) {
 				$table = str_ireplace(' as ', ' ', $this->_table[$i]);
 				$tableParts = explode(' ', $table);
 
@@ -966,7 +966,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create a bind field value list
+	 * Create a bind field value list.
 	 *
 	 * @return string
 	 *
@@ -976,7 +976,7 @@ abstract class Query
 	{
 		$a = array();
 
-		for ($i = 0, $ien = count($this->_field); $i < $ien; $i++) {
+		for ($i = 0, $ien = count($this->_field); $i < $ien; ++$i) {
 			$a[] = ' :' . $this->_safe_bind($this->_field[$i]);
 		}
 
@@ -984,7 +984,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create the WHERE statement
+	 * Create the WHERE statement.
 	 *
 	 * @return string
 	 *
@@ -998,10 +998,10 @@ abstract class Query
 
 		$condition = 'WHERE ';
 
-		for ($i = 0; $i < count($this->_where); $i++) {
+		for ($i = 0; $i < count($this->_where); ++$i) {
 			if ($i === 0) {
 				// Nothing (simplifies the logic!)
-			} else if ($this->_where[$i]['group'] === ')') {
+			} elseif ($this->_where[$i]['group'] === ')') {
 				// If a group has been used but no conditions were added inside
 				// of, we don't want to end up with `()` in the SQL as that is
 				// invalid, so add a 1.
@@ -1009,7 +1009,7 @@ abstract class Query
 					$condition .= '1=1';
 				}
 				// else nothing
-			} else if ($this->_where[$i - 1]['group'] === '(') {
+			} elseif ($this->_where[$i - 1]['group'] === '(') {
 				// Nothing
 			} else {
 				$condition .= $this->_where[$i]['operator'] . ' ';
@@ -1026,7 +1026,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create a DELETE statement
+	 * Create a DELETE statement.
 	 *
 	 * @return Result
 	 *
@@ -1044,7 +1044,7 @@ abstract class Query
 	}
 
 	/**
-	 * Escape quotes in a field identifier
+	 * Escape quotes in a field identifier.
 	 *
 	 *  @internal
 	 */
@@ -1056,7 +1056,7 @@ abstract class Query
 	}
 
 	/**
-	 * Execute the query. Provided by the driver
+	 * Execute the query. Provided by the driver.
 	 *
 	 * @return Result
 	 *
@@ -1065,7 +1065,7 @@ abstract class Query
 	abstract protected function _exec();
 
 	/**
-	 * Create an INSERT statement
+	 * Create an INSERT statement.
 	 *
 	 * @return Result
 	 *
@@ -1088,16 +1088,14 @@ abstract class Query
 
 	/**
 	 * Prepare the SQL query by populating the bound variables.
-	 * Provided by the driver
-	 *
-	 * @return void
+	 * Provided by the driver.
 	 *
 	 * @internal
 	 */
 	abstract protected function _prepare($sql);
 
 	/**
-	 * Protect field names
+	 * Protect field names.
 	 *
 	 * @param string $identifier String to be protected
 	 *
@@ -1118,7 +1116,7 @@ abstract class Query
 		$right = $idl[1];
 
 		// Dealing with a function or other expression? Just return immediately
-		if (strpos($identifier, '(') !== FALSE || strpos($identifier, '*') !== FALSE) {
+		if (strpos($identifier, '(') !== false || strpos($identifier, '*') !== false) {
 			return $identifier;
 		}
 
@@ -1140,11 +1138,12 @@ abstract class Query
 		}
 
 		$a = explode('.', $identifier);
+
 		return $left . implode($right . '.' . $left, $a) . $right . $alias;
 	}
 
 	/**
-	 * Passed in SQL statement
+	 * Passed in SQL statement.
 	 *
 	 * @return Result
 	 *
@@ -1160,7 +1159,7 @@ abstract class Query
 	/**
 	 * The characters that can be used for the PDO bindValue name are quite
 	 * limited (`[a-zA-Z0-9_]+`). We need to abstract this out to allow slightly
-	 * more complex expressions including dots for easy aliasing
+	 * more complex expressions including dots for easy aliasing.
 	 *
 	 * @param string $name Field name
 	 *
@@ -1168,7 +1167,7 @@ abstract class Query
 	 *
 	 * @internal
 	 */
-	protected function _safe_bind ($name)
+	protected function _safe_bind($name)
 	{
 		$name = str_replace('.', '_1_', $name);
 		$name = str_replace('-', '_2_', $name);
@@ -1180,7 +1179,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create a SELECT statement
+	 * Create a SELECT statement.
 	 *
 	 * @return Result
 	 *
@@ -1203,7 +1202,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create a SELECT COUNT statement
+	 * Create a SELECT COUNT statement.
 	 *
 	 * @return Result
 	 *
@@ -1227,7 +1226,7 @@ abstract class Query
 	}
 
 	/**
-	 * Create an UPDATE statement
+	 * Create an UPDATE statement.
 	 *
 	 * @return Result
 	 *
@@ -1256,11 +1255,11 @@ abstract class Query
 	 * @param string       $op
 	 * @param bool         $bind
 	 */
-	protected function _where ($where, $value = null, $type = 'AND ', $op = '=', $bind = true)
+	protected function _where($where, $value = null, $type = 'AND ', $op = '=', $bind = true)
 	{
 		if ($where === null) {
 			return;
-		} else if (!is_array($where)) {
+		} elseif (!is_array($where)) {
 			$where = array($where => $value);
 		}
 
@@ -1275,9 +1274,9 @@ abstract class Query
 					'field' => $this->_protect_identifiers($key),
 					'query' => $this->_protect_identifiers($key) . ($op === '=' ?
 						' IS NULL' :
-						' IS NOT NULL')
+						' IS NOT NULL'),
 				);
-			} else if ($bind) {
+			} elseif ($bind) {
 				// Binding condition (i.e. escape data)
 				if ($this->_dbHost->type() === 'Postgres' && $op === 'like') {
 					// Postgres specific a it needs a case for string searching non-text data
@@ -1285,14 +1284,14 @@ abstract class Query
 						'operator' => $type,
 						'group' => null,
 						'field' => $this->_protect_identifiers($key),
-						'query' => $this->_protect_identifiers($key) . '::text ilike ' . $this->_safe_bind(':where_' . $i)
+						'query' => $this->_protect_identifiers($key) . '::text ilike ' . $this->_safe_bind(':where_' . $i),
 					);
 				} else {
 					$this->_where[] = array(
 						'operator' => $type,
 						'group' => null,
 						'field' => $this->_protect_identifiers($key),
-						'query' => $this->_protect_identifiers($key) . ' ' . $op . ' ' . $this->_safe_bind(':where_' . $i)
+						'query' => $this->_protect_identifiers($key) . ' ' . $op . ' ' . $this->_safe_bind(':where_' . $i),
 					);
 				}
 				$this->bind(':where_' . $i, $value);
@@ -1302,36 +1301,36 @@ abstract class Query
 					'operator' => $type,
 					'group' => null,
 					'field' => null,
-					'query' => $this->_protect_identifiers($key) . ' ' . $op . ' ' . $this->_protect_identifiers($value)
+					'query' => $this->_protect_identifiers($key) . ' ' . $op . ' ' . $this->_protect_identifiers($value),
 				);
 			}
 		}
 	}
 
 	/**
-	 * Add parentheses to a where condition
+	 * Add parentheses to a where condition.
 	 *
 	 * @return string
 	 *
 	 * @internal
 	 */
-	protected function _where_group ($inOut, $op)
+	protected function _where_group($inOut, $op)
 	{
 		$this->_where[] = array(
 			'group' => $inOut ? '(' : ')',
-			'operator' => $op
+			'operator' => $op,
 		);
 	}
 
 	/**
-	 * Check if an array is associative or sequential
+	 * Check if an array is associative or sequential.
 	 */
 	private function _is_assoc(array $arr)
 	{
-		if (array() === $arr) {
+		if ($arr === array()) {
 			return false;
 		}
 
 		return array_keys($arr) !== range(0, count($arr) - 1);
 	}
-};
+}

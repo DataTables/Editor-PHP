@@ -8,7 +8,7 @@
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @link      http://editor.datatables.net
+ *  @see      http://editor.datatables.net
  */
 
 namespace DataTables;
@@ -48,7 +48,7 @@ class Database
 	 *                                         )
 	 *                                         ```
 	 */
-	function __construct($opts)
+	public function __construct($opts)
 	{
 		$types = array('Mysql', 'Oracle', 'Postgres', 'Sqlite', 'Sqlserver', 'Db2', 'Firebird');
 
@@ -71,12 +71,12 @@ class Database
 	 */
 
 	/** @var \PDO */
-	private $_dbResource = null;
+	private $_dbResource;
 
 	/** @var callable */
-	private $_type = null;
-	private $_debugCallback = null;
-	private $query_driver = null;
+	private $_type;
+	private $_debugCallback;
+	private $query_driver;
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -84,7 +84,7 @@ class Database
 
 	/**
 	 * Determine if there is any data in the table that matches the query
-	 * condition
+	 * condition.
 	 *
 	 * @param string|string[] $table Table name(s) to act upon.
 	 * @param array           $where Where condition for what to select - see {@see
@@ -111,9 +111,10 @@ class Database
 	 *
 	 * @return self
 	 */
-	public function commit ()
+	public function commit()
 	{
 		call_user_func($this->query_driver . '::commit', $this->_dbResource);
+
 		return $this;
 	}
 
@@ -127,7 +128,7 @@ class Database
 	 *
 	 * @return Number
 	 */
-	public function count ($table, $field = 'id', $where = null)
+	public function count($table, $field = 'id', $where = null)
 	{
 		$res = $this->query('count')
 			->table($table)
@@ -136,22 +137,23 @@ class Database
 			->exec();
 
 		$cnt = $res->fetch();
+
 		return $cnt['cnt'];
 	}
 
 	/**
 	 * Get / set debug mode.
 	 *
-	 * @param bool $_ Debug mode state. If not given, then used as a getter.
+	 * @param bool $set Debug mode state. If not given, then used as a getter.
 	 *
 	 * @return bool|self Debug mode state if no parameter is given, or
 	 *                   self if used as a setter.
 	 */
-	public function debug ($set = null)
+	public function debug($set = null)
 	{
 		if ($set === null) {
 			return $this->_debugCallback ? true : false;
-		} else if ($set === false) {
+		} elseif ($set === false) {
 			$this->_debugCallback = null;
 		} else {
 			$this->_debugCallback = $set;
@@ -172,7 +174,7 @@ class Database
 	 *
 	 * @return Result
 	 */
-	public function delete ($table, $where = null)
+	public function delete($table, $where = null)
 	{
 		return $this->query('delete')
 			->table($table)
@@ -196,7 +198,7 @@ class Database
 	 *
 	 * @return Result
 	 */
-	public function insert ($table, $set, $pkey = '')
+	public function insert($table, $set, $pkey = '')
 	{
 		return $this->query('insert')
 			->pkey($pkey)
@@ -207,7 +209,7 @@ class Database
 
 	/**
 	 * Update or Insert data. When doing an insert, the where condition is
-	 * added as a set field
+	 * added as a set field.
 	 *
 	 * @param string|string[] $table Table name(s) to act upon.
 	 * @param array           $set   Field names and values to set - see {@see
@@ -221,7 +223,7 @@ class Database
 	 *
 	 * @return Result
 	 */
-	public function push ($table, $set, $where = null, $pkey = '')
+	public function push($table, $set, $where = null, $pkey = '')
 	{
 		$selectColumn = '*';
 
@@ -254,7 +256,7 @@ class Database
 	 *
 	 * @return Query
 	 */
-	public function query ($type, $table = null)
+	public function query($type, $table = null)
 	{
 		return new $this->query_driver($this, $type, $table);
 	}
@@ -267,7 +269,7 @@ class Database
 	 *
 	 * @return string
 	 */
-	public function quote ($val, $type = \PDO::PARAM_STR)
+	public function quote($val, $type = \PDO::PARAM_STR)
 	{
 		return $this->_dbResource->quote($val, $type);
 	}
@@ -290,7 +292,7 @@ class Database
 	 *      ->exec( 'SELECT * FROM staff where date < :date' );
 	 *    ```
 	 */
-	public function raw ()
+	public function raw()
 	{
 		return $this->query('raw');
 	}
@@ -300,7 +302,7 @@ class Database
 	 *
 	 * @return \PDO PDO connection resource (driver dependent)
 	 */
-	public function resource ()
+	public function resource()
 	{
 		return $this->_dbResource;
 	}
@@ -312,9 +314,10 @@ class Database
 	 *
 	 * @return self
 	 */
-	public function rollback ()
+	public function rollback()
 	{
 		call_user_func($this->query_driver . '::rollback', $this->_dbResource);
+
 		return $this;
 	}
 
@@ -334,7 +337,7 @@ class Database
 	 *
 	 * @return Result
 	 */
-	public function select ($table, $field = '*', $where = null, $orderBy = null)
+	public function select($table, $field = '*', $where = null, $orderBy = null)
 	{
 		return $this->query('select')
 			->table($table)
@@ -361,7 +364,7 @@ class Database
 	 *
 	 * @return Result
 	 */
-	public function selectDistinct ($table, $field = '*', $where = null, $orderBy = null)
+	public function selectDistinct($table, $field = '*', $where = null, $orderBy = null)
 	{
 		return $this->query('select')
 			->table($table)
@@ -396,7 +399,7 @@ class Database
 	 *    $db->sql("SET character_set_results=utf8");
 	 *    ```
 	 */
-	public function sql ($sql)
+	public function sql($sql)
 	{
 		return $this->query('raw')
 			->exec($sql);
@@ -409,16 +412,17 @@ class Database
 	 *
 	 * @return self
 	 */
-	public function transaction ()
+	public function transaction()
 	{
 		call_user_func($this->query_driver . '::transaction', $this->_dbResource);
+
 		return $this;
 	}
 
 	/**
-	 * Get the database type (e.g. Postgres, Mysql, etc)
+	 * Get the database type (e.g. Postgres, Mysql, etc).
 	 */
-	public function type ()
+	public function type()
 	{
 		return $this->_type;
 	}
@@ -437,7 +441,7 @@ class Database
 	 *
 	 * @return Result
 	 */
-	public function update ($table, $set = null, $where = null)
+	public function update($table, $set = null, $where = null)
 	{
 		return $this->query('update')
 			->table($table)
@@ -458,17 +462,17 @@ class Database
 	 *
 	 * @internal
 	 */
-	public function debugInfo ($query = null, $bindings = null)
+	public function debugInfo($query = null, $bindings = null)
 	{
 		$callback = $this->_debugCallback;
 
 		if ($callback) {
 			$callback(array(
 				'query' => $query,
-				'bindings' => $bindings
+				'bindings' => $bindings,
 			));
 		}
 
 		return $this;
 	}
-};
+}
