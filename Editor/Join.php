@@ -15,6 +15,7 @@ namespace DataTables\Editor;
 
 use DataTables;
 use DataTables\Editor;
+use DataTables\Editor\Field;
 
 /**
  * Join table class for DataTables Editor.
@@ -159,9 +160,9 @@ class Join extends DataTables\Ext
 	 * The list of fields designates which columns in the table that will be read
 	 * from the joined table.
 	 *
-	 * @param Field ...$_ Instances of the {@see Field} class, given as a single
+	 * @param Field $_,... Instances of the {@see Field} class, given as a single
 	 *                    instance of {@see Field}, an array of {@see Field} instances, or multiple
-	 *                    {@see Field} instance parameters for the function.
+	 *                    {@see Field} instance parameters for the functionFIELD.
 	 *
 	 * @return Field[]|self Array of fields, or self if used as a setter.
 	 *
@@ -183,9 +184,9 @@ class Join extends DataTables\Ext
 	 *
 	 * An alias of {@see field}, for convenience.
 	 *
-	 * @param Field ...$_ Instances of the {@see Field} class, given as a single
+	 * @param Field $_,... Instances of the {@see Field} class, given as a single
 	 *                    instance of {@see Field}, an array of {@see Field} instances, or multiple
-	 *                    {@see Field} instance parameters for the function.
+	 *                    {@see Field} instance parameters for the functionFIUELDS.
 	 *
 	 * @return Field[]|self Array of fields, or self if used as a setter.
 	 *
