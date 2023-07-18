@@ -52,4 +52,6 @@ if (!isset($sql_details)) {
 // Database connection
 //   Database connection is globally available
 //
-$db = new Database($sql_details);
+if (isset($sql_details)) {
+	$db = new Database($sql_details);
+}

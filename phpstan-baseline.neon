@@ -1,56 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Variable \\$sql_details might not be defined\\.$#"
-			count: 1
-			path: Bootstrap.php
-
-		-
-			message: "#^Call to function is_array\\(\\) with non\\-empty\\-array will always evaluate to true\\.$#"
-			count: 1
-			path: Database.php
-
-		-
-			message: "#^Default value of the parameter \\#2 \\$field \\(string\\) of method DataTables\\\\Database\\:\\:select\\(\\) is incompatible with type array\\.$#"
-			count: 1
-			path: Database.php
-
-		-
-			message: "#^Default value of the parameter \\#2 \\$field \\(string\\) of method DataTables\\\\Database\\:\\:selectDistinct\\(\\) is incompatible with type array\\.$#"
-			count: 1
-			path: Database.php
-
-		-
-			message: "#^Default value of the parameter \\#2 \\$type \\(int\\) of method DataTables\\\\Database\\:\\:quote\\(\\) is incompatible with type string\\.$#"
-			count: 1
-			path: Database.php
-
-		-
-			message: "#^Default value of the parameter \\#3 \\$pkey \\(string\\) of method DataTables\\\\Database\\:\\:insert\\(\\) is incompatible with type array\\.$#"
-			count: 1
-			path: Database.php
-
-		-
-			message: "#^Default value of the parameter \\#4 \\$pkey \\(string\\) of method DataTables\\\\Database\\:\\:push\\(\\) is incompatible with type array\\.$#"
-			count: 1
-			path: Database.php
-
-		-
-			message: "#^Method DataTables\\\\Database\\:\\:debugInfo\\(\\) should return array but returns \\$this\\(DataTables\\\\Database\\)\\.$#"
-			count: 1
-			path: Database.php
-
-		-
-			message: "#^Method DataTables\\\\Database\\:\\:raw\\(\\) should return DataTables\\\\Database\\\\Result but returns DataTables\\\\Database\\\\Query\\.$#"
-			count: 1
-			path: Database.php
-
-		-
-			message: "#^Parameter \\#2 \\$type of method PDO\\:\\:quote\\(\\) expects int, string given\\.$#"
-			count: 1
-			path: Database.php
-
-		-
 			message: "#^Class DataTables\\\\Database\\\\Driver\\\\Db2Result constructor invoked with 3 parameters, 2 required\\.$#"
 			count: 1
 			path: Database/Driver/Db2Query.php

@@ -191,7 +191,7 @@ class Database
 	 * @param string|string[] $table Table name(s) to act upon.
 	 * @param array           $set   Field names and values to set - see {@see
 	 *                               Query->set()}.
-	 * @param array           $pkey  Primary key column names (this is an array for
+	 * @param string|array    $pkey  Primary key column names (this is an array for
 	 *                               forwards compt, although only the first item in the array is actually
 	 *                               used). This doesn't need to be set, but it must be if you want to use
 	 *                               the `Result->insertId()` method.
@@ -216,7 +216,7 @@ class Database
 	 *                               Query->set()}.
 	 * @param array           $where Where condition for what to update - see {@see
 	 *                               Query->where()}.
-	 * @param array           $pkey  Primary key column names (this is an array for
+	 * @param string|array    $pkey  Primary key column names (this is an array for
 	 *                               forwards compt, although only the first item in the array is actually
 	 *                               used). This doesn't need to be set, but it must be if you want to use
 	 *                               the `Result->insertId()` method. Only used if an insert is performed.
@@ -265,7 +265,7 @@ class Database
 	 * Quote a string for a quote. Note you should generally use a bind!
 	 *
 	 * @param string $val  Value to quote
-	 * @param string $type Value type
+	 * @param int    $type Value type
 	 *
 	 * @return string
 	 */
@@ -281,7 +281,7 @@ class Database
 	 * wish to bind parameters using the query `bind` method to ensure data is
 	 * properly escaped.
 	 *
-	 * @return Result
+	 * @return Query
 	 *
 	 *  @example
 	 *    Safely escape user input
@@ -328,7 +328,7 @@ class Database
 	 * the query('select'), table, get, where and exec methods of the query.
 	 *
 	 * @param string|string[] $table   Table name(s) to act upon.
-	 * @param array           $field   Fields to get from the table(s) - see {@see
+	 * @param string|array    $field   Fields to get from the table(s) - see {@see
 	 *                                 Query->get()}.
 	 * @param array           $where   Where condition for what to select - see {@see
 	 *                                 Query->where()}.
@@ -355,7 +355,7 @@ class Database
 	 * query.
 	 *
 	 * @param string|string[] $table   Table name(s) to act upon.
-	 * @param array           $field   Fields to get from the table(s) - see {@see
+	 * @param string|array    $field   Fields to get from the table(s) - see {@see
 	 *                                 Query->get()}.
 	 * @param array           $where   Where condition for what to select - see {@see
 	 *                                 Query->where()}.
@@ -457,8 +457,8 @@ class Database
 	/**
 	 * Get debug query information.
 	 *
-	 * @return array Information about the queries used. When this method is
-	 *               called it will reset the query cache.
+	 * @return Database Information about the queries used. When this method is
+	 *                  called it will reset the query cache.
 	 *
 	 * @internal
 	 */
