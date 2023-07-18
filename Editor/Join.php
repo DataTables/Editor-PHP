@@ -162,7 +162,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @param Field $_,... Instances of the {@see Field} class, given as a single
 	 *                    instance of {@see Field}, an array of {@see Field} instances, or multiple
-	 *                    {@see Field} instance parameters for the functionFIELD.
+	 *                    {@see Field} instance parameters for the function.
 	 *
 	 * @return Field[]|self Array of fields, or self if used as a setter.
 	 *
@@ -186,7 +186,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @param Field $_,... Instances of the {@see Field} class, given as a single
 	 *                    instance of {@see Field}, an array of {@see Field} instances, or multiple
-	 *                    {@see Field} instance parameters for the functionFIUELDS.
+	 *                    {@see Field} instance parameters for the function.
 	 *
 	 * @return Field[]|self Array of fields, or self if used as a setter.
 	 *
