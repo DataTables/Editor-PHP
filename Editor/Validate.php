@@ -639,7 +639,7 @@ class Validate
 					$common;
 			}
 
-			$strlen = is_callable('mb_strlen') ?
+			$strlen = function_exists('mb_strlen') ?
 				'mb_strlen' :
 				'strlen';
 
@@ -677,7 +677,7 @@ class Validate
 					$common;
 			}
 
-			$strlen = is_callable('mb_strlen') ?
+			$strlen = function_exists('mb_strlen') ?
 				'mb_strlen' :
 				'strlen';
 

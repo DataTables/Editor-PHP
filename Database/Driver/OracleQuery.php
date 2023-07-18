@@ -56,7 +56,7 @@ class OracleQuery extends Query
 			$port = ":{$port}";
 		}
 
-		if (!is_callable('oci_connect')) {
+		if (!function_exists('oci_connect')) {
 			echo json_encode(array(
 				'error' => 'oci methods are not available in this PHP install to connect to Oracle',
 			));

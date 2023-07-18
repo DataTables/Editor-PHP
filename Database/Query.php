@@ -230,7 +230,7 @@ abstract class Query
 	 *
 	 * @param string $dsn DSN postfix to use
 	 *
-	 * @return Query
+	 * @return string
 	 *
 	 * @internal
 	 */

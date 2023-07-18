@@ -63,7 +63,7 @@ abstract class Result
 	/**
 	 * After an INSERT query, get the ID that was inserted.
 	 *
-	 * @return int
+	 * @return int|string
 	 */
 	abstract public function insertId();
 }
