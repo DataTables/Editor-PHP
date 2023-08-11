@@ -1975,7 +1975,13 @@ class Editor extends Ext
 
 						// ... where the selected option is present...
 						$r = $q
-							->where($field->dbField(), $http['searchPanes'][$field->name()][$i], '=')
+							->where(
+								$field->dbField(),
+								isset($http['searchPanes_null'][$field->name()][$i])
+									? null
+									: $http['searchPanes'][$field->name()][$i],
+								'='
+							)
 							->exec()
 							->fetchAll();
 
