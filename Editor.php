@@ -2584,7 +2584,7 @@ class Editor extends Ext
 	{
 		$str = implode(',', $this->_pkey);
 
-		return hash('crc32', $str);
+		return '_' . hash('crc32', $str) . '_';
 	}
 
 	private function _read_table()
