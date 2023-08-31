@@ -1977,7 +1977,7 @@ class Editor extends Ext
 						$r = $q
 							->where(
 								$field->dbField(),
-								isset($http['searchPanes_null'][$field->name()][$i])
+								isset($http['searchPanes_null'][$field->name()][$i]) && $http['searchPanes_null'][$field->name()][$i] === 'true'
 									? null
 									: $http['searchPanes'][$field->name()][$i],
 								'='
@@ -1996,7 +1996,7 @@ class Editor extends Ext
 						for ($j = 0; $j < count($http['searchPanes'][$field->name()]); ++$j) {
 							$q->or_where(
 								$field->dbField(),
-								isset($http['searchPanes_null'][$field->name()][$j])
+								isset($http['searchPanes_null'][$field->name()][$j]) && $http['searchPanes_null'][$field->name()][$j] === 'true'
 									? null
 									: $http['searchPanes'][$field->name()][$j],
 								'='
