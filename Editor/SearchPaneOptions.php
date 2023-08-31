@@ -392,7 +392,7 @@ class SearchPaneOptions extends DataTables\Ext
 						for ($j = 0, $jen = count($http['searchPanes'][$fieldName]); $j < $jen; ++$j) {
 							$q->or_where(
 								$fieldOpt->dbField(),
-								isset($http['searchPanes_null'][$fieldName][$j])
+								isset($http['searchPanes_null'][$fieldName][$j]) && $http['searchPanes_null'][$fieldName][$j] === 'true'
 									? null
 									: $http['searchPanes'][$fieldName][$j],
 								'='
