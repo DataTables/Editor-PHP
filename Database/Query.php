@@ -1250,7 +1250,7 @@ abstract class Query
 	 * @internal
 	 *
 	 * @param string|array $where
-	 * @param null         $value
+	 * @param string       $value
 	 * @param string       $type
 	 * @param string       $op
 	 * @param bool         $bind
