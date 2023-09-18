@@ -84,6 +84,7 @@ class PostgresQuery extends Query
 		$this->database()->debugInfo($sql, $this->_bindings);
 
 		$resource = $this->database()->resource();
+		$pkey = $this->pkey();
 
 		// Add a RETURNING command to postgres insert queries so we can get the
 		// pkey value from the query reliably
@@ -92,17 +93,14 @@ class PostgresQuery extends Query
 
 			// Get the pkey field name
 			$pkRes = $resource->prepare(
-				"SELECT
-					pg_attribute.attname,
-					format_type(pg_attribute.atttypid, pg_attribute.atttypmod)
-				FROM pg_index, pg_class, pg_attribute
-				WHERE
-					pg_class.oid = '{$table[0]}'::regclass AND
-					indrelid = pg_class.oid AND
-					pg_attribute.attrelid = pg_class.oid AND
-					pg_attribute.attnum = any(pg_index.indkey)
-					AND indisprimary"
+				"SELECT a.attname
+				FROM   pg_index i
+				JOIN   pg_attribute a ON a.attrelid = i.indrelid
+									 AND a.attnum = ANY(i.indkey)
+				WHERE  i.indrelid = (:tableName)::regclass
+				AND    i.indisprimary"
 			);
+			$pkRes->bindValue('tableName', $table[0]);
 			$pkRes->execute();
 			$row = $pkRes->fetch();
 
