@@ -14,6 +14,7 @@
 namespace DataTables\Editor;
 
 use DataTables;
+use DataTables\Database\Query;
 use DataTables\Editor;
 
 /**
@@ -404,9 +405,9 @@ class Join extends DataTables\Ext
 	/**
 	 * Set a validator for the array of data (not on a field basis).
 	 *
-	 * @param string   $fieldName Name of the field that any error should be shown
-	 *                            against on the client-side
-	 * @param callable $fn        Callback function for validation
+	 * @param string                                    $fieldName Name of the field that any error should be shown
+	 *                                                             against on the client-side
+	 * @param callable(Editor, string, string): ?string $fn        Callback function for validation
 	 *
 	 * @return $this
 	 */
@@ -429,9 +430,9 @@ class Join extends DataTables\Ext
 	 * * Simple case: `where( field, value, operator )`
 	 * * Complex: `where( fn )`
 	 *
-	 * @param string|callable $key   Single field name or a closure function
-	 * @param string|string[] $value Single field value, or an array of values.
-	 * @param string          $op    Condition operator: <, >, = etc
+	 * @param string|\Closure(Query): void $key   Single field name or a closure function
+	 * @param string|string[]              $value Single field value, or an array of values.
+	 * @param string                       $op    Condition operator: <, >, = etc
 	 *
 	 * @return ($key is null ? string[] : $this) Where condition array.
 	 */
@@ -809,7 +810,7 @@ class Join extends DataTables\Ext
 	private function _apply_where($query)
 	{
 		for ($i = 0; $i < count($this->_where); ++$i) {
-			if (is_callable($this->_where[$i])) {
+			if ($this->_where[$i] instanceof \Closure) {
 				$this->_where[$i]($query);
 			} else {
 				$query->where(
@@ -857,7 +858,7 @@ class Join extends DataTables\Ext
 			// Note that `whereSet` is now deprecated
 			if ($this->_whereSet) {
 				for ($i = 0, $ien = count($this->_where); $i < $ien; ++$i) {
-					if (!is_callable($this->_where[$i])) {
+					if (!$this->_where[$i] instanceof \Closure) {
 						$stmt->set($this->_where[$i]['key'], $this->_where[$i]['value']);
 					}
 				}
@@ -971,7 +972,7 @@ class Join extends DataTables\Ext
 				// Is there any point in this? Is there any harm?
 				// Note that `whereSet` is now deprecated
 				if ($this->_whereSet) {
-					if (!is_callable($this->_where[$i])) {
+					if (!$this->_where[$i] instanceof \Closure) {
 						$set[$this->_where[$i]['key']] = $this->_where[$i]['value'];
 					}
 				}

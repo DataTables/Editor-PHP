@@ -14,6 +14,7 @@
 namespace DataTables\Editor;
 
 use DataTables;
+use DataTables\Database\Query;
 
 /**
  * The Options class provides a convenient method of specifying where Editor
@@ -130,7 +131,7 @@ class SearchPaneOptions extends DataTables\Ext
 	 * multiple database columns into a single string that is shown as the label
 	 * to the end user in the list of options.
 	 *
-	 * @param callable|null $_ Function to set, null to get current value
+	 * @param callable(string): string|null $_ Function to set, null to get current value
 	 *
 	 * @return ($_ is null ? callable : $this)
 	 */
@@ -169,7 +170,7 @@ class SearchPaneOptions extends DataTables\Ext
 	 * Get / set the method to use for a WHERE condition if it is to be
 	 * applied to the query to get the options.
 	 *
-	 * @param callable|null $_ Function to set, null to get current value
+	 * @param \Closure(Query): void|null $_ Function to set, null to get current value
 	 *
 	 * @return ($_ is null ? callable : $this)
 	 */
@@ -211,7 +212,7 @@ class SearchPaneOptions extends DataTables\Ext
 	private function _get_where($query)
 	{
 		for ($i = 0; $i < count($this->_where); ++$i) {
-			if (is_callable($this->_where[$i])) {
+			if ($this->_where[$i] instanceof \Closure) {
 				$this->_where[$i]($query);
 			} else {
 				$query->where(

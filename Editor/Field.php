@@ -14,6 +14,8 @@
 namespace DataTables\Editor;
 
 use DataTables;
+use DataTables\Database;
+use DataTables\Database\Query;
 use DataTables\Editor;
 use DataTables\HtmLawed\Htmlaw;
 
@@ -228,13 +230,13 @@ class Field extends DataTables\Ext
 	 * Editor has a number of formatters available with the {@see Format} class
 	 * which can be used directly with this method.
 	 *
-	 * @param callable|string $_    Value to set if using as a setter. Can be given as
-	 *                              a closure function or a string with a reference to a function that will
-	 *                              be called with call_user_func().
-	 * @param mixed           $opts Variable that is passed through to the get formatting
-	 *                              function - can be useful for passing through extra information such as
-	 *                              date formatting string, or a required flag. The actual options available
-	 *                              depend upon the formatter used.
+	 * @param callable(mixed, array, array): string $_    Value to set if using as a setter. Can be given as
+	 *                                                    a closure function or a string with a reference to a function that will
+	 *                                                    be called with call_user_func().
+	 * @param mixed                                 $opts Variable that is passed through to the get formatting
+	 *                                                    function - can be useful for passing through extra information such as
+	 *                                                    date formatting string, or a required flag. The actual options available
+	 *                                                    depend upon the formatter used.
 	 *
 	 * @return ($_ is null ? callable|string : $this) The get formatter if no parameter is given.
 	 */
@@ -251,8 +253,8 @@ class Field extends DataTables\Ext
 	 * Get / set a get value. If given, then this value is used to send to the
 	 * client-side, regardless of what value is held by the database.
 	 *
-	 * @param callable|string|number $_ Value to set, or no value to use as a
-	 *                                  getter
+	 * @param \Closure(): mixed|string|number $_ Value to set, or no value to use as a
+	 *                                           getter
 	 *
 	 * @return ($_ is null ? callable|string : $this) Value if used as a getter.
 	 */
@@ -286,16 +288,16 @@ class Field extends DataTables\Ext
 	 * data, including pairs that require joins and where conditions, use a
 	 * closure to provide a query
 	 *
-	 * @param string|callable $table     Database table name to use to get the
-	 *                                   paired data from, or a closure function if providing a method
-	 * @param string          $value     Table column name that contains the pair's
-	 *                                   value. Not used if the first parameter is given as a closure
-	 * @param string          $label     Table column name that contains the pair's
-	 *                                   label. Not used if the first parameter is given as a closure
-	 * @param callable        $condition Function that will add `where`
-	 *                                   conditions to the query
-	 * @param callable        $format    Function will render each label
-	 * @param string          $order     SQL ordering
+	 * @param string|callable(Database): (false|array) $table     Database table name to use to get the
+	 *                                                            paired data from, or a closure function if providing a method
+	 * @param string                                   $value     Table column name that contains the pair's
+	 *                                                            value. Not used if the first parameter is given as a closure
+	 * @param string                                   $label     Table column name that contains the pair's
+	 *                                                            label. Not used if the first parameter is given as a closure
+	 * @param \Closure(Query): void                    $condition Function that will add `where`
+	 *                                                            conditions to the query
+	 * @param callable(array): string                  $format    Function will render each label
+	 * @param string                                   $order     SQL ordering
 	 *
 	 * @return ($table is null ? Options : $this)
 	 */
@@ -340,7 +342,7 @@ class Field extends DataTables\Ext
 	/**
 	 * Get a list of values that can be used for the options list in SearchPanes.
 	 *
-	 * @param SearchPaneOptions|callable $spInput SearchPaneOptions instance or a closure function if providing a method
+	 * @param SearchPaneOptions|callable(Database, DataTables\Editor): (array|bool) $spInput SearchPaneOptions instance or a closure function if providing a method
 	 *
 	 * @return ($spInput is null ? SearchPaneOptions|null : $this)
 	 */
@@ -367,7 +369,7 @@ class Field extends DataTables\Ext
 	/**
 	 * Get a list of values that can be used for the options list in SearchBuilder.
 	 *
-	 * @param SearchBuilderOptions|callable $sbInput SearchBuilderOptions instance or a closure function if providing a method
+	 * @param SearchBuilderOptions|callable(Database, DataTables\Editor): (Promise<IOption[]>|bool) $sbInput SearchBuilderOptions instance or a closure function if providing a method
 	 *
 	 * @return ($sbInput is null ? SearchBuilderOptions|null : $this)
 	 */
@@ -434,13 +436,13 @@ class Field extends DataTables\Ext
 	 * Editor has a number of formatters available with the {@see Format} class
 	 * which can be used directly with this method.
 	 *
-	 * @param callable|string $_    Value to set if using as a setter. Can be given as
-	 *                              a closure function or a string with a reference to a function that will
-	 *                              be called with call_user_func().
-	 * @param mixed           $opts Variable that is passed through to the get formatting
-	 *                              function - can be useful for passing through extra information such as
-	 *                              date formatting string, or a required flag. The actual options available
-	 *                              depend upon the formatter used.
+	 * @param callable(mixed, array, array): string $_    Value to set if using as a setter. Can be given as
+	 *                                                    a closure function or a string with a reference to a function that will
+	 *                                                    be called with call_user_func().
+	 * @param mixed                                 $opts Variable that is passed through to the get formatting
+	 *                                                    function - can be useful for passing through extra information such as
+	 *                                                    date formatting string, or a required flag. The actual options available
+	 *                                                    depend upon the formatter used.
 	 *
 	 * @return ($_ is null ? callable|string : $this) The set formatter if no parameter is given.
 	 */
@@ -457,8 +459,8 @@ class Field extends DataTables\Ext
 	 * Get / set a set value. If given, then this value is used to write to the
 	 * database regardless of what data is sent from the client-side.
 	 *
-	 * @param callable|string|number $_ Value to set, or no value to use as a
-	 *                                  getter
+	 * @param \Closure(): mixed|string|number $_ Value to set, or no value to use as a
+	 *                                           getter
 	 *
 	 * @return ($_ is null ? callable|string : $this) Value if used as a getter.
 	 */
@@ -492,13 +494,13 @@ class Field extends DataTables\Ext
 	 * Editor has a number of validation available with the {@see Validate} class
 	 * which can be used directly with this method.
 	 *
-	 * @param callable|string $_    Value to set if using as the validation method.
-	 *                              Can be given as a closure function or a string with a reference to a
-	 *                              function that will be called with call_user_func().
-	 * @param mixed           $opts Variable that is passed through to the validation
-	 *                              function - can be useful for passing through extra information such as
-	 *                              date formatting string, or a required flag. The actual options available
-	 *                              depend upon the validation function used.
+	 * @param callable(mixed, array, $this, array): (true|string)|string $_    Value to set if using as the validation method.
+	 *                                                                         Can be given as a closure function or a string with a reference to a
+	 *                                                                         function that will be called with call_user_func().
+	 * @param mixed                                                      $opts Variable that is passed through to the validation
+	 *                                                                         function - can be useful for passing through extra information such as
+	 *                                                                         date formatting string, or a required flag. The actual options available
+	 *                                                                         depend upon the validation function used.
 	 *
 	 * @return ($_ is null ? array[] : $this) The validation method if no parameter is given.
 	 */
@@ -531,8 +533,8 @@ class Field extends DataTables\Ext
 	 * simply provide a closure function that returns the value given to the
 	 * function. This is _not_ recommended.
 	 *
-	 * @param callable|false $xssFormatter XSS cleaner function, use `false` or
-	 *                                     `null` to disable XSS cleaning.
+	 * @param callable(mixed): string|false $xssFormatter XSS cleaner function, use `false` or
+	 *                                                    `null` to disable XSS cleaning.
 	 *
 	 * @return $this
 	 */
@@ -860,12 +862,12 @@ class Field extends DataTables\Ext
 	 * Apply a formatter to data. The caller will decide what formatter to apply
 	 * (get or set).
 	 *
-	 * @param mixed    $val       Value to be formatted
-	 * @param array    $data      Full row data
-	 * @param callable $formatter Formatting function to be called
-	 * @param array    $opts      Array of options to be passed to the formatter
+	 * @param mixed                                 $val       Value to be formatted
+	 * @param array                                 $data      Full row data
+	 * @param callable(mixed, array, array): string $formatter Formatting function to be called
+	 * @param array                                 $opts      Array of options to be passed to the formatter
 	 *
-	 * @return mixed Formatted value
+	 * @return string Formatted value
 	 */
 	private function _format($val, $data, $formatter, $opts)
 	{
