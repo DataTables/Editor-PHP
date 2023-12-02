@@ -932,8 +932,6 @@ class Field extends DataTables\Ext
 	 * @param array  $data Data source array to read from
 	 *
 	 * @return bool `true` if present, `false` otherwise
-	 *
-	 * @private
 	 */
 	private function _inData($name, $data)
 	{

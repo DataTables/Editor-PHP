@@ -107,8 +107,6 @@ class Ext
 	 * @param array  $data Data source array to read from
 	 *
 	 * @return bool true if present, false otherwise
-	 *
-	 * @private
 	 */
 	protected function _propExists($name, $data)
 	{
@@ -146,8 +144,6 @@ class Ext
 	 * @param array  $data Data source array to read from
 	 *
 	 * @return mixed The read value, or null if no value found.
-	 *
-	 * @private
 	 */
 	protected function _readProp($name, $data)
 	{
@@ -190,8 +186,6 @@ class Ext
 	 * @param array  &$out  Array to write the data to
 	 * @param string $name  Javascript dotted object name to write to
 	 * @param mixed  $value Value to write
-	 *
-	 * @private
 	 */
 	protected function _writeProp(&$out, $name, $value)
 	{
