@@ -241,7 +241,7 @@ class Join extends DataTables\Ext
 	 *                                link table.
 	 * @param string          $table  Join table name, if using a link table
 	 *
-	 * @returns Join This for chaining
+	 * @return Join This for chaining
 	 *
 	 * @deprecated 1.5 Please use the {@see Join->link()} method rather than this
 	 *                                method now.
@@ -989,7 +989,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @param string $direction Direction: 'get' or 'set'.
 	 *
-	 * @returns array Fields to include
+	 * @return array Fields to include
 	 */
 	private function _fields($direction)
 	{

@@ -1628,7 +1628,7 @@ class Editor extends Ext
 	 * @param array $http  HTTP variables (i.e. GET or POST)
 	 * @param int   $index Index in the DataTables' submitted data
 	 *
-	 * @returns string DB field name
+	 * @return string DB field name
 	 *
 	 * @private Note that it is actually public for PHP 5.3 - thread 39810
 	 */
@@ -2379,7 +2379,7 @@ class Editor extends Ext
 	 * @param string $name SQL field
 	 * @param string $type Which part to get: `alias` (default) or `orig`.
 	 *
-	 * @returns string Alias
+	 * @return string Alias
 	 */
 	private function _alias($name, $type = 'alias')
 	{
