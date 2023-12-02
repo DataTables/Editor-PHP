@@ -443,7 +443,7 @@ class Join extends DataTables\Ext
 			return $this->_where;
 		}
 
-		if (is_callable($key) && is_object($key)) {
+		if ($key instanceof \Closure) {
 			$this->_where[] = $key;
 		} else {
 			$this->_where[] = array(

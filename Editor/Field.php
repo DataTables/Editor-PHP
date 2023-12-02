@@ -315,7 +315,7 @@ class Field extends DataTables\Ext
 			// Options class
 			$this->_optsFn = null;
 			$this->_opts = $table;
-		} elseif (is_callable($table) && is_object($table)) {
+		} elseif ($table instanceof \Closure) {
 			// Function
 			$this->_opts = null;
 			$this->_optsFn = $table;
@@ -360,7 +360,7 @@ class Field extends DataTables\Ext
 			// Options class
 			$this->_spoptsFn = null;
 			$this->_spopts = $spInput;
-		} elseif (is_callable($spInput) && is_object($spInput)) {
+		} elseif ($spInput instanceof \Closure) {
 			// Function
 			$this->_spopts = null;
 			$this->_spoptsFn = $spInput;
@@ -387,7 +387,7 @@ class Field extends DataTables\Ext
 			// Options class
 			$this->_sboptsFn = null;
 			$this->_sbopts = $sbInput;
-		} elseif (is_callable($sbInput) && is_object($sbInput)) {
+		} elseif ($spInput instanceof \Closure) {
 			// Function
 			$this->_sbopts = null;
 			$this->_sboptsFn = $sbInput;
@@ -918,7 +918,7 @@ class Field extends DataTables\Ext
 	 */
 	private function _getAssignedValue($val)
 	{
-		return is_callable($val) && is_object($val) ?
+		return $val instanceof \Closure ?
 			$val() :
 			$val;
 	}
