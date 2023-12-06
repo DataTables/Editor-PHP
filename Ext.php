@@ -71,8 +71,7 @@ class Ext
 	 *                     (default false). If used as an array, then values passed in are added
 	 *                     to the $prop array.
 	 *
-	 * @return self|mixed Class instance if setting (allowing chaining), or
-	 *                    the value requested if getting.
+	 * @return ($prop is null ? mixed : $this)
 	 */
 	protected function _getSet(&$prop, $val, $array = false)
 	{

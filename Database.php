@@ -146,8 +146,7 @@ class Database
 	 *
 	 * @param bool $set Debug mode state. If not given, then used as a getter.
 	 *
-	 * @return bool|self Debug mode state if no parameter is given, or
-	 *                   self if used as a setter.
+	 * @return ($set is null ? bool : $this) Debug mode state if no parameter is given.
 	 */
 	public function debug($set = null)
 	{

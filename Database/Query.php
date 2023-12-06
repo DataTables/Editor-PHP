@@ -470,7 +470,7 @@ abstract class Query
 	 *
 	 * @param string[] $pkey Primary keys
 	 *
-	 * @return Query|string[]
+	 * @return ($pkey is null ? string[] : $this)
 	 */
 	public function pkey($pkey = null)
 	{

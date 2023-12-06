@@ -182,8 +182,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @param string $_ Value to set if using as a setter.
 	 *
-	 * @return string|self The name of the db field if no parameter is given,
-	 *                     or self if used as a setter.
+	 * @return ($_ is null ? string : $this) The name of the db field if no parameter is given.
 	 */
 	public function dbField($_ = null)
 	{
@@ -211,8 +210,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @param bool $_ Value to set if using as a setter.
 	 *
-	 * @return bool|self The get property if no parameter is given, or self
-	 *                   if used as a setter.
+	 * @return ($_ is null ? bool : $this) The get property if no parameter is given.
 	 */
 	public function get($_ = null)
 	{
@@ -238,8 +236,7 @@ class Field extends DataTables\Ext
 	 *                              date formatting string, or a required flag. The actual options available
 	 *                              depend upon the formatter used.
 	 *
-	 * @return callable|string|self The get formatter if no parameter is given, or
-	 *                              self if used as a setter.
+	 * @return ($_ is null ? callable|string : $this) The get formatter if no parameter is given.
 	 */
 	public function getFormatter($_ = null, $opts = null)
 	{
@@ -257,8 +254,7 @@ class Field extends DataTables\Ext
 	 * @param callable|string|number $_ Value to set, or no value to use as a
 	 *                                  getter
 	 *
-	 * @return callable|string|self Value if used as a getter, or self if used
-	 *                              as a setter.
+	 * @return ($_ is null ? callable|string : $this) Value if used as a getter.
 	 */
 	public function getValue($_ = null)
 	{
@@ -275,8 +271,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @param string $_ Value to set if using as a setter.
 	 *
-	 * @return string|self The name property if no parameter is given, or self
-	 *                     if used as a setter.
+	 * @return ($_ is null ? string : $this) The name property if no parameter is given.
 	 */
 	public function name($_ = null)
 	{
@@ -302,7 +297,7 @@ class Field extends DataTables\Ext
 	 * @param callable        $format    Function will render each label
 	 * @param string          $order     SQL ordering
 	 *
-	 * @return Field Self for chaining
+	 * @return ($table is null ? Options : $this)
 	 */
 	public function options($table = null, $value = null, $label = null, $condition = null, $format = null, $order = null)
 	{
@@ -347,7 +342,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @param SearchPaneOptions|callable $spInput SearchPaneOptions instance or a closure function if providing a method
 	 *
-	 * @return self
+	 * @return ($spInput is null ? SearchPaneOptions|null : $this)
 	 */
 	public function searchPaneOptions($spInput = null)
 	{
@@ -374,7 +369,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @param SearchBuilderOptions|callable $sbInput SearchBuilderOptions instance or a closure function if providing a method
 	 *
-	 * @return self
+	 * @return ($sbInput is null ? SearchBuilderOptions|null : $this)
 	 */
 	public function searchBuilderOptions($sbInput = null)
 	{
@@ -415,8 +410,7 @@ class Field extends DataTables\Ext
 	 *    * `Field::SET_CREATE` - Set the database value only on create
 	 *    * `Field::SET_EDIT`   - Set the database value only on edit
 	 *
-	 * @return string|self The set property if no parameter is given, or self
-	 *                     if used as a setter.
+	 * @return ($_ is null ? string : $this) The set property if no parameter is given.
 	 */
 	public function set($_ = null)
 	{
@@ -448,8 +442,7 @@ class Field extends DataTables\Ext
 	 *                              date formatting string, or a required flag. The actual options available
 	 *                              depend upon the formatter used.
 	 *
-	 * @return callable|string|self The set formatter if no parameter is given, or
-	 *                              self if used as a setter.
+	 * @return ($_ is null ? callable|string : $this) The set formatter if no parameter is given.
 	 */
 	public function setFormatter($_ = null, $opts = null)
 	{
@@ -467,8 +460,7 @@ class Field extends DataTables\Ext
 	 * @param callable|string|number $_ Value to set, or no value to use as a
 	 *                                  getter
 	 *
-	 * @return callable|string|self Value if used as a getter, or self if used
-	 *                              as a setter.
+	 * @return ($_ is null ? callable|string : $this) Value if used as a getter.
 	 */
 	public function setValue($_ = null)
 	{
@@ -480,8 +472,7 @@ class Field extends DataTables\Ext
 	 *
 	 * @param Upload $_ Upload class if used as a setter
 	 *
-	 * @return Upload|self Value if used as a getter, or self if used
-	 *                     as a setter.
+	 * @return ($_ is null ? Upload : $this) Value if used as a getter.
 	 */
 	public function upload($_ = null)
 	{
@@ -509,8 +500,7 @@ class Field extends DataTables\Ext
 	 *                              date formatting string, or a required flag. The actual options available
 	 *                              depend upon the validation function used.
 	 *
-	 * @return callable|string|self The validation method if no parameter is given,
-	 *                              or self if used as a setter.
+	 * @return ($_ is null ? callable|string : $this) The validation method if no parameter is given.
 	 */
 	public function validator($_ = null, $opts = null)
 	{
