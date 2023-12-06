@@ -93,12 +93,12 @@ class PostgresQuery extends Query
 
 			// Get the pkey field name
 			$pkRes = $resource->prepare(
-				"SELECT a.attname
+				'SELECT a.attname
 				FROM   pg_index i
 				JOIN   pg_attribute a ON a.attrelid = i.indrelid
 									 AND a.attnum = ANY(i.indkey)
 				WHERE  i.indrelid = (:tableName)::regclass
-				AND    i.indisprimary"
+				AND    i.indisprimary'
 			);
 			$pkRes->bindValue('tableName', $table[0]);
 			$pkRes->execute();

@@ -1533,7 +1533,7 @@ class Editor extends Ext
 
 				if ($fileData !== null) {
 					if (isset($files[$table])) {
-						$files[$table] = $files[$table] + $fileData;
+						$files[$table] += $fileData;
 					} else {
 						$files[$table] = $fileData;
 					}

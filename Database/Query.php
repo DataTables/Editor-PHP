@@ -1010,7 +1010,7 @@ abstract class Query
 				if ($this->_where[$i - 1]['group'] === '(') {
 					$condition .= '1=1';
 				}
-				// else nothing
+			// else nothing reindent once https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues/7497 is fixed
 			} elseif ($this->_where[$i - 1]['group'] === '(') {
 				// Nothing
 			} else {
