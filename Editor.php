@@ -86,9 +86,9 @@ class Editor extends Ext
 	 *                     an Editor payload
 	 * @param string $name The parameter name that the action should be read from.
 	 *
-	 * @return string `Editor::ACTION_READ`, `Editor::ACTION_CREATE`,
-	 *                `Editor::ACTION_EDIT` or `Editor::ACTION_DELETE` indicating the request
-	 *                type.
+	 * @return static::ACTION_* `Editor::ACTION_READ`, `Editor::ACTION_CREATE`,
+	 *                          `Editor::ACTION_EDIT` or `Editor::ACTION_DELETE` indicating the request
+	 *                          type.
 	 */
 	public static function action($http, $name = 'action')
 	{
@@ -189,7 +189,7 @@ class Editor extends Ext
 	/** @var array */
 	private $_out = array();
 
-	/** @var array */
+	/** @var array[] */
 	private $_events = array();
 
 	/** @var bool */
@@ -201,7 +201,7 @@ class Editor extends Ext
 	/** @var string Log output path */
 	private $_debugLog = '';
 
-	/** @var callable */
+	/** @var array */
 	private $_validator = array();
 
 	/** @var bool Enable true / catch when processing */

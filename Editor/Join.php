@@ -121,7 +121,7 @@ class Join extends DataTables\Ext
 	/** @var string */
 	private $_customOrder;
 
-	/** @var callable[] */
+	/** @var array */
 	private $_validators = array();
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

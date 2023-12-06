@@ -150,7 +150,7 @@ class Field extends DataTables\Ext
 	/** @var mixed */
 	private $_setValue;
 
-	/** @var mixed */
+	/** @var array[] */
 	private $_validator = array();
 
 	/** @var Upload */
@@ -871,7 +871,7 @@ class Field extends DataTables\Ext
 	 * (get or set).
 	 *
 	 * @param mixed    $val       Value to be formatted
-	 * @param mixed    $data      Full row data
+	 * @param array    $data      Full row data
 	 * @param callable $formatter Formatting function to be called
 	 * @param array    $opts      Array of options to be passed to the formatter
 	 *
