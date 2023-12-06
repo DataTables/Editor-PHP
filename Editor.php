@@ -310,7 +310,7 @@ class Editor extends Ext
 	 *      * `array` - An array of {@see Field} instances to add to the list
 	 *        of fields.
 	 *
-	 * @return ($_ is null ? Field|Field[] : $this) The selected field, an array of fields, depending on the input parameter.
+	 * @return ($_ is null ? ($_ is string ? Field : Field[]) : $this) The selected field, an array of fields, depending on the input parameter.
 	 *
 	 * @see {@see Field} for field documentation.
 	 */
