@@ -102,7 +102,7 @@ class Options extends DataTables\Ext
 	 * @param string      $label The label to use for the option
 	 * @param string|null $value Value for the option. If not given, the label will be used
 	 *
-	 * @return Options Self for chaining
+	 * @return $this
 	 */
 	public function add($label, $value = null)
 	{
@@ -148,7 +148,7 @@ class Options extends DataTables\Ext
 	 * @param string $operator the operation to perform on the two fields
 	 * @param string $field2   the second field to get the information from
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	public function leftJoin($table, $field1, $operator, $field2)
 	{

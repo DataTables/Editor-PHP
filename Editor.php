@@ -458,7 +458,7 @@ class Editor extends Ext
 	 * @param string $callback The callback function name to use. If not given
 	 *                         or `null`, then `$_GET['callback']` is used (the jQuery default).
 	 *
-	 * @return self Self for chaining.
+	 * @return $this
 	 */
 	public function jsonp($callback = null)
 	{
@@ -507,7 +507,7 @@ class Editor extends Ext
 	 * @param string $operator Join condition (`=`, '<`, etc)
 	 * @param string $field2   Field from the child table to use as the join link
 	 *
-	 * @return self Self for chaining.
+	 * @return $this
 	 *
 	 * @example
 	 *    Simple join:
@@ -569,7 +569,7 @@ class Editor extends Ext
 	 * @param callable $callback Callback function to execute when the event
 	 *                           occurs
 	 *
-	 * @return self Self for chaining.
+	 * @return $this
 	 */
 	public function on($name, $callback)
 	{
@@ -689,7 +689,7 @@ class Editor extends Ext
 	 * @param array $data Typically $_POST or $_GET as required by what is sent
 	 *                    by Editor
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	public function process($data)
 	{

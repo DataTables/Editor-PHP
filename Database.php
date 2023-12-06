@@ -109,7 +109,7 @@ class Database
 	 *
 	 * Use with {@see Database->transaction()} and {@see Database->rollback()}.
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	public function commit()
 	{
@@ -312,7 +312,7 @@ class Database
 	 *
 	 * Use with {@see Database->transaction()} and {@see Database->commit()}.
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	public function rollback()
 	{
@@ -410,7 +410,7 @@ class Database
 	 *
 	 * Use with {@see Database->commit()} and {@see Database->rollback()}.
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	public function transaction()
 	{
@@ -457,8 +457,8 @@ class Database
 	/**
 	 * Get debug query information.
 	 *
-	 * @return Database Information about the queries used. When this method is
-	 *                  called it will reset the query cache.
+	 * @return $this Information about the queries used. When this method is
+	 *               called it will reset the query cache.
 	 *
 	 * @internal
 	 */

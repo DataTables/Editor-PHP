@@ -37,8 +37,6 @@ class ValidateOptions extends DataTables\Ext
 				$this->optional($opts['optional']);
 			}
 		}
-
-		return $this;
 	}
 
 	/**

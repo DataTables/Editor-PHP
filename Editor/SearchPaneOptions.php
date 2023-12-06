@@ -190,7 +190,7 @@ class SearchPaneOptions extends DataTables\Ext
 	 * @param string $operator the operation to perform on the two fields
 	 * @param string $field2   the second field to get the information from
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	public function leftJoin($table, $field1, $operator, $field2)
 	{
@@ -209,7 +209,7 @@ class SearchPaneOptions extends DataTables\Ext
 	 *
 	 * @param string $query the query being built
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	private function _get_where($query)
 	{

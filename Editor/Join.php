@@ -267,7 +267,7 @@ class Join extends DataTables\Ext
 	 * @param string $operator the operation to perform on the two fields
 	 * @param string $field2   the second field to get the information from
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	public function leftJoin($table, $field1, $operator, $field2)
 	{
@@ -298,7 +298,7 @@ class Join extends DataTables\Ext
 	 * @param string $field1 Table and field name
 	 * @param string $field2 Table and field name
 	 *
-	 * @return Join Self for chaining
+	 * @return $this
 	 */
 	public function link($field1, $field2)
 	{
@@ -410,7 +410,7 @@ class Join extends DataTables\Ext
 	 *                            against on the client-side
 	 * @param callable $fn        Callback function for validation
 	 *
-	 * @return self Chainable
+	 * @return $this
 	 */
 	public function validator($fieldName, $fn)
 	{

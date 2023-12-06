@@ -28,8 +28,6 @@ class Ext
 	 * target class and chain methods as normal.
 	 *
 	 * @return \DataTables\Editor|\DataTables\Editor\Field|\DataTables\Editor\Join|\DataTables\Editor\Upload Instantiated class
-	 *
-	 * @static
 	 */
 	public static function instantiate()
 	{
@@ -49,8 +47,6 @@ class Ext
 	 * static method, but is simply shorter and easier to type!
 	 *
 	 * @return \DataTables\Editor|\DataTables\Editor\Field|\DataTables\Editor\Join|\DataTables\Editor\Upload class
-	 *
-	 * @static
 	 */
 	public static function inst()
 	{

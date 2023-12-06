@@ -544,7 +544,7 @@ class Field extends DataTables\Ext
 	 * @param callable|false $xssFormatter XSS cleaner function, use `false` or
 	 *                                     `null` to disable XSS cleaning.
 	 *
-	 * @return Field Self for chaining.
+	 * @return $this
 	 */
 	public function xss($xssFormatter)
 	{
