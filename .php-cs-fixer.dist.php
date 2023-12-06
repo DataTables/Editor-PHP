@@ -4,7 +4,7 @@ $finder = PhpCsFixer\Finder::create()
 	->in(array(__DIR__))
 	->ignoreDotFiles(false)
 	->ignoreVCS(true)
-	->exclude(array('vendor'));
+	->exclude(array('vendor', 'HtmLawed'));
 
 $config = new PhpCsFixer\Config();
 
