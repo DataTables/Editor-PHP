@@ -637,7 +637,7 @@ abstract class Query
 	{
 		if ($key === null) {
 			return $this;
-		} elseif (is_callable($key) && is_object($key)) { // is a closure
+		} elseif ($key instanceof \Closure) {
 			$this->_where_group(true, 'AND');
 			$key($this);
 			$this->_where_group(false, 'OR');
@@ -698,7 +698,7 @@ abstract class Query
 	{
 		if ($key === null) {
 			return $this;
-		} elseif (is_callable($key) && is_object($key)) {
+		} elseif ($key instanceof \Closure) {
 			$this->_where_group(true, 'OR');
 			$key($this);
 			$this->_where_group(false, 'OR');
@@ -743,7 +743,7 @@ abstract class Query
 	 */
 	public function where_group($inOut, $op = 'AND')
 	{
-		if (is_callable($inOut) && is_object($inOut)) {
+		if ($inOut instanceof \Closure) {
 			$this->_where_group(true, $op);
 			$inOut($this);
 			$this->_where_group(false, $op);

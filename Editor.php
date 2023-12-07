@@ -86,9 +86,9 @@ class Editor extends Ext
 	 *                     an Editor payload
 	 * @param string $name The parameter name that the action should be read from.
 	 *
-	 * @return string `Editor::ACTION_READ`, `Editor::ACTION_CREATE`,
-	 *                `Editor::ACTION_EDIT` or `Editor::ACTION_DELETE` indicating the request
-	 *                type.
+	 * @return static::ACTION_* `Editor::ACTION_READ`, `Editor::ACTION_CREATE`,
+	 *                          `Editor::ACTION_EDIT` or `Editor::ACTION_DELETE` indicating the request
+	 *                          type.
 	 */
 	public static function action($http, $name = 'action')
 	{
@@ -189,7 +189,7 @@ class Editor extends Ext
 	/** @var array */
 	private $_out = array();
 
-	/** @var array */
+	/** @var array[] */
 	private $_events = array();
 
 	/** @var bool */
@@ -201,7 +201,7 @@ class Editor extends Ext
 	/** @var string Log output path */
 	private $_debugLog = '';
 
-	/** @var callable */
+	/** @var array */
 	private $_validator = array();
 
 	/** @var bool Enable true / catch when processing */
@@ -910,7 +910,7 @@ class Editor extends Ext
 			return $this->_where;
 		}
 
-		if (is_callable($key) && is_object($key)) {
+		if ($key instanceof \Closure) {
 			$this->_where[] = $key;
 		} else {
 			$this->_where[] = array(
@@ -953,8 +953,6 @@ class Editor extends Ext
 	 * Process a request from the Editor client-side to get / set data.
 	 *
 	 * @param array $data Data to process
-	 *
-	 * @private
 	 */
 	private function _process($data)
 	{
@@ -1085,8 +1083,6 @@ class Editor extends Ext
 	 *                         server-side processing requests from DataTables).
 	 *
 	 * @return array DataTables get information
-	 *
-	 * @private
 	 */
 	private function _get($id = null, $http = null)
 	{
@@ -1226,8 +1222,6 @@ class Editor extends Ext
 
 	/**
 	 * Insert a new row in the database.
-	 *
-	 *  @private
 	 */
 	private function _insert($values)
 	{
@@ -1285,8 +1279,6 @@ class Editor extends Ext
 	 * @param string $id The DOM ID for the row that is being edited.
 	 *
 	 * @return array Row's data
-	 *
-	 * @private
 	 */
 	private function _update($id, $values)
 	{
@@ -1322,8 +1314,6 @@ class Editor extends Ext
 
 	/**
 	 * Delete one or more rows from the database.
-	 *
-	 *  @private
 	 */
 	private function _remove($data)
 	{
@@ -1395,8 +1385,6 @@ class Editor extends Ext
 	 * File upload.
 	 *
 	 * @param array $data Upload data
-	 *
-	 * @private
 	 */
 	private function _upload($data)
 	{
@@ -1466,8 +1454,6 @@ class Editor extends Ext
 	 * @param number[] $ids        Limit to a specific set of ids
 	 *
 	 * @return array File information
-	 *
-	 * @private
 	 */
 	private function _fileData($limitTable = null, $ids = null, $data = null)
 	{
@@ -1503,8 +1489,6 @@ class Editor extends Ext
 	 * @param Field[] $fields     Fields to get file information about
 	 * @param string  $limitTable Limit the data gathering to a single table
 	 *                            only
-	 *
-	 * @private
 	 */
 	private function _fileDataFields(&$files, $fields, $limitTable, $idsIn = null, $data = null)
 	{
@@ -1563,8 +1547,6 @@ class Editor extends Ext
 
 	/**
 	 * Run the file clean up.
-	 *
-	 * @private
 	 */
 	private function _fileClean()
 	{
@@ -1599,8 +1581,6 @@ class Editor extends Ext
 	 * @param array                      $http  Parameters from HTTP request
 	 *
 	 * @return array Server-side processing information array
-	 *
-	 * @private
 	 */
 	private function _ssp_query($query, $http)
 	{
@@ -1648,7 +1628,7 @@ class Editor extends Ext
 	 * @param array $http  HTTP variables (i.e. GET or POST)
 	 * @param int   $index Index in the DataTables' submitted data
 	 *
-	 * @returns string DB field name
+	 * @return string DB field name
 	 *
 	 * @private Note that it is actually public for PHP 5.3 - thread 39810
 	 */
@@ -1674,8 +1654,6 @@ class Editor extends Ext
 	 *
 	 * @param \DataTables\Database\Query $query Query instance to apply sorting to
 	 * @param array                      $http  HTTP variables (i.e. GET or POST)
-	 *
-	 * @private
 	 */
 	private function _ssp_sort($query, $http)
 	{
@@ -1921,8 +1899,6 @@ class Editor extends Ext
 	 *
 	 * @param \DataTables\Database\Query $query Query instance to apply the WHERE conditions to
 	 * @param array                      $http  HTTP variables (i.e. GET or POST)
-	 *
-	 * @private
 	 */
 	private function _ssp_filter($query, $http)
 	{
@@ -2052,8 +2028,6 @@ class Editor extends Ext
 	 *
 	 * @param \DataTables\Database\Query $query Query instance to apply the offset / limit to
 	 * @param array                      $http  HTTP variables (i.e. GET or POST)
-	 *
-	 * @private
 	 */
 	private function _ssp_limit($query, $http)
 	{
@@ -2072,8 +2046,6 @@ class Editor extends Ext
 	 * Add local WHERE condition to query.
 	 *
 	 * @param \DataTables\Database\Query $query Query instance to apply the WHERE conditions to
-	 *
-	 * @private
 	 */
 	private function _get_where($query)
 	{
@@ -2097,8 +2069,6 @@ class Editor extends Ext
 	 * @param string $type Matching name type
 	 *
 	 * @return Field Field instance
-	 *
-	 * @private
 	 */
 	private function _find_field($name, $type)
 	{
@@ -2126,8 +2096,6 @@ class Editor extends Ext
 	 *
 	 * @return \DataTables\Database\Result Result from the query or null if no
 	 *                                     query performed.
-	 *
-	 * @private
 	 */
 	private function _insert_or_update($id, $values)
 	{
@@ -2214,8 +2182,6 @@ class Editor extends Ext
 	 *
 	 * @return \DataTables\Database\Result Result from the query or null if no query
 	 *                                     performed.
-	 *
-	 * @private
 	 */
 	private function _insert_or_update_table($table, $values, $where = null)
 	{
@@ -2304,8 +2270,6 @@ class Editor extends Ext
 	 * @param string $pkey  Database column name to match the ids on for the
 	 *                      delete condition. If not given the instance's base primary key is
 	 *                      used.
-	 *
-	 * @private
 	 */
 	private function _remove_table($table, $ids, $pkey = null)
 	{
@@ -2376,8 +2340,6 @@ class Editor extends Ext
 	 * Check the validity of the set options if  we are doing a join, since
 	 * there are some conditions for this state. Will throw an error if not
 	 * valid.
-	 *
-	 *  @private
 	 */
 	private function _prepJoin()
 	{
@@ -2417,9 +2379,7 @@ class Editor extends Ext
 	 * @param string $name SQL field
 	 * @param string $type Which part to get: `alias` (default) or `orig`.
 	 *
-	 * @returns string Alias
-	 *
-	 * @private
+	 * @return string Alias
 	 */
 	private function _alias($name, $type = 'alias')
 	{
@@ -2451,8 +2411,6 @@ class Editor extends Ext
 	 *                     `column`
 	 *
 	 * @return string Part name
-	 *
-	 * @private
 	 */
 	private function _part($name, $type = 'table')
 	{
@@ -2486,8 +2444,6 @@ class Editor extends Ext
 
 	/**
 	 * Trigger an event.
-	 *
-	 * @private
 	 */
 	private function _trigger($eventName, &$arg1 = null, &$arg2 = null, &$arg3 = null, &$arg4 = null, &$arg5 = null)
 	{

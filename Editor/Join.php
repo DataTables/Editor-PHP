@@ -121,7 +121,7 @@ class Join extends DataTables\Ext
 	/** @var string */
 	private $_customOrder;
 
-	/** @var callable[] */
+	/** @var array */
 	private $_validators = array();
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -241,7 +241,7 @@ class Join extends DataTables\Ext
 	 *                                link table.
 	 * @param string          $table  Join table name, if using a link table
 	 *
-	 * @returns Join This for chaining
+	 * @return Join This for chaining
 	 *
 	 * @deprecated 1.5 Please use the {@see Join->link()} method rather than this
 	 *                                method now.
@@ -443,7 +443,7 @@ class Join extends DataTables\Ext
 			return $this->_where;
 		}
 
-		if (is_callable($key) && is_object($key)) {
+		if ($key instanceof \Closure) {
 			$this->_where[] = $key;
 		} else {
 			$this->_where[] = array(
@@ -807,8 +807,6 @@ class Join extends DataTables\Ext
 	 * Add local WHERE condition to query.
 	 *
 	 * @param \DataTables\Database\Query $query Query instance to apply the WHERE conditions to
-	 *
-	 * @private
 	 */
 	private function _apply_where($query)
 	{
@@ -831,8 +829,6 @@ class Join extends DataTables\Ext
 	 * @param \DataTables\Database $db       Database reference to use
 	 * @param int                  $parentId Parent row's primary key value
 	 * @param string[]             $data     Data to be set for the join
-	 *
-	 * @private
 	 */
 	private function _insert($db, $parentId, $data)
 	{
@@ -877,8 +873,6 @@ class Join extends DataTables\Ext
 	 * Prepare the instance to be run.
 	 *
 	 * @param Editor $editor Editor instance
-	 *
-	 * @private
 	 */
 	private function _prep($editor)
 	{
@@ -942,8 +936,6 @@ class Join extends DataTables\Ext
 	 * @param \DataTables\Database $db       Database reference to use
 	 * @param int                  $parentId Parent row's primary key value
 	 * @param string[]             $data     Data to be set for the join
-	 *
-	 * @private
 	 */
 	private function _update_row($db, $parentId, $data)
 	{
@@ -997,9 +989,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @param string $direction Direction: 'get' or 'set'.
 	 *
-	 * @returns array Fields to include
-	 *
-	 * @private
+	 * @return array Fields to include
 	 */
 	private function _fields($direction)
 	{

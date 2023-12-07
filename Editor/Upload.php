@@ -663,7 +663,7 @@ class Upload extends DataTables\Ext
 					$val = $prop;
 
 					// Callable function - execute to get the value
-					if (is_callable($prop) && is_object($prop)) {
+					if ($prop instanceof \Closure) {
 						$val = $prop($db, $upload);
 					}
 

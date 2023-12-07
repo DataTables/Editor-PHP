@@ -150,7 +150,7 @@ class Field extends DataTables\Ext
 	/** @var mixed */
 	private $_setValue;
 
-	/** @var mixed */
+	/** @var array[] */
 	private $_validator = array();
 
 	/** @var Upload */
@@ -315,7 +315,7 @@ class Field extends DataTables\Ext
 			// Options class
 			$this->_optsFn = null;
 			$this->_opts = $table;
-		} elseif (is_callable($table) && is_object($table)) {
+		} elseif ($table instanceof \Closure) {
 			// Function
 			$this->_opts = null;
 			$this->_optsFn = $table;
@@ -360,7 +360,7 @@ class Field extends DataTables\Ext
 			// Options class
 			$this->_spoptsFn = null;
 			$this->_spopts = $spInput;
-		} elseif (is_callable($spInput) && is_object($spInput)) {
+		} elseif ($spInput instanceof \Closure) {
 			// Function
 			$this->_spopts = null;
 			$this->_spoptsFn = $spInput;
@@ -387,7 +387,7 @@ class Field extends DataTables\Ext
 			// Options class
 			$this->_sboptsFn = null;
 			$this->_sbopts = $sbInput;
-		} elseif (is_callable($sbInput) && is_object($sbInput)) {
+		} elseif ($spInput instanceof \Closure) {
 			// Function
 			$this->_sbopts = null;
 			$this->_sboptsFn = $sbInput;
@@ -871,7 +871,7 @@ class Field extends DataTables\Ext
 	 * (get or set).
 	 *
 	 * @param mixed    $val       Value to be formatted
-	 * @param mixed    $data      Full row data
+	 * @param array    $data      Full row data
 	 * @param callable $formatter Formatting function to be called
 	 * @param array    $opts      Array of options to be passed to the formatter
 	 *
@@ -918,7 +918,7 @@ class Field extends DataTables\Ext
 	 */
 	private function _getAssignedValue($val)
 	{
-		return is_callable($val) && is_object($val) ?
+		return $val instanceof \Closure ?
 			$val() :
 			$val;
 	}
@@ -932,8 +932,6 @@ class Field extends DataTables\Ext
 	 * @param array  $data Data source array to read from
 	 *
 	 * @return bool `true` if present, `false` otherwise
-	 *
-	 * @private
 	 */
 	private function _inData($name, $data)
 	{
