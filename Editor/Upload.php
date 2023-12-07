@@ -172,7 +172,7 @@ class Upload extends DataTables\Ext
 	 *
 	 * @param string|callable $action Action to take - see description above.
 	 *
-	 * @return self Current instance, used for chaining
+	 * @return $this
 	 */
 	public function action($action)
 	{
@@ -193,7 +193,7 @@ class Upload extends DataTables\Ext
 	 * @param string   $error Error message if a file is uploaded that doesn't
 	 *                        match the valid list of extensions.
 	 *
-	 * @return self Current instance, used for chaining
+	 * @return $this
 	 *
 	 * @deprecated Use Validate::fileExtensions
 	 */
@@ -225,7 +225,7 @@ class Upload extends DataTables\Ext
 	 *                         from the database. Only gets a single parameter passed in - the
 	 *                         database row for the file that is read.
 	 *
-	 * @return self Current instance, used for chaining
+	 * @return $this
 	 */
 	public function db($table, $pkey, $fields, $format = null)
 	{
@@ -247,7 +247,7 @@ class Upload extends DataTables\Ext
 	 *                           removed from the database. Any other return value (including none)
 	 *                           will result in the records being retained.
 	 *
-	 * @return self Current instance, used for chaining
+	 * @return $this
 	 */
 	public function dbClean($tableField, $callback = null)
 	{
@@ -266,6 +266,8 @@ class Upload extends DataTables\Ext
 	/**
 	 * Set the permissions on the file after it has been uploaded using
 	 * chmod.
+	 *
+	 * @return $this
 	 */
 	public function mode($m)
 	{
@@ -283,7 +285,7 @@ class Upload extends DataTables\Ext
 	 *                     passed in for the uploaded file and the return is either a string
 	 *                     (validation failed and error message), or `null` (validation passed).
 	 *
-	 * @return self Current instance, used for chaining
+	 * @return $this
 	 */
 	public function validator($fn)
 	{
@@ -300,7 +302,7 @@ class Upload extends DataTables\Ext
 	 *
 	 * @param callable $fn Where function.
 	 *
-	 * @return self Current instance, used for chaining
+	 * @return $this
 	 */
 	public function where($fn)
 	{

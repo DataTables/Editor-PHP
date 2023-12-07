@@ -102,7 +102,7 @@ class Options extends DataTables\Ext
 	 * @param string      $label The label to use for the option
 	 * @param string|null $value Value for the option. If not given, the label will be used
 	 *
-	 * @return Options Self for chaining
+	 * @return $this
 	 */
 	public function add($label, $value = null)
 	{
@@ -124,8 +124,7 @@ class Options extends DataTables\Ext
 	 * @param string|string[]|null $_ null to get the current value, string or
 	 *                                array to get.
 	 *
-	 * @return Options|string[] Self if setting for chaining, array of values if
-	 *                          getting.
+	 * @return ($_ is null ? string[] : $this)
 	 */
 	public function label($_ = null)
 	{
@@ -148,7 +147,7 @@ class Options extends DataTables\Ext
 	 * @param string $operator the operation to perform on the two fields
 	 * @param string $field2   the second field to get the information from
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	public function leftJoin($table, $field1, $operator, $field2)
 	{
@@ -167,7 +166,7 @@ class Options extends DataTables\Ext
 	 *
 	 * @param number|null $_ Number of rows to limit the result to
 	 *
-	 * @return Options|string[] Self if setting for chaining, limit if getting.
+	 * @return ($_ is null ? string[] : $this)
 	 */
 	public function limit($_ = null)
 	{
@@ -181,7 +180,7 @@ class Options extends DataTables\Ext
 	 *
 	 * @param string|null $_ String to set, null to get current value
 	 *
-	 * @return Options|string Self if setting for chaining, string if getting.
+	 * @return ($_ is null ? string : $this)
 	 */
 	public function order($_ = null)
 	{
@@ -195,8 +194,7 @@ class Options extends DataTables\Ext
 	 *
 	 * @param callable|null $_ Function to set, null to get current value
 	 *
-	 * @return Options|callable Self if setting for chaining, callable if
-	 *                          getting.
+	 * @return ($_ is null ? callable : $this)
 	 */
 	public function render($_ = null)
 	{
@@ -209,7 +207,7 @@ class Options extends DataTables\Ext
 	 *
 	 * @param string|null $_ String to set, null to get current value
 	 *
-	 * @return Options|string Self if setting for chaining, string if getting.
+	 * @return ($_ is null ? string : $this)
 	 */
 	public function table($_ = null)
 	{
@@ -222,7 +220,7 @@ class Options extends DataTables\Ext
 	 *
 	 * @param string|null $_ String to set, null to get current value
 	 *
-	 * @return Options|string Self if setting for chaining, string if getting.
+	 * @return ($_ is null ? string : $this)
 	 */
 	public function value($_ = null)
 	{
@@ -235,8 +233,7 @@ class Options extends DataTables\Ext
 	 *
 	 * @param callable|null $_ Function to set, null to get current value
 	 *
-	 * @return Options|callable Self if setting for chaining, callable if
-	 *                          getting.
+	 * @return ($_ is null ? callable : $this)
 	 */
 	public function where($_ = null)
 	{

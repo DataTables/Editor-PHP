@@ -224,7 +224,7 @@ class Editor extends Ext
 	 *
 	 * @param string $_ Value to set. If not given, then used as a getter.
 	 *
-	 * @return string|self Value, or self if used as a setter.
+	 * @return ($_ is null ? string : $this) Value.
 	 */
 	public function actionName($_ = null)
 	{
@@ -251,8 +251,8 @@ class Editor extends Ext
 	 * @param Database $_ DataTable's Database class instance to use for database
 	 *                    connectivity. If not given, then used as a getter.
 	 *
-	 * @return Database|self The Database connection instance if no parameter
-	 *                       is given, or self if used as a setter.
+	 * @return ($_ is null ? Database : $this) The Database connection instance if no parameter
+	 *                                         is given.
 	 */
 	public function db($_ = null)
 	{
@@ -276,8 +276,7 @@ class Editor extends Ext
 	 *                         to the debug information sent back to the client.
 	 * @param string     $path Set an output path to log debug information
 	 *
-	 * @return bool|self Debug mode state if no parameter is given, or
-	 *                   self if used as a setter or when adding a debug message.
+	 * @return ($_ is null ? bool : $this) Debug mode state if no parameter is given.
 	 */
 	public function debug($_ = null, $path = null)
 	{
@@ -300,7 +299,7 @@ class Editor extends Ext
 	 * The list of fields designates which columns in the table that Editor will work
 	 * with (both get and set).
 	 *
-	 * @param Field|string $_,... This parameter effects the return value of the
+	 * @param Field|string ...$_ This parameter effects the return value of the
 	 *                           function:
 	 *
 	 *      * `null` - Get an array of all fields assigned to the instance
@@ -311,8 +310,7 @@ class Editor extends Ext
 	 *      * `array` - An array of {@see Field} instances to add to the list
 	 *        of fields.
 	 *
-	 * @return Field|Field[]|Editor The selected field, an array of fields, or
-	 *                              the Editor instance for chaining, depending on the input parameter.
+	 * @return ($_ is null ? ($_ is string ? Field : Field[]) : $this) The selected field, an array of fields, depending on the input parameter.
 	 *
 	 * @see {@see Field} for field documentation.
 	 */
@@ -342,11 +340,11 @@ class Editor extends Ext
 	 *
 	 * An alias of {@see field}, for convenience.
 	 *
-	 * @param Field|Field[] $_,... Instances of the {@see Field} class, given as a single
+	 * @param Field|Field[] ...$_ Instances of the {@see Field} class, given as a single
 	 *                            instance of {@see Field}, an array of {@see Field} instances, or multiple
 	 *                            {@see Field} instance parameters for the function.
 	 *
-	 * @return Field[]|self Array of fields, or self if used as a setter.
+	 * @return ($_ is null ? Field[] : $this) Array of fields.
 	 *
 	 * @see {@see Field} for field documentation.
 	 */
@@ -372,8 +370,7 @@ class Editor extends Ext
 	 *
 	 * @param string $_ Primary key's name. If not given, then used as a getter.
 	 *
-	 * @return string|self Primary key value if no parameter is given, or
-	 *                     self if used as a setter.
+	 * @return ($_ is null ? string : $this) Primary key value if no parameter is given.
 	 */
 	public function idPrefix($_ = null)
 	{
@@ -401,11 +398,11 @@ class Editor extends Ext
 	 * (i.e. the one that the {@see Editor->table()} and {@see Editor->fields}
 	 * methods refer to in this class instance).
 	 *
-	 * @param Join $_,... Instances of the {@see Join} class, given as a
+	 * @param Join ...$_ Instances of the {@see Join} class, given as a
 	 *                   single instance of {@see Join}, an array of {@see Join} instances,
 	 *                   or multiple {@see Join} instance parameters for the function.
 	 *
-	 * @return Join[]|self Array of joins, or self if used as a setter.
+	 * @return ($_ is null ? Join[] : $this) Array of joins.
 	 */
 	public function join($_ = null)
 	{
@@ -428,8 +425,8 @@ class Editor extends Ext
 	 *                      (false).
 	 * @param int  $options JSON encode option https://www.php.net/manual/en/json.constants.php
 	 *
-	 * @return string|self self if printing the JSON, or JSON representation of
-	 *                     the processed data if false is given as the first parameter.
+	 * @return ($print is false ? string : $this) JSON representation of the processed data if
+	 *                                            false is given as the first parameter.
 	 */
 	public function json($print = true, $options = 0)
 	{
@@ -458,7 +455,7 @@ class Editor extends Ext
 	 * @param string $callback The callback function name to use. If not given
 	 *                         or `null`, then `$_GET['callback']` is used (the jQuery default).
 	 *
-	 * @return self Self for chaining.
+	 * @return $this
 	 */
 	public function jsonp($callback = null)
 	{
@@ -507,7 +504,7 @@ class Editor extends Ext
 	 * @param string $operator Join condition (`=`, '<`, etc)
 	 * @param string $field2   Field from the child table to use as the join link
 	 *
-	 * @return self Self for chaining.
+	 * @return $this
 	 *
 	 * @example
 	 *    Simple join:
@@ -553,8 +550,7 @@ class Editor extends Ext
 	 *
 	 * @param bool $_ Value to set. If not given, then used as a getter.
 	 *
-	 * @return bool|self Value if no parameter is given, or
-	 *                   self if used as a setter.
+	 * @return ($_ is null ? bool : $this) Value if no parameter is given.
 	 */
 	public function leftJoinRemove($_ = null)
 	{
@@ -569,7 +565,7 @@ class Editor extends Ext
 	 * @param callable $callback Callback function to execute when the event
 	 *                           occurs
 	 *
-	 * @return self Self for chaining.
+	 * @return $this
 	 */
 	public function on($name, $callback)
 	{
@@ -592,8 +588,7 @@ class Editor extends Ext
 	 *                           getter. An array of column names can be given to allow composite keys to
 	 *                           be used.
 	 *
-	 * @return string[]|self Primary key value if no parameter is given, or
-	 *                       self if used as a setter.
+	 * @return ($_ is null ? string[] : $this) Primary key value if no parameter is given.
 	 */
 	public function pkey($_ = null)
 	{
@@ -689,7 +684,7 @@ class Editor extends Ext
 	 * @param array $data Typically $_POST or $_GET as required by what is sent
 	 *                    by Editor
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	public function process($data)
 	{
@@ -737,10 +732,10 @@ class Editor extends Ext
 	 * a useful distinction to allow a read from a VIEW (which could make use of a
 	 * complex SELECT) while writing to a different table.
 	 *
-	 * @param string|array $_,... Read table names given as a single string, an array
+	 * @param string|array ...$_ Read table names given as a single string, an array
 	 *                           of strings or multiple string parameters for the function.
 	 *
-	 * @return string[]|self Array of read tables names, or self if used as a setter.
+	 * @return ($_ is null ? string[] : $this) Array of read tables names.
 	 */
 	public function readTable($_ = null)
 	{
@@ -762,10 +757,10 @@ class Editor extends Ext
 	 * names would also need to reflect the alias, just like an SQL query. For
 	 * example: `users as a`.
 	 *
-	 * @param string|array $_,... Table names given as a single string, an array of
+	 * @param string|array ...$_ Table names given as a single string, an array of
 	 *                           strings or multiple string parameters for the function.
 	 *
-	 * @return string[]|self Array of tables names, or self if used as a setter.
+	 * @return ($_ is null ? string[] : $this) Array of tables names.
 	 */
 	public function table($_ = null)
 	{
@@ -789,8 +784,7 @@ class Editor extends Ext
 	 * @param bool $_ Enable (`true`) or disabled (`false`) transactions.
 	 *                If not given, then used as a getter.
 	 *
-	 * @return bool|self Transactions enabled flag, or self if used as a
-	 *                   setter.
+	 * @return ($_ is null ? bool : $this) Transactions enabled flag.
 	 */
 	public function transaction($_ = null)
 	{
@@ -803,8 +797,7 @@ class Editor extends Ext
 	 *
 	 * @param bool $_ `true` to enable (default), otherwise false to disable
 	 *
-	 * @return bool|Editor Value if used as a getter, otherwise `$this` when
-	 *                     used as a setter.
+	 * @return ($_ is null ? bool : $this) Value if used as a getter.
 	 */
 	public function tryCatch($_ = null)
 	{
@@ -870,8 +863,7 @@ class Editor extends Ext
 	 *                    It is passed three parameters: 1. The editor instance, 2. The action
 	 *                    and 3. The values.
 	 *
-	 * @return Editor|callable Editor instance if called as a setter, or the
-	 *                         validator function if not.
+	 * @return ($_ is null ? callable : $this) The validator function.
 	 */
 	public function validator($_ = null)
 	{
@@ -902,7 +894,7 @@ class Editor extends Ext
 	 * @param string          $value Single field value.
 	 * @param string          $op    Condition operator: <, >, = etc
 	 *
-	 * @return string[]|self Where condition array, or self if used as a setter.
+	 * @return ($key is null ? string[] : $this) Where condition array.
 	 */
 	public function where($key = null, $value = null, $op = '=')
 	{
@@ -929,7 +921,7 @@ class Editor extends Ext
 	 *
 	 * @param bool $_ Include (`true`), or not (`false`)
 	 *
-	 * @return bool Current value
+	 * @return ($_ is null ? bool : $this) Current value
 	 *
 	 * @deprecated Note that `whereSet` is now deprecated and replaced with the
 	 *              ability to set values for columns on create and edit. The C# libraries
@@ -940,6 +932,11 @@ class Editor extends Ext
 		return $this->_getSet($this->_whereSet, $_);
 	}
 
+	/**
+	 * @param bool $_writeVal
+	 *
+	 * @return ($_writeVal is null ? bool : $this)
+	 */
 	public function write($_writeVal = null)
 	{
 		return $this->_getSet($this->_write, $_writeVal);
@@ -1536,7 +1533,7 @@ class Editor extends Ext
 
 				if ($fileData !== null) {
 					if (isset($files[$table])) {
-						$files[$table] = $files[$table] + $fileData;
+						$files[$table] += $fileData;
 					} else {
 						$files[$table] = $fileData;
 					}

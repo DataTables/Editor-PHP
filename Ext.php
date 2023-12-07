@@ -27,18 +27,14 @@ class Ext
 	 * If using PHP 5.4 or later, simply create a 'new' instance of the
 	 * target class and chain methods as normal.
 	 *
-	 * @return \DataTables\Editor|\DataTables\Editor\Field|\DataTables\Editor\Join|\DataTables\Editor\Upload Instantiated class
-	 *
-	 * @static
+	 * @return static Instantiated class
 	 */
 	public static function instantiate()
 	{
 		$rc = new \ReflectionClass(get_called_class());
 		$args = func_get_args();
 
-		return count($args) === 0 ?
-			$rc->newInstance() :
-			$rc->newInstanceArgs($args);
+		return $rc->newInstanceArgs($args);
 	}
 
 	/**
@@ -48,18 +44,14 @@ class Ext
 	 * This method performs exactly the same actions as the 'instantiate'
 	 * static method, but is simply shorter and easier to type!
 	 *
-	 * @return \DataTables\Editor|\DataTables\Editor\Field|\DataTables\Editor\Join|\DataTables\Editor\Upload class
-	 *
-	 * @static
+	 * @return static class
 	 */
 	public static function inst()
 	{
 		$rc = new \ReflectionClass(get_called_class());
 		$args = func_get_args();
 
-		return count($args) === 0 ?
-			$rc->newInstance() :
-			$rc->newInstanceArgs($args);
+		return $rc->newInstanceArgs($args);
 	}
 
 	/**
@@ -75,8 +67,7 @@ class Ext
 	 *                     (default false). If used as an array, then values passed in are added
 	 *                     to the $prop array.
 	 *
-	 * @return self|mixed Class instance if setting (allowing chaining), or
-	 *                    the value requested if getting.
+	 * @return ($prop is null ? mixed : $this)
 	 */
 	protected function _getSet(&$prop, $val, $array = false)
 	{

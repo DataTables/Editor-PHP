@@ -15,7 +15,6 @@ namespace DataTables\Editor;
 
 use DataTables;
 use DataTables\Editor;
-use DataTables\Editor\Field;
 
 /**
  * Join table class for DataTables Editor.
@@ -146,8 +145,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @param string $_ Table alias to use
 	 *
-	 * @return string|self Table alias set (which is null by default), or self if used as
-	 *                     a setter.
+	 * @return ($_ is null ? string : $this) Table alias set (which is null by default).
 	 */
 	public function aliasParentTable($_ = null)
 	{
@@ -160,11 +158,11 @@ class Join extends DataTables\Ext
 	 * The list of fields designates which columns in the table that will be read
 	 * from the joined table.
 	 *
-	 * @param Field $_,... Instances of the {@see Field} class, given as a single
+	 * @param Field ...$_ Instances of the {@see Field} class, given as a single
 	 *                    instance of {@see Field}, an array of {@see Field} instances, or multiple
 	 *                    {@see Field} instance parameters for the function.
 	 *
-	 * @return Field[]|self Array of fields, or self if used as a setter.
+	 * @return ($_ is null ? Field[] : $this) Array of fields.
 	 *
 	 * @see {@see Field} for field documentation.
 	 */
@@ -184,11 +182,11 @@ class Join extends DataTables\Ext
 	 *
 	 * An alias of {@see field}, for convenience.
 	 *
-	 * @param Field $_,... Instances of the {@see Field} class, given as a single
+	 * @param Field ...$_ Instances of the {@see Field} class, given as a single
 	 *                    instance of {@see Field}, an array of {@see Field} instances, or multiple
 	 *                    {@see Field} instance parameters for the function.
 	 *
-	 * @return Field[]|self Array of fields, or self if used as a setter.
+	 * @return ($_ is null ? Field[] : $this) Array of fields.
 	 *
 	 * @see {@see Field} for field documentation.
 	 */
@@ -210,7 +208,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @param bool $_ Value
 	 *
-	 * @return bool|self Name
+	 * @return ($_ is null ? bool : $this) Name
 	 */
 	public function get($_ = null)
 	{
@@ -241,7 +239,7 @@ class Join extends DataTables\Ext
 	 *                                link table.
 	 * @param string          $table  Join table name, if using a link table
 	 *
-	 * @return Join This for chaining
+	 * @return ($parent is null ? array : $this)
 	 *
 	 * @deprecated 1.5 Please use the {@see Join->link()} method rather than this
 	 *                                method now.
@@ -267,7 +265,7 @@ class Join extends DataTables\Ext
 	 * @param string $operator the operation to perform on the two fields
 	 * @param string $field2   the second field to get the information from
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	public function leftJoin($table, $field1, $operator, $field2)
 	{
@@ -298,7 +296,7 @@ class Join extends DataTables\Ext
 	 * @param string $field1 Table and field name
 	 * @param string $field2 Table and field name
 	 *
-	 * @return Join Self for chaining
+	 * @return $this
 	 */
 	public function link($field1, $field2)
 	{
@@ -321,7 +319,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @param string $_ SQL column name to order the data by
 	 *
-	 * @return Join Self for chaining
+	 * @return ($_ is null ? Join : $this)
 	 */
 	public function order($_ = null)
 	{
@@ -341,7 +339,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @param string $_ Field name
 	 *
-	 * @return string|self Name
+	 * @return ($_ is null ? string : $this) Name
 	 */
 	public function name($_ = null)
 	{
@@ -357,7 +355,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @param bool $_ Value
 	 *
-	 * @return bool|self Name
+	 * @return ($_ is null ? bool : $this) Name
 	 */
 	public function set($_ = null)
 	{
@@ -374,7 +372,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @param string $_ Name of the table to read the join data from
 	 *
-	 * @return string|self Name of the join table, or self if used as a setter.
+	 * @return ($_ is null ? string : $this) Name of the join table.
 	 */
 	public function table($_ = null)
 	{
@@ -396,7 +394,7 @@ class Join extends DataTables\Ext
 	 * @param string $_ Join type ('object') or an array of
 	 *                  results ('array') for the join.
 	 *
-	 * @return string|self Join type, or self if used as a setter.
+	 * @return ($_ is null ? string : $this) Join type.
 	 */
 	public function type($_ = null)
 	{
@@ -410,7 +408,7 @@ class Join extends DataTables\Ext
 	 *                            against on the client-side
 	 * @param callable $fn        Callback function for validation
 	 *
-	 * @return self Chainable
+	 * @return $this
 	 */
 	public function validator($fieldName, $fn)
 	{
@@ -435,7 +433,7 @@ class Join extends DataTables\Ext
 	 * @param string|string[] $value Single field value, or an array of values.
 	 * @param string          $op    Condition operator: <, >, = etc
 	 *
-	 * @return string[]|self Where condition array, or self if used as a setter.
+	 * @return ($key is null ? string[] : $this) Where condition array.
 	 */
 	public function where($key = null, $value = null, $op = '=')
 	{
@@ -468,7 +466,7 @@ class Join extends DataTables\Ext
 	 *
 	 * @param bool $_ Include (`true`), or not (`false`)
 	 *
-	 * @return bool Current value
+	 * @return ($_ is null ? bool : $this) Current value
 	 */
 	public function whereSet($_ = null)
 	{
