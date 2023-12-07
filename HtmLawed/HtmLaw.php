@@ -34,7 +34,7 @@ namespace DataTables\HtmLawed;
 /**
  * A class wrapper for the htmLawed library.
  */
-class Htmlaw
+class HtmLaw
 {
 	// / Methods ///
 
@@ -83,7 +83,7 @@ class Htmlaw
 			$spec = static::$defaultSpec;
 		}
 
-		return Htmlawed::hl($html, $config, $spec);
+		return HtmLawed::hl($html, $config, $spec);
 	}
 
 	/**
@@ -93,7 +93,7 @@ class Htmlaw
 	 *
 	 * @return string Returns the filtered html.
 	 *
-	 * @see Htmlawed::filter().
+	 * @see HtmLawed::filter().
 	 */
 	public static function filterRSS($html)
 	{

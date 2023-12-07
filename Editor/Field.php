@@ -17,7 +17,7 @@ use DataTables;
 use DataTables\Database;
 use DataTables\Database\Query;
 use DataTables\Editor;
-use DataTables\HtmLawed\Htmlaw;
+use DataTables\HtmLawed\HtmLaw;
 
 /**
  * Field definitions for the DataTables Editor.
@@ -843,7 +843,7 @@ class Field extends DataTables\Ext
 			foreach ($val as $individual) {
 				$res[] = $xss ?
 					$xss($individual) :
-					Htmlaw::filter($individual);
+					HtmLaw::filter($individual);
 			}
 
 			return $res;
@@ -851,7 +851,7 @@ class Field extends DataTables\Ext
 
 		return $xss ?
 			$xss($val) :
-			Htmlaw::filter($val);
+			HtmLaw::filter($val);
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

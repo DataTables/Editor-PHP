@@ -12,7 +12,7 @@ parameters:
     ignoreErrors:
         -
             message: '~^.+$~'
-            path: HtmLawed/Htmlawed.php
+            path: HtmLawed/HtmLawed.php
 
         # TODO
         - '~Property .+ has no type specified~'
