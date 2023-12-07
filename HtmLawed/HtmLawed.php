@@ -1,5 +1,10 @@
 <?php
 
+// Downloaded from http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/oop.htm
+// with the following modifications:
+// 1. add `DataTables\HtmLawed` namespace
+// 2. rename class name from `htmLawed` to `HtmLawed`
+
 /**
  * htmLawed.php with htmLawed as OOP class – Filter/sanitize HTML text.
  *
@@ -21,7 +26,9 @@
  * @version    1.2.15
  */
 
-class htmLawed
+namespace DataTables\HtmLawed;
+
+class HtmLawed
 
 {
   /*
@@ -143,9 +150,9 @@ class htmLawed
        && is_array($C['anti_link_spam'])
        && count($C['anti_link_spam']) == 2
        && (empty($C['anti_link_spam'][0])
-           || htmLawed::hl_regex($C['anti_link_spam'][0]))
+           || self::hl_regex($C['anti_link_spam'][0]))
        && (empty($C['anti_link_spam'][1])
-           || htmLawed::hl_regex($C['anti_link_spam'][1])))
+           || self::hl_regex($C['anti_link_spam'][1])))
       ? $C['anti_link_spam']
       : 0;
     $C['anti_mail_spam'] = isset($C['anti_mail_spam']) ? $C['anti_mail_spam'] : 0;
@@ -178,7 +185,7 @@ class htmLawed
 
     // Set $S array ($spec).
 
-    $S = is_array($S) ? $S : htmLawed::hl_spec($S);
+    $S = is_array($S) ? $S : self::hl_spec($S);
     if (isset($GLOBALS['S'])) {
       $oldS = $GLOBALS['S'];
     }
@@ -199,12 +206,12 @@ class htmLawed
     // Handle CDATA, comments, and entities.
 
     if ($C['cdata'] || $C['comment']) {
-      $t = preg_replace_callback('`<!(?:(?:--.*?--)|(?:\[CDATA\[.*?\]\]))>`sm', 'htmLawed::hl_commentCdata', $t);
+      $t = preg_replace_callback('`<!(?:(?:--.*?--)|(?:\[CDATA\[.*?\]\]))>`sm', 'DataTables\HtmLawed\HtmLawed::hl_commentCdata', $t);
     }
     $t =
       preg_replace_callback(
         '`&amp;([a-zA-Z][a-zA-Z0-9]{1,30}|#(?:[0-9]{1,8}|[Xx][0-9A-Fa-f]{1,7}));`',
-        'htmLawed::hl_entity',
+        'DataTables\HtmLawed\HtmLawed::hl_entity',
         str_replace('&', '&amp;', $t));
     if ($C['unique_ids'] && !isset($GLOBALS['hl_Ids'])) {
       $GLOBALS['hl_Ids'] = array();
@@ -216,17 +223,17 @@ class htmLawed
 
     // Handle remaining text.
 
-    $t = preg_replace_callback('`<(?:(?:\s|$)|(?:[^>]*(?:>|$)))|>`m', 'htmLawed::hl_tag', $t);
-    $t = $C['balance'] ? htmLawed::hl_balance($t, $C['keep_bad'], $C['parent']) : $t;
+    $t = preg_replace_callback('`<(?:(?:\s|$)|(?:[^>]*(?:>|$)))|>`m', 'DataTables\HtmLawed\HtmLawed::hl_tag', $t);
+    $t = $C['balance'] ? self::hl_balance($t, $C['keep_bad'], $C['parent']) : $t;
     $t = (($C['cdata'] || $C['comment']) && strpos($t, "\x01") !== false)
          ? str_replace(array("\x01", "\x02", "\x03", "\x04", "\x05"), array('', '', '&', '<', '>'), $t)
          : $t;
-    $t = $C['tidy'] ? htmLawed::hl_tidy($t, $C['tidy'], $C['parent']) : $t;
+    $t = $C['tidy'] ? self::hl_tidy($t, $C['tidy'], $C['parent']) : $t;
 
     // Cleanup.
 
     if ($C['show_setting'] && preg_match('`^[a-z][a-z0-9_]*$`i', $C['show_setting'])) {
-      $GLOBALS[$C['show_setting']] = array('config'=>$C, 'spec'=>$S, 'time'=>microtime(true), 'version'=>htmLawed::hl_version());
+      $GLOBALS[$C['show_setting']] = array('config'=>$C, 'spec'=>$S, 'time'=>microtime(true), 'version'=>self::hl_version());
     }
     unset($C, $eleAr);
     if (isset($oldC)) {
@@ -922,10 +929,10 @@ class htmLawed
               array(";", "|", "~", " ", ",", "/", "(", ")"),
               substr($m, $rulePos + 1));
         }
-        if (isset($ruleAr[$attr]['match']) && !htmLawed::hl_regex($ruleAr[$attr]['match'])) {
+        if (isset($ruleAr[$attr]['match']) && !self::hl_regex($ruleAr[$attr]['match'])) {
           unset($ruleAr[$attr]['match']);
         }
-        if (isset($ruleAr[$attr]['nomatch']) && !htmLawed::hl_regex($ruleAr[$attr]['nomatch'])) {
+        if (isset($ruleAr[$attr]['nomatch']) && !self::hl_regex($ruleAr[$attr]['nomatch'])) {
           unset($ruleAr[$attr]['nomatch']);
         }
       }
@@ -1002,7 +1009,7 @@ class htmLawed
 
     static $deprecatedEleAr = array('acronym'=>1, 'applet'=>1, 'big'=>1, 'center'=>1, 'dir'=>1, 'font'=>1, 'isindex'=>1, 's'=>1, 'strike'=>1, 'tt'=>1);
     if ($C['make_tag_strict'] && isset($deprecatedEleAr[$ele])) {
-      $eleTransformed = htmLawed::hl_deprecatedElement($ele, $attrStr, $C['make_tag_strict']); // hl_deprecatedElement uses referencing
+      $eleTransformed = self::hl_deprecatedElement($ele, $attrStr, $C['make_tag_strict']); // hl_deprecatedElement uses referencing
       if (!$ele) {
         return (($C['keep_bad'] % 2) ? str_replace(array('<', '>'), array('&lt;', '&gt;'), $t) : '');
       }
@@ -1186,7 +1193,7 @@ class htmLawed
           $v =
             preg_replace_callback(
               '`(url(?:\()(?: )*(?:\'|"|&(?:quot|apos);)?)(.+?)((?:\'|"|&(?:quot|apos);)?(?: )*(?:\)))`iS',
-              'htmLawed::hl_url',
+              'DataTables\HtmLawed\HtmLawed::hl_url',
               $v);
           $v = !$C['css_expression']
                ? preg_replace('`expression`i', ' ', preg_replace('`\\\\\S|(/|(%2f))(\*|(%2a))`i', ' ', $v))
@@ -1207,7 +1214,7 @@ class htmLawed
               $k = isset($x[1]) ? trim($x[1]) : '';
               $x = trim($x[0]);
               if (isset($x[0])) {
-                $vNew .= htmLawed::hl_url($x, $attr). (empty($k) ? '' : ' '. $k). ', ';
+                $vNew .= self::hl_url($x, $attr). (empty($k) ? '' : ' '. $k). ', ';
               }
             }
             $v = trim($vNew, ', ');
@@ -1216,12 +1223,12 @@ class htmLawed
             $vNew = '';
             foreach (explode(' ', $v) as $x) {
               if (isset($x[0])) {
-                $vNew .= htmLawed::hl_url($x, $attr). ' ';
+                $vNew .= self::hl_url($x, $attr). ' ';
               }
             }
             $v = trim($vNew, ' ');
           } else {
-            $v = htmLawed::hl_url($v, $attr);
+            $v = self::hl_url($v, $attr);
           }
 
           // Anti-spam measure.
@@ -1256,7 +1263,7 @@ class htmLawed
 
         if (isset($eleSpec[$attr])
             && is_array($eleSpec[$attr])
-            && ($v = htmLawed::hl_attributeValue($attr, $v, $eleSpec[$attr], $ele)) === 0) {
+            && ($v = self::hl_attributeValue($attr, $v, $eleSpec[$attr], $ele)) === 0) {
           continue;
         }
 
@@ -1585,4 +1592,3 @@ class htmLawed
     return '1.2.15';
   }
 }
-  
