@@ -500,7 +500,7 @@ class Field extends DataTables\Ext
 	 *                              date formatting string, or a required flag. The actual options available
 	 *                              depend upon the validation function used.
 	 *
-	 * @return ($_ is null ? callable|string : $this) The validation method if no parameter is given.
+	 * @return ($_ is null ? array[] : $this) The validation method if no parameter is given.
 	 */
 	public function validator($_ = null, $opts = null)
 	{

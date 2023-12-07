@@ -239,7 +239,7 @@ class Join extends DataTables\Ext
 	 *                                link table.
 	 * @param string          $table  Join table name, if using a link table
 	 *
-	 * @return ($parent is null ? Join : $this)
+	 * @return ($parent is null ? array : $this)
 	 *
 	 * @deprecated 1.5 Please use the {@see Join->link()} method rather than this
 	 *                                method now.
