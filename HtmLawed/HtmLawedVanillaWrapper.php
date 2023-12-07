@@ -34,7 +34,7 @@ namespace DataTables\HtmLawed;
 /**
  * A class wrapper for the htmLawed library.
  */
-class HtmLaw
+class HtmLawedVanillaWrapper
 {
 	// / Methods ///
 
