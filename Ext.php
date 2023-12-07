@@ -34,9 +34,7 @@ class Ext
 		$rc = new \ReflectionClass(get_called_class());
 		$args = func_get_args();
 
-		return count($args) === 0 ?
-			$rc->newInstance() :
-			$rc->newInstanceArgs($args);
+		return $rc->newInstanceArgs($args);
 	}
 
 	/**
@@ -53,9 +51,7 @@ class Ext
 		$rc = new \ReflectionClass(get_called_class());
 		$args = func_get_args();
 
-		return count($args) === 0 ?
-			$rc->newInstance() :
-			$rc->newInstanceArgs($args);
+		return $rc->newInstanceArgs($args);
 	}
 
 	/**
