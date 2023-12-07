@@ -382,7 +382,7 @@ class Field extends DataTables\Ext
 			// Options class
 			$this->_sboptsFn = null;
 			$this->_sbopts = $sbInput;
-		} elseif ($spInput instanceof \Closure) {
+		} elseif ($sbInput instanceof \Closure) {
 			// Function
 			$this->_sbopts = null;
 			$this->_sboptsFn = $sbInput;
