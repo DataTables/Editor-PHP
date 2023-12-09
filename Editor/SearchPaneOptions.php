@@ -27,8 +27,8 @@ use DataTables;
  *  @example
  *   Get a list of options from the `sites` table
  *    ```php
- *    Field::inst( 'users.site' )
- *        ->options( Options::inst()
+ *    (new Field( 'users.site' ))
+ *        ->options( (new Options())
  *            ->table( 'sites' )
  *            ->value( 'id' )
  *            ->label( 'name' )
@@ -37,8 +37,8 @@ use DataTables;
  *  @example
  *   Get a list of options with custom ordering
  *    ```php
- *    Field::inst( 'users.site' )
- *        ->options( Options::inst()
+ *    new (Field( 'users.site' ))
+ *        ->options( (new Options())
  *            ->table( 'sites' )
  *            ->value( 'id' )
  *            ->label( 'name' )
@@ -48,8 +48,8 @@ use DataTables;
  *  @example
  *   Get a list of options showing the id and name in the label
  *    ```php
- *    Field::inst( 'users.site' )
- *        ->options( Options::inst()
+ *    (new Field( 'users.site' ))
+ *        ->options( (new Options())
  *            ->table( 'sites' )
  *            ->value( 'id' )
  *            ->label( [ 'name', 'id' ] )

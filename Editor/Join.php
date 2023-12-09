@@ -32,12 +32,12 @@ use DataTables\Editor;
  *    method) with the table *access*, with a link table *user__access*, which
  *    allows multiple properties to be found for each row in the parent table.
  *    ```php
- *      Join::inst( 'access', 'array' )
+ *      (new Join( 'access', 'array' ))
  *          ->link( 'users.id', 'user_access.user_id' )
  *          ->link( 'access.id', 'user_access.access_id' )
  *          ->field(
- *              Field::inst( 'id' )->validator( 'Validate::required' ),
- *              Field::inst( 'name' )
+ *              (new Field( 'id' ))->validator( 'Validate::required' ),
+ *              new Field( 'name' )
  *          )
  *    ```
  *  @example
@@ -46,11 +46,11 @@ use DataTables\Editor;
  *    child table is called *extra* and the two fields give the columns that
  *    Editor will read from that table.
  *    ```php
- *        Join::inst( 'extra', 'object' )
+ *        (new Join( 'extra', 'object' ))
  *            ->link( 'user.id', 'extra.user_id' )
  *            ->field(
- *                Field::inst( 'comments' ),
- *                Field::inst( 'review' )
+ *                new Field( 'comments' ),
+ *                new Field( 'review' )
  *            )
  *    ```
  */

@@ -45,23 +45,7 @@ use DataTables;
  * 	 Store information about a file in a table called `files` and the actual
  * 	 file in an `uploads` directory.
  *   ```
- *		Field::inst( 'imageId' )
- *			->upload(
- *				Upload::inst( $_SERVER['DOCUMENT_ROOT'].'/uploads/__ID__.__EXTN__' )
- *			 		->db( 'files', 'id', array(
- *						'webPath'     => Upload::DB_WEB_PATH,
- *						'fileName'    => Upload::DB_FILE_NAME,
- *						'fileSize'    => Upload::DB_FILE_SIZE,
- *						'systemPath'  => Upload::DB_SYSTEM_PATH
- *					) )
- *					->allowedExtensions( array( 'png', 'jpg' ), "Please upload an image file" )
- *			)
- *	```
- * @example
- * 	 As above, but with PHP 5.4 (which allows chaining from new instances of a
- * 	 class)
- *   ```
- *		newField( 'imageId' )
+ *		new Field( 'imageId' )
  *			->upload(
  *				new Upload( $_SERVER['DOCUMENT_ROOT'].'/uploads/__ID__.__EXTN__' )
  *			 		->db( 'files', 'id', array(

@@ -56,38 +56,38 @@ namespace DataTables\Editor;
  *  @example
  *    ```
  *      // Ensure that a non-empty value is given for a field
- *      Field::inst( 'engine' )->validator( Validate::required() )
+ *      (new Field( 'engine' ))->validator( Validate::required() )
  *    ```
  *  @example
  *    ```
  *      // Don't require a field to be submitted, but if it is submitted, it
  *      // must be non-empty
- *      Field::inst( 'reg_date' )->validator( Validate::notEmpty() )
+ *      (new Field( 'reg_date' ))->validator( Validate::notEmpty() )
  *    ```
  *  @example
  *    ```
  *      // Date validation
- *      Field::inst( 'reg_date' )->validator( Validate::dateFormat( 'D, d M y' ) )
+ *      (new Field( 'reg_date' ))->validator( Validate::dateFormat( 'D, d M y' ) )
  *    ```
  *  @example
  *    ```
  *      // Date validation with a custom error message
- *      Field::inst( 'reg_date' )->validator( Validate::dateFormat( 'D, d M y',
- *          ValidateOptions::inst()
+ *      (new Field( 'reg_date' ))->validator( Validate::dateFormat( 'D, d M y',
+ *          (new ValidateOptions())
  *              ->message( 'Invalid date' )
  *      ) )
  *    ```
  *  @example
  *    ```
  *      // Require a non-empty e-mail address
- *      Field::inst( 'reg_date' )->validator( Validate::email( ValidateOptions::inst()
+ *      (new Field( 'reg_date' ))->validator( Validate::email( (new ValidateOptions())
  *        ->empty( false )
  *      ) )
  *    ```
  *  @example
  *    ```
  *      // Custom validation - closure
- *      Field::inst( 'engine' )->validator( function($val, $data, $opts) {
+ *      (new Field( 'engine' ))->validator( function($val, $data, $opts) {
  *         if ( ! preg_match( '/^1/', $val ) ) {
  *           return "Value <b>must</b> start with a 1";
  *         }

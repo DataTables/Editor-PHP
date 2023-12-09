@@ -28,6 +28,8 @@ class Ext
 	 * target class and chain methods as normal.
 	 *
 	 * @return static Instantiated class
+	 *
+	 * @deprecated Use `new` instead.
 	 */
 	public static function instantiate()
 	{
@@ -45,6 +47,8 @@ class Ext
 	 * static method, but is simply shorter and easier to type!
 	 *
 	 * @return static class
+	 *
+	 * @deprecated Use `new` instead.
 	 */
 	public static function inst()
 	{

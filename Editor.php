@@ -47,12 +47,12 @@ use DataTables\Editor\Join;
  *    Editor is requesting from the server-side and will correctly action it.
  *
  *    ```php
- *      Editor::inst( $db, 'browsers' )
+ *      (new Editor( $db, 'browsers' ))
  *          ->fields(
- *              Field::inst( 'first_name' )->validator( Validate::required() ),
- *              Field::inst( 'last_name' )->validator( Validate::required() ),
- *              Field::inst( 'country' ),
- *              Field::inst( 'details' )
+ *              (new Field( 'first_name' ))->validator( Validate::required() ),
+ *              (new Field( 'last_name' ))->validator( Validate::required() ),
+ *              new Field( 'country' ),
+ *              new Field( 'details' )
  *          )
  *          ->process( $_POST )
  *          ->json();
@@ -511,10 +511,10 @@ class Editor extends Ext
 	 *
 	 *    ```php
 	 *        ->field(
-	 *          Field::inst( 'users.first_name as myField' ),
-	 *          Field::inst( 'users.last_name' ),
-	 *          Field::inst( 'users.dept_id' ),
-	 *          Field::inst( 'dept.name' )
+	 *          new Field( 'users.first_name as myField' ),
+	 *          new Field( 'users.last_name' ),
+	 *          new Field( 'users.dept_id' ),
+	 *          new Field( 'dept.name' )
 	 *        )
 	 *        ->leftJoin( 'dept', 'users.dept_id', '=', 'dept.id' )
 	 *        ->process($_POST)
