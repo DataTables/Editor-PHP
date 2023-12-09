@@ -369,7 +369,7 @@ class Field extends DataTables\Ext
 	/**
 	 * Get a list of values that can be used for the options list in SearchBuilder.
 	 *
-	 * @param SearchBuilderOptions|callable(Database, DataTables\Editor): (Promise<IOption[]>|bool) $sbInput SearchBuilderOptions instance or a closure function if providing a method
+	 * @param SearchBuilderOptions|callable(Database, DataTables\Editor): (array|bool) $sbInput SearchBuilderOptions instance or a closure function if providing a method
 	 *
 	 * @return ($sbInput is null ? SearchBuilderOptions|null : $this)
 	 */
@@ -627,11 +627,11 @@ class Field extends DataTables\Ext
 	 * Execute the spopts to get the list of options for SearchPanes to return
 	 * to the client-side.
 	 *
-	 * @param Editor\Field   $field    The field to retrieve the data from
-	 * @param Editor         $editor   The editor instance
-	 * @param array          $http     The http request sent to the server
-	 * @param Editor\Field[] $fields   All of the fields
-	 * @param array          $leftJoin Info for a leftJoin if required
+	 * @param self   $field    The field to retrieve the data from
+	 * @param Editor $editor   The editor instance
+	 * @param array  $http     The http request sent to the server
+	 * @param self[] $fields   All of the fields
+	 * @param array  $leftJoin Info for a leftJoin if required
 	 *
 	 * @return array|bool
 	 *
@@ -654,13 +654,13 @@ class Field extends DataTables\Ext
 	 * Execute the spopts to get the list of options for SearchBuilder to return
 	 * to the client-side.
 	 *
-	 * @param DataTables\Field     $field    The field to retrieve the data from
-	 * @param DataTables\Editor    $editor   The editor instance
-	 * @param DataTables\DTRequest $http     The http request sent to the server
-	 * @param DataTables\Field[]   $fields   All of the fields
-	 * @param any                  $leftJoin Info for a leftJoin if required
+	 * @param self   $field    The field to retrieve the data from
+	 * @param Editor $editor   The editor instance
+	 * @param array  $http     The http request sent to the server
+	 * @param self[] $fields   All of the fields
+	 * @param array  $leftJoin Info for a leftJoin if required
 	 *
-	 * @return Promise<IOption[]>|bool
+	 * @return array|bool
 	 *
 	 * @internal
 	 */

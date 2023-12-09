@@ -86,12 +86,7 @@ parameters:
 			path: Database/Query.php
 
 		-
-			message: "#^Property DataTables\\\\Database\\\\Query\\:\\:\\$_distinct \\(string\\) does not accept bool\\.$#"
-			count: 1
-			path: Database/Query.php
-
-		-
-			message: "#^Property DataTables\\\\Database\\\\Query\\:\\:\\$_distinct \\(string\\) does not accept default value of type false\\.$#"
+			message: "#^Negated boolean expression is always false\\.$#"
 			count: 1
 			path: Database/Query.php
 
@@ -151,11 +146,6 @@ parameters:
 			path: Editor.php
 
 		-
-			message: "#^Parameter \\#1 \\$field of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) expects DataTables\\\\Field, DataTables\\\\Editor\\\\Field given\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
 			message: "#^Parameter \\#1 \\$id of method DataTables\\\\Editor\\:\\:_insert_or_update\\(\\) expects int\\|string, null given\\.$#"
 			count: 1
 			path: Editor.php
@@ -176,22 +166,7 @@ parameters:
 			path: Editor.php
 
 		-
-			message: "#^Parameter \\#3 \\$http of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) expects DataTables\\\\DTRequest, array\\|null given\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
 			message: "#^Parameter \\#3 \\$pkey of method DataTables\\\\Editor\\:\\:_remove_table\\(\\) expects string\\|null, array\\<int, mixed\\> given\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
-			message: "#^Parameter \\#4 \\$fields of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) expects array\\<DataTables\\\\Field\\>, array\\<DataTables\\\\Editor\\\\Field\\> given\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
-			message: "#^Parameter \\#5 \\$leftJoin of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) expects DataTables\\\\Editor\\\\any, array given\\.$#"
 			count: 1
 			path: Editor.php
 
@@ -256,57 +231,12 @@ parameters:
 			path: Editor.php
 
 		-
-			message: "#^Method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) has invalid return type DataTables\\\\Editor\\\\IOption\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) has invalid return type DataTables\\\\Editor\\\\Promise\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) should return bool\\|DataTables\\\\Editor\\\\Promise\\<array\\<DataTables\\\\Editor\\\\IOption\\>\\> but returns array\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
 			message: "#^Method DataTables\\\\Editor\\\\Field\\:\\:xssSafety\\(\\) should return string but returns array\\<int, mixed\\>\\.$#"
 			count: 1
 			path: Editor/Field.php
 
 		-
 			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Parameter \\$field of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) has invalid type DataTables\\\\Field\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Parameter \\$fields of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) has invalid type DataTables\\\\Field\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Parameter \\$http of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) has invalid type DataTables\\\\DTRequest\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Parameter \\$leftJoin of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) has invalid type DataTables\\\\Editor\\\\any\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Parameter \\$sbInput of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptions\\(\\) has invalid type DataTables\\\\Editor\\\\IOption\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Parameter \\$sbInput of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptions\\(\\) has invalid type DataTables\\\\Editor\\\\Promise\\.$#"
 			count: 1
 			path: Editor/Field.php
 

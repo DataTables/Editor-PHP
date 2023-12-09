@@ -143,7 +143,7 @@ abstract class Query
 	protected $_offset;
 
 	/**
-	 * @var string
+	 * @var bool
 	 *
 	 * @internal
 	 */
