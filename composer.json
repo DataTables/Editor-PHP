@@ -3,7 +3,7 @@
 	"description": "PHP server-side libraries for Editor",
 	"type": "library",
 	"require": {
-		"php": ">=5.3.0"
+		"php": ">=5.4.0"
 	},
 	"keywords": ["DataTables","jQuery","Editor"],
 	"homepage": "https://editor.datatables.net",

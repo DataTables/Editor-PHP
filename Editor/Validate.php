@@ -2,7 +2,7 @@
 /**
  * DataTables PHP libraries.
  *
- * PHP libraries for DataTables and DataTables Editor, utilising PHP 5.3+.
+ * PHP libraries for DataTables and DataTables Editor.
  *
  *  @author    SpryMedia
  *  @copyright 2012-2014 SpryMedia ( http://sprymedia.co.uk )
