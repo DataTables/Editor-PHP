@@ -121,7 +121,7 @@ parameters:
 			path: Database/Query.php
 
 		-
-			message: "#^Strict comparison using \\=\\=\\= between array\\<string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|string and null will always evaluate to false\\.$#"
+			message: "#^Strict comparison using \\=\\=\\= between array\\<string\\>\\|\\(Closure\\(\\$this\\)\\: void\\)\\|string and null will always evaluate to false\\.$#"
 			count: 2
 			path: Database/Query.php
 
@@ -351,12 +351,12 @@ parameters:
 			path: Editor/Field.php
 
 		-
-			message: "#^Strict comparison using \\=\\=\\= between \\(callable\\(\\)\\: mixed\\)\\|false and true will always evaluate to false\\.$#"
+			message: "#^Strict comparison using \\=\\=\\= between \\(callable\\(mixed\\)\\: string\\)\\|false and true will always evaluate to false\\.$#"
 			count: 1
 			path: Editor/Field.php
 
 		-
-			message: "#^Strict comparison using \\=\\=\\= between callable\\(\\)\\: mixed and null will always evaluate to false\\.$#"
+			message: "#^Strict comparison using \\=\\=\\= between callable\\(mixed\\)\\: string and null will always evaluate to false\\.$#"
 			count: 1
 			path: Editor/Field.php
 
@@ -448,11 +448,6 @@ parameters:
 		-
 			message: "#^Parameter \\#2 \\$val of method DataTables\\\\Database\\\\Query\\:\\:set\\(\\) expects string\\|null, int given\\.$#"
 			count: 2
-			path: Editor/Join.php
-
-		-
-			message: "#^Parameter \\#2 \\$value of method DataTables\\\\Database\\\\Query\\:\\:or_where\\(\\) expects array\\<string\\>\\|string\\|null, array\\<int\\> given\\.$#"
-			count: 1
 			path: Editor/Join.php
 
 		-

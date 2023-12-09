@@ -614,7 +614,7 @@ abstract class Query
 	 *                                                     If given as a function (i.e. a closure), the function is called, passing the
 	 *                                                     query itself in as the only parameter, so the function can add extra conditions
 	 *                                                     with parentheses around the additional parameters.
-	 * @param string|string[]                       $value Single field value, or an array of
+	 * @param string|int|string[]|int[]             $value Single field value, or an array of
 	 *                                                     values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
 	 *                                                     on the value of `$op` which should be `=` or `!=`.
 	 * @param string                                $op    Condition operator: <, >, = etc
@@ -665,7 +665,7 @@ abstract class Query
 	 *                                                     If given as a function (i.e. a closure), the function is called, passing the
 	 *                                                     query itself in as the only parameter, so the function can add extra conditions
 	 *                                                     with parentheses around the additional parameters.
-	 * @param string|string[]                       $value Single field value, or an array of
+	 * @param string|int|string[]|int[]             $value Single field value, or an array of
 	 *                                                     values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
 	 *                                                     on the value of `$op` which should be `=` or `!=`.
 	 * @param string                                $op    Condition operator: <, >, = etc
@@ -688,7 +688,7 @@ abstract class Query
 	 *                                                     If given as a function (i.e. a closure), the function is called, passing the
 	 *                                                     query itself in as the only parameter, so the function can add extra conditions
 	 *                                                     with parentheses around the additional parameters.
-	 * @param string|string[]                       $value Single field value, or an array of
+	 * @param string|int|string[]|int[]             $value Single field value, or an array of
 	 *                                                     values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
 	 *                                                     on the value of `$op` which should be `=` or `!=`.
 	 * @param string                                $op    Condition operator: <, >, = etc
@@ -1252,7 +1252,7 @@ abstract class Query
 	 * @internal
 	 *
 	 * @param string|array $where
-	 * @param string       $value
+	 * @param string|int   $value
 	 * @param string       $type
 	 * @param string       $op
 	 * @param bool         $bind
