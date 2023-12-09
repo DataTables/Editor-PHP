@@ -48,13 +48,13 @@ use DataTables;
  *		new Field( 'imageId' )
  *			->upload(
  *				new Upload( $_SERVER['DOCUMENT_ROOT'].'/uploads/__ID__.__EXTN__' )
- *			 		->db( 'files', 'id', array(
+ *			 		->db( 'files', 'id', [
  *						'webPath'     => Upload::DB_WEB_PATH,
  *						'fileName'    => Upload::DB_FILE_NAME,
  *						'fileSize'    => Upload::DB_FILE_SIZE,
  *						'systemPath'  => Upload::DB_SYSTEM_PATH
- *					) )
- *					->allowedExtensions( array( 'png', 'jpg' ), "Please upload an image file" )
+ *					] )
+ *					->allowedExtensions( [ 'png', 'jpg' ], "Please upload an image file" )
  *			)
  *	```
  */

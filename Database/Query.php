@@ -571,7 +571,7 @@ abstract class Query
 	 * Set fields to a given value.
 	 *
 	 * Can be used in two different ways, as set( field, value ) or as an array of
-	 * fields to set: set( array( 'fieldName' => 'value', ...) );
+	 * fields to set: set( [ 'fieldName' => 'value', ...] );
 	 *
 	 * @param string|string[] $set  Can be given as a single string, when then $val
 	 *                              must be set, or as an array of key/value pairs to be set.
@@ -608,7 +608,7 @@ abstract class Query
 	 * Where query - multiple conditions are bound as ANDs.
 	 *
 	 * Can be used in two different ways, as where( field, value ) or as an array of
-	 * conditions to use: where( array('fieldName', ...), array('value', ...) );
+	 * conditions to use: where( ['fieldName', ...], ['value', ...] );
 	 *
 	 * @param string|string[]|callable $key   Single field name, or an array of field names.
 	 *                                        If given as a function (i.e. a closure), the function is called, passing the
@@ -659,7 +659,7 @@ abstract class Query
 	 * of `where` for naming consistency.
 	 *
 	 * Can be used in two different ways, as where( field, value ) or as an array of
-	 * conditions to use: where( array('fieldName', ...), array('value', ...) );
+	 * conditions to use: where( ['fieldName', ...], ['value', ...] );
 	 *
 	 * @param string|string[]|callable $key   Single field name, or an array of field names.
 	 *                                        If given as a function (i.e. a closure), the function is called, passing the
@@ -682,7 +682,7 @@ abstract class Query
 	 * Add addition where conditions to the query with an OR operator.
 	 *
 	 * Can be used in two different ways, as where( field, value ) or as an array of
-	 * conditions to use: where( array('fieldName', ...), array('value', ...) );
+	 * conditions to use: where( ['fieldName', ...], ['value', ...] );
 	 *
 	 * @param string|string[]|callable $key   Single field name, or an array of field names.
 	 *                                        If given as a function (i.e. a closure), the function is called, passing the

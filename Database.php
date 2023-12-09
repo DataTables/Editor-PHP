@@ -38,14 +38,14 @@ class Database
 	 *
 	 * @param array<string, string|\PDO> $opts Array of connection parameters for the database:
 	 *                                         ```php
-	 *                                         array(
+	 *                                         [
 	 *                                         "user" => "", // User name
 	 *                                         "pass" => "", // Password
 	 *                                         "host" => "", // Host name
 	 *                                         "port" => "", // Port
 	 *                                         "db"   => "", // Database name
 	 *                                         "type" => ""  // Datable type: "Mysql", "Postgres" or "Sqlite"
-	 *                                         )
+	 *                                         ]
 	 *                                         ```
 	 */
 	public function __construct($opts)

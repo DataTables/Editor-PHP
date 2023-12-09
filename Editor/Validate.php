@@ -255,9 +255,9 @@ class Validate
 	 * Validate::required()
 	 *
 	 * // is the same as
-	 * Validate::basic( $val, $data, array(
+	 * Validate::basic( $val, $data, [
 	 *   "required" => true
-	 * );
+	 * ];
 	 * ```
 	 *
 	 * ```
@@ -265,9 +265,9 @@ class Validate
 	 * Validate::notEmpty()
 	 *
 	 * // is the same as
-	 * Validate::basic( $val, $data, array(
+	 * Validate::basic( $val, $data, [
 	 *   "empty" => false
-	 * );
+	 * ];
 	 * ```
 	 *
 	 * @callback-param string   $val  The value to check for validity
@@ -298,9 +298,9 @@ class Validate
 	 * This is a helper short-cut method which is the same as:
 	 *
 	 * ```
-	 * Validate::basic( $val, $data, array(
+	 * Validate::basic( $val, $data, [
 	 *   "required" => true
-	 * );
+	 * ];
 	 * ```
 	 *
 	 * @callback-param string   $val  The value to check for validity
@@ -333,9 +333,9 @@ class Validate
 	 * This is a helper short-cut method which is the same as:
 	 *
 	 * ```
-	 * Validate::basic( $val, $data, array(
+	 * Validate::basic( $val, $data, [
 	 *   "empty" => false
-	 * );
+	 * ];
 	 * ```
 	 *
 	 * @param ValidateOptions $cfg Validation options
