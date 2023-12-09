@@ -30,7 +30,7 @@ class OracleQuery extends Query
 
 	private $_editor_pkey_value;
 
-	protected $_identifier_limiter = array('"', '"');
+	protected $_identifier_limiter = ['"', '"'];
 
 	protected $_field_quote = '"';
 
@@ -57,9 +57,9 @@ class OracleQuery extends Query
 		}
 
 		if (!function_exists('oci_connect')) {
-			echo json_encode(array(
+			echo json_encode([
 				'error' => 'oci methods are not available in this PHP install to connect to Oracle',
-			));
+			]);
 
 			exit(1);
 		}
@@ -71,10 +71,10 @@ class OracleQuery extends Query
 			// error.
 			$e = oci_error();
 
-			echo json_encode(array(
+			echo json_encode([
 				'error' => 'An error occurred while connecting to the database ' .
 					"'{$db}'. The error reported by the server was: " . $e['message'],
-			));
+			]);
 
 			exit(1);
 		}
@@ -166,7 +166,7 @@ class OracleQuery extends Query
 
 	protected function _build_table()
 	{
-		$out = array();
+		$out = [];
 
 		for ($i = 0, $ien = count($this->_table); $i < $ien; ++$i) {
 			$t = $this->_table[$i];

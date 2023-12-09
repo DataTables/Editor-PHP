@@ -115,8 +115,8 @@ class Upload extends DataTables\Ext
 	private $_extnError;
 	private $_error;
 	private $_mode = 0644;
-	private $_validators = array();
-	private $_where = array();
+	private $_validators = [];
+	private $_where = [];
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
@@ -336,7 +336,7 @@ class Upload extends DataTables\Ext
 		}
 
 		$result = $q->exec()->fetchAll();
-		$out = array();
+		$out = [];
 
 		for ($i = 0, $ien = count($result); $i < $ien; ++$i) {
 			if ($this->_dbFormat) {
@@ -596,7 +596,7 @@ class Upload extends DataTables\Ext
 	 */
 	private function _dbExec($upload, $db)
 	{
-		$pathFields = array();
+		$pathFields = [];
 		$insertedId = null;
 
 		// Insert the details requested, for the columns requested

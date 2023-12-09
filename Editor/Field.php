@@ -151,7 +151,7 @@ class Field extends DataTables\Ext
 	private $_setValue;
 
 	/** @var array[] */
-	private $_validator = array();
+	private $_validator = [];
 
 	/** @var Upload */
 	private $_upload;
@@ -508,10 +508,10 @@ class Field extends DataTables\Ext
 			return $this->_validator;
 		}
 
-		$this->_validator[] = array(
+		$this->_validator[] = [
 			'func' => $_,
 			'opts' => $opts,
-		);
+		];
 
 		return $this;
 	}
@@ -765,13 +765,13 @@ class Field extends DataTables\Ext
 			$this->_readProp($this->name(), $data);
 
 		$processData = $editor->inData();
-		$instances = array(
+		$instances = [
 			'action' => $processData['action'],
 			'id' => $id,
 			'field' => $this,
 			'editor' => $editor,
 			'db' => $editor->db(),
-		);
+		];
 
 		for ($i = 0, $ien = count($this->_validator); $i < $ien; ++$i) {
 			$validator = $this->_validator[$i];
@@ -836,7 +836,7 @@ class Field extends DataTables\Ext
 		$xss = $this->_xss;
 
 		if (is_array($val)) {
-			$res = array();
+			$res = [];
 
 			foreach ($val as $individual) {
 				$res[] = $xss ?

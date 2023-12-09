@@ -72,10 +72,10 @@ class SearchPaneOptions extends DataTables\Ext
 	private $_value;
 
 	/** @var string[] Column names for the label(s) */
-	private $_label = array();
+	private $_label = [];
 
 	/** @var string[] Column names for left join */
-	private $_leftJoin = array();
+	private $_leftJoin = [];
 
 	/** @var callable Callback function to do rendering of labels */
 	private $_renderer;
@@ -103,7 +103,7 @@ class SearchPaneOptions extends DataTables\Ext
 		if ($_ === null) {
 			return $this;
 		} elseif (is_string($_)) {
-			$this->_label = array($_);
+			$this->_label = [$_];
 		} else {
 			$this->_label = $_;
 		}
@@ -191,12 +191,12 @@ class SearchPaneOptions extends DataTables\Ext
 	 */
 	public function leftJoin($table, $field1, $operator, $field2)
 	{
-		$this->_leftJoin[] = array(
+		$this->_leftJoin[] = [
 			'table' => $table,
 			'field1' => $field1,
 			'field2' => $field2,
 			'operator' => $operator,
-		);
+		];
 
 		return $this;
 	}
@@ -279,7 +279,7 @@ class SearchPaneOptions extends DataTables\Ext
 		// Set up the join variable so that it will fit nicely later
 		$leftJoin = gettype($this->_leftJoin) === 'array' ?
 			$this->_leftJoin :
-			array($this->_leftJoin);
+			[$this->_leftJoin];
 
 		foreach ($leftJoinIn as $lj) {
 			$found = false;
@@ -408,7 +408,7 @@ class SearchPaneOptions extends DataTables\Ext
 			$entries = array_combine($entriesKeys, $entriesRows);
 		}
 
-		$out = array();
+		$out = [];
 
 		for ($i = 0, $ien = count($rows); $i < $ien; ++$i) {
 			$row = $rows[$i];
@@ -428,12 +428,12 @@ class SearchPaneOptions extends DataTables\Ext
 				}
 			}
 
-			$out[] = array(
+			$out[] = [
 				'label' => $formatter($row['label']),
 				'total' => $total,
 				'value' => $value,
 				'count' => $count,
-			);
+			];
 		}
 
 		// Only sort if there was no SQL order field

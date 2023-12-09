@@ -50,7 +50,7 @@ class Database
 	 */
 	public function __construct($opts)
 	{
-		$types = array('Mysql', 'Oracle', 'Postgres', 'Sqlite', 'Sqlserver', 'Db2', 'Firebird');
+		$types = ['Mysql', 'Oracle', 'Postgres', 'Sqlite', 'Sqlserver', 'Db2', 'Firebird'];
 
 		if (!in_array($opts['type'], $types)) {
 			throw new \Exception(
@@ -466,10 +466,10 @@ class Database
 		$callback = $this->_debugCallback;
 
 		if ($callback) {
-			$callback(array(
+			$callback([
 				'query' => $query,
 				'bindings' => $bindings,
-			));
+			]);
 		}
 
 		return $this;

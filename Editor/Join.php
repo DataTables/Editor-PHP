@@ -78,17 +78,17 @@ class Join extends DataTables\Ext
 	 */
 
 	/** @var DataTables\Editor\Field[] */
-	private $_fields = array();
+	private $_fields = [];
 
 	/** @var array */
-	private $_join = array(
+	private $_join = [
 		'parent' => null,
 		'child' => null,
 		'table' => null,
-	);
+	];
 
 	/** @var array */
-	private $_leftJoin = array();
+	private $_leftJoin = [];
 
 	/** @var string */
 	private $_table;
@@ -109,19 +109,19 @@ class Join extends DataTables\Ext
 	private $_aliasParentTable;
 
 	/** @var array */
-	private $_where = array();
+	private $_where = [];
 
 	/** @var bool */
 	private $_whereSet = false;
 
 	/** @var array */
-	private $_links = array();
+	private $_links = [];
 
 	/** @var string */
 	private $_customOrder;
 
 	/** @var array */
-	private $_validators = array();
+	private $_validators = [];
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -269,12 +269,12 @@ class Join extends DataTables\Ext
 	 */
 	public function leftJoin($table, $field1, $operator, $field2)
 	{
-		$this->_leftJoin[] = array(
+		$this->_leftJoin[] = [
 			'table' => $table,
 			'field1' => $field1,
 			'field2' => $field2,
 			'operator' => $operator,
-		);
+		];
 
 		return $this;
 	}
@@ -412,10 +412,10 @@ class Join extends DataTables\Ext
 	 */
 	public function validator($fieldName, $fn)
 	{
-		$this->_validators[] = array(
+		$this->_validators[] = [
 			'fieldName' => $fieldName,
 			'fn' => $fn,
-		);
+		];
 
 		return $this;
 	}
@@ -444,11 +444,11 @@ class Join extends DataTables\Ext
 		if ($key instanceof \Closure) {
 			$this->_where[] = $key;
 		} else {
-			$this->_where[] = array(
+			$this->_where[] = [
 				'key' => $key,
 				'value' => $value,
 				'op' => $op,
-			);
+			];
 		}
 
 		return $this;
@@ -568,11 +568,11 @@ class Join extends DataTables\Ext
 			} elseif ($this->_propExists($joinField, $data[0])) {
 				$readField = $joinField;
 			} elseif (!$pkeyIsJoin) {
-				echo json_encode(array(
+				echo json_encode([
 					'sError' => "Join was performed on the field '{$joinField}' which was not "
 						. 'included in the Editor field list. The join field must be included '
 						. 'as a regular field in the Editor instance.',
-				));
+				]);
 
 				exit(1);
 			}
@@ -584,7 +584,7 @@ class Join extends DataTables\Ext
 			// matters for really large data sets:
 			// https://stackoverflow.com/questions/21178390/in-clause-limitation-in-sql-server
 			if (count($data) < 1000) {
-				$whereIn = array();
+				$whereIn = [];
 
 				for ($i = 0; $i < count($data); ++$i) {
 					$whereIn[] = $pkeyIsJoin ?
@@ -602,9 +602,9 @@ class Join extends DataTables\Ext
 			}
 
 			// Map to primary key for fast lookup
-			$join = array();
+			$join = [];
 			while ($row = $res->fetch()) {
-				$inner = array();
+				$inner = [];
 
 				for ($j = 0; $j < count($this->_fields); ++$j) {
 					$field = $this->_fields[$j];
@@ -617,7 +617,7 @@ class Join extends DataTables\Ext
 					$join[$row['dteditor_pkey']] = $inner;
 				} else {
 					if (!isset($join[$row['dteditor_pkey']])) {
-						$join[$row['dteditor_pkey']] = array();
+						$join[$row['dteditor_pkey']] = [];
 					}
 					$join[$row['dteditor_pkey']][] = $inner;
 				}
@@ -633,7 +633,7 @@ class Join extends DataTables\Ext
 					$data[$i][$this->_name] = $join[$rowPKey];
 				} else {
 					$data[$i][$this->_name] = ($this->_type === 'object') ?
-						(object) array() : array();
+						(object) [] : [];
 				}
 			}
 		}
@@ -711,7 +711,7 @@ class Join extends DataTables\Ext
 			// WARNING - this will remove rows and then readd them. Any
 			// data not in the field list WILL BE LOST
 			// todo - is there a better way of doing this?
-			$this->remove($editor, array($parentId));
+			$this->remove($editor, [$parentId]);
 			$this->create($editor, $parentId, $data);
 		}
 	}
@@ -773,7 +773,7 @@ class Join extends DataTables\Ext
 
 		$joinData = isset($data[$this->_name]) ?
 			$data[$this->_name] :
-			array();
+			[];
 
 		for ($i = 0; $i < count($this->_validators); ++$i) {
 			$validator = $this->_validators[$i];
@@ -781,10 +781,10 @@ class Join extends DataTables\Ext
 			$res = $fn($editor, $action, $joinData);
 
 			if (is_string($res)) {
-				$errors[] = array(
+				$errors[] = [
 					'name' => $validator['fieldName'],
 					'status' => $res,
-				);
+				];
 			}
 		}
 
@@ -922,8 +922,8 @@ class Join extends DataTables\Ext
 					$this->_join['table'] = $f4[0];
 				}
 
-				$this->_join['parent'] = array($f1[1], $f2[1]);
-				$this->_join['child'] = array($f3[1], $f4[1]);
+				$this->_join['parent'] = [$f1[1], $f2[1]];
+				$this->_join['child'] = [$f3[1], $f4[1]];
 			}
 		}
 	}
@@ -941,19 +941,19 @@ class Join extends DataTables\Ext
 			// Got a link table, just insert the pkey references
 			$db->push(
 				$this->_join['table'],
-				array(
+				[
 					$this->_join['parent'][1] => $parentId,
 					$this->_join['child'][1] => $data[$this->_join['child'][0]],
-				),
-				array(
+				],
+				[
 					$this->_join['parent'][1] => $parentId,
-				)
+				]
 			);
 		} else {
 			// No link table, just a direct reference
-			$set = array(
+			$set = [
 				$this->_join['child'] => $parentId,
-			);
+			];
 
 			for ($i = 0; $i < count($this->_fields); ++$i) {
 				$field = $this->_fields[$i];
@@ -964,7 +964,7 @@ class Join extends DataTables\Ext
 			}
 
 			// Add WHERE conditions
-			$where = array($this->_join['child'] => $parentId);
+			$where = [$this->_join['child'] => $parentId];
 			for ($i = 0, $ien = count($this->_where); $i < $ien; ++$i) {
 				$where[$this->_where[$i]['key']] = $this->_where[$i]['value'];
 
@@ -991,7 +991,7 @@ class Join extends DataTables\Ext
 	 */
 	private function _fields($direction)
 	{
-		$fields = array();
+		$fields = [];
 
 		for ($i = 0; $i < count($this->_fields); ++$i) {
 			$field = $this->_fields[$i];
@@ -1026,10 +1026,10 @@ class Join extends DataTables\Ext
 			$validation = $field->validate($data, $editor);
 
 			if ($validation !== true) {
-				$errors[] = array(
+				$errors[] = [
 					'name' => $prefix . $field->name(),
 					'status' => $validation,
-				);
+				];
 			}
 		}
 	}

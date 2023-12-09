@@ -69,7 +69,7 @@ class Db2Result extends Result
 
 	private function _fetchAll()
 	{
-		$a = array();
+		$a = [];
 		while ($row = db2_fetch_assoc($this->_stmt)) {
 			$a[] = $row;
 		}

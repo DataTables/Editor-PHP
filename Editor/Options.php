@@ -73,10 +73,10 @@ class Options extends DataTables\Ext
 	private $_value;
 
 	/** @var string[] Column names for the label(s) */
-	private $_label = array();
+	private $_label = [];
 
 	/** Information for left join */
-	private $_leftJoin = array();
+	private $_leftJoin = [];
 
 	/** @var int Row limit */
 	private $_limit;
@@ -90,7 +90,7 @@ class Options extends DataTables\Ext
 	/** @var string ORDER BY clause */
 	private $_order;
 
-	private $_manualAdd = array();
+	private $_manualAdd = [];
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -110,10 +110,10 @@ class Options extends DataTables\Ext
 			$value = $label;
 		}
 
-		$this->_manualAdd[] = array(
+		$this->_manualAdd[] = [
 			'label' => $label,
 			'value' => $value,
-		);
+		];
 
 		return $this;
 	}
@@ -131,7 +131,7 @@ class Options extends DataTables\Ext
 		if ($_ === null) {
 			return $this;
 		} elseif (is_string($_)) {
-			$this->_label = array($_);
+			$this->_label = [$_];
 		} else {
 			$this->_label = $_;
 		}
@@ -151,12 +151,12 @@ class Options extends DataTables\Ext
 	 */
 	public function leftJoin($table, $field1, $operator, $field2)
 	{
-		$this->_leftJoin[] = array(
+		$this->_leftJoin[] = [
 			'table' => $table,
 			'field1' => $field1,
 			'field2' => $field2,
 			'operator' => $operator,
-		);
+		];
 
 		return $this;
 	}
@@ -260,14 +260,14 @@ class Options extends DataTables\Ext
 		$formatter = $this->_renderer;
 
 		// Create a list of the fields that we need to get from the db
-		$fields = array();
+		$fields = [];
 		$fields[] = $value;
 		$fields = array_merge($fields, $label);
 
 		// We need a default formatter if one isn't provided
 		if (!$formatter) {
 			$formatter = function ($row) use ($label) {
-				$a = array();
+				$a = [];
 
 				for ($i = 0, $ien = count($label); $i < $ien; ++$i) {
 					$a[] = $row[$label[$i]];
@@ -315,13 +315,13 @@ class Options extends DataTables\Ext
 			->fetchAll();
 
 		// Create the output array
-		$out = array();
+		$out = [];
 
 		for ($i = 0, $ien = count($rows); $i < $ien; ++$i) {
-			$out[] = array(
+			$out[] = [
 				'label' => $formatter($rows[$i]),
 				'value' => $rows[$i][$value],
-			);
+			];
 		}
 
 		// Stick on any extra manually added options

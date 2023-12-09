@@ -138,12 +138,12 @@ class Validate
 	 */
 	public static function _extend($userOpts, $prop, $fnOpts)
 	{
-		$cfg = array(
+		$cfg = [
 			'message' => 'Input not valid',
 			'required' => false,
 			'empty' => true,
 			'optional' => true,
-		);
+		];
 
 		if (!is_array($userOpts)) {
 			if ($prop) {
@@ -152,7 +152,7 @@ class Validate
 
 			// Not an array, but the non-array case has been handled above, so
 			// just an empty array
-			$userOpts = array();
+			$userOpts = [];
 		}
 
 		// Merge into a single array - first array gets priority if there is a
@@ -1023,7 +1023,7 @@ class Validate
 	 * @return string|true true if the value is valid, a string with an error
 	 *                     message otherwise.
 	 */
-	public static function dbValues($cfg = null, $column = null, $table = null, $db = null, $values = array())
+	public static function dbValues($cfg = null, $column = null, $table = null, $db = null, $values = [])
 	{
 		$opts = ValidateOptions::select($cfg);
 
@@ -1158,7 +1158,7 @@ class Validate
 	 */
 	public static function basicLegacy($legacyOpts)
 	{
-		$cfg = Validate::_extend($legacyOpts, null, array());
+		$cfg = Validate::_extend($legacyOpts, null, []);
 		$opts = Validate::_commonLegacy($cfg);
 
 		return Validate::required($opts);
@@ -1169,9 +1169,9 @@ class Validate
 	 */
 	public static function requiredLegacy($legacyOpts)
 	{
-		$cfg = Validate::_extend($legacyOpts, null, array(
+		$cfg = Validate::_extend($legacyOpts, null, [
 			'message' => 'This field is required.',
-		));
+		]);
 		$opts = Validate::_commonLegacy($cfg);
 
 		return Validate::required($opts);
@@ -1182,9 +1182,9 @@ class Validate
 	 */
 	public static function notEmptyLegacy($legacyOpts)
 	{
-		$cfg = Validate::_extend($legacyOpts, null, array(
+		$cfg = Validate::_extend($legacyOpts, null, [
 			'message' => 'This field is required.',
-		));
+		]);
 		$opts = Validate::_commonLegacy($cfg);
 
 		return Validate::notEmpty($opts);
@@ -1195,9 +1195,9 @@ class Validate
 	 */
 	public static function booleanLegacy($legacyOpts)
 	{
-		$cfg = Validate::_extend($legacyOpts, null, array(
+		$cfg = Validate::_extend($legacyOpts, null, [
 			'message' => 'Please enter true or false.',
-		));
+		]);
 		$opts = Validate::_commonLegacy($cfg);
 
 		return Validate::notEmpty($opts);
@@ -1208,9 +1208,9 @@ class Validate
 	 */
 	public static function numericLegacy($legacyOpts)
 	{
-		$cfg = Validate::_extend($legacyOpts, null, array(
+		$cfg = Validate::_extend($legacyOpts, null, [
 			'message' => 'This input must be given as a number.',
-		));
+		]);
 		$opts = Validate::_commonLegacy($cfg);
 
 		return isset($legacyOpts['decimal']) ?
@@ -1224,9 +1224,9 @@ class Validate
 	public static function minNumLegacy($legacyOpts)
 	{
 		$min = is_array($legacyOpts) ? $legacyOpts['min'] : $legacyOpts;
-		$cfg = Validate::_extend($legacyOpts, null, array(
+		$cfg = Validate::_extend($legacyOpts, null, [
 			'message' => 'Number is too small, must be ' . $min . ' or larger.',
-		));
+		]);
 		$opts = Validate::_commonLegacy($cfg);
 
 		return isset($legacyOpts['decimal']) ?
@@ -1240,9 +1240,9 @@ class Validate
 	public static function maxNumLegacy($legacyOpts)
 	{
 		$max = is_array($legacyOpts) ? $legacyOpts['max'] : $legacyOpts;
-		$cfg = Validate::_extend($legacyOpts, null, array(
+		$cfg = Validate::_extend($legacyOpts, null, [
 			'message' => 'Number is too large, must be ' . $max . ' or smaller.',
-		));
+		]);
 		$opts = Validate::_commonLegacy($cfg);
 
 		return isset($legacyOpts['decimal']) ?
@@ -1257,7 +1257,7 @@ class Validate
 	{
 		$min = $legacyOpts['min'];
 		$max = $legacyOpts['max'];
-		$cfg = Validate::_extend($legacyOpts, null, array());
+		$cfg = Validate::_extend($legacyOpts, null, []);
 		$opts = Validate::_commonLegacy($cfg);
 
 		return isset($legacyOpts['decimal']) ?
@@ -1270,9 +1270,9 @@ class Validate
 	 */
 	public static function emailLegacy($legacyOpts)
 	{
-		$cfg = Validate::_extend($legacyOpts, null, array(
+		$cfg = Validate::_extend($legacyOpts, null, [
 			'message' => 'Please enter a valid e-mail address.',
-		));
+		]);
 		$opts = Validate::_commonLegacy($cfg);
 
 		return Validate::email($opts);
@@ -1284,9 +1284,9 @@ class Validate
 	public static function minLenLegacy($legacyOpts)
 	{
 		$min = is_array($legacyOpts) ? $legacyOpts['min'] : $legacyOpts;
-		$cfg = Validate::_extend($legacyOpts, null, array(
+		$cfg = Validate::_extend($legacyOpts, null, [
 			'message' => 'The input is too short. ' . $min . ' characters required.',
-		));
+		]);
 		$opts = Validate::_commonLegacy($cfg);
 
 		return Validate::minLen($min, $opts);
@@ -1298,9 +1298,9 @@ class Validate
 	public static function maxLenLegacy($legacyOpts)
 	{
 		$max = is_array($legacyOpts) ? $legacyOpts['max'] : $legacyOpts;
-		$cfg = Validate::_extend($legacyOpts, null, array(
+		$cfg = Validate::_extend($legacyOpts, null, [
 			'message' => 'The input is too long. ' . $max . ' characters maximum.',
-		));
+		]);
 		$opts = Validate::_commonLegacy($cfg);
 
 		return Validate::maxLen($max, $opts);
@@ -1313,7 +1313,7 @@ class Validate
 	{
 		$min = $legacyOpts['min'];
 		$max = $legacyOpts['max'];
-		$cfg = Validate::_extend($legacyOpts, null, array());
+		$cfg = Validate::_extend($legacyOpts, null, []);
 		$opts = Validate::_commonLegacy($cfg);
 
 		return Validate::minMaxLen($min, $max, $opts);
@@ -1324,9 +1324,9 @@ class Validate
 	 */
 	public static function ipLegacy($legacyOpts)
 	{
-		$cfg = Validate::_extend($legacyOpts, null, array(
+		$cfg = Validate::_extend($legacyOpts, null, [
 			'message' => 'Please enter a valid IP address.',
-		));
+		]);
 		$opts = Validate::_commonLegacy($cfg);
 
 		return Validate::ip($opts);
@@ -1337,9 +1337,9 @@ class Validate
 	 */
 	public static function urlLegacy($legacyOpts)
 	{
-		$cfg = Validate::_extend($legacyOpts, null, array(
+		$cfg = Validate::_extend($legacyOpts, null, [
 			'message' => 'Please enter a valid URL.',
-		));
+		]);
 		$opts = Validate::_commonLegacy($cfg);
 
 		return Validate::url($opts);
@@ -1350,9 +1350,9 @@ class Validate
 	 */
 	public static function xssLegacy($legacyOpts)
 	{
-		$cfg = Validate::_extend($legacyOpts, null, array(
+		$cfg = Validate::_extend($legacyOpts, null, [
 			'message' => 'This field contains potentially unsafe data.',
-		));
+		]);
 		$opts = Validate::_commonLegacy($cfg);
 
 		return Validate::xss($opts);
@@ -1364,9 +1364,9 @@ class Validate
 	public static function valuesLegacy($legacyOpts)
 	{
 		$values = isset($legacyOpts['valid']) ? $legacyOpts['valid'] : $legacyOpts;
-		$cfg = Validate::_extend($legacyOpts, null, array(
+		$cfg = Validate::_extend($legacyOpts, null, [
 			'message' => 'This value is not valid.',
-		));
+		]);
 		$opts = Validate::_commonLegacy($cfg);
 
 		return Validate::values($values, $opts);
@@ -1377,9 +1377,9 @@ class Validate
 	 */
 	public static function noTagsLegacy($legacyOpts)
 	{
-		$cfg = Validate::_extend($legacyOpts, null, array(
+		$cfg = Validate::_extend($legacyOpts, null, [
 			'message' => 'This field may not contain HTML.',
-		));
+		]);
 		$opts = Validate::_commonLegacy($cfg);
 
 		return Validate::noTags($opts);
@@ -1391,9 +1391,9 @@ class Validate
 	public static function dateFormatLegacy($legacyOpts)
 	{
 		$format = is_array($legacyOpts) ? $legacyOpts['format'] : $legacyOpts;
-		$cfg = Validate::_extend($legacyOpts, null, array(
+		$cfg = Validate::_extend($legacyOpts, null, [
 			'message' => 'Date is not in the expected format.',
-		));
+		]);
 		$opts = Validate::_commonLegacy($cfg);
 
 		return Validate::dateFormat($format, $opts);
@@ -1407,9 +1407,9 @@ class Validate
 		$table = isset($legacyOpts['table']) ? $legacyOpts['table'] : null;
 		$column = isset($legacyOpts['column']) ? $legacyOpts['column'] : null;
 		$db = isset($legacyOpts['db']) ? $legacyOpts['db'] : null;
-		$cfg = Validate::_extend($legacyOpts, null, array(
+		$cfg = Validate::_extend($legacyOpts, null, [
 			'message' => 'This field must have a unique value.',
-		));
+		]);
 		$opts = Validate::_commonLegacy($cfg);
 
 		return Validate::unique($opts, $column, $table, $db);
@@ -1423,10 +1423,10 @@ class Validate
 		$table = isset($legacyOpts['table']) ? $legacyOpts['table'] : null;
 		$column = isset($legacyOpts['column']) ? $legacyOpts['column'] : null;
 		$db = isset($legacyOpts['db']) ? $legacyOpts['db'] : null;
-		$values = isset($legacyOpts['values']) ? $legacyOpts['values'] : array();
-		$cfg = Validate::_extend($legacyOpts, null, array(
+		$values = isset($legacyOpts['values']) ? $legacyOpts['values'] : [];
+		$cfg = Validate::_extend($legacyOpts, null, [
 			'message' => 'This value is not valid.',
-		));
+		]);
 		$opts = Validate::_commonLegacy($cfg);
 
 		return Validate::dbValues($opts, $column, $table, $db, $values);

@@ -196,7 +196,7 @@ class Ext
 			$loopName = $names[$i];
 
 			if (!isset($inner[$loopName])) {
-				$inner[$loopName] = array();
+				$inner[$loopName] = [];
 			} elseif (!is_array($inner[$loopName])) {
 				throw new \Exception(
 					'A property with the name `' . $name . '` already exists. This ' .
