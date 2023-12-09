@@ -692,7 +692,7 @@ class Editor extends Ext
 			$debugInfo = &$this->_debugInfo;
 
 			$debugInfo[] = 'Editor PHP libraries - version ' . $this->version;
-			$debugVal = $this->_db->debug(function ($mess) use (&$debugInfo) {
+			$debugVal = $this->_db->debug(static function ($mess) use (&$debugInfo) {
 				$debugInfo[] = $mess;
 			});
 		}
@@ -1819,7 +1819,7 @@ class Editor extends Ext
 						break;
 					case 'between':
 						if ($data['logic'] === 'AND' || $first) {
-							$query->where_group(function ($q) use ($crit, $val1, $val2) {
+							$query->where_group(static function ($q) use ($crit, $val1, $val2) {
 								$q
 									->where($crit['origData'], is_numeric($val1) ? (int) $val1 : $val1, '>=')
 									->where($crit['origData'], is_numeric($val2) ? (int) $val2 : $val2, '<=');
@@ -1834,7 +1834,7 @@ class Editor extends Ext
 						break;
 					case '!between':
 						if ($data['logic'] === 'AND' || $first) {
-							$query->where_group(function ($q) use ($crit, $val1, $val2) {
+							$query->where_group(static function ($q) use ($crit, $val1, $val2) {
 								$q->where($crit['origData'], is_numeric($val1) ? (int) $val1 : $val1, '<')->or_where($crit['origData'], is_numeric($val2) ? (int) $val2 : $val2, '>');
 							});
 							$first = false;
@@ -1845,7 +1845,7 @@ class Editor extends Ext
 						break;
 					case 'null':
 						if ($data['logic'] === 'AND' || $first) {
-							$query->where_group(function ($q) use ($crit) {
+							$query->where_group(static function ($q) use ($crit) {
 								$q->where($crit['origData'], null, '=');
 								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
 									$q->or_where($crit['origData'], '', '=');
@@ -1853,7 +1853,7 @@ class Editor extends Ext
 							});
 							$first = false;
 						} else {
-							$query->where_group(function ($q) use ($crit) {
+							$query->where_group(static function ($q) use ($crit) {
 								$q->where($crit['origData'], null, '=');
 								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
 									$q->or_where($crit['origData'], '', '=');
@@ -1864,7 +1864,7 @@ class Editor extends Ext
 						break;
 					case '!null':
 						if ($data['logic'] === 'AND' || $first) {
-							$query->where_group(function ($q) use ($crit) {
+							$query->where_group(static function ($q) use ($crit) {
 								$q->where($crit['origData'], null, '!=');
 								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
 									$q->where($crit['origData'], '', '!=');
@@ -1872,7 +1872,7 @@ class Editor extends Ext
 							});
 							$first = false;
 						} else {
-							$query->where_group(function ($q) use ($crit) {
+							$query->where_group(static function ($q) use ($crit) {
 								$q->where($crit['origData'], null, '!=');
 								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
 									$q->where($crit['origData'], '', '!=');
@@ -1965,7 +1965,7 @@ class Editor extends Ext
 						}
 					}
 
-					$query->where(function ($q) use ($field, $http) {
+					$query->where(static function ($q) use ($field, $http) {
 						for ($j = 0; $j < count($http['searchPanes'][$field->name()]); ++$j) {
 							$q->or_where(
 								$field->dbField(),
@@ -2324,7 +2324,7 @@ class Editor extends Ext
 			for ($i = 0, $ien = count($ids); $i < $ien; ++$i) {
 				$cond = $this->pkeyToArray($ids[$i], true, $pkey);
 
-				$q->or_where(function ($q2) use ($cond) {
+				$q->or_where(static function ($q2) use ($cond) {
 					$q2->where($cond);
 				});
 			}

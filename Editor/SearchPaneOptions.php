@@ -272,7 +272,7 @@ class SearchPaneOptions extends DataTables\Ext
 			? $value
 			: $this->_label[0];
 
-		$formatter = $this->_renderer ?: function ($str) {
+		$formatter = $this->_renderer ?: static function ($str) {
 			return $str;
 		};
 
@@ -385,7 +385,7 @@ class SearchPaneOptions extends DataTables\Ext
 				}
 
 				if ($add) {
-					$query->where(function ($q) use ($fieldOpt, $http, $fieldName) {
+					$query->where(static function ($q) use ($fieldOpt, $http, $fieldName) {
 						for ($j = 0, $jen = count($http['searchPanes'][$fieldName]); $j < $jen; ++$j) {
 							$q->or_where(
 								$fieldOpt->dbField(),
@@ -438,7 +438,7 @@ class SearchPaneOptions extends DataTables\Ext
 
 		// Only sort if there was no SQL order field
 		if (!$this->_order) {
-			usort($out, function ($a, $b) {
+			usort($out, static function ($a, $b) {
 				$aLabel = $a['label'];
 				$bLabel = $b['label'];
 

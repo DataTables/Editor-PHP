@@ -236,7 +236,7 @@ class Validate
 	 */
 	public static function none()
 	{
-		return function ($val, $data, $field, $host) {
+		return static function ($val, $data, $field, $host) {
 			return true;
 		};
 	}
@@ -283,7 +283,7 @@ class Validate
 	{
 		$opts = ValidateOptions::select($cfg);
 
-		return function ($val, $data, $field, $host) use ($opts) {
+		return static function ($val, $data, $field, $host) use ($opts) {
 			$common = Validate::_common($val, $opts);
 
 			return $common === false ?
@@ -318,7 +318,7 @@ class Validate
 		$opts->allowEmpty(false);
 		$opts->optional(false);
 
-		return function ($val, $data, $field, $host) use ($opts) {
+		return static function ($val, $data, $field, $host) use ($opts) {
 			$common = Validate::_common($val, $opts);
 
 			return $common === false ?
@@ -347,7 +347,7 @@ class Validate
 		$opts = ValidateOptions::select($cfg);
 		$opts->allowEmpty(false);
 
-		return function ($val, $data, $field, $host) use ($opts) {
+		return static function ($val, $data, $field, $host) use ($opts) {
 			$common = Validate::_common($val, $opts);
 
 			return $common === false ?
@@ -372,7 +372,7 @@ class Validate
 	{
 		$opts = ValidateOptions::select($cfg);
 
-		return function ($val, $data, $field, $host) use ($opts) {
+		return static function ($val, $data, $field, $host) use ($opts) {
 			$common = Validate::_common($val, $opts);
 
 			if ($common !== null) {
@@ -410,7 +410,7 @@ class Validate
 	{
 		$opts = ValidateOptions::select($cfg);
 
-		return function ($val, $data, $field, $host) use ($opts, $decimal) {
+		return static function ($val, $data, $field, $host) use ($opts, $decimal) {
 			$common = Validate::_common($val, $opts);
 
 			if ($common !== null) {
@@ -450,7 +450,7 @@ class Validate
 	{
 		$opts = ValidateOptions::select($cfg);
 
-		return function ($val, $data, $field, $host) use ($opts, $min, $decimal) {
+		return static function ($val, $data, $field, $host) use ($opts, $min, $decimal) {
 			$common = Validate::_common($val, $opts);
 
 			if ($common !== null) {
@@ -496,7 +496,7 @@ class Validate
 	{
 		$opts = ValidateOptions::select($cfg);
 
-		return function ($val, $data, $field, $host) use ($opts, $max, $decimal) {
+		return static function ($val, $data, $field, $host) use ($opts, $max, $decimal) {
 			$common = Validate::_common($val, $opts);
 
 			if ($common !== null) {
@@ -542,7 +542,7 @@ class Validate
 	{
 		$opts = ValidateOptions::select($cfg);
 
-		return function ($val, $data, $field, $host) use ($opts, $min, $max, $decimal) {
+		return static function ($val, $data, $field, $host) use ($opts, $min, $max, $decimal) {
 			$common = Validate::_common($val, $opts);
 
 			if ($common !== null) {
@@ -596,7 +596,7 @@ class Validate
 	{
 		$opts = ValidateOptions::select($cfg);
 
-		return function ($val, $data, $field, $host) use ($opts) {
+		return static function ($val, $data, $field, $host) use ($opts) {
 			$common = Validate::_common($val, $opts);
 
 			if ($common !== null) {
@@ -630,7 +630,7 @@ class Validate
 	{
 		$opts = ValidateOptions::select($cfg);
 
-		return function ($val, $data, $field, $host) use ($min, $opts) {
+		return static function ($val, $data, $field, $host) use ($min, $opts) {
 			$common = Validate::_common($val, $opts);
 
 			if ($common !== null) {
@@ -668,7 +668,7 @@ class Validate
 	{
 		$opts = ValidateOptions::select($cfg);
 
-		return function ($val, $data, $field, $host) use ($max, $opts) {
+		return static function ($val, $data, $field, $host) use ($max, $opts) {
 			$common = Validate::_common($val, $opts);
 
 			if ($common !== null) {
@@ -704,7 +704,7 @@ class Validate
 	{
 		$opts = ValidateOptions::select($cfg);
 
-		return function ($val, $data, $field, $host) use ($opts, $min, $max) {
+		return static function ($val, $data, $field, $host) use ($opts, $min, $max) {
 			$common = Validate::_common($val, $opts);
 
 			if ($common !== null) {
@@ -747,7 +747,7 @@ class Validate
 	{
 		$opts = ValidateOptions::select($cfg);
 
-		return function ($val, $data, $field, $host) use ($opts) {
+		return static function ($val, $data, $field, $host) use ($opts) {
 			$common = Validate::_common($val, $opts);
 
 			if ($common !== null) {
@@ -778,7 +778,7 @@ class Validate
 	{
 		$opts = ValidateOptions::select($cfg);
 
-		return function ($val, $data, $field, $host) use ($opts) {
+		return static function ($val, $data, $field, $host) use ($opts) {
 			$common = Validate::_common($val, $opts);
 
 			if ($common !== null) {
@@ -812,7 +812,7 @@ class Validate
 	{
 		$opts = ValidateOptions::select($cfg);
 
-		return function ($val, $data, $field, $host) use ($opts) {
+		return static function ($val, $data, $field, $host) use ($opts) {
 			$common = Validate::_common($val, $opts);
 
 			if ($common !== null) {
@@ -846,7 +846,7 @@ class Validate
 	{
 		$opts = ValidateOptions::select($cfg);
 
-		return function ($val, $data, $field, $host) use ($values, $opts) {
+		return static function ($val, $data, $field, $host) use ($values, $opts) {
 			$common = Validate::_common($val, $opts);
 
 			if ($common !== null) {
@@ -880,7 +880,7 @@ class Validate
 	{
 		$opts = ValidateOptions::select($cfg);
 
-		return function ($val, $data, $field, $host) use ($opts) {
+		return static function ($val, $data, $field, $host) use ($opts) {
 			$common = Validate::_common($val, $opts);
 
 			if ($common !== null) {
@@ -917,7 +917,7 @@ class Validate
 	{
 		$opts = ValidateOptions::select($cfg);
 
-		return function ($val, $data, $field, $host) use ($format, $opts) {
+		return static function ($val, $data, $field, $host) use ($format, $opts) {
 			$common = Validate::_common($val, $opts);
 
 			if ($common !== null) {
@@ -961,7 +961,7 @@ class Validate
 	{
 		$opts = ValidateOptions::select($cfg);
 
-		return function ($val, $data, $field, $host) use ($opts, $column, $table, $db) {
+		return static function ($val, $data, $field, $host) use ($opts, $column, $table, $db) {
 			$common = Validate::_common($val, $opts);
 
 			if ($common !== null) {
@@ -1027,7 +1027,7 @@ class Validate
 	{
 		$opts = ValidateOptions::select($cfg);
 
-		return function ($val, $data, $field, $host) use ($opts, $column, $table, $db, $values) {
+		return static function ($val, $data, $field, $host) use ($opts, $column, $table, $db, $values) {
 			$common = Validate::_common($val, $opts);
 
 			if ($common !== null) {
@@ -1088,7 +1088,7 @@ class Validate
 	*/
 	public static function fileExtensions($extensions, $msg = 'This file type cannot be uploaded.')
 	{
-		return function ($file) use ($extensions, $msg) {
+		return static function ($file) use ($extensions, $msg) {
 			$extn = pathinfo($file['name'], \PATHINFO_EXTENSION);
 
 			for ($i = 0, $ien = count($extensions); $i < $ien; ++$i) {
@@ -1103,7 +1103,7 @@ class Validate
 
 	public static function fileSize($size, $msg = 'Uploaded file is too large.')
 	{
-		return function ($file) use ($size, $msg) {
+		return static function ($file) use ($size, $msg) {
 			return $file['size'] > $size ?
 				$msg :
 				true;
@@ -1115,7 +1115,7 @@ class Validate
 	*/
 	public static function mjoinMinCount($count, $msg = 'Too few items.')
 	{
-		return function ($editor, $action, $values) use ($count, $msg) {
+		return static function ($editor, $action, $values) use ($count, $msg) {
 			if ($action === 'create' || $action === 'edit') {
 				return count($values) < $count ?
 					$msg :
@@ -1128,7 +1128,7 @@ class Validate
 
 	public static function mjoinMaxCount($count, $msg = 'Too many items.')
 	{
-		return function ($editor, $action, $values) use ($count, $msg) {
+		return static function ($editor, $action, $values) use ($count, $msg) {
 			if ($action === 'create' || $action === 'edit') {
 				return count($values) > $count ?
 					$msg :

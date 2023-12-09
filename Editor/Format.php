@@ -64,7 +64,7 @@ class Format
 	 */
 	public static function dateSqlToFormat($format)
 	{
-		return function ($val, $data) use ($format) {
+		return static function ($val, $data) use ($format) {
 			if ($val === null || $val === '') {
 				return null;
 			}
@@ -92,7 +92,7 @@ class Format
 	 */
 	public static function dateFormatToSql($format)
 	{
-		return function ($val, $data) use ($format) {
+		return static function ($val, $data) use ($format) {
 			if ($val === null || $val === '') {
 				return null;
 			}
@@ -131,7 +131,7 @@ class Format
 	 */
 	public static function datetime($from, $to)
 	{
-		return function ($val, $data) use ($from, $to) {
+		return static function ($val, $data) use ($from, $to) {
 			if ($val === null || $val === '') {
 				return null;
 			}
@@ -161,7 +161,7 @@ class Format
 	 */
 	public static function explode($char = '|')
 	{
-		return function ($val, $data) use ($char) {
+		return static function ($val, $data) use ($char) {
 			if ($val === null) {
 				$val = '';
 			}
@@ -182,7 +182,7 @@ class Format
 	 */
 	public static function implode($char = '|')
 	{
-		return function ($val, $data) use ($char) {
+		return static function ($val, $data) use ($char) {
 			return implode($char, $val);
 		};
 	}
@@ -218,7 +218,7 @@ class Format
 	 */
 	public static function ifEmpty($ret)
 	{
-		return function ($val, $data) use ($ret) {
+		return static function ($val, $data) use ($ret) {
 			return $val === '' ?
 				$ret :
 				$val;
@@ -239,7 +239,7 @@ class Format
 	 */
 	public static function fromDecimalChar($char = ',')
 	{
-		return function ($val, $data) use ($char) {
+		return static function ($val, $data) use ($char) {
 			return str_replace($char, '.', $val);
 		};
 	}
@@ -256,7 +256,7 @@ class Format
 	 */
 	public static function toDecimalChar($char = ',')
 	{
-		return function ($val, $data) use ($char) {
+		return static function ($val, $data) use ($char) {
 			return str_replace('.', $char, $val);
 		};
 	}

@@ -271,7 +271,7 @@ class SearchBuilderOptions extends DataTables\Ext
 
 		// We need a default formatter if one isn't provided
 		if (!$formatter) {
-			$formatter = function ($str) {
+			$formatter = static function ($str) {
 				return $str;
 			};
 		}
@@ -320,7 +320,7 @@ class SearchBuilderOptions extends DataTables\Ext
 
 		// Only sort if there was no SQL order field
 		if (!$this->_order) {
-			usort($out, function ($a, $b) {
+			usort($out, static function ($a, $b) {
 				return is_numeric($a['label']) && is_numeric($b['label']) ?
 					($a['label'] * 1) - ($b['label'] * 1) :
 					strcmp($a['label'], $b['label']);
