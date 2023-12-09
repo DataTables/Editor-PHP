@@ -150,7 +150,7 @@ abstract class Query
 	protected $_distinct = false;
 
 	/**
-	 * @var string
+	 * @var array{string, string}
 	 *
 	 * @internal
 	 */

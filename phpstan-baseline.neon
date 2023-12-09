@@ -31,11 +31,6 @@ parameters:
 			path: Database/Driver/FirebirdQuery.php
 
 		-
-			message: "#^Property DataTables\\\\Database\\\\Driver\\\\FirebirdQuery\\:\\:\\$_identifier_limiter \\(string\\) does not accept default value of type array\\<int, string\\>\\.$#"
-			count: 1
-			path: Database/Driver/FirebirdQuery.php
-
-		-
 			message: "#^Property DataTables\\\\Database\\\\Driver\\\\FirebirdResult\\:\\:\\$_dbh is never read, only written\\.$#"
 			count: 1
 			path: Database/Driver/FirebirdResult.php
@@ -71,29 +66,14 @@ parameters:
 			path: Database/Driver/OracleQuery.php
 
 		-
-			message: "#^Property DataTables\\\\Database\\\\Driver\\\\OracleQuery\\:\\:\\$_identifier_limiter \\(string\\) does not accept default value of type array\\<int, string\\>\\.$#"
-			count: 1
-			path: Database/Driver/OracleQuery.php
-
-		-
 			message: "#^Property DataTables\\\\Database\\\\Driver\\\\OracleResult\\:\\:\\$_dbh is never read, only written\\.$#"
 			count: 1
 			path: Database/Driver/OracleResult.php
 
 		-
-			message: "#^Property DataTables\\\\Database\\\\Driver\\\\PostgresQuery\\:\\:\\$_identifier_limiter \\(string\\) does not accept default value of type array\\<int, string\\>\\.$#"
-			count: 1
-			path: Database/Driver/PostgresQuery.php
-
-		-
 			message: "#^Property DataTables\\\\Database\\\\Driver\\\\PostgresResult\\:\\:\\$_dbh is never read, only written\\.$#"
 			count: 1
 			path: Database/Driver/PostgresResult.php
-
-		-
-			message: "#^Property DataTables\\\\Database\\\\Driver\\\\SqlserverQuery\\:\\:\\$_identifier_limiter \\(string\\) does not accept default value of type array\\<int, string\\>\\.$#"
-			count: 1
-			path: Database/Driver/SqlserverQuery.php
 
 		-
 			message: "#^Method DataTables\\\\Database\\\\Query\\:\\:_where_group\\(\\) should return string but return statement is missing\\.$#"
@@ -112,11 +92,6 @@ parameters:
 
 		-
 			message: "#^Property DataTables\\\\Database\\\\Query\\:\\:\\$_distinct \\(string\\) does not accept default value of type false\\.$#"
-			count: 1
-			path: Database/Query.php
-
-		-
-			message: "#^Property DataTables\\\\Database\\\\Query\\:\\:\\$_identifier_limiter \\(string\\) does not accept default value of type array\\<int, string\\>\\.$#"
 			count: 1
 			path: Database/Query.php
 
@@ -322,6 +297,16 @@ parameters:
 
 		-
 			message: "#^Parameter \\$leftJoin of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) has invalid type DataTables\\\\Editor\\\\any\\.$#"
+			count: 1
+			path: Editor/Field.php
+
+		-
+			message: "#^Parameter \\$sbInput of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptions\\(\\) has invalid type DataTables\\\\Editor\\\\IOption\\.$#"
+			count: 1
+			path: Editor/Field.php
+
+		-
+			message: "#^Parameter \\$sbInput of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptions\\(\\) has invalid type DataTables\\\\Editor\\\\Promise\\.$#"
 			count: 1
 			path: Editor/Field.php
 
