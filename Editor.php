@@ -17,6 +17,7 @@
 namespace DataTables;
 
 use DataTables;
+use DataTables\Database\Query;
 use DataTables\Editor\Field;
 use DataTables\Editor\Join;
 
@@ -561,9 +562,9 @@ class Editor extends Ext
 	 * Add an event listener. The `Editor` class will trigger an number of
 	 * events that some action can be taken on.
 	 *
-	 * @param string   $name     Event name
-	 * @param callable $callback Callback function to execute when the event
-	 *                           occurs
+	 * @param string                                                     $name     Event name
+	 * @param callable($this, mixed, mixed, mixed, mixed, mixed): ?false $callback Callback function to execute when the event
+	 *                                                                             occurs
 	 *
 	 * @return $this
 	 */
@@ -859,9 +860,9 @@ class Editor extends Ext
 	 * and remove actions performed from the client-side. Multiple validators
 	 * can be added.
 	 *
-	 * @param callable $_ Function to execute when validating the input data.
-	 *                    It is passed three parameters: 1. The editor instance, 2. The action
-	 *                    and 3. The values.
+	 * @param callable($this, self::ACTION_*, array): ?string $_ Function to execute when validating the input data.
+	 *                                                           It is passed three parameters: 1. The editor instance, 2. The action
+	 *                                                           and 3. The values.
 	 *
 	 * @return ($_ is null ? callable : $this) The validator function.
 	 */
@@ -890,9 +891,9 @@ class Editor extends Ext
 	 * undefined (since Editor expects the row to still be available, but the
 	 * condition removes it from the result set).
 	 *
-	 * @param string|callable $key   Single field name or a closure function
-	 * @param string          $value Single field value.
-	 * @param string          $op    Condition operator: <, >, = etc
+	 * @param string|\Closure(Query): void $key   Single field name or a closure function
+	 * @param string                       $value Single field value.
+	 * @param string                       $op    Condition operator: <, >, = etc
 	 *
 	 * @return ($key is null ? string[] : $this) Where condition array.
 	 */
@@ -2047,7 +2048,7 @@ class Editor extends Ext
 	private function _get_where($query)
 	{
 		for ($i = 0; $i < count($this->_where); ++$i) {
-			if (is_callable($this->_where[$i])) {
+			if ($this->_where[$i] instanceof \Closure) {
 				$this->_where[$i]($query);
 			} else {
 				$query->where(
@@ -2220,7 +2221,7 @@ class Editor extends Ext
 			for ($j = 0, $jen = count($this->_where); $j < $jen; ++$j) {
 				$cond = $this->_where[$j];
 
-				if (!is_callable($cond)) {
+				if (!$cond instanceof \Closure) {
 					// Make sure the value wasn't in the submitted data set,
 					// otherwise we would be overwriting it
 					if (!isset($set[$cond['key']])) {

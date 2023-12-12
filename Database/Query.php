@@ -143,14 +143,14 @@ abstract class Query
 	protected $_offset;
 
 	/**
-	 * @var string
+	 * @var bool
 	 *
 	 * @internal
 	 */
 	protected $_distinct = false;
 
 	/**
-	 * @var string
+	 * @var array{string, string}
 	 *
 	 * @internal
 	 */
@@ -610,15 +610,15 @@ abstract class Query
 	 * Can be used in two different ways, as where( field, value ) or as an array of
 	 * conditions to use: where( array('fieldName', ...), array('value', ...) );
 	 *
-	 * @param string|string[]|callable $key   Single field name, or an array of field names.
-	 *                                        If given as a function (i.e. a closure), the function is called, passing the
-	 *                                        query itself in as the only parameter, so the function can add extra conditions
-	 *                                        with parentheses around the additional parameters.
-	 * @param string|string[]          $value Single field value, or an array of
-	 *                                        values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
-	 *                                        on the value of `$op` which should be `=` or `!=`.
-	 * @param string                   $op    Condition operator: <, >, = etc
-	 * @param bool                     $bind  Escape the value (true, default) or not (false).
+	 * @param string|string[]|\Closure($this): void $key   Single field name, or an array of field names.
+	 *                                                     If given as a function (i.e. a closure), the function is called, passing the
+	 *                                                     query itself in as the only parameter, so the function can add extra conditions
+	 *                                                     with parentheses around the additional parameters.
+	 * @param string|int|string[]|int[]             $value Single field value, or an array of
+	 *                                                     values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
+	 *                                                     on the value of `$op` which should be `=` or `!=`.
+	 * @param string                                $op    Condition operator: <, >, = etc
+	 * @param bool                                  $bind  Escape the value (true, default) or not (false).
 	 *
 	 * @return $this
 	 *
@@ -661,15 +661,15 @@ abstract class Query
 	 * Can be used in two different ways, as where( field, value ) or as an array of
 	 * conditions to use: where( array('fieldName', ...), array('value', ...) );
 	 *
-	 * @param string|string[]|callable $key   Single field name, or an array of field names.
-	 *                                        If given as a function (i.e. a closure), the function is called, passing the
-	 *                                        query itself in as the only parameter, so the function can add extra conditions
-	 *                                        with parentheses around the additional parameters.
-	 * @param string|string[]          $value Single field value, or an array of
-	 *                                        values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
-	 *                                        on the value of `$op` which should be `=` or `!=`.
-	 * @param string                   $op    Condition operator: <, >, = etc
-	 * @param bool                     $bind  Escape the value (true, default) or not (false).
+	 * @param string|string[]|\Closure($this): void $key   Single field name, or an array of field names.
+	 *                                                     If given as a function (i.e. a closure), the function is called, passing the
+	 *                                                     query itself in as the only parameter, so the function can add extra conditions
+	 *                                                     with parentheses around the additional parameters.
+	 * @param string|int|string[]|int[]             $value Single field value, or an array of
+	 *                                                     values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
+	 *                                                     on the value of `$op` which should be `=` or `!=`.
+	 * @param string                                $op    Condition operator: <, >, = etc
+	 * @param bool                                  $bind  Escape the value (true, default) or not (false).
 	 *
 	 * @return $this
 	 */
@@ -684,15 +684,15 @@ abstract class Query
 	 * Can be used in two different ways, as where( field, value ) or as an array of
 	 * conditions to use: where( array('fieldName', ...), array('value', ...) );
 	 *
-	 * @param string|string[]|callable $key   Single field name, or an array of field names.
-	 *                                        If given as a function (i.e. a closure), the function is called, passing the
-	 *                                        query itself in as the only parameter, so the function can add extra conditions
-	 *                                        with parentheses around the additional parameters.
-	 * @param string|string[]          $value Single field value, or an array of
-	 *                                        values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
-	 *                                        on the value of `$op` which should be `=` or `!=`.
-	 * @param string                   $op    Condition operator: <, >, = etc
-	 * @param bool                     $bind  Escape the value (true, default) or not (false).
+	 * @param string|string[]|\Closure($this): void $key   Single field name, or an array of field names.
+	 *                                                     If given as a function (i.e. a closure), the function is called, passing the
+	 *                                                     query itself in as the only parameter, so the function can add extra conditions
+	 *                                                     with parentheses around the additional parameters.
+	 * @param string|int|string[]|int[]             $value Single field value, or an array of
+	 *                                                     values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
+	 *                                                     on the value of `$op` which should be `=` or `!=`.
+	 * @param string                                $op    Condition operator: <, >, = etc
+	 * @param bool                                  $bind  Escape the value (true, default) or not (false).
 	 *
 	 * @return $this
 	 */
@@ -727,11 +727,11 @@ abstract class Query
 	 * define if a grouping bracket should be opened or closed in the query.
 	 * This method is not prefer.
 	 *
-	 * @param bool|callable $inOut If callable it will create the group
-	 *                             automatically and pass the query into the called function. For
-	 *                             legacy operations use `true` to open brackets, `false` to close.
-	 * @param string        $op    Conditional operator to use to join to the
-	 *                             preceding condition. Default `AND`.
+	 * @param bool|\Closure($this): void $inOut If callable it will create the group
+	 *                                          automatically and pass the query into the called function. For
+	 *                                          legacy operations use `true` to open brackets, `false` to close.
+	 * @param string                     $op    Conditional operator to use to join to the
+	 *                                          preceding condition. Default `AND`.
 	 *
 	 * @return $this
 	 *
@@ -1252,7 +1252,7 @@ abstract class Query
 	 * @internal
 	 *
 	 * @param string|array $where
-	 * @param string       $value
+	 * @param string|int   $value
 	 * @param string       $type
 	 * @param string       $op
 	 * @param bool         $bind
