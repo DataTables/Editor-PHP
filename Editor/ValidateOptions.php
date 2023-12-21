@@ -37,8 +37,6 @@ class ValidateOptions extends DataTables\Ext
 				$this->optional($opts['optional']);
 			}
 		}
-
-		return $this;
 	}
 
 	/**
@@ -47,7 +45,7 @@ class ValidateOptions extends DataTables\Ext
 	 * @param string $msg Error message to use. If not given, the currently
 	 *                    set message will be returned.
 	 *
-	 * @return ValidateOptions|string Self if setting, message if getting.
+	 * @return ($msg is null ? string : $this)
 	 */
 	public function message($msg = null)
 	{
@@ -66,7 +64,7 @@ class ValidateOptions extends DataTables\Ext
 	 * @param bool $empty `false` if the field is not allowed to be
 	 *                    empty. `true` if it can be.
 	 *
-	 * @return ValidateOptions|bool Self if setting, current value if getting.
+	 * @return ($empty is null ? bool : $this)
 	 */
 	public function allowEmpty($empty = null)
 	{
@@ -85,7 +83,7 @@ class ValidateOptions extends DataTables\Ext
 	 * @param bool $optional `false` if the field does not need to be
 	 *                       submitted. `true` if it must be.
 	 *
-	 * @return ValidateOptions|bool Self if setting, current value if getting.
+	 * @return ($optional is null ? bool : $this)
 	 */
 	public function optional($optional = null)
 	{

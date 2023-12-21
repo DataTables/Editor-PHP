@@ -4,7 +4,7 @@ $finder = PhpCsFixer\Finder::create()
 	->in(array(__DIR__))
 	->ignoreDotFiles(false)
 	->ignoreVCS(true)
-	->exclude(array('vendor'));
+	->exclude(array('vendor', 'HtmLawed'));
 
 $config = new PhpCsFixer\Config();
 
@@ -66,6 +66,7 @@ return $config
 		'single_line_comment_style' => false,
 		'phpdoc_annotation_without_dot' => false,
 		'declare_strict_types' => false,
+		'static_lambda' => false, // needs PHP 5.4+
 		'strict_comparison' => false,
 		'strict_param' => false, // TODO
 		'final_internal_class' => false,

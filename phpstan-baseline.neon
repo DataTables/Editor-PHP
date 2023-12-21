@@ -6,7 +6,7 @@ parameters:
 			path: Database/Driver/Db2Query.php
 
 		-
-			message: "#^Method DataTables\\\\Database\\\\Driver\\\\Db2Query\\:\\:connect\\(\\) should return DataTables\\\\Database\\\\Query but returns resource\\.$#"
+			message: "#^Method DataTables\\\\Database\\\\Driver\\\\Db2Query\\:\\:connect\\(\\) should return PDO but returns resource\\.$#"
 			count: 1
 			path: Database/Driver/Db2Query.php
 
@@ -26,12 +26,7 @@ parameters:
 			path: Database/Driver/Db2Result.php
 
 		-
-			message: "#^Method DataTables\\\\Database\\\\Driver\\\\FirebirdQuery\\:\\:connect\\(\\) should return DataTables\\\\Database\\\\Query but returns PDO\\.$#"
-			count: 1
-			path: Database/Driver/FirebirdQuery.php
-
-		-
-			message: "#^Property DataTables\\\\Database\\\\Driver\\\\FirebirdQuery\\:\\:\\$_identifier_limiter \\(string\\) does not accept default value of type array\\<int, string\\>\\.$#"
+			message: "#^Call to function is_array\\(\\) with non\\-empty\\-array\\<string\\> will always evaluate to true\\.$#"
 			count: 1
 			path: Database/Driver/FirebirdQuery.php
 
@@ -41,12 +36,12 @@ parameters:
 			path: Database/Driver/FirebirdResult.php
 
 		-
-			message: "#^Method DataTables\\\\Database\\\\Driver\\\\MysqlQuery\\:\\:connect\\(\\) should return DataTables\\\\Database\\\\Query but returns PDO\\.$#"
+			message: "#^Call to function is_array\\(\\) with non\\-empty\\-array\\<string\\> will always evaluate to true\\.$#"
 			count: 1
-			path: Database/Driver/MysqlQuery.php
+			path: Database/Driver/OracleQuery.php
 
 		-
-			message: "#^Method DataTables\\\\Database\\\\Driver\\\\OracleQuery\\:\\:connect\\(\\) should return DataTables\\\\Database\\\\Query but returns resource\\.$#"
+			message: "#^Method DataTables\\\\Database\\\\Driver\\\\OracleQuery\\:\\:connect\\(\\) should return PDO but returns resource\\.$#"
 			count: 1
 			path: Database/Driver/OracleQuery.php
 
@@ -71,24 +66,9 @@ parameters:
 			path: Database/Driver/OracleQuery.php
 
 		-
-			message: "#^Property DataTables\\\\Database\\\\Driver\\\\OracleQuery\\:\\:\\$_identifier_limiter \\(string\\) does not accept default value of type array\\<int, string\\>\\.$#"
-			count: 1
-			path: Database/Driver/OracleQuery.php
-
-		-
 			message: "#^Property DataTables\\\\Database\\\\Driver\\\\OracleResult\\:\\:\\$_dbh is never read, only written\\.$#"
 			count: 1
 			path: Database/Driver/OracleResult.php
-
-		-
-			message: "#^Method DataTables\\\\Database\\\\Driver\\\\PostgresQuery\\:\\:connect\\(\\) should return DataTables\\\\Database\\\\Query but returns PDO\\.$#"
-			count: 1
-			path: Database/Driver/PostgresQuery.php
-
-		-
-			message: "#^Property DataTables\\\\Database\\\\Driver\\\\PostgresQuery\\:\\:\\$_identifier_limiter \\(string\\) does not accept default value of type array\\<int, string\\>\\.$#"
-			count: 1
-			path: Database/Driver/PostgresQuery.php
 
 		-
 			message: "#^Property DataTables\\\\Database\\\\Driver\\\\PostgresResult\\:\\:\\$_dbh is never read, only written\\.$#"
@@ -96,47 +76,22 @@ parameters:
 			path: Database/Driver/PostgresResult.php
 
 		-
-			message: "#^Method DataTables\\\\Database\\\\Driver\\\\SqliteQuery\\:\\:connect\\(\\) should return DataTables\\\\Database\\\\Query but returns PDO\\.$#"
-			count: 1
-			path: Database/Driver/SqliteQuery.php
-
-		-
-			message: "#^Method DataTables\\\\Database\\\\Driver\\\\SqlserverQuery\\:\\:connect\\(\\) should return DataTables\\\\Database\\\\Query but returns PDO\\.$#"
-			count: 1
-			path: Database/Driver/SqlserverQuery.php
-
-		-
-			message: "#^Property DataTables\\\\Database\\\\Driver\\\\SqlserverQuery\\:\\:\\$_identifier_limiter \\(string\\) does not accept default value of type array\\<int, string\\>\\.$#"
-			count: 1
-			path: Database/Driver/SqlserverQuery.php
-
-		-
 			message: "#^Method DataTables\\\\Database\\\\Query\\:\\:_where_group\\(\\) should return string but return statement is missing\\.$#"
 			count: 1
 			path: Database/Query.php
 
 		-
-			message: "#^Method DataTables\\\\Database\\\\Query\\:\\:connect\\(\\) should return DataTables\\\\Database\\\\Query but return statement is missing\\.$#"
+			message: "#^Method DataTables\\\\Database\\\\Query\\:\\:connect\\(\\) should return PDO but return statement is missing\\.$#"
 			count: 1
 			path: Database/Query.php
 
 		-
-			message: "#^Property DataTables\\\\Database\\\\Query\\:\\:\\$_distinct \\(string\\) does not accept bool\\.$#"
+			message: "#^Negated boolean expression is always false\\.$#"
 			count: 1
 			path: Database/Query.php
 
 		-
-			message: "#^Property DataTables\\\\Database\\\\Query\\:\\:\\$_distinct \\(string\\) does not accept default value of type false\\.$#"
-			count: 1
-			path: Database/Query.php
-
-		-
-			message: "#^Property DataTables\\\\Database\\\\Query\\:\\:\\$_identifier_limiter \\(string\\) does not accept default value of type array\\<int, string\\>\\.$#"
-			count: 1
-			path: Database/Query.php
-
-		-
-			message: "#^Strict comparison using \\=\\=\\= between array\\<string\\>\\|\\(callable\\(\\)\\: mixed\\)\\|string and null will always evaluate to false\\.$#"
+			message: "#^Strict comparison using \\=\\=\\= between array\\<string\\>\\|\\(Closure\\(\\$this\\)\\: void\\)\\|string and null will always evaluate to false\\.$#"
 			count: 2
 			path: Database/Query.php
 
@@ -162,7 +117,7 @@ parameters:
 
 		-
 			message: "#^If condition is always true\\.$#"
-			count: 4
+			count: 3
 			path: Editor.php
 
 		-
@@ -191,11 +146,6 @@ parameters:
 			path: Editor.php
 
 		-
-			message: "#^Parameter \\#1 \\$field of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) expects DataTables\\\\Field, DataTables\\\\Editor\\\\Field given\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
 			message: "#^Parameter \\#1 \\$id of method DataTables\\\\Editor\\:\\:_insert_or_update\\(\\) expects int\\|string, null given\\.$#"
 			count: 1
 			path: Editor.php
@@ -216,22 +166,7 @@ parameters:
 			path: Editor.php
 
 		-
-			message: "#^Parameter \\#3 \\$http of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) expects DataTables\\\\DTRequest, array\\|null given\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
 			message: "#^Parameter \\#3 \\$pkey of method DataTables\\\\Editor\\:\\:_remove_table\\(\\) expects string\\|null, array\\<int, mixed\\> given\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
-			message: "#^Parameter \\#4 \\$fields of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) expects array\\<DataTables\\\\Field\\>, array\\<DataTables\\\\Editor\\\\Field\\> given\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
-			message: "#^Parameter \\#5 \\$leftJoin of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) expects DataTables\\\\Editor\\\\any, array given\\.$#"
 			count: 1
 			path: Editor.php
 
@@ -242,11 +177,6 @@ parameters:
 
 		-
 			message: "#^Property DataTables\\\\Editor\\:\\:\\$_formData is never read, only written\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\:\\:\\$_validator \\(callable\\(\\)\\: mixed\\) does not accept default value of type array\\{\\}\\.$#"
 			count: 1
 			path: Editor.php
 
@@ -276,7 +206,7 @@ parameters:
 			path: Editor.php
 
 		-
-			message: "#^Strict comparison using \\=\\=\\= between \\(callable\\(\\)\\: mixed\\)\\|DataTables\\\\Editor\\\\Field\\|string and null will always evaluate to false\\.$#"
+			message: "#^Strict comparison using \\=\\=\\= between \\(callable\\(\\)\\: mixed\\)\\|string and null will always evaluate to false\\.$#"
 			count: 1
 			path: Editor.php
 
@@ -301,72 +231,12 @@ parameters:
 			path: Editor.php
 
 		-
-			message: "#^Call to function is_callable\\(\\) with callable\\(\\)\\: mixed will always evaluate to true\\.$#"
-			count: 2
-			path: Editor/Field.php
-
-		-
-			message: "#^Cannot call method value\\(\\) on array\\<string\\>\\|DataTables\\\\Editor\\|DataTables\\\\Editor\\\\Join\\|string\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Method DataTables\\\\Editor\\\\Field\\:\\:options\\(\\) should return DataTables\\\\Editor\\\\Field but returns DataTables\\\\Editor\\\\Options\\|null\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptions\\(\\) should return DataTables\\\\Editor\\\\Field but returns DataTables\\\\Editor\\\\SearchBuilderOptions\\|null\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) has invalid return type DataTables\\\\Editor\\\\IOption\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) has invalid return type DataTables\\\\Editor\\\\Promise\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) should return bool\\|DataTables\\\\Editor\\\\Promise\\<array\\<DataTables\\\\Editor\\\\IOption\\>\\> but returns array\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Method DataTables\\\\Editor\\\\Field\\:\\:searchPaneOptions\\(\\) should return DataTables\\\\Editor\\\\Field but returns DataTables\\\\Editor\\\\SearchPaneOptions\\|null\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
 			message: "#^Method DataTables\\\\Editor\\\\Field\\:\\:xssSafety\\(\\) should return string but returns array\\<int, mixed\\>\\.$#"
 			count: 1
 			path: Editor/Field.php
 
 		-
 			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Parameter \\$field of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) has invalid type DataTables\\\\Field\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Parameter \\$fields of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) has invalid type DataTables\\\\Field\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Parameter \\$http of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) has invalid type DataTables\\\\DTRequest\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Parameter \\$leftJoin of method DataTables\\\\Editor\\\\Field\\:\\:searchBuilderOptionsExec\\(\\) has invalid type DataTables\\\\Editor\\\\any\\.$#"
 			count: 1
 			path: Editor/Field.php
 
@@ -396,12 +266,12 @@ parameters:
 			path: Editor/Field.php
 
 		-
-			message: "#^Strict comparison using \\=\\=\\= between \\(callable\\(\\)\\: mixed\\)\\|false and true will always evaluate to false\\.$#"
+			message: "#^Strict comparison using \\=\\=\\= between \\(callable\\(mixed\\)\\: string\\)\\|false and true will always evaluate to false\\.$#"
 			count: 1
 			path: Editor/Field.php
 
 		-
-			message: "#^Strict comparison using \\=\\=\\= between callable\\(\\)\\: mixed and null will always evaluate to false\\.$#"
+			message: "#^Strict comparison using \\=\\=\\= between callable\\(mixed\\)\\: string and null will always evaluate to false\\.$#"
 			count: 1
 			path: Editor/Field.php
 
@@ -496,11 +366,6 @@ parameters:
 			path: Editor/Join.php
 
 		-
-			message: "#^Parameter \\#2 \\$value of method DataTables\\\\Database\\\\Query\\:\\:or_where\\(\\) expects array\\<string\\>\\|string\\|null, array\\<int\\> given\\.$#"
-			count: 1
-			path: Editor/Join.php
-
-		-
 			message: "#^Parameter \\#3 \\$data of method DataTables\\\\Editor\\\\Join\\:\\:_update_row\\(\\) expects array\\<string\\>, string given\\.$#"
 			count: 1
 			path: Editor/Join.php
@@ -576,11 +441,6 @@ parameters:
 			path: Editor/SearchBuilderOptions.php
 
 		-
-			message: "#^Method DataTables\\\\Editor\\\\SearchBuilderOptions\\:\\:label\\(\\) should return array\\<string\\>\\|DataTables\\\\Editor\\\\Options but returns \\$this\\(DataTables\\\\Editor\\\\SearchBuilderOptions\\)\\.$#"
-			count: 2
-			path: Editor/SearchBuilderOptions.php
-
-		-
 			message: "#^Negated boolean expression is always false\\.$#"
 			count: 1
 			path: Editor/SearchBuilderOptions.php
@@ -623,11 +483,6 @@ parameters:
 		-
 			message: "#^Method DataTables\\\\Editor\\\\SearchPaneOptions\\:\\:_get_where\\(\\) is unused\\.$#"
 			count: 1
-			path: Editor/SearchPaneOptions.php
-
-		-
-			message: "#^Method DataTables\\\\Editor\\\\SearchPaneOptions\\:\\:label\\(\\) should return array\\<string\\>\\|DataTables\\\\Editor\\\\Options but returns \\$this\\(DataTables\\\\Editor\\\\SearchPaneOptions\\)\\.$#"
-			count: 2
 			path: Editor/SearchPaneOptions.php
 
 		-
@@ -789,19 +644,4 @@ parameters:
 			message: "#^Method DataTables\\\\Editor\\\\Validate\\:\\:xss\\(\\) should return string\\|true but returns Closure\\(mixed, mixed, mixed, mixed\\)\\: mixed\\.$#"
 			count: 1
 			path: Editor/Validate.php
-
-		-
-			message: "#^Method DataTables\\\\Editor\\\\ValidateOptions\\:\\:__construct\\(\\) with return type void returns \\$this\\(DataTables\\\\Editor\\\\ValidateOptions\\) but should not return anything\\.$#"
-			count: 1
-			path: Editor/ValidateOptions.php
-
-		-
-			message: "#^Method DataTables\\\\Ext\\:\\:inst\\(\\) should return DataTables\\\\Editor\\|DataTables\\\\Editor\\\\Field\\|DataTables\\\\Editor\\\\Join\\|DataTables\\\\Editor\\\\Upload but returns static\\(DataTables\\\\Ext\\)\\.$#"
-			count: 1
-			path: Ext.php
-
-		-
-			message: "#^Method DataTables\\\\Ext\\:\\:instantiate\\(\\) should return DataTables\\\\Editor\\|DataTables\\\\Editor\\\\Field\\|DataTables\\\\Editor\\\\Join\\|DataTables\\\\Editor\\\\Upload but returns static\\(DataTables\\\\Ext\\)\\.$#"
-			count: 1
-			path: Ext.php
 

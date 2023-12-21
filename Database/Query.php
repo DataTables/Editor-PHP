@@ -143,14 +143,14 @@ abstract class Query
 	protected $_offset;
 
 	/**
-	 * @var string
+	 * @var bool
 	 *
 	 * @internal
 	 */
 	protected $_distinct = false;
 
 	/**
-	 * @var string
+	 * @var array{string, string}
 	 *
 	 * @internal
 	 */
@@ -196,7 +196,7 @@ abstract class Query
 	 * @param string       $host Host name
 	 * @param string       $db   Database name
 	 *
-	 * @return Query
+	 * @return \PDO
 	 */
 	public static function connect($user, $pass = '', $host = '', $port = '', $db = '', $dsn = '')
 	{
@@ -262,7 +262,7 @@ abstract class Query
 	 * @param mixed  $type  Data type. See the PHP PDO documentation:
 	 *                      http://php.net/manual/en/pdo.constants.php
 	 *
-	 * @return Query
+	 * @return $this
 	 */
 	public function bind($name, $value, $type = null)
 	{
@@ -291,7 +291,7 @@ abstract class Query
 	 *
 	 * @param bool $dis Optional
 	 *
-	 * @return Query
+	 * @return $this
 	 */
 	public function distinct($dis)
 	{
@@ -334,7 +334,7 @@ abstract class Query
 	 * @param string|string[] ...$get Fields to get - can be specified as
 	 *                                individual fields or an array of fields.
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	public function get($get)
 	{
@@ -374,7 +374,7 @@ abstract class Query
 	 * @param string $condition JOIN condition
 	 * @param string $type      JOIN type
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	public function join($table, $condition, $type = '', $bind = true)
 	{
@@ -402,6 +402,8 @@ abstract class Query
 
 	/**
 	 * Add a left join, with common logic for handling binding or not.
+	 *
+	 * @return $this
 	 */
 	public function left_join($joins)
 	{
@@ -439,7 +441,7 @@ abstract class Query
 	 *
 	 * @param int $lim The number of records to limit the result to.
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	public function limit($lim)
 	{
@@ -453,7 +455,7 @@ abstract class Query
 	 *
 	 * @param string $group_by The field of which the values are to be grouped
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	public function group_by($group_by)
 	{
@@ -468,7 +470,7 @@ abstract class Query
 	 *
 	 * @param string[] $pkey Primary keys
 	 *
-	 * @return Query|string[]
+	 * @return ($pkey is null ? string[] : $this)
 	 */
 	public function pkey($pkey = null)
 	{
@@ -488,7 +490,7 @@ abstract class Query
 	 *                                  individual names, an array of names, a string of comma separated
 	 *                                  names or any combination of those.
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	public function table($table)
 	{
@@ -518,7 +520,7 @@ abstract class Query
 	 *
 	 * @param int $off The number of records to offset the result by.
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	public function offset($off)
 	{
@@ -534,7 +536,7 @@ abstract class Query
 	 *                               be specified as individual names, an array of names, a string of comma
 	 *                               separated names or any combination of those.
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	public function order($order)
 	{
@@ -577,7 +579,7 @@ abstract class Query
 	 *                              name and this is the field's value.
 	 * @param bool            $bind Should the value be bound or not
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	public function set($set, $val = null, $bind = true)
 	{
@@ -608,17 +610,17 @@ abstract class Query
 	 * Can be used in two different ways, as where( field, value ) or as an array of
 	 * conditions to use: where( array('fieldName', ...), array('value', ...) );
 	 *
-	 * @param string|string[]|callable $key   Single field name, or an array of field names.
-	 *                                        If given as a function (i.e. a closure), the function is called, passing the
-	 *                                        query itself in as the only parameter, so the function can add extra conditions
-	 *                                        with parentheses around the additional parameters.
-	 * @param string|string[]          $value Single field value, or an array of
-	 *                                        values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
-	 *                                        on the value of `$op` which should be `=` or `!=`.
-	 * @param string                   $op    Condition operator: <, >, = etc
-	 * @param bool                     $bind  Escape the value (true, default) or not (false).
+	 * @param string|string[]|\Closure($this): void $key   Single field name, or an array of field names.
+	 *                                                     If given as a function (i.e. a closure), the function is called, passing the
+	 *                                                     query itself in as the only parameter, so the function can add extra conditions
+	 *                                                     with parentheses around the additional parameters.
+	 * @param string|int|string[]|int[]             $value Single field value, or an array of
+	 *                                                     values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
+	 *                                                     on the value of `$op` which should be `=` or `!=`.
+	 * @param string                                $op    Condition operator: <, >, = etc
+	 * @param bool                                  $bind  Escape the value (true, default) or not (false).
 	 *
-	 * @return self
+	 * @return $this
 	 *
 	 *  @example
 	 *     The following will produce
@@ -637,7 +639,7 @@ abstract class Query
 	{
 		if ($key === null) {
 			return $this;
-		} elseif (is_callable($key) && is_object($key)) { // is a closure
+		} elseif ($key instanceof \Closure) {
 			$this->_where_group(true, 'AND');
 			$key($this);
 			$this->_where_group(false, 'OR');
@@ -659,17 +661,17 @@ abstract class Query
 	 * Can be used in two different ways, as where( field, value ) or as an array of
 	 * conditions to use: where( array('fieldName', ...), array('value', ...) );
 	 *
-	 * @param string|string[]|callable $key   Single field name, or an array of field names.
-	 *                                        If given as a function (i.e. a closure), the function is called, passing the
-	 *                                        query itself in as the only parameter, so the function can add extra conditions
-	 *                                        with parentheses around the additional parameters.
-	 * @param string|string[]          $value Single field value, or an array of
-	 *                                        values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
-	 *                                        on the value of `$op` which should be `=` or `!=`.
-	 * @param string                   $op    Condition operator: <, >, = etc
-	 * @param bool                     $bind  Escape the value (true, default) or not (false).
+	 * @param string|string[]|\Closure($this): void $key   Single field name, or an array of field names.
+	 *                                                     If given as a function (i.e. a closure), the function is called, passing the
+	 *                                                     query itself in as the only parameter, so the function can add extra conditions
+	 *                                                     with parentheses around the additional parameters.
+	 * @param string|int|string[]|int[]             $value Single field value, or an array of
+	 *                                                     values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
+	 *                                                     on the value of `$op` which should be `=` or `!=`.
+	 * @param string                                $op    Condition operator: <, >, = etc
+	 * @param bool                                  $bind  Escape the value (true, default) or not (false).
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	public function and_where($key, $value = null, $op = '=', $bind = true)
 	{
@@ -682,23 +684,23 @@ abstract class Query
 	 * Can be used in two different ways, as where( field, value ) or as an array of
 	 * conditions to use: where( array('fieldName', ...), array('value', ...) );
 	 *
-	 * @param string|string[]|callable $key   Single field name, or an array of field names.
-	 *                                        If given as a function (i.e. a closure), the function is called, passing the
-	 *                                        query itself in as the only parameter, so the function can add extra conditions
-	 *                                        with parentheses around the additional parameters.
-	 * @param string|string[]          $value Single field value, or an array of
-	 *                                        values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
-	 *                                        on the value of `$op` which should be `=` or `!=`.
-	 * @param string                   $op    Condition operator: <, >, = etc
-	 * @param bool                     $bind  Escape the value (true, default) or not (false).
+	 * @param string|string[]|\Closure($this): void $key   Single field name, or an array of field names.
+	 *                                                     If given as a function (i.e. a closure), the function is called, passing the
+	 *                                                     query itself in as the only parameter, so the function can add extra conditions
+	 *                                                     with parentheses around the additional parameters.
+	 * @param string|int|string[]|int[]             $value Single field value, or an array of
+	 *                                                     values. Can be null to search for `IS NULL` or `IS NOT NULL` (depending
+	 *                                                     on the value of `$op` which should be `=` or `!=`.
+	 * @param string                                $op    Condition operator: <, >, = etc
+	 * @param bool                                  $bind  Escape the value (true, default) or not (false).
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	public function or_where($key, $value = null, $op = '=', $bind = true)
 	{
 		if ($key === null) {
 			return $this;
-		} elseif (is_callable($key) && is_object($key)) {
+		} elseif ($key instanceof \Closure) {
 			$this->_where_group(true, 'OR');
 			$key($this);
 			$this->_where_group(false, 'OR');
@@ -725,13 +727,13 @@ abstract class Query
 	 * define if a grouping bracket should be opened or closed in the query.
 	 * This method is not prefer.
 	 *
-	 * @param bool|callable $inOut If callable it will create the group
-	 *                             automatically and pass the query into the called function. For
-	 *                             legacy operations use `true` to open brackets, `false` to close.
-	 * @param string        $op    Conditional operator to use to join to the
-	 *                             preceding condition. Default `AND`.
+	 * @param bool|\Closure($this): void $inOut If callable it will create the group
+	 *                                          automatically and pass the query into the called function. For
+	 *                                          legacy operations use `true` to open brackets, `false` to close.
+	 * @param string                     $op    Conditional operator to use to join to the
+	 *                                          preceding condition. Default `AND`.
 	 *
-	 * @return self
+	 * @return $this
 	 *
 	 *  @example
 	 *     ```php
@@ -743,7 +745,7 @@ abstract class Query
 	 */
 	public function where_group($inOut, $op = 'AND')
 	{
-		if (is_callable($inOut) && is_object($inOut)) {
+		if ($inOut instanceof \Closure) {
 			$this->_where_group(true, $op);
 			$inOut($this);
 			$this->_where_group(false, $op);
@@ -766,7 +768,7 @@ abstract class Query
 	 * @param string $operator Conditional operator to use to join to the
 	 *                         preceding condition. Default `AND`.
 	 *
-	 * @return self
+	 * @return $this
 	 */
 	public function where_in($field, $arr, $operator = 'AND')
 	{
@@ -1008,7 +1010,7 @@ abstract class Query
 				if ($this->_where[$i - 1]['group'] === '(') {
 					$condition .= '1=1';
 				}
-				// else nothing
+			// else nothing reindent once https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues/7497 is fixed
 			} elseif ($this->_where[$i - 1]['group'] === '(') {
 				// Nothing
 			} else {
@@ -1250,7 +1252,7 @@ abstract class Query
 	 * @internal
 	 *
 	 * @param string|array $where
-	 * @param string       $value
+	 * @param string|int   $value
 	 * @param string       $type
 	 * @param string       $op
 	 * @param bool         $bind
