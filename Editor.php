@@ -436,6 +436,8 @@ class Editor extends Ext
 		if ($print) {
 			$json = json_encode($this->_out, $options);
 
+			header('Content-Type: application/json; charset=utf-8');
+
 			if ($json !== false) {
 				echo $json;
 			} else {
@@ -469,6 +471,8 @@ class Editor extends Ext
 		if (preg_match('/[^a-zA-Z0-9_]/', $callback)) {
 			throw new \Exception('Invalid JSONP callback function name');
 		}
+
+		header('Content-Type: application/javascript; charset=utf-8');
 
 		echo $callback . '(' . json_encode($this->_out) . ');';
 
