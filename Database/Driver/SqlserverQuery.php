@@ -25,7 +25,7 @@ class SqlserverQuery extends Query
 	 */
 	private $_stmt;
 
-	protected $_identifier_limiter = array('[', ']');
+	protected $_identifier_limiter = ['[', ']'];
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -41,7 +41,7 @@ class SqlserverQuery extends Query
 			$host = $opts['host'];
 			$db = $opts['db'];
 			$dsn = isset($opts['dsn']) ? $opts['dsn'] : '';
-			$pdoAttr = isset($opts['pdoAttr']) ? $opts['pdoAttr'] : array();
+			$pdoAttr = isset($opts['pdoAttr']) ? $opts['pdoAttr'] : [];
 		}
 
 		try {
@@ -75,10 +75,10 @@ class SqlserverQuery extends Query
 		} catch (\PDOException $e) {
 			// If we can't establish a DB connection then we return a DataTables
 			// error.
-			echo json_encode(array(
+			echo json_encode([
 				'error' => 'An error occurred while connecting to the database ' .
 					"'{$db}'. The error reported by the server was: " . $e->getMessage(),
-			));
+			]);
 
 			exit(1);
 		}

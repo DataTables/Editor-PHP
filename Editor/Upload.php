@@ -2,7 +2,7 @@
 /**
  * DataTables PHP libraries.
  *
- * PHP libraries for DataTables and DataTables Editor, utilising PHP 5.3+.
+ * PHP libraries for DataTables and DataTables Editor.
  *
  *  @author    SpryMedia
  *  @copyright 2015 SpryMedia ( http://sprymedia.co.uk )
@@ -46,32 +46,16 @@ use DataTables\Database\Query;
  * 	 Store information about a file in a table called `files` and the actual
  * 	 file in an `uploads` directory.
  *   ```
- *		Field::inst( 'imageId' )
- *			->upload(
- *				Upload::inst( $_SERVER['DOCUMENT_ROOT'].'/uploads/__ID__.__EXTN__' )
- *			 		->db( 'files', 'id', array(
- *						'webPath'     => Upload::DB_WEB_PATH,
- *						'fileName'    => Upload::DB_FILE_NAME,
- *						'fileSize'    => Upload::DB_FILE_SIZE,
- *						'systemPath'  => Upload::DB_SYSTEM_PATH
- *					) )
- *					->allowedExtensions( array( 'png', 'jpg' ), "Please upload an image file" )
- *			)
- *	```
- * @example
- * 	 As above, but with PHP 5.4 (which allows chaining from new instances of a
- * 	 class)
- *   ```
- *		newField( 'imageId' )
+ *		new Field( 'imageId' )
  *			->upload(
  *				new Upload( $_SERVER['DOCUMENT_ROOT'].'/uploads/__ID__.__EXTN__' )
- *			 		->db( 'files', 'id', array(
+ *			 		->db( 'files', 'id', [
  *						'webPath'     => Upload::DB_WEB_PATH,
  *						'fileName'    => Upload::DB_FILE_NAME,
  *						'fileSize'    => Upload::DB_FILE_SIZE,
  *						'systemPath'  => Upload::DB_SYSTEM_PATH
- *					) )
- *					->allowedExtensions( array( 'png', 'jpg' ), "Please upload an image file" )
+ *					] )
+ *					->allowedExtensions( [ 'png', 'jpg' ], "Please upload an image file" )
  *			)
  *	```
  */
@@ -132,8 +116,8 @@ class Upload extends DataTables\Ext
 	private $_extnError;
 	private $_error;
 	private $_mode = 0644;
-	private $_validators = array();
-	private $_where = array();
+	private $_validators = [];
+	private $_where = [];
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
@@ -353,7 +337,7 @@ class Upload extends DataTables\Ext
 		}
 
 		$result = $q->exec()->fetchAll();
-		$out = array();
+		$out = [];
 
 		for ($i = 0, $ien = count($result); $i < $ien; ++$i) {
 			if ($this->_dbFormat) {
@@ -613,7 +597,7 @@ class Upload extends DataTables\Ext
 	 */
 	private function _dbExec($upload, $db)
 	{
-		$pathFields = array();
+		$pathFields = [];
 		$insertedId = null;
 
 		// Insert the details requested, for the columns requested

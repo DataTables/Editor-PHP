@@ -9,11 +9,11 @@ jobs:
     name: Unit
     runs-on: ubuntu-latest
     container:
-      image: ${{ (matrix.php == '5.3' || matrix.php == '5.4' || matrix.php == '5.5' || matrix.php == '5.6' || matrix.php == '7.0' || matrix.php == '7.1' || matrix.php == '7.2' || matrix.php == '7.3') && 'php' || 'ghcr.io/mvorisek/image-php' }}:${{ matrix.php }}
+      image: ${{ (matrix.php == '5.4' || matrix.php == '5.5' || matrix.php == '5.6' || matrix.php == '7.0' || matrix.php == '7.1' || matrix.php == '7.2' || matrix.php == '7.3') && 'php' || 'ghcr.io/mvorisek/image-php' }}:${{ matrix.php }}
     strategy:
       fail-fast: false
       matrix:
-        php: ['5.3', '5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', 'latest']
+        php: ['5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', 'latest']
         type: ['Lint']
 #        php: ['7.4', '8.0', '8.1', 'latest']
 #        type: ['Phpunit']
@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Configure PHP (for PHP < 7.4)
-        if: matrix.php == '5.3' || matrix.php == '5.4' || matrix.php == '5.5' || matrix.php == '5.6' || matrix.php == '7.0' || matrix.php == '7.1' || matrix.php == '7.2' || matrix.php == '7.3'
+        if: matrix.php == '5.4' || matrix.php == '5.5' || matrix.php == '5.6' || matrix.php == '7.0' || matrix.php == '7.1' || matrix.php == '7.2' || matrix.php == '7.3'
         run: |
           php --version
           echo 'deb [trusted=yes] http://archive.debian.org/debian jessie main' > /etc/apt/sources.list
@@ -39,7 +39,7 @@ jobs:
           sed -i 's/require-dev/require-xxx/g' composer.json
 
       - name: Configure PHP (for PHP >= 7.4)
-        if: matrix.php != '5.3' && matrix.php != '5.4' && matrix.php != '5.5' && matrix.php != '5.6' && matrix.php != '7.0' && matrix.php != '7.1' && matrix.php != '7.2' && matrix.php != '7.3'
+        if: matrix.php != '5.4' && matrix.php != '5.5' && matrix.php != '5.6' && matrix.php != '7.0' && matrix.php != '7.1' && matrix.php != '7.2' && matrix.php != '7.3'
         run: |
           rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
           php --version

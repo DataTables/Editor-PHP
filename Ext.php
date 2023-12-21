@@ -2,7 +2,7 @@
 /**
  * DataTables PHP libraries.
  *
- * PHP libraries for DataTables and DataTables Editor, utilising PHP 5.3+.
+ * PHP libraries for DataTables and DataTables Editor.
  *
  *  @author    SpryMedia
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
@@ -28,6 +28,8 @@ class Ext
 	 * target class and chain methods as normal.
 	 *
 	 * @return static Instantiated class
+	 *
+	 * @deprecated Use `new` instead.
 	 */
 	public static function instantiate()
 	{
@@ -45,6 +47,8 @@ class Ext
 	 * static method, but is simply shorter and easier to type!
 	 *
 	 * @return static class
+	 *
+	 * @deprecated Use `new` instead.
 	 */
 	public static function inst()
 	{
@@ -192,7 +196,7 @@ class Ext
 			$loopName = $names[$i];
 
 			if (!isset($inner[$loopName])) {
-				$inner[$loopName] = array();
+				$inner[$loopName] = [];
 			} elseif (!is_array($inner[$loopName])) {
 				throw new \Exception(
 					'A property with the name `' . $name . '` already exists. This ' .

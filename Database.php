@@ -2,7 +2,7 @@
 /**
  * DataTables PHP libraries.
  *
- * PHP libraries for DataTables and DataTables Editor, utilising PHP 5.3+.
+ * PHP libraries for DataTables and DataTables Editor.
  *
  *  @author    SpryMedia
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
@@ -38,19 +38,19 @@ class Database
 	 *
 	 * @param array<string, string|\PDO> $opts Array of connection parameters for the database:
 	 *                                         ```php
-	 *                                         array(
+	 *                                         [
 	 *                                         "user" => "", // User name
 	 *                                         "pass" => "", // Password
 	 *                                         "host" => "", // Host name
 	 *                                         "port" => "", // Port
 	 *                                         "db"   => "", // Database name
 	 *                                         "type" => ""  // Datable type: "Mysql", "Postgres" or "Sqlite"
-	 *                                         )
+	 *                                         ]
 	 *                                         ```
 	 */
 	public function __construct($opts)
 	{
-		$types = array('Mysql', 'Oracle', 'Postgres', 'Sqlite', 'Sqlserver', 'Db2', 'Firebird');
+		$types = ['Mysql', 'Oracle', 'Postgres', 'Sqlite', 'Sqlserver', 'Db2', 'Firebird'];
 
 		if (!in_array($opts['type'], $types)) {
 			throw new \Exception(
@@ -466,10 +466,10 @@ class Database
 		$callback = $this->_debugCallback;
 
 		if ($callback) {
-			$callback(array(
+			$callback([
 				'query' => $query,
 				'bindings' => $bindings,
-			));
+			]);
 		}
 
 		return $this;

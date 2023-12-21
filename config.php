@@ -13,7 +13,7 @@ ini_set('display_errors', '1');
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Database user / pass
  */
-$sql_details = array(
+$sql_details = [
 	'type' => 'Mysql',     // Database type: "Mysql", "Postgres", "Sqlserver", "Sqlite" or "Oracle"
 	'user' => '',          // Database user name
 	'pass' => '',          // Database password
@@ -21,8 +21,8 @@ $sql_details = array(
 	'port' => '',          // Database connection port (can be left empty for default)
 	'db' => '',          // Database name
 	'dsn' => '',          // PHP DSN extra information. Set as `charset=utf8mb4` if you are using MySQL
-	'pdoAttr' => array(),   // PHP PDO attributes array. See the PHP documentation for all options
-);
+	'pdoAttr' => [],   // PHP PDO attributes array. See the PHP documentation for all options
+];
 
 // This is included for the development and deploy environment used on the DataTables
 // server. You can delete this block - it just includes my own user/pass without making

@@ -2,7 +2,7 @@
 /**
  * DataTables PHP libraries.
  *
- * PHP libraries for DataTables and DataTables Editor, utilising PHP 5.3+.
+ * PHP libraries for DataTables and DataTables Editor.
  *
  *  @author    SpryMedia
  *  @copyright 2016 SpryMedia ( http://sprymedia.co.uk )
@@ -29,8 +29,8 @@ use DataTables\Database\Query;
  *  @example
  *   Get a list of options from the `sites` table
  *    ```php
- *    Field::inst( 'users.site' )
- *        ->options( Options::inst()
+ *    (new Field( 'users.site' ))
+ *        ->options( (new Options())
  *            ->table( 'sites' )
  *            ->value( 'id' )
  *            ->label( 'name' )
@@ -39,8 +39,8 @@ use DataTables\Database\Query;
  *  @example
  *   Get a list of options with custom ordering
  *    ```php
- *    Field::inst( 'users.site' )
- *        ->options( Options::inst()
+ *    (new Field( 'users.site' ))
+ *        ->options( (new Options())
  *            ->table( 'sites' )
  *            ->value( 'id' )
  *            ->label( 'name' )
@@ -50,8 +50,8 @@ use DataTables\Database\Query;
  *  @example
  *   Get a list of options showing the id and name in the label
  *    ```php
- *    Field::inst( 'users.site' )
- *        ->options( Options::inst()
+ *    (new Field( 'users.site' ))
+ *        ->options( (new Options())
  *            ->table( 'sites' )
  *            ->value( 'id' )
  *            ->label( [ 'name', 'id' ] )
@@ -74,10 +74,10 @@ class Options extends DataTables\Ext
 	private $_value;
 
 	/** @var string[] Column names for the label(s) */
-	private $_label = array();
+	private $_label = [];
 
 	/** Information for left join */
-	private $_leftJoin = array();
+	private $_leftJoin = [];
 
 	/** @var int Row limit */
 	private $_limit;
@@ -91,7 +91,7 @@ class Options extends DataTables\Ext
 	/** @var string ORDER BY clause */
 	private $_order;
 
-	private $_manualAdd = array();
+	private $_manualAdd = [];
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -111,10 +111,10 @@ class Options extends DataTables\Ext
 			$value = $label;
 		}
 
-		$this->_manualAdd[] = array(
+		$this->_manualAdd[] = [
 			'label' => $label,
 			'value' => $value,
-		);
+		];
 
 		return $this;
 	}
@@ -132,7 +132,7 @@ class Options extends DataTables\Ext
 		if ($_ === null) {
 			return $this;
 		} elseif (is_string($_)) {
-			$this->_label = array($_);
+			$this->_label = [$_];
 		} else {
 			$this->_label = $_;
 		}
@@ -152,12 +152,12 @@ class Options extends DataTables\Ext
 	 */
 	public function leftJoin($table, $field1, $operator, $field2)
 	{
-		$this->_leftJoin[] = array(
+		$this->_leftJoin[] = [
 			'table' => $table,
 			'field1' => $field1,
 			'field2' => $field2,
 			'operator' => $operator,
-		);
+		];
 
 		return $this;
 	}
@@ -261,14 +261,14 @@ class Options extends DataTables\Ext
 		$formatter = $this->_renderer;
 
 		// Create a list of the fields that we need to get from the db
-		$fields = array();
+		$fields = [];
 		$fields[] = $value;
 		$fields = array_merge($fields, $label);
 
 		// We need a default formatter if one isn't provided
 		if (!$formatter) {
-			$formatter = function ($row) use ($label) {
-				$a = array();
+			$formatter = static function ($row) use ($label) {
+				$a = [];
 
 				for ($i = 0, $ien = count($label); $i < $ien; ++$i) {
 					$a[] = $row[$label[$i]];
@@ -316,13 +316,13 @@ class Options extends DataTables\Ext
 			->fetchAll();
 
 		// Create the output array
-		$out = array();
+		$out = [];
 
 		for ($i = 0, $ien = count($rows); $i < $ien; ++$i) {
-			$out[] = array(
+			$out[] = [
 				'label' => $formatter($rows[$i]),
 				'value' => $rows[$i][$value],
-			);
+			];
 		}
 
 		// Stick on any extra manually added options
@@ -332,7 +332,7 @@ class Options extends DataTables\Ext
 
 		// Only sort if there was no SQL order field
 		if (!$this->_order) {
-			usort($out, function ($a, $b) {
+			usort($out, static function ($a, $b) {
 				return is_numeric($a['label']) && is_numeric($b['label']) ?
 					($a['label'] * 1) - ($b['label'] * 1) :
 					strcmp($a['label'], $b['label']);

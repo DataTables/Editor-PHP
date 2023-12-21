@@ -2,7 +2,7 @@
 /**
  * DataTables PHP libraries.
  *
- * PHP libraries for DataTables and DataTables Editor, utilising PHP 5.3+.
+ * PHP libraries for DataTables and DataTables Editor.
  *
  *  @author    SpryMedia
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
@@ -34,19 +34,19 @@ use DataTables\HtmLawed\HtmLawedVanillaWrapper;
  *  @example
  *    Simply get a column with the name "city". No validation is performed.
  *    ```php
- *      Field::inst( 'city' )
+ *      new Field( 'city' )
  *    ```
  *  @example
  *    Get a column with the name "first_name" - when edited a value must
  *    be given due to the "required" validation from the {@see Validate} class.
  *    ```php
- *      Field::inst( 'first_name' )->validator( 'Validate::required' )
+ *      (new Field( 'first_name' ))->validator( 'Validate::required' )
  *    ```
  *  @example
  *    Working with a date field, which is validated, and also has *get* and
  *    *set* formatters.
  *    ```php
- *      Field::inst( 'registered_date' )
+ *      (new Field( 'registered_date' ))
  *          ->validator( 'Validate::dateFormat', 'D, d M y' )
  *          ->getFormatter( 'Format::date_sql_to_format', 'D, d M y' )
  *          ->setFormatter( 'Format::date_format_to_sql', 'D, d M y' )
@@ -54,7 +54,7 @@ use DataTables\HtmLawed\HtmLawedVanillaWrapper;
  *  @example
  *    Using an alias in the first parameter
  *    ```php
- *      Field::inst( 'name.first as first_name' )
+ *      new Field( 'name.first as first_name' )
  *    ```
  */
 class Field extends DataTables\Ext
@@ -153,7 +153,7 @@ class Field extends DataTables\Ext
 	private $_setValue;
 
 	/** @var array[] */
-	private $_validator = array();
+	private $_validator = [];
 
 	/** @var Upload */
 	private $_upload;
@@ -179,8 +179,8 @@ class Field extends DataTables\Ext
 	 * As a result of this, the following constructs have identical
 	 * functionality:
 	 *
-	 *    Field::inst( 'firstName as name' );
-	 *    Field::inst( 'firstName', 'name' );
+	 *    new Field( 'firstName as name' );
+	 *    new Field( 'firstName', 'name' );
 	 *
 	 * @param string $_ Value to set if using as a setter.
 	 *
@@ -318,7 +318,7 @@ class Field extends DataTables\Ext
 			$this->_optsFn = $table;
 		} else {
 			$this->_optsFn = null;
-			$this->_opts = Options::inst()
+			$this->_opts = (new Options())
 				->table($table)
 				->value($value)
 				->label($label);
@@ -510,10 +510,10 @@ class Field extends DataTables\Ext
 			return $this->_validator;
 		}
 
-		$this->_validator[] = array(
+		$this->_validator[] = [
 			'func' => $_,
 			'opts' => $opts,
-		);
+		];
 
 		return $this;
 	}
@@ -767,13 +767,13 @@ class Field extends DataTables\Ext
 			$this->_readProp($this->name(), $data);
 
 		$processData = $editor->inData();
-		$instances = array(
+		$instances = [
 			'action' => $processData['action'],
 			'id' => $id,
 			'field' => $this,
 			'editor' => $editor,
 			'db' => $editor->db(),
-		);
+		];
 
 		for ($i = 0, $ien = count($this->_validator); $i < $ien; ++$i) {
 			$validator = $this->_validator[$i];
@@ -838,7 +838,7 @@ class Field extends DataTables\Ext
 		$xss = $this->_xss;
 
 		if (is_array($val)) {
-			$res = array();
+			$res = [];
 
 			foreach ($val as $individual) {
 				$res[] = $xss ?

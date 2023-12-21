@@ -2,7 +2,7 @@
 /**
  * DataTables PHP libraries.
  *
- * PHP libraries for DataTables and DataTables Editor, utilising PHP 5.3+.
+ * PHP libraries for DataTables and DataTables Editor.
  *
  *  @author    SpryMedia
  *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
@@ -77,49 +77,49 @@ abstract class Query
 	 *
 	 * @internal
 	 */
-	protected $_table = array();
+	protected $_table = [];
 
 	/**
 	 * @var array
 	 *
 	 * @internal
 	 */
-	protected $_field = array();
+	protected $_field = [];
 
 	/**
 	 * @var array
 	 *
 	 * @internal
 	 */
-	protected $_bindings = array();
+	protected $_bindings = [];
 
 	/**
 	 * @var array
 	 *
 	 * @internal
 	 */
-	protected $_where = array();
+	protected $_where = [];
 
 	/**
 	 * @var array
 	 *
 	 * @internal
 	 */
-	protected $_join = array();
+	protected $_join = [];
 
 	/**
 	 * @var array
 	 *
 	 * @internal
 	 */
-	protected $_order = array();
+	protected $_order = [];
 
 	/**
 	 * @var array
 	 *
 	 * @internal
 	 */
-	protected $_noBind = array();
+	protected $_noBind = [];
 
 	/**
 	 * @var int
@@ -154,7 +154,7 @@ abstract class Query
 	 *
 	 * @internal
 	 */
-	protected $_identifier_limiter = array('`', '`');
+	protected $_identifier_limiter = ['`', '`'];
 
 	/**
 	 * @var string
@@ -266,11 +266,11 @@ abstract class Query
 	 */
 	public function bind($name, $value, $type = null)
 	{
-		$this->_bindings[] = array(
+		$this->_bindings[] = [
 			'name' => $this->_safe_bind($name),
 			'value' => $value,
 			'type' => $type,
-		);
+		];
 
 		return $this;
 	}
@@ -382,7 +382,7 @@ abstract class Query
 		if ($type !== '') {
 			$type = strtoupper(trim($type));
 
-			if (!in_array($type, array('LEFT', 'RIGHT', 'INNER', 'OUTER', 'LEFT OUTER', 'RIGHT OUTER'))) {
+			if (!in_array($type, ['LEFT', 'RIGHT', 'INNER', 'OUTER', 'LEFT OUTER', 'RIGHT OUTER'])) {
 				$type = '';
 			}
 		}
@@ -409,9 +409,9 @@ abstract class Query
 	{
 		// Allow a single associative array
 		if ($this->_is_assoc($joins)) {
-			$joins = array(
+			$joins = [
 				$joins,
-			);
+			];
 		}
 
 		for ($i = 0, $ien = count($joins); $i < $ien; ++$i) {
@@ -571,7 +571,7 @@ abstract class Query
 	 * Set fields to a given value.
 	 *
 	 * Can be used in two different ways, as set( field, value ) or as an array of
-	 * fields to set: set( array( 'fieldName' => 'value', ...) );
+	 * fields to set: set( [ 'fieldName' => 'value', ...] );
 	 *
 	 * @param string|string[] $set  Can be given as a single string, when then $val
 	 *                              must be set, or as an array of key/value pairs to be set.
@@ -588,7 +588,7 @@ abstract class Query
 		}
 
 		if (!is_array($set)) {
-			$set = array($set => $val);
+			$set = [$set => $val];
 		}
 
 		foreach ($set as $key => $value) {
@@ -608,7 +608,7 @@ abstract class Query
 	 * Where query - multiple conditions are bound as ANDs.
 	 *
 	 * Can be used in two different ways, as where( field, value ) or as an array of
-	 * conditions to use: where( array('fieldName', ...), array('value', ...) );
+	 * conditions to use: where( ['fieldName', ...], ['value', ...] );
 	 *
 	 * @param string|string[]|\Closure($this): void $key   Single field name, or an array of field names.
 	 *                                                     If given as a function (i.e. a closure), the function is called, passing the
@@ -659,7 +659,7 @@ abstract class Query
 	 * of `where` for naming consistency.
 	 *
 	 * Can be used in two different ways, as where( field, value ) or as an array of
-	 * conditions to use: where( array('fieldName', ...), array('value', ...) );
+	 * conditions to use: where( ['fieldName', ...], ['value', ...] );
 	 *
 	 * @param string|string[]|\Closure($this): void $key   Single field name, or an array of field names.
 	 *                                                     If given as a function (i.e. a closure), the function is called, passing the
@@ -682,7 +682,7 @@ abstract class Query
 	 * Add addition where conditions to the query with an OR operator.
 	 *
 	 * Can be used in two different ways, as where( field, value ) or as an array of
-	 * conditions to use: where( array('fieldName', ...), array('value', ...) );
+	 * conditions to use: where( ['fieldName', ...], ['value', ...] );
 	 *
 	 * @param string|string[]|\Closure($this): void $key   Single field name, or an array of field names.
 	 *                                                     If given as a function (i.e. a closure), the function is called, passing the
@@ -776,7 +776,7 @@ abstract class Query
 			return $this;
 		}
 
-		$binders = array();
+		$binders = [];
 		$prefix = ':wherein';
 
 		// Need to build an array of the binders (having bound the values) so
@@ -790,12 +790,12 @@ abstract class Query
 			++$this->_whereInCnt;
 		}
 
-		$this->_where[] = array(
+		$this->_where[] = [
 			'operator' => $operator,
 			'group' => null,
 			'field' => $this->_protect_identifiers($field),
 			'query' => $this->_protect_identifiers($field) . ' IN (' . implode(', ', $binders) . ')',
-		);
+		];
 
 		return $this;
 	}
@@ -815,7 +815,7 @@ abstract class Query
 	 */
 	protected function _build_field($addAlias = false)
 	{
-		$a = array();
+		$a = [];
 		$asAlias = $this->_supportsAsAlias ?
 			' as ' :
 			' ';
@@ -926,7 +926,7 @@ abstract class Query
 	 */
 	protected function _build_set()
 	{
-		$a = array();
+		$a = [];
 
 		for ($i = 0; $i < count($this->_field); ++$i) {
 			$field = $this->_field[$i];
@@ -952,7 +952,7 @@ abstract class Query
 	{
 		if ($this->_type === 'insert') {
 			// insert, update and delete statements don't need or want aliases in the table name
-			$a = array();
+			$a = [];
 
 			for ($i = 0, $ien = count($this->_table); $i < $ien; ++$i) {
 				$table = str_ireplace(' as ', ' ', $this->_table[$i]);
@@ -976,7 +976,7 @@ abstract class Query
 	 */
 	protected function _build_value()
 	{
-		$a = array();
+		$a = [];
 
 		for ($i = 0, $ien = count($this->_field); $i < $ien; ++$i) {
 			$a[] = ' :' . $this->_safe_bind($this->_field[$i]);
@@ -1262,7 +1262,7 @@ abstract class Query
 		if ($where === null) {
 			return;
 		} elseif (!is_array($where)) {
-			$where = array($where => $value);
+			$where = [$where => $value];
 		}
 
 		foreach ($where as $key => $value) {
@@ -1270,41 +1270,41 @@ abstract class Query
 
 			if ($value === null) {
 				// Null query
-				$this->_where[] = array(
+				$this->_where[] = [
 					'operator' => $type,
 					'group' => null,
 					'field' => $this->_protect_identifiers($key),
 					'query' => $this->_protect_identifiers($key) . ($op === '=' ?
 						' IS NULL' :
 						' IS NOT NULL'),
-				);
+				];
 			} elseif ($bind) {
 				// Binding condition (i.e. escape data)
 				if ($this->_dbHost->type() === 'Postgres' && $op === 'like') {
 					// Postgres specific a it needs a case for string searching non-text data
-					$this->_where[] = array(
+					$this->_where[] = [
 						'operator' => $type,
 						'group' => null,
 						'field' => $this->_protect_identifiers($key),
 						'query' => $this->_protect_identifiers($key) . '::text ilike ' . $this->_safe_bind(':where_' . $i),
-					);
+					];
 				} else {
-					$this->_where[] = array(
+					$this->_where[] = [
 						'operator' => $type,
 						'group' => null,
 						'field' => $this->_protect_identifiers($key),
 						'query' => $this->_protect_identifiers($key) . ' ' . $op . ' ' . $this->_safe_bind(':where_' . $i),
-					);
+					];
 				}
 				$this->bind(':where_' . $i, $value);
 			} else {
 				// Non-binding condition
-				$this->_where[] = array(
+				$this->_where[] = [
 					'operator' => $type,
 					'group' => null,
 					'field' => null,
 					'query' => $this->_protect_identifiers($key) . ' ' . $op . ' ' . $this->_protect_identifiers($value),
-				);
+				];
 			}
 		}
 	}
@@ -1318,10 +1318,10 @@ abstract class Query
 	 */
 	protected function _where_group($inOut, $op)
 	{
-		$this->_where[] = array(
+		$this->_where[] = [
 			'group' => $inOut ? '(' : ')',
 			'operator' => $op,
-		);
+		];
 	}
 
 	/**
@@ -1329,7 +1329,7 @@ abstract class Query
 	 */
 	private function _is_assoc(array $arr)
 	{
-		if ($arr === array()) {
+		if ($arr === []) {
 			return false;
 		}
 

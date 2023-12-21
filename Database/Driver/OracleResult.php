@@ -57,7 +57,7 @@ class OracleResult extends Result
 	public function fetchAll($fetchType = \PDO::FETCH_ASSOC /* irrelevant for oci8 */)
 	{
 		if (!$this->_rows) {
-			$out = array();
+			$out = [];
 
 			oci_fetch_all($this->_stmt, $out, 0, -1, OCI_FETCHSTATEMENT_BY_ROW + OCI_ASSOC);
 
