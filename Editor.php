@@ -145,10 +145,10 @@ class Editor extends Ext
 	 * Private properties
 	 */
 
-	/** @var DataTables\Database */
+	/** @var Database */
 	private $_db;
 
-	/** @var DataTables\Editor\Field[] */
+	/** @var Editor\Field[] */
 	private $_fields = [];
 
 	/** @var array */
@@ -160,7 +160,7 @@ class Editor extends Ext
 	/** @var string */
 	private $_idPrefix = 'row_';
 
-	/** @var DataTables\Editor\Join[] */
+	/** @var Editor\Join[] */
 	private $_join = [];
 
 	/** @var string[] */
@@ -1579,8 +1579,8 @@ class Editor extends Ext
 	 * When server-side processing is being used, modify the query with // the
 	 * required extra conditions.
 	 *
-	 * @param \DataTables\Database\Query $query Query instance to apply the SSP commands to
-	 * @param array                      $http  Parameters from HTTP request
+	 * @param Query $query Query instance to apply the SSP commands to
+	 * @param array $http  Parameters from HTTP request
 	 *
 	 * @return array Server-side processing information array
 	 */
@@ -1654,8 +1654,8 @@ class Editor extends Ext
 	/**
 	 * Sorting requirements to a server-side processing query.
 	 *
-	 * @param \DataTables\Database\Query $query Query instance to apply sorting to
-	 * @param array                      $http  HTTP variables (i.e. GET or POST)
+	 * @param Query $query Query instance to apply sorting to
+	 * @param array $http  HTTP variables (i.e. GET or POST)
 	 */
 	private function _ssp_sort($query, $http)
 	{
@@ -1899,8 +1899,8 @@ class Editor extends Ext
 	 * Add DataTables' 'where' condition to a server-side processing query. This
 	 * works for both global and individual column filtering.
 	 *
-	 * @param \DataTables\Database\Query $query Query instance to apply the WHERE conditions to
-	 * @param array                      $http  HTTP variables (i.e. GET or POST)
+	 * @param Query $query Query instance to apply the WHERE conditions to
+	 * @param array $http  HTTP variables (i.e. GET or POST)
 	 */
 	private function _ssp_filter($query, $http)
 	{
@@ -2028,8 +2028,8 @@ class Editor extends Ext
 	/**
 	 * Add a limit / offset to a server-side processing query.
 	 *
-	 * @param \DataTables\Database\Query $query Query instance to apply the offset / limit to
-	 * @param array                      $http  HTTP variables (i.e. GET or POST)
+	 * @param Query $query Query instance to apply the offset / limit to
+	 * @param array $http  HTTP variables (i.e. GET or POST)
 	 */
 	private function _ssp_limit($query, $http)
 	{
@@ -2047,7 +2047,7 @@ class Editor extends Ext
 	/**
 	 * Add local WHERE condition to query.
 	 *
-	 * @param \DataTables\Database\Query $query Query instance to apply the WHERE conditions to
+	 * @param Query $query Query instance to apply the WHERE conditions to
 	 */
 	private function _get_where($query)
 	{
@@ -2096,8 +2096,8 @@ class Editor extends Ext
 	 *                       on. Mote that for compound keys, this should be the "joined" value
 	 *                       (i.e. a single string rather than an array).
 	 *
-	 * @return \DataTables\Database\Result Result from the query or null if no
-	 *                                     query performed.
+	 * @return Database\Result Result from the query or null if no
+	 *                         query performed.
 	 */
 	private function _insert_or_update($id, $values)
 	{
@@ -2182,8 +2182,8 @@ class Editor extends Ext
 	 * @param string $table Database table name to use (can include an alias)
 	 * @param array  $where Update condition
 	 *
-	 * @return \DataTables\Database\Result Result from the query or null if no query
-	 *                                     performed.
+	 * @return Database\Result Result from the query or null if no query
+	 *                         performed.
 	 */
 	private function _insert_or_update_table($table, $values, $where = null)
 	{

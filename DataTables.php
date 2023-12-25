@@ -8,7 +8,7 @@
  *  @copyright SpryMedia ( http://sprymedia.co.uk )
  *  @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @see      http://editor.datatables.net
+ *  @see http://editor.datatables.net
  */
 define('DATATABLES', true);
 

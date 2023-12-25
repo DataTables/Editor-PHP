@@ -78,7 +78,7 @@ class Join extends DataTables\Ext
 	 * Private properties
 	 */
 
-	/** @var DataTables\Editor\Field[] */
+	/** @var Field[] */
 	private $_fields = [];
 
 	/** @var array */
@@ -805,7 +805,7 @@ class Join extends DataTables\Ext
 	/**
 	 * Add local WHERE condition to query.
 	 *
-	 * @param \DataTables\Database\Query $query Query instance to apply the WHERE conditions to
+	 * @param Query $query Query instance to apply the WHERE conditions to
 	 */
 	private function _apply_where($query)
 	{

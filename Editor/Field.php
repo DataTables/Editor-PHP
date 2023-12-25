@@ -604,7 +604,7 @@ class Field extends DataTables\Ext
 	 * Execute the ipOpts to get the list of options to return to the client-
 	 * side.
 	 *
-	 * @param \DataTables\Database $db Database instance
+	 * @param Database $db Database instance
 	 *
 	 * @return false|array Array of value / label options for the list
 	 *
