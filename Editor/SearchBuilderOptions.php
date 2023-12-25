@@ -4,11 +4,11 @@
  *
  * PHP libraries for DataTables and DataTables Editor.
  *
- *  @author    SpryMedia
- *  @copyright 2016 SpryMedia ( http://sprymedia.co.uk )
- *  @license   http://editor.datatables.net/license DataTables Editor
+ * @author    SpryMedia
+ * @copyright 2016 SpryMedia ( http://sprymedia.co.uk )
+ * @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @see      http://editor.datatables.net
+ * @see       http://editor.datatables.net
  */
 
 namespace DataTables\Editor;
@@ -25,7 +25,7 @@ use DataTables\Ext;
  *
  * `Options` instances are used with the {@see Field->options()} method.
  *
- *  @example
+ * @example
  *   Get a list of options from the `sites` table
  *    ```php
  *    (new Field( 'users.site' ))
@@ -35,7 +35,7 @@ use DataTables\Ext;
  *            ->label( 'name' )
  *        )
  *    ```
- *  @example
+ * @example
  *   Get a list of options with custom ordering
  *    ```php
  *    (new Field( 'users.site' ))
@@ -46,7 +46,7 @@ use DataTables\Ext;
  *            ->order( 'name DESC' )
  *        )
  *    ```
- *  @example
+ * @example
  *   Get a list of options showing the id and name in the label
  *    ```php
  *    (new Field( 'users.site' ))

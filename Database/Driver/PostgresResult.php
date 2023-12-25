@@ -4,11 +4,11 @@
  *
  * PHP libraries for DataTables and DataTables Editor.
  *
- *  @author    SpryMedia
- *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
- *  @license   http://editor.datatables.net/license DataTables Editor
+ * @author    SpryMedia
+ * @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
+ * @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @see      http://editor.datatables.net
+ * @see       http://editor.datatables.net
  */
 
 namespace DataTables\Database\Driver;
@@ -18,7 +18,7 @@ use DataTables\Database\Result;
 /**
  * Postgres driver for DataTables Database Result class.
  *
- *  @internal
+ * @internal
  */
 class PostgresResult extends Result
 {

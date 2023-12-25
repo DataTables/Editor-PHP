@@ -4,11 +4,11 @@
  *
  * PHP libraries for DataTables and DataTables Editor.
  *
- *  @author    SpryMedia
- *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
- *  @license   http://editor.datatables.net/license DataTables Editor
+ * @author    SpryMedia
+ * @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
+ * @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @see      http://editor.datatables.net
+ * @see       http://editor.datatables.net
  */
 
 namespace DataTables\Editor;
@@ -31,18 +31,18 @@ use DataTables\HtmLawed\HtmLawedVanillaWrapper;
  * {@see Join->field()} methods to describe what fields should be interacted
  * with by the editable table.
  *
- *  @example
+ * @example
  *    Simply get a column with the name "city". No validation is performed.
  *    ```php
  *      new Field( 'city' )
  *    ```
- *  @example
+ * @example
  *    Get a column with the name "first_name" - when edited a value must
  *    be given due to the "required" validation from the {@see Validate} class.
  *    ```php
  *      (new Field( 'first_name' ))->validator( 'Validate::required' )
  *    ```
- *  @example
+ * @example
  *    Working with a date field, which is validated, and also has *get* and
  *    *set* formatters.
  *    ```php
@@ -51,7 +51,7 @@ use DataTables\HtmLawed\HtmLawedVanillaWrapper;
  *          ->getFormatter( 'Format::date_sql_to_format', 'D, d M y' )
  *          ->setFormatter( 'Format::date_format_to_sql', 'D, d M y' )
  *    ```
- *  @example
+ * @example
  *    Using an alias in the first parameter
  *    ```php
  *      new Field( 'name.first as first_name' )

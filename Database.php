@@ -4,11 +4,11 @@
  *
  * PHP libraries for DataTables and DataTables Editor.
  *
- *  @author    SpryMedia
- *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
- *  @license   http://editor.datatables.net/license DataTables Editor
+ * @author    SpryMedia
+ * @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
+ * @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @see      http://editor.datatables.net
+ * @see       http://editor.datatables.net
  */
 
 namespace DataTables;
@@ -282,7 +282,7 @@ class Database
 	 *
 	 * @return Query
 	 *
-	 *  @example
+	 * @example
 	 *    Safely escape user input
 	 *    ```php
 	 *    $db
@@ -385,12 +385,12 @@ class Database
 	 *
 	 * @return Result
 	 *
-	 *  @example
+	 * @example
 	 *    Basic select
 	 *    ```php
 	 *    $result = $db->sql( 'SELECT * FROM myTable;' );
 	 *    ```
-	 *  @example
+	 * @example
 	 *    Set the character set of the connection
 	 *    ```php
 	 *    $db->sql("SET character_set_client=utf8");

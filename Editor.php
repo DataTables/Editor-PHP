@@ -4,14 +4,14 @@
  *
  * PHP libraries for DataTables and DataTables Editor.
  *
- *  @author    SpryMedia
+ * @author    SpryMedia
  *
- *  @version   __VERSION__
+ * @version   __VERSION__
  *
- *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
- *  @license   http://editor.datatables.net/license DataTables Editor
+ * @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
+ * @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @see      http://editor.datatables.net
+ * @see       http://editor.datatables.net
  */
 
 namespace DataTables;
@@ -40,7 +40,7 @@ use DataTables\Editor\Join;
  * the Editor class is used, and how to install Editor on your server, please
  * refer to the {@link https://editor.datatables.net/manual Editor manual}.
  *
- *  @example
+ * @example
  *    A very basic example of using Editor to create a table with four fields.
  *    This is all that is needed on the server-side to create a editable
  *    table - the {@see Editor->process()} method determines what action DataTables /
@@ -550,7 +550,7 @@ class Editor extends Ext
 	 * from the parent row. Note that this is disabled by default and will be
 	 * removed completely in v2. Use `ON DELETE CASCADE` in your database instead.
 	 *
-	 *  @deprecated
+	 * @deprecated
 	 *
 	 * @param bool $_ Value to set. If not given, then used as a getter.
 	 *

@@ -4,11 +4,11 @@
  *
  * PHP libraries for DataTables and DataTables Editor.
  *
- *  @author    SpryMedia
- *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
- *  @license   http://editor.datatables.net/license DataTables Editor
+ * @author    SpryMedia
+ * @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
+ * @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @see      http://editor.datatables.net
+ * @see       http://editor.datatables.net
  */
 
 namespace DataTables\Editor;
@@ -29,7 +29,7 @@ use DataTables\Ext;
  * useful to understand how this class represents the links between tables,
  * before fully getting to grips with it's API.
  *
- *  @example
+ * @example
  *    Join the parent table (the one specified in the {@see Editor->table()}
  *    method) with the table *access*, with a link table *user__access*, which
  *    allows multiple properties to be found for each row in the parent table.
@@ -42,7 +42,7 @@ use DataTables\Ext;
  *              new Field( 'name' )
  *          )
  *    ```
- *  @example
+ * @example
  *    Single row join - here we join the parent table with a single row in
  *    the child table, without an intermediate link table. In this case the
  *    child table is called *extra* and the two fields give the columns that
