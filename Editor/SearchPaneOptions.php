@@ -13,8 +13,8 @@
 
 namespace DataTables\Editor;
 
-use DataTables;
 use DataTables\Database\Query;
+use DataTables\Ext;
 
 /**
  * The Options class provides a convenient method of specifying where Editor
@@ -60,7 +60,7 @@ use DataTables\Database\Query;
  *        )
  *    ```
  */
-class SearchPaneOptions extends DataTables\Ext
+class SearchPaneOptions extends Ext
 {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private parameters

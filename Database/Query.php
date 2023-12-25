@@ -23,7 +23,7 @@ use DataTables\Database;
  * Perform an individual query on the database.
  *
  * The typical pattern for using this class is through the {@see
- * \DataTables\Database->query()} method (and it's 'select', etc short-cuts).
+ * Database->query()} method (and it's 'select', etc short-cuts).
  * Typically it would not be initialised directly.
  *
  * Note that this is a stub class that a driver will extend and complete as
@@ -41,7 +41,7 @@ abstract class Query
 	 * Query instance constructor.
 	 *
 	 * Note that typically instances of this class will be automatically created
-	 * through the {@see \DataTables\Database->query()} method.
+	 * through the {@see Database->query()} method.
 	 *
 	 * @param Database        $dbHost Database instance
 	 * @param string          $type   Query type - 'select', 'insert', 'update' or 'delete'

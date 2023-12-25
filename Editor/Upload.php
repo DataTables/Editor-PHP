@@ -13,8 +13,10 @@
 
 namespace DataTables\Editor;
 
-use DataTables;
+use DataTables\Database;
 use DataTables\Database\Query;
+use DataTables\Editor;
+use DataTables\Ext;
 
 /**
  * Upload class for Editor. This class provides the ability to easily specify
@@ -59,7 +61,7 @@ use DataTables\Database\Query;
  *			)
  *	```
  */
-class Upload extends DataTables\Ext
+class Upload extends Ext
 {
 	/*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
 	 * Constants
@@ -303,8 +305,8 @@ class Upload extends DataTables\Ext
 	/**
 	 * Get database information data from the table.
 	 *
-	 * @param \DataTables\Database $db  Database
-	 * @param number[]             $ids Limit to a specific set of ids
+	 * @param Database $db  Database
+	 * @param number[] $ids Limit to a specific set of ids
 	 *
 	 * @return array Database information
 	 *
@@ -353,8 +355,8 @@ class Upload extends DataTables\Ext
 	/**
 	 * Clean the database.
 	 *
-	 * @param \DataTables\Editor $editor Calling Editor instance
-	 * @param Field              $field  Host field
+	 * @param Editor $editor Calling Editor instance
+	 * @param Field  $field  Host field
 	 *
 	 * @internal
 	 */
@@ -381,7 +383,7 @@ class Upload extends DataTables\Ext
 	/**
 	 * Execute an upload.
 	 *
-	 * @param \DataTables\Editor $editor Calling Editor instance
+	 * @param Editor $editor Calling Editor instance
 	 *
 	 * @return int Primary key value
 	 *
@@ -518,9 +520,9 @@ class Upload extends DataTables\Ext
 	 * orphaned rows and then calling the callback function. The callback can
 	 * then instruct the rows to be removed through the return value.
 	 *
-	 * @param \DataTables\Database $db          Database instance
-	 * @param string               $editorTable Editor Editor instance table name
-	 * @param string               $fieldName   Host field's name
+	 * @param Database $db          Database instance
+	 * @param string   $editorTable Editor Editor instance table name
+	 * @param string   $fieldName   Host field's name
 	 */
 	private function _dbClean($db, $editorTable, $fieldName)
 	{
@@ -590,8 +592,8 @@ class Upload extends DataTables\Ext
 	/**
 	 * Add a record to the database for a newly uploaded file.
 	 *
-	 * @param array                $upload $_FILES['upload']
-	 * @param \DataTables\Database $db     Database instance
+	 * @param array    $upload $_FILES['upload']
+	 * @param Database $db     Database instance
 	 *
 	 * @return int Primary key value for the newly uploaded file
 	 */

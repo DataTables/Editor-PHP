@@ -13,9 +13,10 @@
 
 namespace DataTables\Editor;
 
-use DataTables;
+use DataTables\Database;
 use DataTables\Database\Query;
 use DataTables\Editor;
+use DataTables\Ext;
 
 /**
  * Join table class for DataTables Editor.
@@ -55,7 +56,7 @@ use DataTables\Editor;
  *            )
  *    ```
  */
-class Join extends DataTables\Ext
+class Join extends Ext
 {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
@@ -825,9 +826,9 @@ class Join extends DataTables\Ext
 	/**
 	 * Create a row.
 	 *
-	 * @param \DataTables\Database $db       Database reference to use
-	 * @param int                  $parentId Parent row's primary key value
-	 * @param string[]             $data     Data to be set for the join
+	 * @param Database $db       Database reference to use
+	 * @param int      $parentId Parent row's primary key value
+	 * @param string[] $data     Data to be set for the join
 	 */
 	private function _insert($db, $parentId, $data)
 	{
@@ -932,9 +933,9 @@ class Join extends DataTables\Ext
 	/**
 	 * Update a row.
 	 *
-	 * @param \DataTables\Database $db       Database reference to use
-	 * @param int                  $parentId Parent row's primary key value
-	 * @param string[]             $data     Data to be set for the join
+	 * @param Database $db       Database reference to use
+	 * @param int      $parentId Parent row's primary key value
+	 * @param string[] $data     Data to be set for the join
 	 */
 	private function _update_row($db, $parentId, $data)
 	{

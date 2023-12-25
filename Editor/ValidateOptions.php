@@ -13,12 +13,12 @@
 
 namespace DataTables\Editor;
 
-use DataTables;
+use DataTables\Ext;
 
 /**
  * Common validation options that can be specified for all validation methods.
  */
-class ValidateOptions extends DataTables\Ext
+class ValidateOptions extends Ext
 {
 	private $_empty = true;
 	private $_message = 'Input not valid';

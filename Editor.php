@@ -16,7 +16,6 @@
 
 namespace DataTables;
 
-use DataTables;
 use DataTables\Database\Query;
 use DataTables\Editor\Field;
 use DataTables\Editor\Join;
