@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SQL Server driver for DataTables PHP libraries.
  *

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Oracle database driver for Editor.
  *

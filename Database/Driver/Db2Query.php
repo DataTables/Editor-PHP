@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DB2 database driver for DataTables libraries.
  * BETA! Feedback welcome.
