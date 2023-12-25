@@ -1,12 +1,13 @@
 <?php
+
 /**
  * SQL Server driver for DataTables PHP libraries.
  *
- *  @author    SpryMedia
- *  @copyright 2013 SpryMedia ( http://sprymedia.co.uk )
- *  @license   http://editor.datatables.net/license DataTables Editor
+ * @author    SpryMedia
+ * @copyright 2013 SpryMedia ( http://sprymedia.co.uk )
+ * @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @see      http://editor.datatables.net
+ * @see       http://editor.datatables.net
  */
 
 namespace DataTables\Database\Driver;
@@ -16,7 +17,7 @@ use DataTables\Database\Query;
 /**
  * SQL Server driver for DataTables Database Query class.
  *
- *  @internal
+ * @internal
  */
 class SqlserverQuery extends Query
 {

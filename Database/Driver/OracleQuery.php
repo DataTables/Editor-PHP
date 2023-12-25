@@ -1,15 +1,16 @@
 <?php
+
 /**
  * Oracle database driver for DataTables libraries.
  *
  * Note that this software uses the oci_* methods in PHP and NOT the Oracle PDO
  * driver, which is poorly supported.
  *
- *  @author    SpryMedia
- *  @copyright 2014 SpryMedia ( http://sprymedia.co.uk )
- *  @license   http://editor.datatables.net/license DataTables Editor
+ * @author    SpryMedia
+ * @copyright 2014 SpryMedia ( http://sprymedia.co.uk )
+ * @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @see      http://editor.datatables.net
+ * @see       http://editor.datatables.net
  */
 
 namespace DataTables\Database\Driver;
@@ -19,7 +20,7 @@ use DataTables\Database\Query;
 /**
  * Oracle driver for DataTables Database Query class.
  *
- *  @internal
+ * @internal
  */
 class OracleQuery extends Query
 {

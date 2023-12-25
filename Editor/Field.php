@@ -1,22 +1,23 @@
 <?php
+
 /**
  * DataTables PHP libraries.
  *
  * PHP libraries for DataTables and DataTables Editor.
  *
- *  @author    SpryMedia
- *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
- *  @license   http://editor.datatables.net/license DataTables Editor
+ * @author    SpryMedia
+ * @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
+ * @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @see      http://editor.datatables.net
+ * @see       http://editor.datatables.net
  */
 
 namespace DataTables\Editor;
 
-use DataTables;
 use DataTables\Database;
 use DataTables\Database\Query;
 use DataTables\Editor;
+use DataTables\Ext;
 use DataTables\HtmLawed\HtmLawedVanillaWrapper;
 
 /**
@@ -31,18 +32,18 @@ use DataTables\HtmLawed\HtmLawedVanillaWrapper;
  * {@see Join->field()} methods to describe what fields should be interacted
  * with by the editable table.
  *
- *  @example
+ * @example
  *    Simply get a column with the name "city". No validation is performed.
  *    ```php
  *      new Field( 'city' )
  *    ```
- *  @example
+ * @example
  *    Get a column with the name "first_name" - when edited a value must
  *    be given due to the "required" validation from the {@see Validate} class.
  *    ```php
  *      (new Field( 'first_name' ))->validator( 'Validate::required' )
  *    ```
- *  @example
+ * @example
  *    Working with a date field, which is validated, and also has *get* and
  *    *set* formatters.
  *    ```php
@@ -51,13 +52,13 @@ use DataTables\HtmLawed\HtmLawedVanillaWrapper;
  *          ->getFormatter( 'Format::date_sql_to_format', 'D, d M y' )
  *          ->setFormatter( 'Format::date_format_to_sql', 'D, d M y' )
  *    ```
- *  @example
+ * @example
  *    Using an alias in the first parameter
  *    ```php
  *      new Field( 'name.first as first_name' )
  *    ```
  */
-class Field extends DataTables\Ext
+class Field extends Ext
 {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Statics
@@ -308,7 +309,7 @@ class Field extends DataTables\Ext
 		}
 
 		// Overloads for backwards compatibility
-		if (is_a($table, '\DataTables\Editor\Options')) {
+		if (is_a($table, 'DataTables\Editor\Options')) {
 			// Options class
 			$this->_optsFn = null;
 			$this->_opts = $table;
@@ -342,7 +343,7 @@ class Field extends DataTables\Ext
 	/**
 	 * Get a list of values that can be used for the options list in SearchPanes.
 	 *
-	 * @param SearchPaneOptions|callable(Database, DataTables\Editor): (array|bool) $spInput SearchPaneOptions instance or a closure function if providing a method
+	 * @param SearchPaneOptions|callable(Database, Editor): (array|bool) $spInput SearchPaneOptions instance or a closure function if providing a method
 	 *
 	 * @return ($spInput is null ? SearchPaneOptions|null : $this)
 	 */
@@ -353,7 +354,7 @@ class Field extends DataTables\Ext
 		}
 
 		// Overloads for backwards compatibility
-		if (is_a($spInput, '\DataTables\Editor\SearchPaneOptions')) {
+		if (is_a($spInput, 'DataTables\Editor\SearchPaneOptions')) {
 			// Options class
 			$this->_spoptsFn = null;
 			$this->_spopts = $spInput;
@@ -369,7 +370,7 @@ class Field extends DataTables\Ext
 	/**
 	 * Get a list of values that can be used for the options list in SearchBuilder.
 	 *
-	 * @param SearchBuilderOptions|callable(Database, DataTables\Editor): (array|bool) $sbInput SearchBuilderOptions instance or a closure function if providing a method
+	 * @param SearchBuilderOptions|callable(Database, Editor): (array|bool) $sbInput SearchBuilderOptions instance or a closure function if providing a method
 	 *
 	 * @return ($sbInput is null ? SearchBuilderOptions|null : $this)
 	 */
@@ -380,7 +381,7 @@ class Field extends DataTables\Ext
 		}
 
 		// Overloads for backwards compatibility
-		if (is_a($sbInput, '\DataTables\Editor\SearchBuilderOptions')) {
+		if (is_a($sbInput, 'DataTables\Editor\SearchBuilderOptions')) {
 			// Options class
 			$this->_sboptsFn = null;
 			$this->_sbopts = $sbInput;
@@ -604,7 +605,7 @@ class Field extends DataTables\Ext
 	 * Execute the ipOpts to get the list of options to return to the client-
 	 * side.
 	 *
-	 * @param \DataTables\Database $db Database instance
+	 * @param Database $db Database instance
 	 *
 	 * @return false|array Array of value / label options for the list
 	 *
@@ -785,12 +786,12 @@ class Field extends DataTables\Ext
 
 					// Validate class static methods - they have `Legacy` counter parts that
 					// convert from the old style to the new so the old style options still work.
-					if (method_exists('\\DataTables\\Editor\\' . $a[0], $a[1] . 'Legacy')) {
-						$func = call_user_func('\\DataTables\\Editor\\' . $validator['func'] . 'Legacy', $validator['opts']);
+					if (method_exists('DataTables\\Editor\\' . $a[0], $a[1] . 'Legacy')) {
+						$func = call_user_func('DataTables\\Editor\\' . $validator['func'] . 'Legacy', $validator['opts']);
 						$res = call_user_func($func, $val, $data, $this, $instances);
 					} else {
 						// User style legacy function. Call it directly
-						$func = '\\DataTables\\Editor\\' . $validator['func'];
+						$func = 'DataTables\\Editor\\' . $validator['func'];
 						$res = call_user_func($func, $val, $data, $this, $instances);
 					}
 				} else {
@@ -886,14 +887,14 @@ class Field extends DataTables\Ext
 
 			// Old style Editor formatter - use the legacy functions to
 			// convert to the new style
-			if (method_exists('\\DataTables\\Editor\\' . $a[0], $a[1] . 'Legacy')) {
-				$func = call_user_func('\\DataTables\\Editor\\' . $formatter . 'Legacy', $opts);
+			if (method_exists('DataTables\\Editor\\' . $a[0], $a[1] . 'Legacy')) {
+				$func = call_user_func('DataTables\\Editor\\' . $formatter . 'Legacy', $opts);
 
 				return $func($val, $data);
 			}
 
 			// User added old style methods
-			return call_user_func('\\DataTables\\Editor\\' . $formatter, $val, $data, $opts);
+			return call_user_func('DataTables\\Editor\\' . $formatter, $val, $data, $opts);
 		}
 
 		// User function (string identifier)

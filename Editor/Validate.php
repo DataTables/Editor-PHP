@@ -1,14 +1,15 @@
 <?php
+
 /**
  * DataTables PHP libraries.
  *
  * PHP libraries for DataTables and DataTables Editor.
  *
- *  @author    SpryMedia
- *  @copyright 2012-2014 SpryMedia ( http://sprymedia.co.uk )
- *  @license   http://editor.datatables.net/license DataTables Editor
+ * @author    SpryMedia
+ * @copyright 2012-2014 SpryMedia ( http://sprymedia.co.uk )
+ * @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @see      http://editor.datatables.net
+ * @see       http://editor.datatables.net
  */
 
 namespace DataTables\Editor;
@@ -53,23 +54,23 @@ namespace DataTables\Editor;
  *   internationalisation (i.e. to provide a translation that is not in the
  *   English language).
  *
- *  @example
+ * @example
  *    ```
  *      // Ensure that a non-empty value is given for a field
  *      (new Field( 'engine' ))->validator( Validate::required() )
  *    ```
- *  @example
+ * @example
  *    ```
  *      // Don't require a field to be submitted, but if it is submitted, it
  *      // must be non-empty
  *      (new Field( 'reg_date' ))->validator( Validate::notEmpty() )
  *    ```
- *  @example
+ * @example
  *    ```
  *      // Date validation
  *      (new Field( 'reg_date' ))->validator( Validate::dateFormat( 'D, d M y' ) )
  *    ```
- *  @example
+ * @example
  *    ```
  *      // Date validation with a custom error message
  *      (new Field( 'reg_date' ))->validator( Validate::dateFormat( 'D, d M y',
@@ -77,14 +78,14 @@ namespace DataTables\Editor;
  *              ->message( 'Invalid date' )
  *      ) )
  *    ```
- *  @example
+ * @example
  *    ```
  *      // Require a non-empty e-mail address
  *      (new Field( 'reg_date' ))->validator( Validate::email( (new ValidateOptions())
  *        ->empty( false )
  *      ) )
  *    ```
- *  @example
+ * @example
  *    ```
  *      // Custom validation - closure
  *      (new Field( 'engine' ))->validator( function($val, $data, $opts) {
@@ -134,7 +135,7 @@ class Validate
 	 * Extend the options from the user function and the validation function
 	 * with core defaults.
 	 *
-	 *  @internal
+	 * @internal
 	 */
 	public static function _extend($userOpts, $prop, $fnOpts)
 	{
@@ -166,7 +167,7 @@ class Validate
 	/**
 	 * Perform common validation using the configuration parameters.
 	 *
-	 *  @internal
+	 * @internal
 	 */
 	public static function _common($val, $opts)
 	{
@@ -196,7 +197,7 @@ class Validate
 	/**
 	 * Convert the old style validation parameters into ValidateOptions.
 	 *
-	 *  @internal
+	 * @internal
 	 */
 	public static function _commonLegacy($cfg)
 	{

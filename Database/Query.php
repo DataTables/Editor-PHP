@@ -1,14 +1,15 @@
 <?php
+
 /**
  * DataTables PHP libraries.
  *
  * PHP libraries for DataTables and DataTables Editor.
  *
- *  @author    SpryMedia
- *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
- *  @license   http://editor.datatables.net/license DataTables Editor
+ * @author    SpryMedia
+ * @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
+ * @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @see      http://editor.datatables.net
+ * @see       http://editor.datatables.net
  */
 
 namespace DataTables\Database;
@@ -23,7 +24,7 @@ use DataTables\Database;
  * Perform an individual query on the database.
  *
  * The typical pattern for using this class is through the {@see
- * \DataTables\Database->query()} method (and it's 'select', etc short-cuts).
+ * Database->query()} method (and it's 'select', etc short-cuts).
  * Typically it would not be initialised directly.
  *
  * Note that this is a stub class that a driver will extend and complete as
@@ -41,7 +42,7 @@ abstract class Query
 	 * Query instance constructor.
 	 *
 	 * Note that typically instances of this class will be automatically created
-	 * through the {@see \DataTables\Database->query()} method.
+	 * through the {@see Database->query()} method.
 	 *
 	 * @param Database        $dbHost Database instance
 	 * @param string          $type   Query type - 'select', 'insert', 'update' or 'delete'
@@ -622,7 +623,7 @@ abstract class Query
 	 *
 	 * @return $this
 	 *
-	 *  @example
+	 * @example
 	 *     The following will produce
 	 *     `'WHERE name='allan' AND ( location='Scotland' OR location='Canada' )`:
 	 *
@@ -735,7 +736,7 @@ abstract class Query
 	 *
 	 * @return $this
 	 *
-	 *  @example
+	 * @example
 	 *     ```php
 	 *     $query->where_group( function ($q) {
 	 *       $q->where( 'location', 'Edinburgh' );
@@ -1048,7 +1049,7 @@ abstract class Query
 	/**
 	 * Escape quotes in a field identifier.
 	 *
-	 *  @internal
+	 * @internal
 	 */
 	protected function _escape_field($field)
 	{

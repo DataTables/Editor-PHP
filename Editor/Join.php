@@ -1,21 +1,23 @@
 <?php
+
 /**
  * DataTables PHP libraries.
  *
  * PHP libraries for DataTables and DataTables Editor.
  *
- *  @author    SpryMedia
- *  @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
- *  @license   http://editor.datatables.net/license DataTables Editor
+ * @author    SpryMedia
+ * @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
+ * @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @see      http://editor.datatables.net
+ * @see       http://editor.datatables.net
  */
 
 namespace DataTables\Editor;
 
-use DataTables;
+use DataTables\Database;
 use DataTables\Database\Query;
 use DataTables\Editor;
+use DataTables\Ext;
 
 /**
  * Join table class for DataTables Editor.
@@ -28,7 +30,7 @@ use DataTables\Editor;
  * useful to understand how this class represents the links between tables,
  * before fully getting to grips with it's API.
  *
- *  @example
+ * @example
  *    Join the parent table (the one specified in the {@see Editor->table()}
  *    method) with the table *access*, with a link table *user__access*, which
  *    allows multiple properties to be found for each row in the parent table.
@@ -41,7 +43,7 @@ use DataTables\Editor;
  *              new Field( 'name' )
  *          )
  *    ```
- *  @example
+ * @example
  *    Single row join - here we join the parent table with a single row in
  *    the child table, without an intermediate link table. In this case the
  *    child table is called *extra* and the two fields give the columns that
@@ -55,7 +57,7 @@ use DataTables\Editor;
  *            )
  *    ```
  */
-class Join extends DataTables\Ext
+class Join extends Ext
 {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
@@ -78,7 +80,7 @@ class Join extends DataTables\Ext
 	 * Private properties
 	 */
 
-	/** @var DataTables\Editor\Field[] */
+	/** @var Field[] */
 	private $_fields = [];
 
 	/** @var array */
@@ -805,7 +807,7 @@ class Join extends DataTables\Ext
 	/**
 	 * Add local WHERE condition to query.
 	 *
-	 * @param \DataTables\Database\Query $query Query instance to apply the WHERE conditions to
+	 * @param Query $query Query instance to apply the WHERE conditions to
 	 */
 	private function _apply_where($query)
 	{
@@ -825,9 +827,9 @@ class Join extends DataTables\Ext
 	/**
 	 * Create a row.
 	 *
-	 * @param \DataTables\Database $db       Database reference to use
-	 * @param int                  $parentId Parent row's primary key value
-	 * @param string[]             $data     Data to be set for the join
+	 * @param Database $db       Database reference to use
+	 * @param int      $parentId Parent row's primary key value
+	 * @param string[] $data     Data to be set for the join
 	 */
 	private function _insert($db, $parentId, $data)
 	{
@@ -932,9 +934,9 @@ class Join extends DataTables\Ext
 	/**
 	 * Update a row.
 	 *
-	 * @param \DataTables\Database $db       Database reference to use
-	 * @param int                  $parentId Parent row's primary key value
-	 * @param string[]             $data     Data to be set for the join
+	 * @param Database $db       Database reference to use
+	 * @param int      $parentId Parent row's primary key value
+	 * @param string[] $data     Data to be set for the join
 	 */
 	private function _update_row($db, $parentId, $data)
 	{

@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Oracle database driver for Editor.
  *
- *  @author    SpryMedia
- *  @copyright 2014 SpryMedia ( http://sprymedia.co.uk )
- *  @license   http://editor.datatables.net/license DataTables Editor
+ * @author    SpryMedia
+ * @copyright 2014 SpryMedia ( http://sprymedia.co.uk )
+ * @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @see      http://editor.datatables.net
+ * @see       http://editor.datatables.net
  */
 
 namespace DataTables\Database\Driver;
@@ -16,7 +17,7 @@ use DataTables\Database\Result;
 /**
  * MySQL driver for DataTables Database Result class.
  *
- *  @internal
+ * @internal
  */
 class OracleResult extends Result
 {

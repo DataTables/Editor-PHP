@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DB2 database driver for DataTables libraries.
  * BETA! Feedback welcome.
@@ -11,7 +12,7 @@ use DataTables\Database\Query;
 /**
  * DB2 driver for DataTables Database Query class.
  *
- *  @internal
+ * @internal
  */
 class Db2Query extends Query
 {

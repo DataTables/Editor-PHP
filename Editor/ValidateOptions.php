@@ -1,24 +1,25 @@
 <?php
+
 /**
  * DataTables PHP libraries.
  *
  * PHP libraries for DataTables and DataTables Editor.
  *
- *  @author    SpryMedia
- *  @copyright 2012-2014 SpryMedia ( http://sprymedia.co.uk )
- *  @license   http://editor.datatables.net/license DataTables Editor
+ * @author    SpryMedia
+ * @copyright 2012-2014 SpryMedia ( http://sprymedia.co.uk )
+ * @license   http://editor.datatables.net/license DataTables Editor
  *
- *  @see      http://editor.datatables.net
+ * @see       http://editor.datatables.net
  */
 
 namespace DataTables\Editor;
 
-use DataTables;
+use DataTables\Ext;
 
 /**
  * Common validation options that can be specified for all validation methods.
  */
-class ValidateOptions extends DataTables\Ext
+class ValidateOptions extends Ext
 {
 	private $_empty = true;
 	private $_message = 'Input not valid';
