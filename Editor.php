@@ -1048,10 +1048,10 @@ class Editor extends Ext
 					$this->_fileClean();
 				}
 			}
-		}
 
-		if ($this->_transaction) {
-			$this->_db->commit();
+			if ($this->_transaction) {
+				$this->_db->commit();
+			}
 		}
 
 		// Tidy up the reply
