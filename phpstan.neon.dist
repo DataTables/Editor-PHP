@@ -20,3 +20,4 @@ parameters:
         - '~has no return type specified~'
         - '~return type has no value type specified~'
         - '~no value type specified in iterable type array~'
+        - 'Call to function is_string() with non-falsy-string will always evaluate to true.'
