@@ -697,9 +697,9 @@ class Upload extends Ext
 			foreach ($pathFields as $column => $type) {
 				if ($type === self::DB_WEB_PATH) {
 					$q->set($column, $webPath);
-				} else if ($type === self::DB_SYSTEM_PATH) {
+				} elseif ($type === self::DB_SYSTEM_PATH) {
 					$q->set($column, $path);
-				} else if (is_string($type)) {
+				} elseif (is_string($type)) {
 					$q->set($column, str_replace('__ID__', $id, $type));
 				} else {
 					$q->set($column, $type);
