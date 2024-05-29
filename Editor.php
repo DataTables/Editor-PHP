@@ -1669,6 +1669,13 @@ class Editor extends Ext
 				);
 			}
 		}
+
+		// Paging makes little sense without an ordering clause, so if there is
+		// no order to apply (possible in DT2 on the third click of a header)
+		// we apply the primary key as the ordering value.
+		if (! isset($http['order']) || count($http['order']) === 0) {
+			$query->order($this->_pkey[0] . ' asc');
+		}
 	}
 
 	private function _constructSearchBuilderConditions($query, $data)
