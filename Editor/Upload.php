@@ -699,10 +699,8 @@ class Upload extends Ext
 					$q->set($column, $webPath);
 				} elseif ($type === self::DB_SYSTEM_PATH) {
 					$q->set($column, $path);
-				} elseif (is_string($type)) {
-					$q->set($column, str_replace('__ID__', $id, $type));
 				} else {
-					$q->set($column, $type);
+					$q->set($column, str_replace('__ID__', $id, $type));
 				}
 			}
 

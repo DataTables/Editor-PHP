@@ -341,22 +341,7 @@ parameters:
 			path: Editor/Join.php
 
 		-
-			message: "#^Offset 'DT_RowId' does not exist on string\\.$#"
-			count: 1
-			path: Editor/Join.php
-
-		-
 			message: "#^Parameter \\#1 \\$order of method DataTables\\\\Database\\\\Query\\:\\:order\\(\\) expects array\\<string\\>\\|string, DataTables\\\\Editor\\\\Join given\\.$#"
-			count: 1
-			path: Editor/Join.php
-
-		-
-			message: "#^Parameter \\#2 \\$data of method DataTables\\\\Ext\\:\\:_propExists\\(\\) expects array, string given\\.$#"
-			count: 2
-			path: Editor/Join.php
-
-		-
-			message: "#^Parameter \\#2 \\$data of method DataTables\\\\Ext\\:\\:_readProp\\(\\) expects array, string given\\.$#"
 			count: 1
 			path: Editor/Join.php
 
