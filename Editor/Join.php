@@ -483,10 +483,10 @@ class Join extends Ext
 	/**
 	 * Get data.
 	 *
-	 * @param Editor   $editor  Host Editor instance
-	 * @param string[] $data    Data from the parent table's get and were we need
-	 *                          to add out output.
-	 * @param array    $options options array for fields
+	 * @param Editor  $editor  Host Editor instance
+	 * @param mixed[] $data    Data from the parent table's get and were we need
+	 *                         to add out output.
+	 * @param array   $options options array for fields
 	 *
 	 * @internal
 	 */
