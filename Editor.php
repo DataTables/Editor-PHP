@@ -1631,10 +1631,8 @@ class Editor extends Ext
 	 * @param int   $index Index in the DataTables' submitted data
 	 *
 	 * @return string DB field name
-	 *
-	 * @private Note that it is actually public for PHP 5.3 - thread 39810
 	 */
-	public function _ssp_field($http, $index)
+	private function _ssp_field($http, $index)
 	{
 		$name = $http['columns'][$index]['data'];
 		$field = $this->_find_field($name, 'name');
