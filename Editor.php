@@ -1596,25 +1596,25 @@ class Editor extends Ext
 		$this->_ssp_filter($query, $http);
 
 		// Get the number of rows in the result set
-		$ssp_set_count = $this->_db
+		$ssp_set_count_query = $this->_db
 			->query('count')
 			->table($this->_read_table())
 			->get($this->_pkey[0]);
-		$this->_get_where($ssp_set_count);
-		$this->_ssp_filter($ssp_set_count, $http);
-		$ssp_set_count->left_join($this->_leftJoin);
-		$ssp_set_count = $ssp_set_count->exec()->fetch();
+		$this->_get_where($ssp_set_count_query);
+		$this->_ssp_filter($ssp_set_count_query, $http);
+		$ssp_set_count_query->left_join($this->_leftJoin);
+		$ssp_set_count = $ssp_set_count_query->exec()->fetch();
 
 		// Get the number of rows in the full set
-		$ssp_full_count = $this->_db
+		$ssp_full_count_query = $this->_db
 			->query('count')
 			->table($this->_read_table())
 			->get($this->_pkey[0]);
-		$this->_get_where($ssp_full_count);
+		$this->_get_where($ssp_full_count_query);
 		if (count($this->_where)) { // only needed if there is a where condition
-			$ssp_full_count->left_join($this->_leftJoin);
+			$ssp_full_count_query->left_join($this->_leftJoin);
 		}
-		$ssp_full_count = $ssp_full_count->exec()->fetch();
+		$ssp_full_count = $ssp_full_count_query->exec()->fetch();
 
 		return [
 			'draw' => (int) $http['draw'],
@@ -1631,10 +1631,8 @@ class Editor extends Ext
 	 * @param int   $index Index in the DataTables' submitted data
 	 *
 	 * @return string DB field name
-	 *
-	 * @private Note that it is actually public for PHP 5.3 - thread 39810
 	 */
-	public function _ssp_field($http, $index)
+	private function _ssp_field($http, $index)
 	{
 		$name = $http['columns'][$index]['data'];
 		$field = $this->_find_field($name, 'name');
