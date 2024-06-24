@@ -323,9 +323,20 @@ class SearchBuilderOptions extends Ext
 		// Only sort if there was no SQL order field
 		if (!$this->_order) {
 			usort($out, static function ($a, $b) {
-				return is_numeric($a['label']) && is_numeric($b['label']) ?
-					($a['label'] * 1) - ($b['label'] * 1) :
-					strcmp($a['label'], $b['label']);
+				$aLabel = $a['label'];
+				$bLabel = $b['label'];
+
+				if ($aLabel === null) {
+					$aLabel = '';
+				}
+
+				if ($bLabel === null) {
+					$bLabel = '';
+				}
+
+				return is_numeric($aLabel) && is_numeric($bLabel) ?
+					($aLabel * 1) - ($bLabel * 1) :
+					strcmp($aLabel, $bLabel);
 			});
 		}
 
