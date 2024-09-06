@@ -20,6 +20,7 @@ namespace DataTables;
 use DataTables\Database\Query;
 use DataTables\Editor\Field;
 use DataTables\Editor\Join;
+use DataTables\Editor\ColumnSearch;
 
 /**
  * DataTables Editor base class for creating editable tables.
@@ -1049,6 +1050,8 @@ class Editor extends Ext
 				}
 			}
 
+			$this->_columnSearch();
+
 			if ($this->_transaction) {
 				$this->_db->commit();
 			}
@@ -1069,6 +1072,38 @@ class Editor extends Ext
 
 		if (count($this->_out['cancelled']) === 0) {
 			unset($this->_out['cancelled']);
+		}
+	}
+
+	/**
+	 * Get information for display in the client-side search fields
+	 */
+	private function _columnSearch()
+	{
+		if (isset($this->_processData['columnSearch'])) {
+			$columnSearch = $this->_processData['columnSearch'];
+
+			foreach ($columnSearch as $colIdx => $search) {
+				if ($search === '') {
+					continue;
+				}
+
+				if ($search['type'] === 'select' && $search['fetch'] === 'true') {
+					// Get a list of options for the select list
+
+					$dataSrc = $_POST['columns'][$colIdx]['data'];
+					$dbSrc = $this->_ssp_field($this->_processData, $colIdx);
+					$opts = $this->db()
+						->selectDistinct('candidates_view', $dataSrc, null, [$dbSrc . ' asc'])
+						->fetchAll();
+
+					if (! isset($this->_out['columnSearch'])) {
+						$this->_out['columnSearch'] = [];
+					}
+
+					$this->_out['columnSearch'][$colIdx] = array_column($opts, $dbSrc);
+				}
+			}
 		}
 	}
 
@@ -2025,7 +2060,14 @@ class Editor extends Ext
 			$search = $column['search']['value'];
 
 			if ($search !== '' && $column['searchable'] == 'true') {
-				$query->where($this->_ssp_field($http, $i), '%' . $search . '%', 'like');
+				$fieldName = $this->_ssp_field($http, $i);
+				$field = $this->_find_field($fieldName, 'name');
+
+				$handled = ColumnSearch::process($query, $field, $i, $search, $http);
+
+				if (! $handled) {
+					$query->where($fieldName, '%' . $search . '%', 'like');
+				}
 			}
 		}
 	}
