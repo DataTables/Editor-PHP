@@ -205,6 +205,9 @@ class Editor extends Ext
 	/** @var array */
 	private $_validator = [];
 
+	/** @var array */
+	private $_validatorAfterFields = [];
+
 	/** @var bool Enable true / catch when processing */
 	private $_tryCatch = true;
 
@@ -856,6 +859,18 @@ class Editor extends Ext
 			}
 		}
 
+		// Global validators to run _after_ field validation
+		for ($i = 0; $i < count($this->_validatorAfterFields); ++$i) {
+			$validator = $this->_validatorAfterFields[$i];
+			$ret = $validator($this, $this->_actionName, $data);
+
+			if (is_string($ret)) {
+				$this->_out['error'] = $ret;
+
+				return false;
+			}
+		}
+
 		return count($errors) > 0 ? false : true;
 	}
 
@@ -864,14 +879,22 @@ class Editor extends Ext
 	 * and remove actions performed from the client-side. Multiple validators
 	 * can be added.
 	 *
+	 * @param bool $afterFields `true` to run the validator after field validation,
+	 *   `false` to run before. Can be omitted (which is the equivalent of `false`).
 	 * @param callable($this, self::ACTION_*, array): ?string $_ Function to execute when validating the input data.
 	 *                                                           It is passed three parameters: 1. The editor instance, 2. The action
 	 *                                                           and 3. The values.
 	 *
 	 * @return ($_ is null ? callable : $this) The validator function.
 	 */
-	public function validator($_ = null)
+	public function validator($afterFields, $_ = null)
 	{
+		if (is_bool($afterFields) && $afterFields === true) {
+			return $this->_getSet($this->_validatorAfterFields, $_, true);
+		}
+
+		// Argument shift
+		$_ = $afterFields;
 		return $this->_getSet($this->_validator, $_, true);
 	}
 
