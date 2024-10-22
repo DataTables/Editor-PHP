@@ -879,7 +879,7 @@ class Editor extends Ext
 	 * and remove actions performed from the client-side. Multiple validators
 	 * can be added.
 	 *
-	 * @param bool $afterFields `true` to run the validator after field validation,
+	 * @param bool|callable $afterFields `true` to run the validator after field validation,
 	 *   `false` to run before. Can be omitted (which is the equivalent of `false`).
 	 * @param callable($this, self::ACTION_*, array): ?string $_ Function to execute when validating the input data.
 	 *                                                           It is passed three parameters: 1. The editor instance, 2. The action
