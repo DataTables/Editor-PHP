@@ -89,8 +89,8 @@ class Options extends Ext
 	/** @var callable Callback function to add where conditions */
 	private $_where;
 
-	/** @var string ORDER BY clause */
-	private $_order;
+	/** @var string|boolean ORDER BY clause */
+	private $_order = true;
 
 	private $_manualAdd = [];
 
@@ -176,11 +176,13 @@ class Options extends Ext
 	}
 
 	/**
-	 * Get / set the ORDER BY clause to use in the SQL. If this option is not
-	 * provided the ordering will be based on the rendered output, either
-	 * numerically or alphabetically based on the data returned by the renderer.
+	 * Get / set the ORDER BY clause to use in the SQL. If this option is `true`
+	 * (which it is by default) the ordering will be based on the rendered output,
+	 * either numerically or alphabetically based on the data returned by the
+	 * renderer. If `false` no ordering will be performed and whatever is returned
+	 * from the database will be used.
 	 *
-	 * @param string|null $_ String to set, null to get current value
+	 * @param string|boolean|null $_ String to set, null to get current value
 	 *
 	 * @return ($_ is null ? string : $this)
 	 */
@@ -288,7 +290,7 @@ class Options extends Ext
 			->get($fields)
 			->where($this->_where);
 
-		if ($this->_order) {
+		if (is_string($this->_order)) {
 			// For cases where we are ordering by a field which isn't included in the list
 			// of fields to display, we need to add the ordering field, due to the
 			// select distinct.
@@ -331,8 +333,8 @@ class Options extends Ext
 			$out = array_merge($out, $this->_manualAdd);
 		}
 
-		// Only sort if there was no SQL order field
-		if (!$this->_order) {
+		// Local sorting
+		if ($this->_order === true) {
 			usort($out, static function ($a, $b) {
 				$aLabel = $a['label'];
 				$bLabel = $b['label'];
