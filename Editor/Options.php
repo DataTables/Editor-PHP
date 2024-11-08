@@ -68,6 +68,9 @@ class Options extends Ext
 	 * Private parameters
 	 */
 
+	/** @var boolean Indicate if options should always be refreshed */
+	private $_alwaysRefresh = true;
+
 	/** @var string Table to get the information from */
 	private $_table;
 
@@ -118,6 +121,20 @@ class Options extends Ext
 		];
 
 		return $this;
+	}
+
+	/**
+	 * Get / set the flag to indicate if the options should always be refreshed
+	 * (i.e. on get, create and edit) or only on the initial data load (false)
+	 *
+	 * @param boolean|null $_ Flag to set the always refresh set to, or null to
+	 *                        get the current state.
+	 *
+	 * @return ($_ is null ? boolean : $this)
+	 */
+	public function alwaysRefresh($_ = null)
+	{
+		return $this->_getSet($this->_alwaysRefresh, $_);
 	}
 
 	/**
@@ -252,13 +269,19 @@ class Options extends Ext
 	 * Execute the options (i.e. get them).
 	 *
 	 * @param Database $db Database connection
+	 * @param boolean $refresh Indicate if this is a refresh or a full load
 	 *
 	 * @return array List of options
 	 *
 	 * @internal
 	 */
-	public function exec($db)
+	public function exec($db, $refresh)
 	{
+		// Only get the options if doing a full load, or always is set
+		if ($refresh === true && !$this->alwaysRefresh()) {
+			return false;
+		}
+
 		$label = $this->_label;
 		$value = $this->_value;
 		$formatter = $this->_renderer;

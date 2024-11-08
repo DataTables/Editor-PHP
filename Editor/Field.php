@@ -606,19 +606,20 @@ class Field extends Ext
 	 * side.
 	 *
 	 * @param Database $db Database instance
+	 * @param boolean $refresh Indicate if this is a refresh or a full load
 	 *
 	 * @return false|array Array of value / label options for the list
 	 *
 	 * @internal
 	 */
-	public function optionsExec($db)
+	public function optionsExec($db, $refresh)
 	{
 		if ($this->_optsFn) {
 			$fn = $this->_optsFn;
 
 			return $fn($db);
 		} elseif ($this->_opts) {
-			return $this->_opts->exec($db);
+			return $this->_opts->exec($db, $refresh);
 		}
 
 		return false;

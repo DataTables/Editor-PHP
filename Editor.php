@@ -1024,6 +1024,7 @@ class Editor extends Ext
 			if ($action === Editor::ACTION_READ) {
 				/* Get data */
 				$this->_out = array_merge($this->_out, $this->_get(null, $data));
+				$this->_options(false);
 			} elseif ($action === Editor::ACTION_UPLOAD && $this->_write === true) {
 				/* File upload */
 				$this->_upload($data);
@@ -1070,6 +1071,8 @@ class Editor extends Ext
 
 					$this->_fileClean();
 				}
+
+				$this->_options(true);
 			}
 
 			if ($this->_transaction) {
@@ -1116,9 +1119,6 @@ class Editor extends Ext
 			return [];
 		}
 
-		// print_r($id);
-		// print_r($http);
-
 		$query = $this->_db
 			->query('select')
 			->table($this->_read_table())
@@ -1163,38 +1163,6 @@ class Editor extends Ext
 			$out[] = $inner;
 		}
 
-		// Field options
-		$options = [];
-		$spOptions = [];
-		$sbOptions = [];
-		$searchPanes = [];
-
-		if ($id === null) {
-			foreach ($this->_fields as $field) {
-				$opts = $field->optionsExec($this->_db);
-
-				if ($opts !== false) {
-					$options[$field->name()] = $opts;
-				}
-
-				// SearchPanes options
-				$spOpts = $field->searchPaneOptionsExec($field, $this, $http, $this->_fields, $this->_leftJoin);
-
-				if ($spOpts !== false) {
-					$spOptions[$field->name()] = $spOpts;
-				}
-
-				$sbOpts = $field->searchBuilderOptionsExec($field, $this, $http, $this->_fields, $this->_leftJoin);
-
-				if ($sbOpts !== false) {
-					$sbOptions[$field->name()] = $sbOpts;
-				}
-			}
-		}
-
-		$searchPanes['options'] = $spOptions;
-		$searchBuilder['options'] = $sbOptions;
-
 		// Row based "joins"
 		for ($i = 0; $i < count($this->_join); ++$i) {
 			$this->_join[$i]->data($this, $out, $options);
@@ -1202,47 +1170,10 @@ class Editor extends Ext
 
 		$this->_trigger('postGet', $out, $id);
 
-		if (count($searchPanes['options']) > 0 && count($searchBuilder['options']) > 0) {
-			return array_merge(
-				[
-					'data' => $out,
-					'options' => $options,
-					'files' => $this->_fileData(null, null, $out),
-					'searchBuilder' => $searchBuilder,
-					'searchPanes' => $searchPanes,
-				],
-				$ssp
-			);
-		} elseif (count($searchBuilder['options']) > 0) {
-			return array_merge(
-				[
-					'data' => $out,
-					'options' => $options,
-					'files' => $this->_fileData(null, null, $out),
-					'searchBuilder' => $searchBuilder,
-				],
-				$ssp
-			);
-		} elseif (count($searchPanes['options']) > 0) {
-			return array_merge(
-				[
-					'data' => $out,
-					'options' => $options,
-					'files' => $this->_fileData(null, null, $out),
-					'searchPanes' => $searchPanes,
-				],
-				$ssp
-			);
-		}
-
-		return array_merge(
-			[
-				'data' => $out,
-				'options' => $options,
-				'files' => $this->_fileData(null, null, $out),
-			],
-			$ssp
-		);
+		return [
+			'data' => $out,
+			'files' => $this->_fileData(null, null, $out),
+		];
 	}
 
 	/**
@@ -2290,6 +2221,51 @@ class Editor extends Ext
 		}
 
 		return $this->_db->push($table, $set, $where, $pkey);
+	}
+
+	/**
+	 * Get option lists for select, radio, autocomplete, etc
+	 *
+	 * @param boolean $refresh false for initial load, true if after insert, update
+	 */
+	private function _options($refresh)
+	{
+		foreach ($this->_fields as $field) {
+			// Basic options class
+			$opts = $field->optionsExec($this->_db, $refresh);
+
+			if ($opts !== false) {
+				if (!isset($this->_out['options'])) {
+					$this->_out['options'] = [];
+				}
+
+				$this->_out['options'][$field->name()] = $opts;
+			}
+
+			if (! $refresh) {
+				// SearchPanes options
+				$spOpts = $field->searchPaneOptionsExec($field, $this, $this->_processData, $this->_fields, $this->_leftJoin);
+
+				if ($spOpts !== false) {
+					if (!isset($this->_out['searchPanes'])) {
+						$this->_out['searchPanes'] = ['options' => []];
+					}
+
+					$this->_out['searchPanes']['options'] = $spOpts;
+				}
+
+				// SearchBuilder options
+				$sbOpts = $field->searchBuilderOptionsExec($field, $this, $this->_processData, $this->_fields, $this->_leftJoin);
+
+				if ($sbOpts !== false) {
+					if (!isset($this->_out['searchBuilder'])) {
+						$this->_out['searchBuilder'] = ['options' => []];
+					}
+
+					$this->_out['searchBuilder']['options'] = $sbOpts;
+				}
+			}
+		}
 	}
 
 	/**
