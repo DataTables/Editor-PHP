@@ -93,14 +93,16 @@ class PostgresQuery extends Query
 			$table = explode(' as ', $this->_table[0]);
 
 			// Get the pkey field name
-			$pkRes = $resource->prepare(
-				'SELECT a.attname
+			$pkSql = 'SELECT a.attname
 				FROM   pg_index i
 				JOIN   pg_attribute a ON a.attrelid = i.indrelid
-									 AND a.attnum = ANY(i.indkey)
+									AND a.attnum = ANY(i.indkey)
 				WHERE  i.indrelid = (:tableName)::regclass
-				AND    i.indisprimary'
-			);
+				AND    i.indisprimary';
+
+			$this->database()->debugInfo($pkSql, ['tableName' => $table[0]]);
+
+			$pkRes = $resource->prepare($pkSql);
 			$pkRes->bindValue('tableName', $table[0]);
 			$pkRes->execute();
 			$row = $pkRes->fetch();
