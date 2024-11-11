@@ -77,6 +77,9 @@ class Editor extends Ext
 	/** Request type - delete */
 	const ACTION_DELETE = 'remove';
 
+	/** Request type - options search */
+	const ACTION_SEARCH = 'search';
+
 	/** Request type - upload */
 	const ACTION_UPLOAD = 'upload';
 
@@ -104,6 +107,8 @@ class Editor extends Ext
 				return self::ACTION_EDIT;
 			case 'remove':
 				return self::ACTION_DELETE;
+			case 'search':
+				return self::ACTION_SEARCH;
 			case 'upload':
 				return self::ACTION_UPLOAD;
 			default:
@@ -1025,6 +1030,9 @@ class Editor extends Ext
 				/* Get data */
 				$this->_out = array_merge($this->_out, $this->_get(null, $data));
 				$this->_options(false);
+			} elseif ($action === Editor::ACTION_SEARCH) {
+				/* Options search */
+				$this->_optionsSearch();
 			} elseif ($action === Editor::ACTION_UPLOAD && $this->_write === true) {
 				/* File upload */
 				$this->_upload($data);
@@ -2232,14 +2240,18 @@ class Editor extends Ext
 	{
 		foreach ($this->_fields as $field) {
 			// Basic options class
-			$opts = $field->optionsExec($this->_db, $refresh);
+			$options = $field->options();
 
-			if ($opts !== false) {
-				if (!isset($this->_out['options'])) {
-					$this->_out['options'] = [];
+			if ($options) {
+				$opts = $options($this->_db, $refresh);
+	
+				if ($opts !== false) {
+					if (!isset($this->_out['options'])) {
+						$this->_out['options'] = [];
+					}
+	
+					$this->_out['options'][$field->name()] = $opts;
 				}
-
-				$this->_out['options'][$field->name()] = $opts;
 			}
 
 			if (! $refresh) {
@@ -2266,6 +2278,12 @@ class Editor extends Ext
 				}
 			}
 		}
+	}
+
+	private function _optionsSearch()
+	{
+		// TODO!
+		// Get the field in question, the search term and perform the search
 	}
 
 	/**

@@ -130,9 +130,6 @@ class Field extends Ext
 	private $_sbopts;
 
 	/** @var callable|null */
-	private $_optsFn;
-
-	/** @var callable|null */
 	private $_spoptsFn;
 
 	/** @var callable|null */
@@ -311,15 +308,13 @@ class Field extends Ext
 		// Overloads for backwards compatibility
 		if (is_a($table, 'DataTables\Editor\Options')) {
 			// Options class
-			$this->_optsFn = null;
 			$this->_opts = $table;
 		} elseif ($table instanceof \Closure) {
 			// Function
-			$this->_opts = null;
-			$this->_optsFn = $table;
+			$this->_opts = Options::inst()
+				->fn($table);
 		} else {
-			$this->_optsFn = null;
-			$this->_opts = (new Options())
+			$this->_opts = Options::inst()
 				->table($table)
 				->value($value)
 				->label($label);
@@ -599,30 +594,6 @@ class Field extends Ext
 
 		// In the data set, so use it
 		return true;
-	}
-
-	/**
-	 * Execute the ipOpts to get the list of options to return to the client-
-	 * side.
-	 *
-	 * @param Database $db Database instance
-	 * @param boolean $refresh Indicate if this is a refresh or a full load
-	 *
-	 * @return false|array Array of value / label options for the list
-	 *
-	 * @internal
-	 */
-	public function optionsExec($db, $refresh)
-	{
-		if ($this->_optsFn) {
-			$fn = $this->_optsFn;
-
-			return $fn($db);
-		} elseif ($this->_opts) {
-			return $this->_opts->exec($db, $refresh);
-		}
-
-		return false;
 	}
 
 	/**

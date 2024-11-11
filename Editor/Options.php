@@ -89,6 +89,9 @@ class Options extends Ext
 	/** @var callable Callback function to do rendering of labels */
 	private $_renderer;
 
+	/** @var boolean Indicate if options should get got for create/edit or on search only */
+	private $_searchOnly = false;
+
 	/** @var callable Callback function to add where conditions */
 	private $_where;
 
@@ -96,6 +99,9 @@ class Options extends Ext
 	private $_order = true;
 
 	private $_manualAdd = [];
+
+	/** @var callable|null */
+	private $_customFn;
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -135,6 +141,19 @@ class Options extends Ext
 	public function alwaysRefresh($_ = null)
 	{
 		return $this->_getSet($this->_alwaysRefresh, $_);
+	}
+
+	/**
+	 * Custom function to get the options, rather than using the built in DB
+	 *
+	 * @param callable|null $_ Function that will be run to get the list of
+	 *                         options.
+	 *
+	 * @return ($_ is null ? callable : $this)
+	 */
+	public function fn($_ = null)
+	{
+		return $this->_getSet($this->_customFn, $_);
 	}
 
 	/**
@@ -223,6 +242,20 @@ class Options extends Ext
 	}
 
 	/**
+	 * Get / set the flag to indicate if the options should always be refreshed
+	 * (i.e. on get, create and edit) or only on the initial data load (false)
+	 *
+	 * @param boolean|null $_ Flag to set the always refresh set to, or null to
+	 *                        get the current state.
+	 *
+	 * @return ($_ is null ? boolean : $this)
+	 */
+	public function searchOnly($_ = null)
+	{
+		return $this->_getSet($this->_searchOnly, $_);
+	}
+
+	/**
 	 * Get / set the database table from which to gather the options for the
 	 * list.
 	 *
@@ -275,11 +308,20 @@ class Options extends Ext
 	 *
 	 * @internal
 	 */
-	public function exec($db, $refresh)
+	public function exec($db, $refresh, $search)
 	{
+		// If search only, and not a search action, then just return false
+		if ($this->searchOnly() && ! $search) {
+			return false;
+		}
+
 		// Only get the options if doing a full load, or always is set
 		if ($refresh === true && !$this->alwaysRefresh()) {
 			return false;
+		}
+
+		if ($this->fn()) {
+			return $this->_customFn($db);
 		}
 
 		$label = $this->_label;
