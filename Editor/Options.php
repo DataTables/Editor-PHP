@@ -311,7 +311,7 @@ class Options extends Ext
 	public function exec($db, $refresh, $search)
 	{
 		// If search only, and not a search action, then just return false
-		if ($this->searchOnly() && ! $search) {
+		if ($this->searchOnly() && !$search) {
 			return false;
 		}
 
