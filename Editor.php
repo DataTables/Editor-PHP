@@ -884,11 +884,11 @@ class Editor extends Ext
 	 * and remove actions performed from the client-side. Multiple validators
 	 * can be added.
 	 *
-	 * @param bool|callable $afterFields `true` to run the validator after field validation,
-	 *   `false` to run before. Can be omitted (which is the equivalent of `false`).
-	 * @param callable($this, self::ACTION_*, array): ?string $_ Function to execute when validating the input data.
-	 *                                                           It is passed three parameters: 1. The editor instance, 2. The action
-	 *                                                           and 3. The values.
+	 * @param bool|callable                                   $afterFields `true` to run the validator after field validation,
+	 *                                                                     `false` to run before. Can be omitted (which is the equivalent of `false`).
+	 * @param callable($this, self::ACTION_*, array): ?string $_           Function to execute when validating the input data.
+	 *                                                                     It is passed three parameters: 1. The editor instance, 2. The action
+	 *                                                                     and 3. The values.
 	 *
 	 * @return ($_ is null ? callable : $this) The validator function.
 	 */
@@ -900,6 +900,7 @@ class Editor extends Ext
 
 		// Argument shift
 		$_ = $afterFields;
+
 		return $this->_getSet($this->_validator, $_, true);
 	}
 
@@ -1917,10 +1918,12 @@ class Editor extends Ext
 						$q->left_join($this->_leftJoin);
 
 						// ... where the selected option is present...
-						if (isset($http['searchPanes_null'][$field->name()][$i]) && $http['searchPanes_null'][$field->name()][$i] === 'true') {
+						if (
+							isset($http['searchPanes_null'][$field->name()][$i])
+							&& $http['searchPanes_null'][$field->name()][$i] === 'true'
+						) {
 							$q->where($field->dbField(), null, '=');
-						}
-						else {
+						} else {
 							$q->where(
 								$field->dbField(),
 								$http['searchPanes'][$field->name()][$i],
@@ -1941,13 +1944,18 @@ class Editor extends Ext
 
 					$query->where(static function ($q) use ($field, $http) {
 						for ($j = 0; $j < count($http['searchPanes'][$field->name()]); ++$j) {
-							$q->or_where(
-								$field->dbField(),
-								isset($http['searchPanes_null'][$field->name()][$j]) && $http['searchPanes_null'][$field->name()][$j] === 'true'
-								? null
-								: $http['searchPanes'][$field->name()][$j],
-								'='
-							);
+							if (
+								isset($http['searchPanes_null'][$field->name()][$j])
+								&& $http['searchPanes_null'][$field->name()][$j] === 'true'
+							) {
+								$q->or_where($field->dbField(), null, '=');
+							} else {
+								$q->or_where(
+									$field->dbField(),
+									$http['searchPanes'][$field->name()][$j],
+									'='
+								);
+							}
 						}
 					});
 				}
@@ -2232,9 +2240,9 @@ class Editor extends Ext
 	}
 
 	/**
-	 * Get option lists for select, radio, autocomplete, etc
+	 * Get option lists for select, radio, autocomplete, etc.
 	 *
-	 * @param boolean $refresh false for initial load, true if after insert, update
+	 * @param bool $refresh false for initial load, true if after insert, update
 	 */
 	private function _options($refresh)
 	{

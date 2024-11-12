@@ -68,7 +68,7 @@ class Options extends Ext
 	 * Private parameters
 	 */
 
-	/** @var boolean Indicate if options should always be refreshed */
+	/** @var bool Indicate if options should always be refreshed */
 	private $_alwaysRefresh = true;
 
 	/** @var string Table to get the information from */
@@ -89,13 +89,13 @@ class Options extends Ext
 	/** @var callable Callback function to do rendering of labels */
 	private $_renderer;
 
-	/** @var boolean Indicate if options should get got for create/edit or on search only */
+	/** @var bool Indicate if options should get got for create/edit or on search only */
 	private $_searchOnly = false;
 
 	/** @var callable Callback function to add where conditions */
 	private $_where;
 
-	/** @var string|boolean ORDER BY clause */
+	/** @var string|bool ORDER BY clause */
 	private $_order = true;
 
 	private $_manualAdd = [];
@@ -131,10 +131,10 @@ class Options extends Ext
 
 	/**
 	 * Get / set the flag to indicate if the options should always be refreshed
-	 * (i.e. on get, create and edit) or only on the initial data load (false)
+	 * (i.e. on get, create and edit) or only on the initial data load (false).
 	 *
-	 * @param boolean|null $_ Flag to set the always refresh set to, or null to
-	 *                        get the current state.
+	 * @param bool|null $_ Flag to set the always refresh set to, or null to
+	 *                     get the current state.
 	 *
 	 * @return ($_ is null ? boolean : $this)
 	 */
@@ -144,7 +144,7 @@ class Options extends Ext
 	}
 
 	/**
-	 * Custom function to get the options, rather than using the built in DB
+	 * Custom function to get the options, rather than using the built in DB.
 	 *
 	 * @param callable|null $_ Function that will be run to get the list of
 	 *                         options.
@@ -218,7 +218,7 @@ class Options extends Ext
 	 * renderer. If `false` no ordering will be performed and whatever is returned
 	 * from the database will be used.
 	 *
-	 * @param string|boolean|null $_ String to set, null to get current value
+	 * @param string|bool|null $_ String to set, null to get current value
 	 *
 	 * @return ($_ is null ? string : $this)
 	 */
@@ -243,10 +243,10 @@ class Options extends Ext
 
 	/**
 	 * Get / set the flag to indicate if the options should always be refreshed
-	 * (i.e. on get, create and edit) or only on the initial data load (false)
+	 * (i.e. on get, create and edit) or only on the initial data load (false).
 	 *
-	 * @param boolean|null $_ Flag to set the always refresh set to, or null to
-	 *                        get the current state.
+	 * @param bool|null $_ Flag to set the always refresh set to, or null to
+	 *                     get the current state.
 	 *
 	 * @return ($_ is null ? boolean : $this)
 	 */
@@ -301,8 +301,8 @@ class Options extends Ext
 	/**
 	 * Execute the options (i.e. get them).
 	 *
-	 * @param Database $db Database connection
-	 * @param boolean $refresh Indicate if this is a refresh or a full load
+	 * @param Database $db      Database connection
+	 * @param bool     $refresh Indicate if this is a refresh or a full load
 	 *
 	 * @return array List of options
 	 *
