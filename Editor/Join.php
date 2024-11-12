@@ -483,9 +483,9 @@ class Join extends Ext
 	/**
 	 * Get data.
 	 *
-	 * @param Editor  $editor  Host Editor instance
-	 * @param mixed[] $data    Data from the parent table's get and were we need
-	 *                         to add out output.
+	 * @param Editor  $editor Host Editor instance
+	 * @param mixed[] $data   Data from the parent table's get and were we need
+	 *                        to add out output.
 	 *
 	 * @internal
 	 */
@@ -675,28 +675,27 @@ class Join extends Ext
 	}
 
 	/**
-	 * Get options for the fields in this join
+	 * Get options for the fields in this join.
 	 *
-	 * @param  array    $options Array to write the read options into
-	 * @param  Database $db      Database connection object
-	 * @param  bool     $refresh Refresh indication flag
-	 * @return void
+	 * @param array    $options Array to write the read options into
+	 * @param Database $db      Database connection object
+	 * @param bool     $refresh Refresh indication flag
 	 *
 	 * @internal
 	 */
-	public function options(&$options, $db, $refresh) {
+	public function options(&$options, $db, $refresh)
+	{
 		// Field options
 		foreach ($this->_fields as $field) {
 			$optsInst = $field->options();
 
 			if ($optsInst) {
 				$opts = $optsInst->exec($db, $refresh);
-				
+
 				if ($opts !== false) {
 					if ($this->_type === 'object') {
 						$name = $this->name() . '.' . $field->name();
-					}
-					else {
+					} else {
 						$name = $this->name() . '[].' . $field->name();
 					}
 

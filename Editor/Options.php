@@ -101,7 +101,7 @@ class Options extends Ext
 	private $_manualAdd = [];
 
 	/** @var callable|null */
-	private $_customFn = null;
+	private $_customFn;
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -309,7 +309,7 @@ class Options extends Ext
 	 *
 	 * @internal
 	 */
-	public function exec($db, $refresh, $search=null)
+	public function exec($db, $refresh, $search = null)
 	{
 		// If search only, and not a search action, then just return false
 		if ($this->searchOnly() && !$search) {

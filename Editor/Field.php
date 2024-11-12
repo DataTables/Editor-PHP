@@ -154,7 +154,7 @@ class Field extends Ext
 	private $_validator = [];
 
 	/** @var Upload|null */
-	private $_upload = null;
+	private $_upload;
 
 	/** @var callable */
 	private $_xss;

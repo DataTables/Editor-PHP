@@ -705,8 +705,8 @@ class Editor extends Ext
 			$debugInfo = &$this->_debugInfo;
 
 			$debugInfo[] = 'Editor PHP libraries - version ' . $this->version;
-			
-			$this->_db->debug(function ($mess) use (&$debugInfo) {
+
+			$this->_db->debug(static function ($mess) use (&$debugInfo) {
 				$debugInfo[] = $mess;
 			});
 		}
@@ -994,7 +994,7 @@ class Editor extends Ext
 			'error' => '',
 			'fieldErrors' => [],
 			'ipOpts' => [],
-			'options' => []
+			'options' => [],
 		];
 
 		$action = Editor::action($data);
