@@ -1890,18 +1890,16 @@ class Editor extends Ext
 			});
 		}
 
-		/*
-			foreach ($this->_fields as $field) {
-			// Don't reselect a pkey column if it was already added
-			if ( in_array( $field->dbField(), $this->_pkey ) ) {
-				continue;
-			}
+		// foreach ($this->_fields as $field) {
+		// 	// Don't reselect a pkey column if it was already added
+		// 	if ( in_array( $field->dbField(), $this->_pkey ) ) {
+		// 		continue;
+		// 	}
 
-			if ( $field->apply('get') && $field->getValue() === null ) {
-				$query->get( $field->dbField() );
-			}
-		}
-		*/
+		// 	if ( $field->apply('get') && $field->getValue() === null ) {
+		// 		$query->get( $field->dbField() );
+		// 	}
+		// }
 
 		if (isset($http['searchPanes'])) {
 			// Set the database from editor
@@ -1919,14 +1917,18 @@ class Editor extends Ext
 						$q->left_join($this->_leftJoin);
 
 						// ... where the selected option is present...
-						$r = $q
-							->where(
+						if (isset($http['searchPanes_null'][$field->name()][$i]) && $http['searchPanes_null'][$field->name()][$i] === 'true') {
+							$q->where($field->dbField(), null, '=');
+						}
+						else {
+							$q->where(
 								$field->dbField(),
-								isset($http['searchPanes_null'][$field->name()][$i]) && $http['searchPanes_null'][$field->name()][$i] === 'true'
-									? null
-									: $http['searchPanes'][$field->name()][$i],
+								$http['searchPanes'][$field->name()][$i],
 								'='
-							)
+							);
+						}
+
+						$r = $q
 							->exec()
 							->fetchAll();
 
@@ -1942,8 +1944,8 @@ class Editor extends Ext
 							$q->or_where(
 								$field->dbField(),
 								isset($http['searchPanes_null'][$field->name()][$j]) && $http['searchPanes_null'][$field->name()][$j] === 'true'
-									? null
-									: $http['searchPanes'][$field->name()][$j],
+								? null
+								: $http['searchPanes'][$field->name()][$j],
 								'='
 							);
 						}
@@ -2073,9 +2075,7 @@ class Editor extends Ext
 			$res = $this->_insert_or_update_table(
 				$this->_table[$i],
 				$values,
-				$id !== null ?
-					$this->pkeyToArray($id, true) :
-					null
+				$id !== null ? $this->pkeyToArray($id, true) : null
 			);
 
 			// If we don't have an id yet, then the first insert will return
@@ -2244,17 +2244,17 @@ class Editor extends Ext
 
 			if ($options) {
 				$opts = $options($this->_db, $refresh);
-	
+
 				if ($opts !== false) {
 					if (!isset($this->_out['options'])) {
 						$this->_out['options'] = [];
 					}
-	
+
 					$this->_out['options'][$field->name()] = $opts;
 				}
 			}
 
-			if (! $refresh) {
+			if (!$refresh) {
 				// SearchPanes options
 				$spOpts = $field->searchPaneOptionsExec($field, $this, $this->_processData, $this->_fields, $this->_leftJoin);
 

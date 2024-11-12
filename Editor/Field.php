@@ -574,11 +574,13 @@ class Field extends Ext
 		// Note that validation must be done on input data before we get here
 
 		// Create or edit action, are we configured to use this field
-		if ($action === 'create'
+		if (
+			$action === 'create'
 			&& ($this->_set === Field::SET_NONE || $this->_set === Field::SET_EDIT)
 		) {
 			return false;
-		} elseif ($action === 'edit'
+		} elseif (
+			$action === 'edit'
 			&& ($this->_set === Field::SET_NONE || $this->_set === Field::SET_CREATE)
 		) {
 			return false;
