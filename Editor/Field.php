@@ -153,8 +153,8 @@ class Field extends Ext
 	/** @var array[] */
 	private $_validator = [];
 
-	/** @var Upload */
-	private $_upload;
+	/** @var Upload|null */
+	private $_upload = null;
 
 	/** @var callable */
 	private $_xss;
@@ -297,7 +297,7 @@ class Field extends Ext
 	 * @param callable(array): string                  $format    Function will render each label
 	 * @param string                                   $order     SQL ordering
 	 *
-	 * @return ($table is null ? Options : $this)
+	 * @return ($table is null ? Options|null : $this)
 	 */
 	public function options($table = null, $value = null, $label = null, $condition = null, $format = null, $order = null)
 	{
@@ -470,7 +470,7 @@ class Field extends Ext
 	 *
 	 * @param Upload $_ Upload class if used as a setter
 	 *
-	 * @return ($_ is null ? Upload : $this) Value if used as a getter.
+	 * @return ($_ is null ? Upload|null : $this) Value if used as a getter.
 	 */
 	public function upload($_ = null)
 	{

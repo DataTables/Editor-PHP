@@ -116,51 +116,6 @@ parameters:
 			path: Editor.php
 
 		-
-			message: "#^If condition is always true\\.$#"
-			count: 3
-			path: Editor.php
-
-		-
-			message: "#^Left side of && is always true\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
-			message: "#^Method DataTables\\\\Editor\\:\\:_find_field\\(\\) should return DataTables\\\\Editor\\\\Field but returns null\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
-			message: "#^Method DataTables\\\\Editor\\:\\:_insert_or_update\\(\\) should return DataTables\\\\Database\\\\Result but returns int\\|string\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
-			message: "#^Method DataTables\\\\Editor\\:\\:_insert_or_update_table\\(\\) should return DataTables\\\\Database\\\\Result but returns null\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 8
-			path: Editor.php
-
-		-
-			message: "#^Parameter \\#1 \\$id of method DataTables\\\\Editor\\:\\:_insert_or_update\\(\\) expects int\\|string, null given\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
-			message: "#^Parameter \\#1 \\$pkeyVal of method DataTables\\\\Editor\\:\\:_pkey_submit_merge\\(\\) expects string, DataTables\\\\Database\\\\Result given\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
-			message: "#^Parameter \\#1 \\$set of method DataTables\\\\Database\\:\\:debug\\(\\) expects bool\\|null, Closure given\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
 			message: "#^Parameter \\#2 \\$parentId of method DataTables\\\\Editor\\\\Join\\:\\:create\\(\\) expects int, string given\\.$#"
 			count: 1
 			path: Editor.php
@@ -182,21 +137,11 @@ parameters:
 
 		-
 			message: "#^Result of && is always false\\.$#"
-			count: 2
-			path: Editor.php
-
-		-
-			message: "#^Strict comparison using \\!\\=\\= between DataTables\\\\Database\\\\Result and null will always evaluate to true\\.$#"
 			count: 1
 			path: Editor.php
 
 		-
 			message: "#^Strict comparison using \\!\\=\\= between array and null will always evaluate to true\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
-			message: "#^Strict comparison using \\!\\=\\= between int\\|string and null will always evaluate to true\\.$#"
 			count: 1
 			path: Editor.php
 
@@ -207,11 +152,6 @@ parameters:
 
 		-
 			message: "#^Strict comparison using \\=\\=\\= between \\(callable\\(\\)\\: mixed\\)\\|string and null will always evaluate to false\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
-			message: "#^Strict comparison using \\=\\=\\= between DataTables\\\\Database\\\\Result and null will always evaluate to false\\.$#"
 			count: 1
 			path: Editor.php
 
@@ -257,11 +197,6 @@ parameters:
 
 		-
 			message: "#^Property DataTables\\\\Editor\\\\Field\\:\\:\\$_setValue is never written, only read\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\Field\\:\\:\\$_upload is never written, only read\\.$#"
 			count: 1
 			path: Editor/Field.php
 
@@ -387,11 +322,6 @@ parameters:
 
 		-
 			message: "#^Property DataTables\\\\Editor\\\\Options\\:\\:\\$_limit is never written, only read\\.$#"
-			count: 1
-			path: Editor/Options.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\Options\\:\\:\\$_order is never written, only read\\.$#"
 			count: 1
 			path: Editor/Options.php
 

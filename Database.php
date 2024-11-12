@@ -76,7 +76,10 @@ class Database
 
 	/** @var callable */
 	private $_type;
+
+	/** @var callable|null */
 	private $_debugCallback;
+
 	private $query_driver;
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -127,7 +130,7 @@ class Database
 	 * @param array           $where Where condition for what to select - see {@see
 	 *                               Query->where()}.
 	 *
-	 * @return Number
+	 * @return int
 	 */
 	public function count($table, $field = 'id', $where = null)
 	{
@@ -145,14 +148,14 @@ class Database
 	/**
 	 * Get / set debug mode.
 	 *
-	 * @param bool $set Debug mode state. If not given, then used as a getter.
+	 * @param false|callable $set Debug mode state. If not given, then used as a getter.
 	 *
 	 * @return ($set is null ? bool : $this) Debug mode state if no parameter is given.
 	 */
 	public function debug($set = null)
 	{
 		if ($set === null) {
-			return $this->_debugCallback ? true : false;
+			return is_callable($this->_debugCallback) ? true : false;
 		} elseif ($set === false) {
 			$this->_debugCallback = null;
 		} else {

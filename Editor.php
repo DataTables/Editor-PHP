@@ -705,7 +705,8 @@ class Editor extends Ext
 			$debugInfo = &$this->_debugInfo;
 
 			$debugInfo[] = 'Editor PHP libraries - version ' . $this->version;
-			$debugVal = $this->_db->debug(static function ($mess) use (&$debugInfo) {
+			
+			$this->_db->debug(function ($mess) use (&$debugInfo) {
 				$debugInfo[] = $mess;
 			});
 		}
@@ -988,11 +989,12 @@ class Editor extends Ext
 	private function _process($data)
 	{
 		$this->_out = [
-			'fieldErrors' => [],
-			'error' => '',
-			'data' => [],
-			'ipOpts' => [],
 			'cancelled' => [],
+			'data' => [],
+			'error' => '',
+			'fieldErrors' => [],
+			'ipOpts' => [],
+			'options' => []
 		];
 
 		$action = Editor::action($data);
@@ -1154,11 +1156,8 @@ class Editor extends Ext
 		}
 
 		$res = $query->exec();
-		if (!$res) {
-			throw new \Exception('Error executing SQL for data get. Enable SQL debug using `->debug(true)`');
-		}
-
 		$out = [];
+
 		while ($row = $res->fetch()) {
 			$inner = [];
 			$inner['DT_RowId'] = $this->_idPrefix . $this->pkeyToValue($row, true);
@@ -1174,15 +1173,18 @@ class Editor extends Ext
 
 		// Row based "joins"
 		for ($i = 0; $i < count($this->_join); ++$i) {
-			$this->_join[$i]->data($this, $out, $options);
+			$this->_join[$i]->data($this, $out);
 		}
 
 		$this->_trigger('postGet', $out, $id);
 
-		return [
-			'data' => $out,
-			'files' => $this->_fileData(null, null, $out),
-		];
+		return array_merge(
+			[
+				'data' => $out,
+				'files' => $this->_fileData(null, null, $out),
+			],
+			$ssp
+		);
 	}
 
 	/**
@@ -2047,7 +2049,7 @@ class Editor extends Ext
 	 * @param string $name Field name
 	 * @param string $type Matching name type
 	 *
-	 * @return Field Field instance
+	 * @return Field|null Field instance or null if not found
 	 */
 	private function _find_field($name, $type)
 	{
@@ -2067,14 +2069,14 @@ class Editor extends Ext
 	/**
 	 * Insert or update a row for all main tables and left joined tables.
 	 *
-	 * @param int|string $id ID to use to condition the update. If null is
-	 *                       given, the first query performed is an insert and the inserted id
-	 *                       used as the value should there be any subsequent tables to operate
-	 *                       on. Mote that for compound keys, this should be the "joined" value
-	 *                       (i.e. a single string rather than an array).
+	 * @param int|string|null $id ID to use to condition the update. If null is
+	 *                            given, the first query performed is an insert and the inserted id
+	 *                            used as the value should there be any subsequent tables to operate
+	 *                            on. Mote that for compound keys, this should be the "joined" value
+	 *                            (i.e. a single string rather than an array).
 	 *
-	 * @return Database\Result Result from the query or null if no
-	 *                         query performed.
+	 * @return int|string Result from the query or null if no
+	 *                    query performed.
 	 */
 	private function _insert_or_update($id, $values)
 	{
@@ -2157,8 +2159,8 @@ class Editor extends Ext
 	 * @param string $table Database table name to use (can include an alias)
 	 * @param array  $where Update condition
 	 *
-	 * @return Database\Result Result from the query or null if no query
-	 *                         performed.
+	 * @return Database\Result|null Result from the query or null if no query
+	 *                              performed.
 	 */
 	private function _insert_or_update_table($table, $values, $where = null)
 	{
@@ -2251,13 +2253,9 @@ class Editor extends Ext
 			$options = $field->options();
 
 			if ($options) {
-				$opts = $options($this->_db, $refresh);
+				$opts = $options->exec($this->_db, $refresh);
 
 				if ($opts !== false) {
-					if (!isset($this->_out['options'])) {
-						$this->_out['options'] = [];
-					}
-
 					$this->_out['options'][$field->name()] = $opts;
 				}
 			}
@@ -2285,6 +2283,10 @@ class Editor extends Ext
 					$this->_out['searchBuilder']['options'] = $sbOpts;
 				}
 			}
+		}
+
+		for ($i = 0; $i < count($this->_join); ++$i) {
+			$this->_join[$i]->options($this->_out['options'], $this->_db, $refresh);
 		}
 	}
 

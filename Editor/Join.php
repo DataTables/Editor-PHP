@@ -486,11 +486,10 @@ class Join extends Ext
 	 * @param Editor  $editor  Host Editor instance
 	 * @param mixed[] $data    Data from the parent table's get and were we need
 	 *                         to add out output.
-	 * @param array   $options options array for fields
 	 *
 	 * @internal
 	 */
-	public function data($editor, &$data, &$options)
+	public function data($editor, &$data)
 	{
 		if (!$this->_get) {
 			return;
@@ -640,18 +639,6 @@ class Join extends Ext
 				}
 			}
 		}
-
-		// Field options
-		foreach ($this->_fields as $field) {
-			$opts = $field->optionsExec($db);
-
-			if ($opts !== false) {
-				$name = $this->name() .
-					($this->_type === 'object' ? '.' : '[].') .
-					$field->name();
-				$options[$name] = $opts;
-			}
-		}
 	}
 
 	/**
@@ -683,6 +670,38 @@ class Join extends Ext
 		} else {
 			for ($i = 0; $i < count($data[$this->_name]); ++$i) {
 				$this->_insert($db, $parentId, $data[$this->_name][$i]);
+			}
+		}
+	}
+
+	/**
+	 * Get options for the fields in this join
+	 *
+	 * @param  array    $options Array to write the read options into
+	 * @param  Database $db      Database connection object
+	 * @param  bool     $refresh Refresh indication flag
+	 * @return void
+	 *
+	 * @internal
+	 */
+	public function options(&$options, $db, $refresh) {
+		// Field options
+		foreach ($this->_fields as $field) {
+			$optsInst = $field->options();
+
+			if ($optsInst) {
+				$opts = $optsInst->exec($db, $refresh);
+				
+				if ($opts !== false) {
+					if ($this->_type === 'object') {
+						$name = $this->name() . '.' . $field->name();
+					}
+					else {
+						$name = $this->name() . '[].' . $field->name();
+					}
+
+					$options[$name] = $opts;
+				}
 			}
 		}
 	}

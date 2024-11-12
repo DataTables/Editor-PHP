@@ -101,7 +101,7 @@ class Options extends Ext
 	private $_manualAdd = [];
 
 	/** @var callable|null */
-	private $_customFn;
+	private $_customFn = null;
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -301,14 +301,15 @@ class Options extends Ext
 	/**
 	 * Execute the options (i.e. get them).
 	 *
-	 * @param Database $db      Database connection
-	 * @param bool     $refresh Indicate if this is a refresh or a full load
+	 * @param Database    $db      Database connection
+	 * @param bool        $refresh Indicate if this is a refresh or a full load
+	 * @param string|null $search  Search term
 	 *
-	 * @return array List of options
+	 * @return array|false List of options
 	 *
 	 * @internal
 	 */
-	public function exec($db, $refresh, $search)
+	public function exec($db, $refresh, $search=null)
 	{
 		// If search only, and not a search action, then just return false
 		if ($this->searchOnly() && !$search) {
@@ -320,8 +321,9 @@ class Options extends Ext
 			return false;
 		}
 
-		if ($this->fn()) {
-			return $this->_customFn($db);
+		$fn = $this->_customFn;
+		if (is_callable($fn)) {
+			return $fn($db);
 		}
 
 		$label = $this->_label;
