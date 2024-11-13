@@ -201,6 +201,11 @@ parameters:
 			path: Editor/Field.php
 
 		-
+			message: "#^Property DataTables\\\\Editor\\\\Field\\:\\:\\$_upload is never written, only read\\.$#"
+			count: 1
+			path: Editor/Field.php
+
+		-
 			message: "#^Strict comparison using \\=\\=\\= between \\(callable\\(mixed\\)\\: string\\)\\|false and true will always evaluate to false\\.$#"
 			count: 1
 			path: Editor/Field.php
@@ -317,6 +322,11 @@ parameters:
 
 		-
 			message: "#^Negated boolean expression is always false\\.$#"
+			count: 1
+			path: Editor/Options.php
+
+		-
+			message: "#^Property DataTables\\\\Editor\\\\Options\\:\\:\\$_customFn is never written, only read\\.$#"
 			count: 1
 			path: Editor/Options.php
 
