@@ -83,7 +83,7 @@ class Options extends Ext
 	/** Information for left join */
 	private $_leftJoin = [];
 
-	/** @var int Row limit */
+	/** @var int|null Row limit */
 	private $_limit;
 
 	/** @var callable Callback function to do rendering of labels */
@@ -312,7 +312,7 @@ class Options extends Ext
 	public function exec($db, $refresh, $search = null)
 	{
 		// If search only, and not a search action, then just return false
-		if ($this->searchOnly() && !$search) {
+		if ($this->searchOnly() && $search === null) {
 			return false;
 		}
 
@@ -323,7 +323,7 @@ class Options extends Ext
 
 		$fn = $this->_customFn;
 		if (is_callable($fn)) {
-			return $fn($db);
+			return $fn($db, $search);
 		}
 
 		$label = $this->_label;
@@ -377,22 +377,32 @@ class Options extends Ext
 			$q->order($this->_order);
 		}
 
-		if ($this->_limit !== null) {
-			$q->limit($this->_limit);
-		}
-
 		$rows = $q
 			->exec()
 			->fetchAll();
 
 		// Create the output array
 		$out = [];
+		$max = $this->_limit;
 
 		for ($i = 0, $ien = count($rows); $i < $ien; ++$i) {
-			$out[] = [
-				'label' => $formatter($rows[$i]),
-				'value' => $rows[$i][$value],
-			];
+			$rowLabel = $formatter($rows[$i]);
+			$rowValue = $rows[$i][$value];
+
+			// Apply the search to the rendered label. Need to do it here rather than in SQL since
+			// the label is rendered in PHP.
+			if ($search === null || $search === '' || stripos($rowLabel, $search) === 0) {
+				$out[] = [
+					'label' => $rowLabel,
+					'value' => $rowValue,
+				];
+			}
+
+			// Limit needs to be done in PHP to allow for the PHP based filtering above, and also
+			// for when using a custom function.
+			if ($max !== null && count($out) >= $max) {
+				break;
+			}
 		}
 
 		// Stick on any extra manually added options
@@ -421,5 +431,18 @@ class Options extends Ext
 		}
 
 		return $out;
+	}
+
+	/**
+	 * Do a search for data on the source.
+	 *
+	 * @param Database $db   Database connection
+	 * @param string   $term Search term
+	 *
+	 * @return array|bool
+	 */
+	public function search($db, $term)
+	{
+		return $this->exec($db, false, $term);
 	}
 }

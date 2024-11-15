@@ -1035,7 +1035,7 @@ class Editor extends Ext
 				$this->_options(false);
 			} elseif ($action === Editor::ACTION_SEARCH) {
 				/* Options search */
-				$this->_optionsSearch();
+				$this->_optionsSearch($data);
 			} elseif ($action === Editor::ACTION_UPLOAD && $this->_write === true) {
 				/* File upload */
 				$this->_upload($data);
@@ -2290,10 +2290,30 @@ class Editor extends Ext
 		}
 	}
 
-	private function _optionsSearch()
+	/**
+	 * Perform a search action on a specific field for label/value pairs.
+	 *
+	 * @param array $http Submitted HTTP request for search
+	 */
+	private function _optionsSearch($http)
 	{
-		// TODO!
-		// Get the field in question, the search term and perform the search
+		$field = $this->_find_field($http['field'], 'name');
+
+		if (!$field) {
+			return;
+		}
+
+		$options = $field->options();
+
+		if (!$options) {
+			return;
+		}
+
+		$values = $options->search($this->db(), $http['search']);
+
+		if ($values) {
+			$this->_out['data'] = $values;
+		}
 	}
 
 	/**
