@@ -375,6 +375,9 @@ class Options extends Ext
 			}
 
 			$q->order($this->_order);
+		} else if ($this->_order === true) {
+			// Attempt to do a database order, needed for "limit()"ed results
+			$q->order($this->_label[0]);
 		}
 
 		$rows = $q
@@ -426,7 +429,7 @@ class Options extends Ext
 
 				return is_numeric($aLabel) && is_numeric($bLabel) ?
 					($aLabel * 1) - ($bLabel * 1) :
-					strcmp($aLabel, $bLabel);
+				strcmp($aLabel, $bLabel);
 			});
 		}
 
