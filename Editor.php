@@ -2297,6 +2297,7 @@ class Editor extends Ext
 	 */
 	private function _optionsSearch($http)
 	{
+		$values = null;
 		$field = $this->_find_field($http['field'], 'name');
 
 		if (!$field) {
@@ -2309,7 +2310,11 @@ class Editor extends Ext
 			return;
 		}
 
-		$values = $options->search($this->db(), $http['search']);
+		if (isset($http['search'])) {
+			$values = $options->search($this->db(), $http['search']);
+		} elseif (isset($http['values'])) {
+			$values = $options->find($this->db(), $http['values']);
+		}
 
 		if ($values) {
 			$this->_out['data'] = $values;
@@ -2441,16 +2446,16 @@ class Editor extends Ext
 			$a = preg_split('/ as /i', $name);
 
 			return $type === 'alias' ?
-				$a[1] :
-				$a[0];
+			$a[1] :
+			$a[0];
 		}
 
 		if (stripos($name, ' ') !== false) {
 			$a = preg_split('/ /i', $name);
 
 			return $type === 'alias' ?
-				$a[1] :
-				$a[0];
+			$a[1] :
+			$a[0];
 		}
 
 		return $name;
