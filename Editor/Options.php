@@ -336,10 +336,10 @@ class Options extends Ext
 	 *
 	 * @internal
 	 */
-	public function exec($db, $refresh, $search = null)
+	public function exec($db, $refresh, $search = null, $find = null)
 	{
 		// If search only, and not a search action, then just return false
-		if ($this->searchOnly() && $search === null) {
+		if ($this->searchOnly() && $search === null && $find === null) {
 			return false;
 		}
 
@@ -384,6 +384,10 @@ class Options extends Ext
 			->get($fields)
 			->where($this->_where);
 
+		if (is_array($find)) {
+			$q->where_in($value, $find);
+		}
+
 		if (is_string($this->_order)) {
 			// For cases where we are ordering by a field which isn't included in the list
 			// of fields to display, we need to add the ordering field, due to the
@@ -402,6 +406,9 @@ class Options extends Ext
 			}
 
 			$q->order($this->_order);
+		} elseif ($this->_order === true) {
+			// Attempt to do a database order, needed for "limit()"ed results
+			$q->order($this->_label[0]);
 		}
 
 		$rows = $q
@@ -464,11 +471,24 @@ class Options extends Ext
 
 				return is_numeric($aLabel) && is_numeric($bLabel) ?
 					($aLabel * 1) - ($bLabel * 1) :
-					strcmp($aLabel, $bLabel);
+				strcmp($aLabel, $bLabel);
 			});
 		}
 
 		return $out;
+	}
+
+	/**
+	 * Get the objects for a set of values.
+	 *
+	 * @param Database $db  Database connection
+	 * @param array    $ids IDs to get
+	 *
+	 * @return array|bool
+	 */
+	public function find($db, $ids)
+	{
+		return $this->exec($db, false, null, $ids);
 	}
 
 	/**
