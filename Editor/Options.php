@@ -71,11 +71,11 @@ class Options extends Ext
 	/** @var bool Indicate if options should always be refreshed */
 	private $_alwaysRefresh = true;
 
-	/** @var string Table to get the information from */
-	private $_table;
+	/** @var callable|null */
+	private $_customFn;
 
-	/** @var string Column name containing the value */
-	private $_value;
+	/** @var string[] List of columns to include in the output */
+	private $_includes = [];
 
 	/** @var string[] Column names for the label(s) */
 	private $_label = [];
@@ -86,22 +86,26 @@ class Options extends Ext
 	/** @var int|null Row limit */
 	private $_limit;
 
+	/** @var array List of label / values to use if not database retrieved */
+	private $_manualAdd = [];
+
+	/** @var string|bool ORDER BY clause */
+	private $_order = true;
+
 	/** @var callable Callback function to do rendering of labels */
 	private $_renderer;
 
 	/** @var bool Indicate if options should get got for create/edit or on search only */
 	private $_searchOnly = false;
 
+	/** @var string Table to get the information from */
+	private $_table;
+
 	/** @var callable Callback function to add where conditions */
 	private $_where;
 
-	/** @var string|bool ORDER BY clause */
-	private $_order = true;
-
-	private $_manualAdd = [];
-
-	/** @var callable|null */
-	private $_customFn;
+	/** @var string Column name containing the value */
+	private $_value;
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
@@ -154,6 +158,29 @@ class Options extends Ext
 	public function fn($_ = null)
 	{
 		return $this->_getSet($this->_customFn, $_);
+	}
+
+	/**
+	 * Column names from `value()` and `label()` that should be included in the output object for
+	 * each option, in addition to the value and label.
+	 *
+	 * @param string|string[] $inc The list of columns to include in the output
+	 *
+	 * @return ($_ is null ? string[] : $this)
+	 */
+	public function include($inc = null)
+	{
+		if ($inc === null) {
+			return $this->_includes;
+		}
+
+		if (is_array($inc)) {
+			$this->_includes = array_merge($this->_includes, $inc);
+		} else {
+			$this->_includes[] = $inc;
+		}
+
+		return $this;
 	}
 
 	/**
@@ -392,10 +419,21 @@ class Options extends Ext
 			// Apply the search to the rendered label. Need to do it here rather than in SQL since
 			// the label is rendered in PHP.
 			if ($search === null || $search === '' || stripos($rowLabel, $search) === 0) {
-				$out[] = [
+				$option = [
 					'label' => $rowLabel,
 					'value' => $rowValue,
 				];
+
+				// Add in any columns that are needed for extra data (includes)
+				for ($j = 0; $j < count($this->_includes); ++$j) {
+					$inc = $this->_includes[$j];
+
+					if (isset($rows[$i][$inc])) {
+						$option[$inc] = $rows[$i][$inc];
+					}
+				}
+
+				$out[] = $option;
 			}
 
 			// Limit needs to be done in PHP to allow for the PHP based filtering above, and also
