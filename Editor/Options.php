@@ -166,7 +166,7 @@ class Options extends Ext
 	 *
 	 * @param string|string[] $inc The list of columns to include in the output
 	 *
-	 * @return ($_ is null ? string[] : $this)
+	 * @return ($inc is null ? string[] : $this)
 	 */
 	public function include($inc = null)
 	{
