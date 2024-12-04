@@ -53,7 +53,7 @@ class HtmLawedVanillaWrapper {
      * @return string Returns the filtered html.
      * @see http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/htmLawed_README.htm
      */
-    public static function filter($html, array $config = null, $spec = null) {
+    public static function filter($html, $config = null, $spec = null) {
         if ($config === null) {
             $config = self::$defaultConfig;
         }
