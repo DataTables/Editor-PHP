@@ -1313,7 +1313,7 @@ abstract class Query
 	/**
 	 * Add parentheses to a where condition.
 	 *
-	 * @return string
+	 * @return void
 	 *
 	 * @internal
 	 */
