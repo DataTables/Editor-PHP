@@ -2269,7 +2269,7 @@ class Editor extends Ext
 						$this->_out['searchPanes'] = ['options' => []];
 					}
 
-					$this->_out['searchPanes']['options'] = $spOpts;
+					$this->_out['searchPanes']['options'][$field->name()] = $spOpts;
 				}
 
 				// SearchBuilder options
@@ -2280,7 +2280,7 @@ class Editor extends Ext
 						$this->_out['searchBuilder'] = ['options' => []];
 					}
 
-					$this->_out['searchBuilder']['options'] = $sbOpts;
+					$this->_out['searchBuilder']['options'][$field->name()] = $sbOpts;
 				}
 			}
 		}
