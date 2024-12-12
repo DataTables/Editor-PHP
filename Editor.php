@@ -1042,6 +1042,7 @@ class Editor extends Ext
 			} elseif ($action === Editor::ACTION_DELETE && $this->_write === true) {
 				/* Remove rows */
 				$this->_remove($data);
+				$this->_options(true);
 				$this->_fileClean();
 			} elseif (($action === Editor::ACTION_CREATE || $action === Editor::ACTION_EDIT) && $this->_write === true) {
 				/* Create or edit row */
