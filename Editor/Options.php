@@ -441,6 +441,10 @@ class Options extends Ext
 
 	public function execDb($db, $find)
 	{
+		if (!$this->_table) {
+			return [];
+		}
+
 		// Create a list of the fields that we need to get from the db
 		$fields = [];
 		$fields[] = $this->_value;
