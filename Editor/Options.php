@@ -439,6 +439,14 @@ class Options extends Ext
 		return $out;
 	}
 
+	/**
+	 * Get the list of options from the database based on the configuration.
+	 *
+	 * @param Database    $db   Database connection
+	 * @param array|false $find Values to search for
+	 *
+	 * @return array List of data from the db
+	 */
 	public function execDb($db, $find)
 	{
 		if (!$this->_table) {
