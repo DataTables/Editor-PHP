@@ -1313,8 +1313,6 @@ abstract class Query
 	/**
 	 * Add parentheses to a where condition.
 	 *
-	 * @return void
-	 *
 	 * @internal
 	 */
 	protected function _where_group($inOut, $op)

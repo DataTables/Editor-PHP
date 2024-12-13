@@ -112,7 +112,10 @@ class Options extends Ext
 	 */
 
 	/**
-	 * Add extra options to the list, in addition to any obtained from the database.
+	 * Add extra options to the list, in addition to any obtained from the database. Note
+	 * that these go through the same filtering and ordering operation as database retrieved
+	 * values (they are merged together if both are used). Use a custom function if you want
+	 * complete control over the options and their order.
 	 *
 	 * @param string      $label The label to use for the option
 	 * @param string|null $value Value for the option. If not given, the label will be used
@@ -357,11 +360,6 @@ class Options extends Ext
 		$value = $this->_value;
 		$formatter = $this->_renderer;
 
-		// Create a list of the fields that we need to get from the db
-		$fields = [];
-		$fields[] = $value;
-		$fields = array_merge($fields, $label);
-
 		// We need a default formatter if one isn't provided
 		if (!$formatter) {
 			$formatter = static function ($row) use ($label) {
@@ -376,6 +374,78 @@ class Options extends Ext
 		}
 
 		// Get the data
+		$options = $this->execDb($db, $find);
+
+		// Manually added options
+		for ($i = 0; $i < count($this->_manualAdd); ++$i) {
+			$options[] = $this->_manualAdd[$i];
+		}
+
+		// Create the output array
+		$out = [];
+		$max = $this->_limit;
+
+		for ($i = 0, $ien = count($options); $i < $ien; ++$i) {
+			$rowLabel = $formatter($options[$i]);
+			$rowValue = $options[$i][$value];
+
+			// Apply the search to the rendered label. Need to do it here rather than in SQL since
+			// the label is rendered in PHP.
+			if ($search === null || $search === '' || stripos($rowLabel, $search) === 0) {
+				$option = [
+					'label' => $rowLabel,
+					'value' => $rowValue,
+				];
+
+				// Add in any columns that are needed for extra data (includes)
+				for ($j = 0; $j < count($this->_includes); ++$j) {
+					$inc = $this->_includes[$j];
+
+					if (isset($rows[$i][$inc])) {
+						$option[$inc] = $options[$i][$inc];
+					}
+				}
+
+				$out[] = $option;
+			}
+
+			// Limit needs to be done in PHP to allow for the PHP based filtering above, and also
+			// for when using a custom function.
+			if ($max !== null && count($out) >= $max) {
+				break;
+			}
+		}
+
+		// Local sorting
+		if ($this->_order === true) {
+			usort($out, static function ($a, $b) {
+				$aLabel = $a['label'];
+				$bLabel = $b['label'];
+
+				if ($aLabel === null) {
+					$aLabel = '';
+				}
+
+				if ($bLabel === null) {
+					$bLabel = '';
+				}
+
+				return is_numeric($aLabel) && is_numeric($bLabel)
+					? ($aLabel * 1) - ($bLabel * 1)
+					: strcmp($aLabel, $bLabel);
+			});
+		}
+
+		return $out;
+	}
+
+	public function execDb($db, $find)
+	{
+		// Create a list of the fields that we need to get from the db
+		$fields = [];
+		$fields[] = $this->_value;
+		$fields = array_merge($fields, $this->_label);
+
 		$q = $db
 			->query('select')
 			->distinct(true)
@@ -385,7 +455,7 @@ class Options extends Ext
 			->where($this->_where);
 
 		if (is_array($find)) {
-			$q->where_in($value, $find);
+			$q->where_in($this->_value, $find);
 		}
 
 		if (is_string($this->_order)) {
@@ -411,71 +481,9 @@ class Options extends Ext
 			$q->order($this->_label[0]);
 		}
 
-		$rows = $q
+		return $q
 			->exec()
 			->fetchAll();
-
-		// Create the output array
-		$out = [];
-		$max = $this->_limit;
-
-		for ($i = 0, $ien = count($rows); $i < $ien; ++$i) {
-			$rowLabel = $formatter($rows[$i]);
-			$rowValue = $rows[$i][$value];
-
-			// Apply the search to the rendered label. Need to do it here rather than in SQL since
-			// the label is rendered in PHP.
-			if ($search === null || $search === '' || stripos($rowLabel, $search) === 0) {
-				$option = [
-					'label' => $rowLabel,
-					'value' => $rowValue,
-				];
-
-				// Add in any columns that are needed for extra data (includes)
-				for ($j = 0; $j < count($this->_includes); ++$j) {
-					$inc = $this->_includes[$j];
-
-					if (isset($rows[$i][$inc])) {
-						$option[$inc] = $rows[$i][$inc];
-					}
-				}
-
-				$out[] = $option;
-			}
-
-			// Limit needs to be done in PHP to allow for the PHP based filtering above, and also
-			// for when using a custom function.
-			if ($max !== null && count($out) >= $max) {
-				break;
-			}
-		}
-
-		// Stick on any extra manually added options
-		if (count($this->_manualAdd)) {
-			$out = array_merge($out, $this->_manualAdd);
-		}
-
-		// Local sorting
-		if ($this->_order === true) {
-			usort($out, static function ($a, $b) {
-				$aLabel = $a['label'];
-				$bLabel = $b['label'];
-
-				if ($aLabel === null) {
-					$aLabel = '';
-				}
-
-				if ($bLabel === null) {
-					$bLabel = '';
-				}
-
-				return is_numeric($aLabel) && is_numeric($bLabel) ?
-					($aLabel * 1) - ($bLabel * 1) :
-				strcmp($aLabel, $bLabel);
-			});
-		}
-
-		return $out;
 	}
 
 	/**
