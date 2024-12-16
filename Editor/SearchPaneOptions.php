@@ -82,7 +82,7 @@ class SearchPaneOptions extends Ext
 	/** @var callable Callback function to do rendering of labels */
 	private $_renderer;
 
-	/** @var callable Callback function to add where conditions */
+	/** @var array|callable Callback function to add where conditions */
 	private $_where;
 
 	/** @var string ORDER BY clause */
@@ -206,7 +206,7 @@ class SearchPaneOptions extends Ext
 	/**
 	 * Adds all of the where conditions to the desired query.
 	 *
-	 * @param string $query the query being built
+	 * @param Query $query the query being built
 	 *
 	 * @return $this
 	 */

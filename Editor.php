@@ -2327,7 +2327,7 @@ class Editor extends Ext
 	 *
 	 * @param string $table Database table name to use
 	 * @param array  $ids   Array of ids to remove
-	 * @param string $pkey  Database column name to match the ids on for the
+	 * @param string|array|null $pkey  Database column name to match the ids on for the
 	 *                      delete condition. If not given the instance's base primary key is
 	 *                      used.
 	 */

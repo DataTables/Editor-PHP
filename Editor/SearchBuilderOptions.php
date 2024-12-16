@@ -206,7 +206,7 @@ class SearchBuilderOptions extends Ext
 	/**
 	 * Adds all of the where conditions to the desired query.
 	 *
-	 * @param string $query the query being built
+	 * @param Query $query the query being built
 	 *
 	 * @return $this
 	 */
