@@ -286,16 +286,16 @@ class Field extends Ext
 	 * data, including pairs that require joins and where conditions, use a
 	 * closure to provide a query
 	 *
-	 * @param string|callable(Database): (false|array) $table     Database table name to use to get the
-	 *                                                            paired data from, or a closure function if providing a method
-	 * @param string                                   $value     Table column name that contains the pair's
-	 *                                                            value. Not used if the first parameter is given as a closure
-	 * @param string                                   $label     Table column name that contains the pair's
-	 *                                                            label. Not used if the first parameter is given as a closure
-	 * @param \Closure(Query): void                    $condition Function that will add `where`
-	 *                                                            conditions to the query
-	 * @param callable(array): string                  $format    Function will render each label
-	 * @param string                                   $order     SQL ordering
+	 * @param Options|string|callable(Database, string): (false|array) $table     Database table name to use to get the
+	 *                                                                            paired data from, or a closure function if providing a method
+	 * @param string                                                   $value     Table column name that contains the pair's
+	 *                                                                            value. Not used if the first parameter is given as a closure
+	 * @param string                                                   $label     Table column name that contains the pair's
+	 *                                                                            label. Not used if the first parameter is given as a closure
+	 * @param \Closure(Query): void                                    $condition Function that will add `where`
+	 *                                                                            conditions to the query
+	 * @param callable(array): string                                  $format    Function will render each label
+	 * @param string                                                   $order     SQL ordering
 	 *
 	 * @return ($table is null ? Options|null : $this)
 	 */
