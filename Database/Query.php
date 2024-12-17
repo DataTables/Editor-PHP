@@ -479,6 +479,11 @@ abstract class Query
 			return $this->_pkey;
 		}
 
+		if (is_string($pkey)) {
+			$this->_pkey = [$pkey];
+			return $this;
+		}
+
 		$this->_pkey = $pkey;
 
 		return $this;
