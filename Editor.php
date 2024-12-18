@@ -2325,11 +2325,11 @@ class Editor extends Ext
 	/**
 	 * Delete one or more rows from the database for an individual table.
 	 *
-	 * @param string $table Database table name to use
-	 * @param array  $ids   Array of ids to remove
+	 * @param string            $table Database table name to use
+	 * @param array             $ids   Array of ids to remove
 	 * @param string|array|null $pkey  Database column name to match the ids on for the
-	 *                      delete condition. If not given the instance's base primary key is
-	 *                      used.
+	 *                                 delete condition. If not given the instance's base primary key is
+	 *                                 used.
 	 */
 	private function _remove_table($table, $ids, $pkey = null)
 	{
