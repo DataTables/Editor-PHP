@@ -469,7 +469,7 @@ abstract class Query
 	 * Get / set the primary key column name(s) so they can be easily returned
 	 * after an insert.
 	 *
-	 * @param string[] $pkey Primary keys
+	 * @param string|string[] $pkey Primary keys
 	 *
 	 * @return ($pkey is null ? string[] : $this)
 	 */
@@ -477,6 +477,11 @@ abstract class Query
 	{
 		if ($pkey === null) {
 			return $this->_pkey;
+		}
+
+		if (is_string($pkey)) {
+			$this->_pkey = [$pkey];
+			return $this;
 		}
 
 		$this->_pkey = $pkey;
