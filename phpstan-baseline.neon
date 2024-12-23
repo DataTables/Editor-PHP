@@ -76,11 +76,6 @@ parameters:
 			path: Database/Driver/PostgresResult.php
 
 		-
-			message: "#^Method DataTables\\\\Database\\\\Query\\:\\:_where_group\\(\\) should return string but return statement is missing\\.$#"
-			count: 1
-			path: Database/Query.php
-
-		-
 			message: "#^Method DataTables\\\\Database\\\\Query\\:\\:connect\\(\\) should return PDO but return statement is missing\\.$#"
 			count: 1
 			path: Database/Query.php
@@ -121,27 +116,12 @@ parameters:
 			path: Editor.php
 
 		-
-			message: "#^Parameter \\#3 \\$pkey of method DataTables\\\\Editor\\:\\:_remove_table\\(\\) expects string\\|null, array\\<int, mixed\\> given\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\:\\:\\$_db is never written, only read\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
 			message: "#^Property DataTables\\\\Editor\\:\\:\\$_formData is never read, only written\\.$#"
 			count: 1
 			path: Editor.php
 
 		-
 			message: "#^Result of && is always false\\.$#"
-			count: 1
-			path: Editor.php
-
-		-
-			message: "#^Strict comparison using \\!\\=\\= between array and null will always evaluate to true\\.$#"
 			count: 1
 			path: Editor.php
 
@@ -177,31 +157,6 @@ parameters:
 
 		-
 			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\Field\\:\\:\\$_getFormatter is never written, only read\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\Field\\:\\:\\$_getValue is never written, only read\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\Field\\:\\:\\$_setFormatter is never written, only read\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\Field\\:\\:\\$_setValue is never written, only read\\.$#"
-			count: 1
-			path: Editor/Field.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\Field\\:\\:\\$_upload is never written, only read\\.$#"
 			count: 1
 			path: Editor/Field.php
 
@@ -296,26 +251,6 @@ parameters:
 			path: Editor/Join.php
 
 		-
-			message: "#^Parameter \\#3 \\$data of method DataTables\\\\Editor\\\\Join\\:\\:_validateFields\\(\\) expects array\\<string\\>, string given\\.$#"
-			count: 1
-			path: Editor/Join.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\Join\\:\\:\\$_customOrder is never written, only read\\.$#"
-			count: 1
-			path: Editor/Join.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\Join\\:\\:\\$_table is never written, only read\\.$#"
-			count: 1
-			path: Editor/Join.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\Join\\:\\:\\$_type is never written, only read\\.$#"
-			count: 1
-			path: Editor/Join.php
-
-		-
 			message: "#^Variable \\$readField might not be defined\\.$#"
 			count: 2
 			path: Editor/Join.php
@@ -324,41 +259,6 @@ parameters:
 			message: "#^Negated boolean expression is always false\\.$#"
 			count: 1
 			path: Editor/Options.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\Options\\:\\:\\$_customFn is never written, only read\\.$#"
-			count: 1
-			path: Editor/Options.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\Options\\:\\:\\$_limit is never written, only read\\.$#"
-			count: 1
-			path: Editor/Options.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\Options\\:\\:\\$_renderer is never written, only read\\.$#"
-			count: 1
-			path: Editor/Options.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\Options\\:\\:\\$_table is never written, only read\\.$#"
-			count: 1
-			path: Editor/Options.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\Options\\:\\:\\$_value is never written, only read\\.$#"
-			count: 1
-			path: Editor/Options.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\Options\\:\\:\\$_where is never written, only read\\.$#"
-			count: 1
-			path: Editor/Options.php
-
-		-
-			message: "#^Cannot call method where\\(\\) on string\\.$#"
-			count: 1
-			path: Editor/SearchBuilderOptions.php
 
 		-
 			message: "#^Method DataTables\\\\Editor\\\\SearchBuilderOptions\\:\\:_get_where\\(\\) is unused\\.$#"
@@ -371,67 +271,12 @@ parameters:
 			path: Editor/SearchBuilderOptions.php
 
 		-
-			message: "#^Property DataTables\\\\Editor\\\\SearchBuilderOptions\\:\\:\\$_order is never written, only read\\.$#"
-			count: 1
-			path: Editor/SearchBuilderOptions.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\SearchBuilderOptions\\:\\:\\$_renderer is never written, only read\\.$#"
-			count: 1
-			path: Editor/SearchBuilderOptions.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\SearchBuilderOptions\\:\\:\\$_table is never written, only read\\.$#"
-			count: 1
-			path: Editor/SearchBuilderOptions.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\SearchBuilderOptions\\:\\:\\$_value is never written, only read\\.$#"
-			count: 1
-			path: Editor/SearchBuilderOptions.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\SearchBuilderOptions\\:\\:\\$_where is never written, only read\\.$#"
-			count: 1
-			path: Editor/SearchBuilderOptions.php
-
-		-
 			message: "#^Strict comparison using \\=\\=\\= between 'array' and 'array' will always evaluate to true\\.$#"
 			count: 1
 			path: Editor/SearchBuilderOptions.php
 
 		-
-			message: "#^Cannot call method where\\(\\) on string\\.$#"
-			count: 1
-			path: Editor/SearchPaneOptions.php
-
-		-
 			message: "#^Method DataTables\\\\Editor\\\\SearchPaneOptions\\:\\:_get_where\\(\\) is unused\\.$#"
-			count: 1
-			path: Editor/SearchPaneOptions.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\SearchPaneOptions\\:\\:\\$_order is never written, only read\\.$#"
-			count: 1
-			path: Editor/SearchPaneOptions.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\SearchPaneOptions\\:\\:\\$_renderer is never written, only read\\.$#"
-			count: 1
-			path: Editor/SearchPaneOptions.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\SearchPaneOptions\\:\\:\\$_table is never written, only read\\.$#"
-			count: 1
-			path: Editor/SearchPaneOptions.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\SearchPaneOptions\\:\\:\\$_value is never written, only read\\.$#"
-			count: 1
-			path: Editor/SearchPaneOptions.php
-
-		-
-			message: "#^Property DataTables\\\\Editor\\\\SearchPaneOptions\\:\\:\\$_where is never written, only read\\.$#"
 			count: 1
 			path: Editor/SearchPaneOptions.php
 
@@ -452,11 +297,6 @@ parameters:
 
 		-
 			message: "#^Method DataTables\\\\Editor\\\\Upload\\:\\:_actionExec\\(\\) should return int but returns false\\.$#"
-			count: 1
-			path: Editor/Upload.php
-
-		-
-			message: "#^Method DataTables\\\\Editor\\\\Upload\\:\\:data\\(\\) should return array but returns null\\.$#"
 			count: 1
 			path: Editor/Upload.php
 
