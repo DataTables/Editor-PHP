@@ -108,6 +108,28 @@ class Options extends Ext
 	private $_value;
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * Constructor
+	 */
+
+	/**
+	 * Constructor.
+	 *
+	 * @param string $table As a string this is the database table name - see `->table()`. If given as a function, then it is passed to `->fn()` as a custom function.
+	 * @param string $value The database column name to use as the value for the options - see `->value()`
+	 * @param string $label The database column name to use as the label for the options - see `->label()`.
+	 */
+	public function __construct($table = null, $value = null, $label = null)
+	{
+		if (is_string($table)) {
+			$this->table($table);
+			$this->value($value);
+			$this->label($label);
+		} elseif (is_callable($table)) {
+			$this->fn($table);
+		}
+	}
+
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
 	 */
 
@@ -272,10 +294,10 @@ class Options extends Ext
 	}
 
 	/**
-	 * Get / set the flag to indicate if the options should always be refreshed
-	 * (i.e. on get, create and edit) or only on the initial data load (false).
+	 * Get / set the search only flag. If enabled the options will only be resolved when doing a
+	 * search for options on this specific instance.
 	 *
-	 * @param bool|null $_ Flag to set the always refresh set to, or null to
+	 * @param bool|null $_ Flag to set the search only set to, or null to
 	 *                     get the current state.
 	 *
 	 * @return ($_ is null ? boolean : $this)
