@@ -115,8 +115,8 @@ class Options extends Ext
 	 * Constructor.
 	 *
 	 * @param string|callable $table As a string this is the database table name - see `->table()`. If given as a function, then it is passed to `->fn()` as a custom function.
-	 * @param string $value The database column name to use as the value for the options - see `->value()`
-	 * @param string $label The database column name to use as the label for the options - see `->label()`.
+	 * @param string          $value The database column name to use as the value for the options - see `->value()`
+	 * @param string          $label The database column name to use as the label for the options - see `->label()`.
 	 */
 	public function __construct($table = null, $value = null, $label = null)
 	{
