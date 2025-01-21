@@ -94,7 +94,7 @@ class Editor extends Ext
 	 *                          `Editor::ACTION_EDIT` or `Editor::ACTION_DELETE` indicating the request
 	 *                          type.
 	 */
-	public static function action($http, $name = null)
+	public static function action($http, $name = 'action')
 	{
 		if (!isset($http[$name])) {
 			return self::ACTION_READ;
