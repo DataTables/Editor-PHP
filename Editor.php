@@ -94,7 +94,7 @@ class Editor extends Ext
 	 *                          `Editor::ACTION_EDIT` or `Editor::ACTION_DELETE` indicating the request
 	 *                          type.
 	 */
-	public static function action($http, $name = 'action')
+	public static function action($http, $name = null)
 	{
 		if (!isset($http[$name])) {
 			return self::ACTION_READ;
@@ -112,7 +112,7 @@ class Editor extends Ext
 			case 'upload':
 				return self::ACTION_UPLOAD;
 			default:
-				throw new \Exception('Unknown Editor action: ' . $http['action']);
+				throw new \Exception('Unknown Editor action: ' . $http[$name]);
 		}
 	}
 
@@ -144,7 +144,7 @@ class Editor extends Ext
 	 */
 
 	/** @var string */
-	public $version = '2.3.2';
+	public $version = '2.4.0';
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private properties
@@ -997,7 +997,7 @@ class Editor extends Ext
 			'options' => [],
 		];
 
-		$action = Editor::action($data);
+		$action = Editor::action($data, $this->_actionName);
 		$this->_processData = $data;
 		$this->_formData = isset($data['data']) ? $data['data'] : null;
 		$validators = $this->_validator;
