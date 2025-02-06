@@ -144,7 +144,7 @@ class Editor extends Ext
 	 */
 
 	/** @var string */
-	public $version = '2.4.0';
+	public $version = '2.4.1';
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private properties
