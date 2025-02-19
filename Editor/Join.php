@@ -537,9 +537,6 @@ class Join extends Ext
 				$stmt->order($this->order());
 			}
 
-			$stmt->left_join($this->_leftJoin);
-			$this->_apply_where($stmt);
-
 			if (isset($this->_join['table'])) {
 				// Working with a link table
 				$stmt
@@ -559,6 +556,9 @@ class Join extends Ext
 						$this->_table . '.' . $this->_join['child'] . ' = ' . $dteTableLocal . '.' . $this->_join['parent']
 					);
 			}
+
+			$stmt->left_join($this->_leftJoin);
+			$this->_apply_where($stmt);
 
 			// Check that the joining field is available.  The joining key can
 			// come from the Editor instance's primary key, or any other field,
