@@ -199,7 +199,8 @@ class Database
 	 *                               used). This doesn't need to be set, but it must be if you want to use
 	 *                               the `Result->insertId()` method.
 	 *
-	 * @return Result
+	 * @return Result Note that only the `insertId()` method can be used in the result. The row's data is
+	 *                not populated into the object.
 	 */
 	public function insert($table, $set, $pkey = '')
 	{
