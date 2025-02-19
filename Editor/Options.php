@@ -476,9 +476,11 @@ class Options extends Ext
 		}
 
 		// Create a list of the fields that we need to get from the db
-		$fields = [];
-		$fields[] = $this->_value;
-		$fields = array_merge($fields, $this->_label);
+		$fields = array_merge([], $this->_label);
+
+		if (!in_array($this->_value, $fields)) {
+			$fields[] = $this->_value;
+		}
 
 		$q = $db
 			->query('select')
