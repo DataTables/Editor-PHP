@@ -193,7 +193,7 @@ class Options extends Ext
 	 *
 	 * @return ($inc is null ? string[] : $this)
 	 */
-	public function include($inc = null)
+	public function inc($inc = null)
 	{
 		if ($inc === null) {
 			return $this->_includes;
