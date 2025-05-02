@@ -1911,40 +1911,6 @@ class Editor extends Ext
 			// For every selection in every column
 			foreach ($this->_fields as $field) {
 				if (isset($http['searchPanes'][$field->name()])) {
-					for ($i = 0; $i < count($http['searchPanes'][$field->name()]); ++$i) {
-						// Check the number of rows...
-						$q = $db
-							->query('select')
-							->table($this->_table)
-							->get('COUNT(*) as cnt');
-
-						$q->left_join($this->_leftJoin);
-
-						// ... where the selected option is present...
-						if (
-							isset($http['searchPanes_null'][$field->name()][$i])
-							&& $http['searchPanes_null'][$field->name()][$i] === 'true'
-						) {
-							$q->where($field->dbField(), null, '=');
-						} else {
-							$q->where(
-								$field->dbField(),
-								$http['searchPanes'][$field->name()][$i],
-								'='
-							);
-						}
-
-						$r = $q
-							->exec()
-							->fetchAll();
-
-						// ... If there are none then don't bother with this selection
-						if ($r[0]['cnt'] == 0) {
-							array_splice($http['searchPanes'][$field->name()], $i, 1);
-							--$i;
-						}
-					}
-
 					$query->where(static function ($q) use ($field, $http) {
 						for ($j = 0; $j < count($http['searchPanes'][$field->name()]); ++$j) {
 							if (
