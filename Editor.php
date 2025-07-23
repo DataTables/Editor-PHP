@@ -111,6 +111,8 @@ class Editor extends Ext
 				return self::ACTION_SEARCH;
 			case 'upload':
 				return self::ACTION_UPLOAD;
+			case 'read':
+				return self::ACTION_READ;
 			default:
 				throw new \Exception('Unknown Editor action: ' . $http[$name]);
 		}
@@ -1152,8 +1154,22 @@ class Editor extends Ext
 		$query->left_join($this->_leftJoin);
 		$ssp = $this->_ssp_query($query, $http);
 
+		// Limit to a single id (after update)
 		if ($id !== null) {
 			$query->where($this->pkeyToArray($id, true));
+		}
+
+		// Limit to specific ids submitted from the client-side
+		if (isset($http['ids'])) {
+			$httpIds = $http['ids'];
+
+			$query->where(function ($q) use ($httpIds) {
+				for ($i=0 ; $i<count($httpIds) ; $i++) {
+					$id = str_replace($this->_idPrefix, '', $httpIds[$i]);
+
+					$q->or_where($this->pkeyToArray($id, true));
+				}
+			});
 		}
 
 		$res = $query->exec();
