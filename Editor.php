@@ -1164,7 +1164,7 @@ class Editor extends Ext
 			$httpIds = $http['ids'];
 
 			$query->where(function ($q) use ($httpIds) {
-				for ($i=0 ; $i<count($httpIds) ; $i++) {
+				for ($i = 0; $i < count($httpIds); ++$i) {
 					$id = str_replace($this->_idPrefix, '', $httpIds[$i]);
 
 					$q->or_where($this->pkeyToArray($id, true));
