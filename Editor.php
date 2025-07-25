@@ -1168,7 +1168,9 @@ class Editor extends Ext
 				for ($i = 0; $i < count($httpIds); ++$i) {
 					$id = str_replace($this->_idPrefix, '', $httpIds[$i]);
 
-					$q->or_where($this->pkeyToArray($id, true));
+					$q->or_where(function ($r) use ($id) {
+						$r->where($this->pkeyToArray($id, true));
+					});
 				}
 			});
 		}
