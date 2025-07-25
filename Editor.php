@@ -897,14 +897,15 @@ class Editor extends Ext
 	 */
 	public function validator($afterFields, $_ = null)
 	{
-		if (is_bool($afterFields) && $afterFields === true) {
-			return $this->_getSet($this->_validatorAfterFields, $_, true);
+		// Argument shift
+		if (!is_bool($afterFields)) {
+			$_ = $afterFields;
+			$afterFields = false;
 		}
 
-		// Argument shift
-		$_ = $afterFields;
-
-		return $this->_getSet($this->_validator, $_, true);
+		return $afterFields === true
+			? $this->_getSet($this->_validatorAfterFields, $_, true)
+			: $this->_getSet($this->_validator, $_, true);
 	}
 
 	/**
