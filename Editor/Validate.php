@@ -277,8 +277,7 @@ class Validate
 	 *                                available or required for this validation method.
 	 * @callback-param array    $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function basic($cfg = null)
 	{
@@ -310,8 +309,7 @@ class Validate
 	 *                                available or required for this validation method.
 	 * @callback-param array    $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function required($cfg = null)
 	{
@@ -366,8 +364,7 @@ class Validate
 	 *                                available or required for this validation method.
 	 * @callback-param array    $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function boolean($cfg = null)
 	{
@@ -404,8 +401,7 @@ class Validate
 	 *                                as the decimal
 	 * @callback-param array    $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function numeric($decimal = '.', $cfg = null)
 	{
@@ -444,8 +440,7 @@ class Validate
 	 *                                 separator (default '.').
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function minNum($min, $decimal = '.', $cfg = null)
 	{
@@ -490,8 +485,7 @@ class Validate
 	 *                                 as the decimal
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function maxNum($max, $decimal = '.', $cfg = null)
 	{
@@ -536,8 +530,7 @@ class Validate
 	 *                                 as the decimal
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function minMaxNum($min, $max, $decimal = '.', $cfg = null)
 	{
@@ -590,8 +583,7 @@ class Validate
 	 *                                available or required for this validation method.
 	 * @callback-param array    $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function email($cfg = null)
 	{
@@ -624,8 +616,7 @@ class Validate
 	 *                                 minimum string length.
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function minLen($min, $cfg = null)
 	{
@@ -662,8 +653,7 @@ class Validate
 	 *                                 maximum string length.
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function maxLen($max, $cfg = null)
 	{
@@ -698,8 +688,7 @@ class Validate
 	 *                                 and maximum string lengths, respectively.
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function minMaxLen($min, $max, $cfg = null)
 	{
@@ -741,8 +730,7 @@ class Validate
 	 *                                available or required for this validation method.
 	 * @callback-param array    $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function ip($cfg = null)
 	{
@@ -772,8 +760,7 @@ class Validate
 	 *                                available or required for this validation method.
 	 * @callback-param array    $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function url($cfg = null)
 	{
@@ -806,8 +793,7 @@ class Validate
 	 *                                 automatically derived from the Editor and Field instances.
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function xss($cfg = null)
 	{
@@ -840,8 +826,7 @@ class Validate
 	 *                                 automatically derived from the Editor and Field instances.
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function values($values, $cfg = null)
 	{
@@ -874,8 +859,7 @@ class Validate
 	 *                                 automatically derived from the Editor and Field instances.
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function noTags($cfg = null)
 	{
@@ -911,8 +895,7 @@ class Validate
 	 *                                    message in the 'message' parameter.
 	 * @callback-param array        $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function dateFormat($format, $cfg = null)
 	{
@@ -955,8 +938,7 @@ class Validate
 	 *                                 automatically derived from the Editor and Field instances.
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function unique($cfg = null, $column = null, $table = null, $db = null)
 	{
@@ -1021,8 +1003,7 @@ class Validate
 	 *                                 automatically derived from the Editor and Field instances.
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function dbValues($cfg = null, $column = null, $table = null, $db = null, $values = [])
 	{
