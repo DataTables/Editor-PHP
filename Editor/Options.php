@@ -74,6 +74,9 @@ class Options extends Ext
 	/** @var callable|null */
 	private $_customFn;
 
+	/** @var bool Enable data fetch (used for permissions) */
+	private $_get = true;
+
 	/** @var string[] List of columns to include in the output */
 	private $_includes = [];
 
@@ -183,6 +186,19 @@ class Options extends Ext
 	public function fn($_ = null)
 	{
 		return $this->_getSet($this->_customFn, $_);
+	}
+
+	/**
+	 * Get / set the `get` flag. This allows the options to be disabled (e.g. for a read only view)
+	 * based on user permissions.
+	 *
+	 * @param bool|null $_ `true` to enable, `false` to disable.
+	 *
+	 * @return ($_ is null ? bool : $this)
+	 */
+	public function get($_ = null)
+	{
+		return $this->_getSet($this->_get, $_);
 	}
 
 	/**
@@ -363,6 +379,11 @@ class Options extends Ext
 	 */
 	public function exec($db, $refresh, $search = null, $find = null)
 	{
+		// Local enablement
+		if ($this->_get === false) {
+			return false;
+		}
+
 		// If search only, and not a search action, then just return false
 		if ($this->searchOnly() && $search === null && $find === null) {
 			return false;
