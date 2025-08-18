@@ -1,13 +1,7 @@
 <?php
 
 /**
- * DataTables PHP libraries.
- *
- * PHP libraries for DataTables and DataTables Editor.
- *
- * @author    SpryMedia
- * @copyright 2012-2014 SpryMedia ( http://sprymedia.co.uk )
- * @license   http://editor.datatables.net/license DataTables Editor
+ * Validation methods for DataTables Editor.
  *
  * @see       http://editor.datatables.net
  */
@@ -132,6 +126,30 @@ class Validate
 	}
 
 	/**
+	 * During validation, check if the validator is conditional.
+	 *
+	 * @internal
+	 *
+	 * @param mixed                $val  Field's value to validate
+	 * @param ValidateOptions|null $opts Validation options
+	 * @param array                $data Row's submitted data
+	 * @param array                $host Host information
+	 *
+	 * @return bool `true` if there is no condition, or if there is one and the condition
+	 *              matches, or `false` if there is a condition and it doesn't match.
+	 */
+	public static function _conditional($val, $opts, $data, $host)
+	{
+		if ($opts === null) {
+			// No options, so there can be no condition
+			return true;
+		}
+
+		// Otherwise, let the options dependency runner return the value
+		return $opts->runDepends($val, $data, $host);
+	}
+
+	/**
 	 * Extend the options from the user function and the validation function
 	 * with core defaults.
 	 *
@@ -169,8 +187,15 @@ class Validate
 	 *
 	 * @internal
 	 */
-	public static function _common($val, $opts)
+	public static function _common($val, $opts, $data, $host)
 	{
+		// Check if the validator should be applied. If not, then it will pass (i.e. as if
+		// there was no validator). If the validator should apply, fall through to the actual
+		// validator function.
+		if (Validate::_conditional($val, $opts, $data, $host) === false) {
+			return true;
+		}
+
 		$optional = $opts->optional();
 		$empty = $opts->allowEmpty();
 
@@ -277,15 +302,14 @@ class Validate
 	 *                                available or required for this validation method.
 	 * @callback-param array    $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function basic($cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
 		return static function ($val, $data, $field, $host) use ($opts) {
-			$common = Validate::_common($val, $opts);
+			$common = Validate::_common($val, $opts, $data, $host);
 
 			return $common === false ?
 				$opts->message() :
@@ -310,8 +334,7 @@ class Validate
 	 *                                available or required for this validation method.
 	 * @callback-param array    $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function required($cfg = null)
 	{
@@ -320,7 +343,7 @@ class Validate
 		$opts->optional(false);
 
 		return static function ($val, $data, $field, $host) use ($opts) {
-			$common = Validate::_common($val, $opts);
+			$common = Validate::_common($val, $opts, $data, $host);
 
 			return $common === false ?
 				$opts->message() :
@@ -349,7 +372,7 @@ class Validate
 		$opts->allowEmpty(false);
 
 		return static function ($val, $data, $field, $host) use ($opts) {
-			$common = Validate::_common($val, $opts);
+			$common = Validate::_common($val, $opts, $data, $host);
 
 			return $common === false ?
 				$opts->message() :
@@ -366,15 +389,14 @@ class Validate
 	 *                                available or required for this validation method.
 	 * @callback-param array    $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function boolean($cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
 		return static function ($val, $data, $field, $host) use ($opts) {
-			$common = Validate::_common($val, $opts);
+			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
 				return $common === false ?
@@ -404,15 +426,14 @@ class Validate
 	 *                                as the decimal
 	 * @callback-param array    $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function numeric($decimal = '.', $cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
 		return static function ($val, $data, $field, $host) use ($opts, $decimal) {
-			$common = Validate::_common($val, $opts);
+			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
 				return $common === false ?
@@ -444,15 +465,14 @@ class Validate
 	 *                                 separator (default '.').
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function minNum($min, $decimal = '.', $cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
 		return static function ($val, $data, $field, $host) use ($opts, $min, $decimal) {
-			$common = Validate::_common($val, $opts);
+			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
 				return $common === false ?
@@ -490,15 +510,14 @@ class Validate
 	 *                                 as the decimal
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function maxNum($max, $decimal = '.', $cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
 		return static function ($val, $data, $field, $host) use ($opts, $max, $decimal) {
-			$common = Validate::_common($val, $opts);
+			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
 				return $common === false ?
@@ -536,15 +555,14 @@ class Validate
 	 *                                 as the decimal
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function minMaxNum($min, $max, $decimal = '.', $cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
 		return static function ($val, $data, $field, $host) use ($opts, $min, $max, $decimal) {
-			$common = Validate::_common($val, $opts);
+			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
 				return $common === false ?
@@ -590,15 +608,14 @@ class Validate
 	 *                                available or required for this validation method.
 	 * @callback-param array    $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function email($cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
 		return static function ($val, $data, $field, $host) use ($opts) {
-			$common = Validate::_common($val, $opts);
+			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
 				return $common === false ?
@@ -624,15 +641,14 @@ class Validate
 	 *                                 minimum string length.
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function minLen($min, $cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
 		return static function ($val, $data, $field, $host) use ($min, $opts) {
-			$common = Validate::_common($val, $opts);
+			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
 				return $common === false ?
@@ -662,15 +678,14 @@ class Validate
 	 *                                 maximum string length.
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function maxLen($max, $cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
 		return static function ($val, $data, $field, $host) use ($max, $opts) {
-			$common = Validate::_common($val, $opts);
+			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
 				return $common === false ?
@@ -698,15 +713,14 @@ class Validate
 	 *                                 and maximum string lengths, respectively.
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function minMaxLen($min, $max, $cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
 		return static function ($val, $data, $field, $host) use ($opts, $min, $max) {
-			$common = Validate::_common($val, $opts);
+			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
 				return $common === false ?
@@ -741,15 +755,14 @@ class Validate
 	 *                                available or required for this validation method.
 	 * @callback-param array    $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function ip($cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
 		return static function ($val, $data, $field, $host) use ($opts) {
-			$common = Validate::_common($val, $opts);
+			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
 				return $common === false ?
@@ -772,15 +785,14 @@ class Validate
 	 *                                available or required for this validation method.
 	 * @callback-param array    $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function url($cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
 		return static function ($val, $data, $field, $host) use ($opts) {
-			$common = Validate::_common($val, $opts);
+			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
 				return $common === false ?
@@ -806,15 +818,14 @@ class Validate
 	 *                                 automatically derived from the Editor and Field instances.
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function xss($cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
 		return static function ($val, $data, $field, $host) use ($opts) {
-			$common = Validate::_common($val, $opts);
+			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
 				return $common === false ?
@@ -840,15 +851,14 @@ class Validate
 	 *                                 automatically derived from the Editor and Field instances.
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function values($values, $cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
 		return static function ($val, $data, $field, $host) use ($values, $opts) {
-			$common = Validate::_common($val, $opts);
+			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
 				return $common === false ?
@@ -874,15 +884,14 @@ class Validate
 	 *                                 automatically derived from the Editor and Field instances.
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function noTags($cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
 		return static function ($val, $data, $field, $host) use ($opts) {
-			$common = Validate::_common($val, $opts);
+			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
 				return $common === false ?
@@ -911,15 +920,14 @@ class Validate
 	 *                                    message in the 'message' parameter.
 	 * @callback-param array        $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function dateFormat($format, $cfg = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
 		return static function ($val, $data, $field, $host) use ($format, $opts) {
-			$common = Validate::_common($val, $opts);
+			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
 				return $common === false ?
@@ -955,15 +963,14 @@ class Validate
 	 *                                 automatically derived from the Editor and Field instances.
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function unique($cfg = null, $column = null, $table = null, $db = null)
 	{
 		$opts = ValidateOptions::select($cfg);
 
 		return static function ($val, $data, $field, $host) use ($opts, $column, $table, $db) {
-			$common = Validate::_common($val, $opts);
+			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
 				return $common === false ?
@@ -1021,15 +1028,14 @@ class Validate
 	 *                                 automatically derived from the Editor and Field instances.
 	 * @callback-param array     $host Host information
 	 *
-	 * @return string|true true if the value is valid, a string with an error
-	 *                     message otherwise.
+	 * @return callable Validation function
 	 */
 	public static function dbValues($cfg = null, $column = null, $table = null, $db = null, $values = [])
 	{
 		$opts = ValidateOptions::select($cfg);
 
 		return static function ($val, $data, $field, $host) use ($opts, $column, $table, $db, $values) {
-			$common = Validate::_common($val, $opts);
+			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
 				return $common === false ?

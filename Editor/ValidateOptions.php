@@ -1,13 +1,7 @@
 <?php
 
 /**
- * DataTables PHP libraries.
- *
- * PHP libraries for DataTables and DataTables Editor.
- *
- * @author    SpryMedia
- * @copyright 2012-2014 SpryMedia ( http://sprymedia.co.uk )
- * @license   http://editor.datatables.net/license DataTables Editor
+ * Validation Options for DataTables Editor.
  *
  * @see       http://editor.datatables.net
  */
@@ -21,9 +15,23 @@ use DataTables\Ext;
  */
 class ValidateOptions extends Ext
 {
+	/** @var bool */
 	private $_empty = true;
+
+	/** @var string */
 	private $_message = 'Input not valid';
+
+	/** @var bool */
 	private $_optional = true;
+
+	/** @var string */
+	private $_dependsField;
+
+	/** @var mixed */
+	private $_dependsValue;
+
+	/** @var callable(mixed, array, array): boolean */
+	private $_dependsFn;
 
 	public function __construct($opts = null)
 	{
@@ -38,6 +46,28 @@ class ValidateOptions extends Ext
 				$this->optional($opts['optional']);
 			}
 		}
+	}
+
+	/**
+	 * Apply a dependency for the validator.
+	 *
+	 * @param callable(mixed, array, array): boolean|string $field Function that performances a
+	 *                                                             dependency check, or a field name that this validator depends upon
+	 * @param mixed                                         $value If `$field` is given as a string, this can be a value, or an array of
+	 *                                                             values that the field name given needs the value to match.
+	 *
+	 * @return $this Self for chaining
+	 */
+	public function dependsOn($field, $value = null)
+	{
+		if (is_callable($field)) {
+			$this->_dependsFn = $field;
+		} else {
+			$this->_dependsField = $field;
+			$this->_dependsValue = $value;
+		}
+
+		return $this;
 	}
 
 	/**
@@ -107,5 +137,43 @@ class ValidateOptions extends Ext
 		}
 
 		return new ValidateOptions();
+	}
+
+	/**
+	 * Run the dependency check.
+	 *
+	 * @internal
+	 *
+	 * @param mixed $val  Field's value to validate
+	 * @param array $data Row's submitted data
+	 * @param array $host Host information
+	 *
+	 * @return bool `true` if there is no condition, or if there is one and the condition
+	 *              matches, or `false` if there is a condition and it doesn't match.
+	 */
+	public function runDepends($val, $data, $host)
+	{
+		if ($this->_dependsFn !== null) {
+			// External function - call it
+			$fn = $this->_dependsFn;
+
+			return $fn($val, $data, $host);
+		} elseif ($this->_dependsField) {
+			// Get the value that was submitted for the dependent field
+			$depFieldVal = $this->_readProp($this->_dependsField, $data);
+
+			if ($this->_dependsValue !== null) {
+				// Field and value
+				return is_array($this->_dependsValue)
+					? in_array($depFieldVal, $this->_dependsValue)
+					: ($depFieldVal === $this->_dependsValue);
+			}
+
+			// Just a field - check that the field has a value
+			return $depFieldVal !== null && $depFieldVal !== '';
+		}
+
+		// Default is to apply the validator
+		return true;
 	}
 }
