@@ -330,6 +330,14 @@ abstract class Query
 	}
 
 	/**
+	 * Determine if the query has any conditions applied or not.
+	 */
+	public function has_conditions()
+	{
+		return count($this->_where) !== 0;
+	}
+
+	/**
 	 * Get fields.
 	 *
 	 * @param string|string[] ...$get Fields to get - can be specified as

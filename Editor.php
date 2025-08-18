@@ -146,7 +146,7 @@ class Editor extends Ext
 	 */
 
 	/** @var string */
-	public $version = '2.4.3';
+	public $version = '2.5.0-dev';
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private properties
@@ -1588,23 +1588,34 @@ class Editor extends Ext
 		$this->_get_where($ssp_set_count_query);
 		$this->_ssp_filter($ssp_set_count_query, $http);
 		$ssp_set_count_query->left_join($this->_leftJoin);
-		$ssp_set_count = $ssp_set_count_query->exec()->fetch();
+		$res = $ssp_set_count_query->exec()->fetch();
 
-		// Get the number of rows in the full set
-		$ssp_full_count_query = $this->_db
-			->query('count')
-			->table($this->_read_table())
-			->get($this->_pkey[0]);
-		$this->_get_where($ssp_full_count_query);
-		if (count($this->_where)) { // only needed if there is a where condition
-			$ssp_full_count_query->left_join($this->_leftJoin);
+		$ssp_set_count = $res['cnt'];
+		$ssp_full_count = $ssp_set_count;
+
+		// If there is a filter applied, then we need to get the number of rows in the full set
+		// without a filter, to be able to display that in the table info. If there is no filter,
+		// then the recordsTotal === recordsFiltered (above).
+		if ($ssp_set_count_query->has_conditions()) {
+			$ssp_full_count_query = $this->_db
+				->query('count')
+				->table($this->_read_table())
+				->get($this->_pkey[0]);
+
+			$this->_get_where($ssp_full_count_query);
+
+			if (count($this->_where)) { // only needed if there is a where condition
+				$ssp_full_count_query->left_join($this->_leftJoin);
+			}
+
+			$res = $ssp_full_count_query->exec()->fetch();
+			$ssp_full_count = $res['cnt'];
 		}
-		$ssp_full_count = $ssp_full_count_query->exec()->fetch();
 
 		return [
 			'draw' => (int) $http['draw'],
-			'recordsTotal' => $ssp_full_count['cnt'],
-			'recordsFiltered' => $ssp_set_count['cnt'],
+			'recordsTotal' => $ssp_full_count,
+			'recordsFiltered' => $ssp_set_count,
 		];
 	}
 
