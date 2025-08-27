@@ -3,21 +3,20 @@
 namespace DataTables\Editor;
 
 /**
- * Column search methods for server-side processing
+ * Column search methods for server-side processing.
  */
 class ColumnControl
 {
 	/**
-	 * Apply conditions to a query for a ColumnControl search
+	 * Apply conditions to a query for a ColumnControl search.
 	 *
-	 * @param \DataTables\Editor $editor Host Editor instance
-	 * @param \DataTables\Database\Query $query Query to add conditions to
-	 * @param mixed $http Request object
-	 * @return void
+	 * @param \DataTables\Editor         $editor Host Editor instance
+	 * @param \DataTables\Database\Query $query  Query to add conditions to
+	 * @param mixed                      $http   Request object
 	 */
 	public static function ssp(&$editor, &$query, $http)
 	{
-		for ($i = 0; $i < count($http['columns']); $i++) {
+		for ($i = 0; $i < count($http['columns']); ++$i) {
 			$column = $http['columns'][$i];
 
 			if (isset($column['columnControl'])) {
@@ -33,7 +32,7 @@ class ColumnControl
 
 					if ($type === 'num') {
 						self::_sspNumber($query, $field, $value, $logic);
-					} else if ($type === 'date') {
+					} elseif ($type === 'date') {
 						self::_sspDate($query, $field, $value, $logic);
 					} else {
 						self::_sspText($query, $field, $value, $logic);
@@ -51,108 +50,105 @@ class ColumnControl
 	}
 
 	/**
-	 * Add conditions to a query for a ColumnControl date search
+	 * Add conditions to a query for a ColumnControl date search.
 	 *
 	 * @param \DataTables\Database\Query $query Query to add the conditions to
-	 * @param \DataTables\Editor\Field $field Field for the column in question
-	 * @param string $value Search term
-	 * @param string $logic Search logic
-	 * @return void
+	 * @param \DataTables\Editor\Field   $field Field for the column in question
+	 * @param string                     $value Search term
+	 * @param string                     $logic Search logic
 	 */
 	private static function _sspDate(&$query, $field, $value, $logic)
 	{
 		if ($logic === 'empty') {
 			$query->where($field->dbField(), null);
-		} else if ($logic === 'notEmpty') {
+		} elseif ($logic === 'notEmpty') {
 			$query->where($field->dbField(), null, '!=');
-		} else if ($value === '') {
+		} elseif ($value === '') {
 			// Empty search value means no search for the other logic operators
 			return;
-		} else if ($logic === 'equal') {
+		} elseif ($logic === 'equal') {
 			$query->where($field->dbField(), $value);
-		} else if ($logic === 'notEqual') {
+		} elseif ($logic === 'notEqual') {
 			$query->where($field->dbField(), $value, '!=');
-		} else if ($logic === 'greater') {
+		} elseif ($logic === 'greater') {
 			$query->where($field->dbField(), $value, '>');
-		} else if ($logic === 'less') {
+		} elseif ($logic === 'less') {
 			$query->where($field->dbField(), $value, '<');
 		}
 	}
 
 	/**
-	 * Add conditions to a query for a ColumnControl number search
+	 * Add conditions to a query for a ColumnControl number search.
 	 *
 	 * @param \DataTables\Database\Query $query Query to add the conditions to
-	 * @param \DataTables\Editor\Field $field Field for the column in question
-	 * @param string $value Search term
-	 * @param string $logic Search logic
-	 * @return void
+	 * @param \DataTables\Editor\Field   $field Field for the column in question
+	 * @param string                     $value Search term
+	 * @param string                     $logic Search logic
 	 */
 	private static function _sspNumber(&$query, $field, $value, $logic)
 	{
 		if ($logic === 'empty') {
-			$query->where(function ($q) use ($field) {
+			$query->where(static function ($q) use ($field) {
 				$q->where($field->dbField(), null);
 				$q->or_where($field->dbField(), '');
 			});
-		} else if ($logic === 'notEmpty') {
-			$query->where(function ($q) use ($field) {
+		} elseif ($logic === 'notEmpty') {
+			$query->where(static function ($q) use ($field) {
 				$q->where($field->dbField(), null, '!=');
 				$q->where($field->dbField(), '', '!=');
 			});
-		} else if ($value === '') {
+		} elseif ($value === '') {
 			// Empty search value means no search for the other logic operators
 			return;
-		} else if ($logic === 'equal') {
+		} elseif ($logic === 'equal') {
 			$query->where($field->dbField(), $value);
-		} else if ($logic === 'notEqual') {
+		} elseif ($logic === 'notEqual') {
 			$query->where($field->dbField(), $value, '!=');
-		} else if ($logic === 'greater') {
+		} elseif ($logic === 'greater') {
 			$query->where($field->dbField(), $value, '>');
-		} else if ($logic === 'greaterOrEqual') {
+		} elseif ($logic === 'greaterOrEqual') {
 			$query->where($field->dbField(), $value, '>=');
-		} else if ($logic === 'less') {
+		} elseif ($logic === 'less') {
 			$query->where($field->dbField(), $value, '<');
-		} else if ($logic === 'lessOrEqual') {
+		} elseif ($logic === 'lessOrEqual') {
 			$query->where($field->dbField(), $value, '<=');
 		}
 	}
 
 	/**
-	 * Add conditions to a query for a ColumnControl text search
+	 * Add conditions to a query for a ColumnControl text search.
 	 *
 	 * @param \DataTables\Database\Query $query Query to add the conditions to
-	 * @param \DataTables\Editor\Field $field Field for the column in question
-	 * @param string $value Search term
-	 * @param string $logic Search logic
-	 * @return void
+	 * @param \DataTables\Editor\Field   $field Field for the column in question
+	 * @param string                     $value Search term
+	 * @param string                     $logic Search logic
 	 */
 	private static function _sspText(&$query, $field, $value, $logic)
 	{
 		if ($logic === 'empty') {
-			$query->where(function ($q) use ($field) {
+			$query->where(static function ($q) use ($field) {
 				$q->where($field->dbField(), null);
 				$q->or_where($field->dbField(), '');
 			});
-		} else if ($logic === 'notEmpty') {
-			$query->where(function ($q) use ($field) {
+		} elseif ($logic === 'notEmpty') {
+			$query->where(static function ($q) use ($field) {
 				$q->where($field->dbField(), null, '!=');
 				$q->where($field->dbField(), '', '!=');
 			});
-		} else if ($value === '') {
+		} elseif ($value === '') {
 			// Empty search value means no search for the other logic operators
 			return;
-		} else if ($logic === 'equal') {
+		} elseif ($logic === 'equal') {
 			$query->where($field->dbField(), $value);
-		} else if ($logic === 'notEqual') {
+		} elseif ($logic === 'notEqual') {
 			$query->where($field->dbField(), $value, '!=');
-		} else if ($logic === 'contains') {
+		} elseif ($logic === 'contains') {
 			$query->where($field->dbField(), '%' . $value . '%', 'like');
-		} else if ($logic === 'notContains') {
+		} elseif ($logic === 'notContains') {
 			$query->where($field->dbField(), '%' . $value . '%', 'not like');
-		} else if ($logic === 'starts') {
+		} elseif ($logic === 'starts') {
 			$query->where($field->dbField(), $value . '%', 'like');
-		} else if ($logic === 'ends') {
+		} elseif ($logic === 'ends') {
 			$query->where($field->dbField(), '%' . $value, 'like');
 		}
 	}

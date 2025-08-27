@@ -206,7 +206,7 @@ class Field extends Ext
 	}
 
 	/**
-	 * Options for ColumnControl's searchList content type
+	 * Options for ColumnControl's searchList content type.
 	 *
 	 * @param Options $_ Options
 	 *
