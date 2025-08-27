@@ -123,6 +123,9 @@ class Field extends Ext
 	/** @var Options|null */
 	private $_opts;
 
+	/** @var Options|null */
+	private $_columnControl;
+
 	/** @var SearchPaneOptions|null */
 	private $_spopts;
 
@@ -200,6 +203,18 @@ class Field extends Ext
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Options for ColumnControl's searchList content type
+	 *
+	 * @param Options $_ Options
+	 *
+	 * @return ($_ is null ? Options|null : $this)
+	 */
+	public function columnControl($_ = null)
+	{
+		return $this->_getSet($this->_columnControl, $_);
 	}
 
 	/**

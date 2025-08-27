@@ -18,6 +18,7 @@
 namespace DataTables;
 
 use DataTables\Database\Query;
+use DataTables\Editor\ColumnControl;
 use DataTables\Editor\Field;
 use DataTables\Editor\Join;
 
@@ -2001,6 +2002,8 @@ class Editor extends Ext
 			});
 		}
 
+		ColumnControl::ssp($this, $query, $http);
+
 		// if ( $http['search']['value'] ) {
 		// 	$words = explode(" ", $http['search']['value']);
 
@@ -2312,6 +2315,21 @@ class Editor extends Ext
 					}
 
 					$this->_out['searchBuilder']['options'][$field->name()] = $sbOpts;
+				}
+
+				// ContentControl - searchList content type
+				$options = $field->columnControl();
+
+				if ($options) {
+					$opts = $options->exec($this->_db, false);
+
+					if ($opts) {
+						if (!isset($this->_out['columnControl'])) {
+							$this->_out['columnControl'] = [];
+						}
+
+						$this->_out['columnControl'][$field->name()] = $opts;
+					}
 				}
 			}
 		}
