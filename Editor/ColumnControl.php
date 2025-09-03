@@ -33,7 +33,7 @@ class ColumnControl
 					if ($type === 'num') {
 						self::_sspNumber($query, $field, $value, $logic);
 					} elseif ($type === 'date') {
-						self::_sspDate($query, $field, $value, $logic);
+						self::_sspDate($query, $field, $value, $logic, $search['mask']);
 					} else {
 						self::_sspText($query, $field, $value, $logic);
 					}
@@ -57,8 +57,24 @@ class ColumnControl
 	 * @param string                     $value Search term
 	 * @param string                     $logic Search logic
 	 */
-	private static function _sspDate(&$query, $field, $value, $logic)
+	private static function _sspDate(&$query, $field, $value, $logic, $mask)
 	{
+		$bindingName = $query->bindName();
+		$dbField = $field->dbField();
+		$search = $bindingName;
+
+		// Only support date and time masks. This departs from the client side which allows
+		// any component in the date/time to be masked out.
+		if ($mask === 'YYYY-MM-DD') {
+			$dbField = 'DATE(' . $dbField . ')';
+			$search = 'DATE(' . $bindingName . ')';
+		} elseif ($mask === 'hh:mm:ss') {
+			$dbField = 'TIME(' . $dbField . ')';
+			$search = 'TIME(' . $bindingName . ')';
+		} else {
+			$search = '(' . $bindingName . ')';
+		}
+
 		if ($logic === 'empty') {
 			$query->where($field->dbField(), null);
 		} elseif ($logic === 'notEmpty') {
@@ -67,13 +83,21 @@ class ColumnControl
 			// Empty search value means no search for the other logic operators
 			return;
 		} elseif ($logic === 'equal') {
-			$query->where($field->dbField(), $value);
+			$query
+				->where($dbField, $search, '=', false)
+				->bind($bindingName, $value);
 		} elseif ($logic === 'notEqual') {
-			$query->where($field->dbField(), $value, '!=');
+			$query
+				->where($dbField, $search, '!=', false)
+				->bind($bindingName, $value);
 		} elseif ($logic === 'greater') {
-			$query->where($field->dbField(), $value, '>');
+			$query
+				->where($dbField, $search, '>', false)
+				->bind($bindingName, $value);
 		} elseif ($logic === 'less') {
-			$query->where($field->dbField(), $value, '<');
+			$query
+				->where($dbField, $search, '<', false)
+				->bind($bindingName, $value);
 		}
 	}
 

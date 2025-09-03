@@ -277,6 +277,16 @@ abstract class Query
 	}
 
 	/**
+	 * Generate a unique name for binding values.
+	 *
+	 * @return string Name
+	 */
+	public function bindName()
+	{
+		return ':binding_' . count($this->_bindings);
+	}
+
+	/**
 	 * Get the Database host for this query instance.
 	 *
 	 * @return Database Database class instance
