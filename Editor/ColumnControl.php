@@ -56,6 +56,7 @@ class ColumnControl
 	 * @param \DataTables\Editor\Field   $field Field for the column in question
 	 * @param string                     $value Search term
 	 * @param string                     $logic Search logic
+	 * @param string                     $mask Mask value
 	 */
 	private static function _sspDate(&$query, $field, $value, $logic, $mask)
 	{
