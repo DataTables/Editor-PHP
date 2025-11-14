@@ -258,6 +258,10 @@ class Format
 	public static function toDecimalChar($char = ',')
 	{
 		return static function ($val, $data) use ($char) {
+			if ($val === null) {
+				return null;
+			}
+
 			return str_replace('.', $char, $val);
 		};
 	}
