@@ -193,7 +193,7 @@ class Field extends Ext
 			return $this->_dbField;
 		}
 
-		// Don't split on an `as` inside paraenthesis
+		// Don't split on an `as` inside parenthesis
 		$a = preg_split('/ as (?![^\(]*\))/i', $_);
 		if (count($a) > 1) {
 			$this->_dbField = trim($a[0]);

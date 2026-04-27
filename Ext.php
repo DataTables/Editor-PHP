@@ -127,6 +127,27 @@ class Ext
 	}
 
 	/**
+	 * Execute a method from a given instance. If the return is that instance,
+	 * then return self instead, otherwise give the returned value.
+	 *
+	 * @param mixed  $inst   Class instance
+	 * @param string $method Method to execute
+	 * @param array  $args   The arguments from the function
+	 *
+	 * @return mixed Value from the executed function or self.
+	 */
+	protected function _proxy($inst, $method, $args)
+	{
+		$ret = $inst->{$method}(...$args);
+
+		if ($ret === $inst) {
+			return $this;
+		}
+
+		return $ret;
+	}
+
+	/**
 	 * Read a value from a data structure, using Javascript dotted object
 	 * notation. This is the inverse of the `_writeProp` method and provides
 	 * the same support, matching DataTables' ability to read nested JSON

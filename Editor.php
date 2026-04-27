@@ -1,20 +1,5 @@
 <?php
 
-/**
- * DataTables PHP libraries.
- *
- * PHP libraries for DataTables and DataTables Editor.
- *
- * @author    SpryMedia
- *
- * @version   __VERSION__
- *
- * @copyright 2012 SpryMedia ( http://sprymedia.co.uk )
- * @license   http://editor.datatables.net/license DataTables Editor
- *
- * @see       http://editor.datatables.net
- */
-
 namespace DataTables;
 
 use DataTables\Database\Query;
@@ -33,20 +18,21 @@ use DataTables\Editor\Join;
  * * Edit existing record
  * * Delete existing records
  *
- * The Editor instance is configured with information regarding the
- * database table fields that you wish to make editable, and other information
- * needed to read and write to the database (table name for example!).
+ * The Editor instance is configured with information regarding the database
+ * table fields that you wish to make editable, and other information needed to
+ * read and write to the database (table name for example!).
  *
- * This documentation is very much focused on describing the API presented
- * by these DataTables Editor classes. For a more general overview of how
- * the Editor class is used, and how to install Editor on your server, please
- * refer to the {@link https://editor.datatables.net/manual Editor manual}.
+ * This documentation is very much focused on describing the API presented by
+ * these DataTables Editor classes. For a more general overview of how the
+ * Editor class is used, and how to install Editor on your server, please refer
+ * to the {@link https://editor.datatables.net/manual Editor manual}.
  *
  * @example
  *    A very basic example of using Editor to create a table with four fields.
  *    This is all that is needed on the server-side to create a editable
- *    table - the {@see Editor->process()} method determines what action DataTables /
- *    Editor is requesting from the server-side and will correctly action it.
+ *    table - the {@see Editor->process()} method determines what action
+ *    DataTables / Editor is requesting from the server-side and will correctly
+ *    action it.
  *
  *    ```php
  *      (new Editor( $db, 'browsers' ))
@@ -83,6 +69,8 @@ class Editor extends Ext
 
 	/** Request type - upload */
 	const ACTION_UPLOAD = 'upload';
+
+	const VERSION = '3.0.0-beta.1';
 
 	/**
 	 * Determine the request type from an HTTP request.
@@ -147,7 +135,7 @@ class Editor extends Ext
 	 */
 
 	/** @var string */
-	public $version = '2.5.2';
+	public $version = self::VERSION;
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private properties
@@ -707,7 +695,7 @@ class Editor extends Ext
 		if ($this->_debug) {
 			$debugInfo = &$this->_debugInfo;
 
-			$debugInfo[] = 'Editor PHP libraries - version ' . $this->version;
+			$debugInfo[] = 'DataTables PHP libraries - version ' . self::VERSION;
 
 			$this->_db->debug(static function ($mess) use (&$debugInfo) {
 				$debugInfo[] = $mess;
