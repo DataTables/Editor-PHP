@@ -1944,7 +1944,10 @@ class Editor extends Ext
 							isset($http['searchPanes_null'][$field->name()][$i])
 							&& $http['searchPanes_null'][$field->name()][$i] === 'true'
 						) {
-							$q->where($field->dbField(), null, '=');
+							$q->where(static function ($q2) use ($field) {
+								$q2->where($field->dbField(), null, '=');
+								$q2->or_where($field->dbField(), '', '=');
+							});
 						} else {
 							$q->where(
 								$field->dbField(),
@@ -1970,7 +1973,10 @@ class Editor extends Ext
 								isset($http['searchPanes_null'][$field->name()][$j])
 								&& $http['searchPanes_null'][$field->name()][$j] === 'true'
 							) {
-								$q->or_where($field->dbField(), null, '=');
+								$q->where(static function ($q2) use ($field) {
+									$q2->where($field->dbField(), null, '=');
+									$q2->or_where($field->dbField(), '', '=');
+								});
 							} else {
 								$q->or_where(
 									$field->dbField(),
