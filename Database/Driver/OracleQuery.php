@@ -73,8 +73,8 @@ class OracleQuery extends Query
 			$e = oci_error();
 
 			echo json_encode([
-				'error' => 'An error occurred while connecting to the database ' .
-					"'{$db}'. The error reported by the server was: " . $e['message'],
+				'error' => 'An error occurred while connecting to the database '
+					. "'{$db}'. The error reported by the server was: " . $e['message'],
 			]);
 
 			exit(1);

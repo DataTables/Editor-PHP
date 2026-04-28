@@ -65,16 +65,16 @@ class Field extends Ext
 	 */
 
 	/** Set option flag (`set()`) - do not set data */
-	const SET_NONE = 'none';
+	public const SET_NONE = 'none';
 
 	/** Set option flag (`set()`) - write to database on both create and edit */
-	const SET_BOTH = 'both';
+	public const SET_BOTH = 'both';
 
 	/** Set option flag (`set()`) - write to database only on create */
-	const SET_CREATE = 'create';
+	public const SET_CREATE = 'create';
 
 	/** Set option flag (`set()`) - write to database only on edit */
-	const SET_EDIT = 'edit';
+	public const SET_EDIT = 'edit';
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
@@ -691,9 +691,9 @@ class Field extends Ext
 				$val = $this->_getAssignedValue($this->_getValue);
 			} else {
 				// Getting data, so the db field name
-				$val = isset($data[$this->_dbField]) ?
-					$data[$this->_dbField] :
-					null;
+				$val = isset($data[$this->_dbField])
+					? $data[$this->_dbField]
+					: null;
 			}
 
 			return $this->_format(
@@ -711,9 +711,9 @@ class Field extends Ext
 
 		// Setting data, so using from the payload (POST usually) and thus
 		// use the 'name'
-		$val = $this->_setValue !== null ?
-			$this->_getAssignedValue($this->_setValue) :
-			$this->_readProp($this->name(), $data);
+		$val = $this->_setValue !== null
+			? $this->_getAssignedValue($this->_setValue)
+			: $this->_readProp($this->name(), $data);
 
 		// XSS removal / checker
 		if ($this->_xssFormat && $val) {
@@ -752,9 +752,9 @@ class Field extends Ext
 		}
 
 		// Value could be from user data, or setValue might take priority
-		$val = $this->_setValue !== null ?
-			$this->_getAssignedValue($this->_setValue) :
-			$this->_readProp($this->name(), $data);
+		$val = $this->_setValue !== null
+			? $this->_getAssignedValue($this->_setValue)
+			: $this->_readProp($this->name(), $data);
 
 		$processData = $editor->inData();
 		$instances = [
@@ -775,12 +775,12 @@ class Field extends Ext
 
 					// Validate class static methods - they have `Legacy` counter parts that
 					// convert from the old style to the new so the old style options still work.
-					if (method_exists('DataTables\\Editor\\' . $a[0], $a[1] . 'Legacy')) {
-						$func = call_user_func('DataTables\\Editor\\' . $validator['func'] . 'Legacy', $validator['opts']);
+					if (method_exists('DataTables\Editor\\' . $a[0], $a[1] . 'Legacy')) {
+						$func = call_user_func('DataTables\Editor\\' . $validator['func'] . 'Legacy', $validator['opts']);
 						$res = call_user_func($func, $val, $data, $this, $instances);
 					} else {
 						// User style legacy function. Call it directly
-						$func = 'DataTables\\Editor\\' . $validator['func'];
+						$func = 'DataTables\Editor\\' . $validator['func'];
 						$res = call_user_func($func, $val, $data, $this, $instances);
 					}
 				} else {
@@ -831,17 +831,17 @@ class Field extends Ext
 			$res = [];
 
 			foreach ($val as $individual) {
-				$res[] = $xss ?
-					$xss($individual) :
-					HtmLawedVanillaWrapper::filter($individual);
+				$res[] = $xss
+					? $xss($individual)
+					: HtmLawedVanillaWrapper::filter($individual);
 			}
 
 			return $res;
 		}
 
-		return $xss ?
-			$xss($val) :
-			HtmLawedVanillaWrapper::filter($val);
+		return $xss
+			? $xss($val)
+			: HtmLawedVanillaWrapper::filter($val);
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -876,14 +876,14 @@ class Field extends Ext
 
 			// Old style Editor formatter - use the legacy functions to
 			// convert to the new style
-			if (method_exists('DataTables\\Editor\\' . $a[0], $a[1] . 'Legacy')) {
-				$func = call_user_func('DataTables\\Editor\\' . $formatter . 'Legacy', $opts);
+			if (method_exists('DataTables\Editor\\' . $a[0], $a[1] . 'Legacy')) {
+				$func = call_user_func('DataTables\Editor\\' . $formatter . 'Legacy', $opts);
 
 				return $func($val, $data);
 			}
 
 			// User added old style methods
-			return call_user_func('DataTables\\Editor\\' . $formatter, $val, $data, $opts);
+			return call_user_func('DataTables\Editor\\' . $formatter, $val, $data, $opts);
 		}
 
 		// User function (string identifier)
@@ -900,9 +900,9 @@ class Field extends Ext
 	 */
 	private function _getAssignedValue($val)
 	{
-		return $val instanceof \Closure ?
-			$val() :
-			$val;
+		return $val instanceof \Closure
+			? $val()
+			: $val;
 	}
 
 	/**
@@ -918,9 +918,9 @@ class Field extends Ext
 	private function _inData($name, $data)
 	{
 		if (strpos($name, '.') === false) {
-			return isset($data[$name]) ?
-				true :
-				false;
+			return isset($data[$name])
+				? true
+				: false;
 		}
 
 		$names = explode('.', $name);
@@ -934,8 +934,8 @@ class Field extends Ext
 			$inner = $inner[$names[$i]];
 		}
 
-		return isset($inner[$names[count($names) - 1]]) ?
-			true :
-			false;
+		return isset($inner[$names[count($names) - 1]])
+			? true
+			: false;
 	}
 }

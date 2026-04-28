@@ -2,6 +2,9 @@
 
 namespace DataTables\Editor;
 
+use DataTables\Database\Query;
+use DataTables\Editor;
+
 /**
  * Column search methods for server-side processing.
  */
@@ -10,9 +13,9 @@ class ColumnControl
 	/**
 	 * Apply conditions to a query for a ColumnControl search.
 	 *
-	 * @param \DataTables\Editor         $editor Host Editor instance
-	 * @param \DataTables\Database\Query $query  Query to add conditions to
-	 * @param mixed                      $http   Request object
+	 * @param Editor $editor Host Editor instance
+	 * @param Query  $query  Query to add conditions to
+	 * @param mixed  $http   Request object
 	 */
 	public static function ssp(&$editor, &$query, $http)
 	{
@@ -52,11 +55,11 @@ class ColumnControl
 	/**
 	 * Add conditions to a query for a ColumnControl date search.
 	 *
-	 * @param \DataTables\Database\Query $query Query to add the conditions to
-	 * @param \DataTables\Editor\Field   $field Field for the column in question
-	 * @param string                     $value Search term
-	 * @param string                     $logic Search logic
-	 * @param string                     $mask  Mask value
+	 * @param Query  $query Query to add the conditions to
+	 * @param Field  $field Field for the column in question
+	 * @param string $value Search term
+	 * @param string $logic Search logic
+	 * @param string $mask  Mask value
 	 */
 	private static function _sspDate(&$query, $field, $value, $logic, $mask)
 	{
@@ -105,10 +108,10 @@ class ColumnControl
 	/**
 	 * Add conditions to a query for a ColumnControl number search.
 	 *
-	 * @param \DataTables\Database\Query $query Query to add the conditions to
-	 * @param \DataTables\Editor\Field   $field Field for the column in question
-	 * @param string                     $value Search term
-	 * @param string                     $logic Search logic
+	 * @param Query  $query Query to add the conditions to
+	 * @param Field  $field Field for the column in question
+	 * @param string $value Search term
+	 * @param string $logic Search logic
 	 */
 	private static function _sspNumber(&$query, $field, $value, $logic)
 	{
@@ -143,10 +146,10 @@ class ColumnControl
 	/**
 	 * Add conditions to a query for a ColumnControl text search.
 	 *
-	 * @param \DataTables\Database\Query $query Query to add the conditions to
-	 * @param \DataTables\Editor\Field   $field Field for the column in question
-	 * @param string                     $value Search term
-	 * @param string                     $logic Search logic
+	 * @param Query  $query Query to add the conditions to
+	 * @param Field  $field Field for the column in question
+	 * @param string $value Search term
+	 * @param string $logic Search logic
 	 */
 	private static function _sspText(&$query, $field, $value, $logic)
 	{

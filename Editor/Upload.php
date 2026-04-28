@@ -73,36 +73,36 @@ class Upload extends Ext
 	 * system, but there are cases where it can be useful to store the file in
 	 * the database.
 	 */
-	const DB_CONTENT = 'editor-content';
+	public const DB_CONTENT = 'editor-content';
 
 	/** Database value option (`Db()`) - Content type */
-	const DB_CONTENT_TYPE = 'editor-contentType';
+	public const DB_CONTENT_TYPE = 'editor-contentType';
 
 	/** Database value option (`Db()`) - File extension */
-	const DB_EXTN = 'editor-extn';
+	public const DB_EXTN = 'editor-extn';
 
 	/** Database value option (`Db()`) - File name (with extension) */
-	const DB_FILE_NAME = 'editor-fileName';
+	public const DB_FILE_NAME = 'editor-fileName';
 
 	/** Database value option (`Db()`) - File size (bytes) */
-	const DB_FILE_SIZE = 'editor-fileSize';
+	public const DB_FILE_SIZE = 'editor-fileSize';
 
 	/** Database value option (`Db()`) - MIME type */
-	const DB_MIME_TYPE = 'editor-mimeType';
+	public const DB_MIME_TYPE = 'editor-mimeType';
 
 	/** Database value option (`Db()`) - Full system path to the file */
-	const DB_SYSTEM_PATH = 'editor-systemPath';
+	public const DB_SYSTEM_PATH = 'editor-systemPath';
 
 	/** Database value option (`Db()`) - HTTP path to the file. This is derived
 	 * from the system path by removing `$_SERVER['DOCUMENT_ROOT']`. If your
 	 * images live outside of the document root a custom value would be to be
 	 * used.
 	 */
-	const DB_WEB_PATH = 'editor-webPath';
+	public const DB_WEB_PATH = 'editor-webPath';
 
 	/** Read from the database - don't write to it.
 	 */
-	const DB_READ_ONLY = 'editor-readOnly';
+	public const DB_READ_ONLY = 'editor-readOnly';
 
 	/*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
 	 * Private parameters
@@ -437,8 +437,8 @@ class Upload extends Ext
 					!is_string($this->_action)
 					&& ($prop === self::DB_SYSTEM_PATH || $prop === self::DB_WEB_PATH)
 				) {
-					$this->_error = 'Cannot set path information in database ' .
-						'if a custom method is used to save the file.';
+					$this->_error = 'Cannot set path information in database '
+						. 'if a custom method is used to save the file.';
 
 					return false;
 				}
@@ -512,9 +512,9 @@ class Upload extends Ext
 			chmod($to, $this->_mode);
 		}
 
-		return $id !== null ?
-			$id :
-			$to;
+		return $id !== null
+			? $id
+			: $to;
 	}
 
 	/**

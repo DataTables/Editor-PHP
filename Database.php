@@ -61,10 +61,10 @@ class Database
 		}
 
 		$this->_type = $opts['type'];
-		$this->query_driver = 'DataTables\\Database\\Driver\\' . $opts['type'] . 'Query';
-		$this->_dbResource = isset($opts['pdo']) ?
-			$opts['pdo'] :
-			call_user_func($this->query_driver . '::connect', $opts);
+		$this->query_driver = 'DataTables\Database\Driver\\' . $opts['type'] . 'Query';
+		$this->_dbResource = isset($opts['pdo'])
+			? $opts['pdo']
+			: call_user_func($this->query_driver . '::connect', $opts);
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -232,9 +232,9 @@ class Database
 		$selectColumn = '*';
 
 		if ($pkey) {
-			$selectColumn = is_array($pkey) ?
-				$pkey[0] :
-				$pkey;
+			$selectColumn = is_array($pkey)
+				? $pkey[0]
+				: $pkey;
 		}
 
 		// Update or insert

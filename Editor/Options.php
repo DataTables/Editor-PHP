@@ -168,7 +168,7 @@ class Options extends Ext
 	 * @param bool|null $_ Flag to set the always refresh set to, or null to
 	 *                     get the current state.
 	 *
-	 * @return ($_ is null ? boolean : $this)
+	 * @return ($_ is null ? bool : $this)
 	 */
 	public function alwaysRefresh($_ = null)
 	{
@@ -316,7 +316,7 @@ class Options extends Ext
 	 * @param bool|null $_ Flag to set the search only set to, or null to
 	 *                     get the current state.
 	 *
-	 * @return ($_ is null ? boolean : $this)
+	 * @return ($_ is null ? bool : $this)
 	 */
 	public function searchOnly($_ = null)
 	{

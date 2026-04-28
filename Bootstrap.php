@@ -34,9 +34,9 @@ spl_autoload_register(function ($class) {
 
 	array_shift($a);
 	$className = array_pop($a);
-	$path = count($a) ?
-		implode('/', $a) . '/' :
-		'';
+	$path = count($a)
+		? implode('/', $a) . '/'
+		: '';
 
 	require __DIR__ . '/' . $path . $className . '.php';
 });

@@ -80,9 +80,9 @@ class Ext
 		// Set
 		if ($array) {
 			// Property is an array, merge or add to array
-			is_array($val) ?
-				$prop = array_merge($prop, $val) :
-				$prop[] = $val;
+			is_array($val)
+				? $prop = array_merge($prop, $val)
+				: $prop[] = $val;
 		} else {
 			// Property is just a value
 			$prop = $val;
@@ -161,9 +161,9 @@ class Ext
 	protected function _readProp($name, $data)
 	{
 		if (strpos($name, '.') === false) {
-			return isset($data[$name]) ?
-				$data[$name] :
-				null;
+			return isset($data[$name])
+				? $data[$name]
+				: null;
 		}
 
 		$names = explode('.', $name);
@@ -180,9 +180,9 @@ class Ext
 		if (isset($names[count($names) - 1])) {
 			$idx = $names[count($names) - 1];
 
-			return isset($inner[$idx]) ?
-				$inner[$idx] :
-				null;
+			return isset($inner[$idx])
+				? $inner[$idx]
+				: null;
 		}
 
 		return null;
@@ -217,9 +217,9 @@ class Ext
 				$inner[$loopName] = [];
 			} elseif (!is_array($inner[$loopName])) {
 				throw new \Exception(
-					'A property with the name `' . $name . '` already exists. This ' .
-					'can occur if you have properties which share a prefix - ' .
-					'for example `name` and `name.first`.'
+					'A property with the name `' . $name . '` already exists. This '
+					. 'can occur if you have properties which share a prefix - '
+					. 'for example `name` and `name.first`.'
 				);
 			}
 
@@ -228,8 +228,8 @@ class Ext
 
 		if (isset($inner[$names[count($names) - 1]])) {
 			throw new \Exception(
-				'Duplicate field detected - a field with the name `' . $name . '` ' .
-				'already exists.'
+				'Duplicate field detected - a field with the name `' . $name . '` '
+				. 'already exists.'
 			);
 		}
 

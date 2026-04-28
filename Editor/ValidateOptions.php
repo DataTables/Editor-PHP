@@ -30,7 +30,7 @@ class ValidateOptions extends Ext
 	/** @var mixed */
 	private $_dependsValue;
 
-	/** @var callable(mixed, array, array): boolean */
+	/** @var callable(mixed, array, array): bool */
 	private $_dependsFn;
 
 	public function __construct($opts = null)
@@ -51,10 +51,10 @@ class ValidateOptions extends Ext
 	/**
 	 * Apply a dependency for the validator.
 	 *
-	 * @param callable(mixed, array, array): boolean|string $field Function that performances a
-	 *                                                             dependency check, or a field name that this validator depends upon
-	 * @param mixed                                         $value If `$field` is given as a string, this can be a value, or an array of
-	 *                                                             values that the field name given needs the value to match.
+	 * @param callable(mixed, array, array): bool|string $field Function that performances a
+	 *                                                          dependency check, or a field name that this validator depends upon
+	 * @param mixed                                      $value If `$field` is given as a string, this can be a value, or an array of
+	 *                                                          values that the field name given needs the value to match.
 	 *
 	 * @return $this Self for chaining
 	 */

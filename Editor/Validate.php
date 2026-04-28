@@ -311,9 +311,9 @@ class Validate
 		return static function ($val, $data, $field, $host) use ($opts) {
 			$common = Validate::_common($val, $opts, $data, $host);
 
-			return $common === false ?
-				$opts->message() :
-				true;
+			return $common === false
+				? $opts->message()
+				: true;
 		};
 	}
 
@@ -345,9 +345,9 @@ class Validate
 		return static function ($val, $data, $field, $host) use ($opts) {
 			$common = Validate::_common($val, $opts, $data, $host);
 
-			return $common === false ?
-				$opts->message() :
-				true;
+			return $common === false
+				? $opts->message()
+				: true;
 		};
 	}
 
@@ -374,9 +374,9 @@ class Validate
 		return static function ($val, $data, $field, $host) use ($opts) {
 			$common = Validate::_common($val, $opts, $data, $host);
 
-			return $common === false ?
-				$opts->message() :
-				true;
+			return $common === false
+				? $opts->message()
+				: true;
 		};
 	}
 
@@ -399,9 +399,9 @@ class Validate
 			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
-				return $common === false ?
-					$opts->message() :
-					$common;
+				return $common === false
+					? $opts->message()
+					: $common;
 			}
 
 			if (filter_var($val, \FILTER_VALIDATE_BOOLEAN, \FILTER_NULL_ON_FAILURE) === null) {
@@ -436,18 +436,18 @@ class Validate
 			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
-				return $common === false ?
-					$opts->message() :
-					$common;
+				return $common === false
+					? $opts->message()
+					: $common;
 			}
 
 			if ($decimal !== '.') {
 				$val = str_replace($decimal, '.', $val);
 			}
 
-			return !is_numeric($val) ?
-				$opts->message() :
-				true;
+			return !is_numeric($val)
+				? $opts->message()
+				: true;
 		};
 	}
 
@@ -475,9 +475,9 @@ class Validate
 			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
-				return $common === false ?
-					$opts->message() :
-					$common;
+				return $common === false
+					? $opts->message()
+					: $common;
 			}
 
 			$fn = Validate::numeric($decimal, $opts);
@@ -491,9 +491,9 @@ class Validate
 				$val = str_replace($decimal, '.', $val);
 			}
 
-			return $val < $min ?
-				$opts->message() :
-				true;
+			return $val < $min
+				? $opts->message()
+				: true;
 		};
 	}
 
@@ -520,9 +520,9 @@ class Validate
 			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
-				return $common === false ?
-					$opts->message() :
-					$common;
+				return $common === false
+					? $opts->message()
+					: $common;
 			}
 
 			$fn = Validate::numeric($decimal, $opts);
@@ -536,9 +536,9 @@ class Validate
 				$val = str_replace($decimal, '.', $val);
 			}
 
-			return $val > $max ?
-				$opts->message() :
-				true;
+			return $val > $max
+				? $opts->message()
+				: true;
 		};
 	}
 
@@ -565,9 +565,9 @@ class Validate
 			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
-				return $common === false ?
-					$opts->message() :
-					$common;
+				return $common === false
+					? $opts->message()
+					: $common;
 			}
 
 			$fn = Validate::numeric($decimal, $opts);
@@ -618,14 +618,14 @@ class Validate
 			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
-				return $common === false ?
-					$opts->message() :
-					$common;
+				return $common === false
+					? $opts->message()
+					: $common;
 			}
 
-			return filter_var($val, \FILTER_VALIDATE_EMAIL) !== false ?
-				true :
-				$opts->message();
+			return filter_var($val, \FILTER_VALIDATE_EMAIL) !== false
+				? true
+				: $opts->message();
 		};
 	}
 
@@ -651,18 +651,18 @@ class Validate
 			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
-				return $common === false ?
-					$opts->message() :
-					$common;
+				return $common === false
+					? $opts->message()
+					: $common;
 			}
 
-			$strlen = function_exists('mb_strlen') ?
-				'mb_strlen' :
-				'strlen';
+			$strlen = function_exists('mb_strlen')
+				? 'mb_strlen'
+				: 'strlen';
 
-			return $strlen($val) < $min ?
-				$opts->message() :
-				true;
+			return $strlen($val) < $min
+				? $opts->message()
+				: true;
 		};
 	}
 
@@ -688,18 +688,18 @@ class Validate
 			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
-				return $common === false ?
-					$opts->message() :
-					$common;
+				return $common === false
+					? $opts->message()
+					: $common;
 			}
 
-			$strlen = function_exists('mb_strlen') ?
-				'mb_strlen' :
-				'strlen';
+			$strlen = function_exists('mb_strlen')
+				? 'mb_strlen'
+				: 'strlen';
 
-			return $strlen($val) > $max ?
-				$opts->message() :
-				true;
+			return $strlen($val) > $max
+				? $opts->message()
+				: true;
 		};
 	}
 
@@ -723,9 +723,9 @@ class Validate
 			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
-				return $common === false ?
-					$opts->message() :
-					$common;
+				return $common === false
+					? $opts->message()
+					: $common;
 			}
 
 			$fn = Validate::minLen($min, $opts);
@@ -765,14 +765,14 @@ class Validate
 			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
-				return $common === false ?
-					$opts->message() :
-					$common;
+				return $common === false
+					? $opts->message()
+					: $common;
 			}
 
-			return filter_var($val, \FILTER_VALIDATE_IP) !== false ?
-				true :
-				$opts->message();
+			return filter_var($val, \FILTER_VALIDATE_IP) !== false
+				? true
+				: $opts->message();
 		};
 	}
 
@@ -795,14 +795,14 @@ class Validate
 			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
-				return $common === false ?
-					$opts->message() :
-					$common;
+				return $common === false
+					? $opts->message()
+					: $common;
 			}
 
-			return filter_var($val, \FILTER_VALIDATE_URL) !== false ?
-				true :
-				$opts->message();
+			return filter_var($val, \FILTER_VALIDATE_URL) !== false
+				? true
+				: $opts->message();
 		};
 	}
 
@@ -828,14 +828,14 @@ class Validate
 			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
-				return $common === false ?
-					$opts->message() :
-					$common;
+				return $common === false
+					? $opts->message()
+					: $common;
 			}
 
-			return $field->xssSafety($val) != $val ?
-				$opts->message() :
-				true;
+			return $field->xssSafety($val) != $val
+				? $opts->message()
+				: true;
 		};
 	}
 
@@ -861,14 +861,14 @@ class Validate
 			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
-				return $common === false ?
-					$opts->message() :
-					$common;
+				return $common === false
+					? $opts->message()
+					: $common;
 			}
 
-			return in_array($val, $values) ?
-				true :
-				$opts->message();
+			return in_array($val, $values)
+				? true
+				: $opts->message();
 		};
 	}
 
@@ -894,14 +894,14 @@ class Validate
 			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
-				return $common === false ?
-					$opts->message() :
-					$common;
+				return $common === false
+					? $opts->message()
+					: $common;
 			}
 
-			return strip_tags($val) != $val ?
-				$opts->message() :
-				true;
+			return strip_tags($val) != $val
+				? $opts->message()
+				: true;
 		};
 	}
 
@@ -930,20 +930,20 @@ class Validate
 			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
-				return $common === false ?
-					$opts->message() :
-					$common;
+				return $common === false
+					? $opts->message()
+					: $common;
 			}
 
-			$formatCreate = substr($format, 0, 1) !== '!' ?
-				'!' . $format :
-				$format;
+			$formatCreate = substr($format, 0, 1) !== '!'
+				? '!' . $format
+				: $format;
 
 			$date = \DateTime::createFromFormat($formatCreate, $val);
 
-			return $date && $date->format($format) === $val ?
-				true :
-				$opts->message();
+			return $date && $date->format($format) === $val
+				? true
+				: $opts->message();
 		};
 	}
 
@@ -973,9 +973,9 @@ class Validate
 			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
-				return $common === false ?
-					$opts->message() :
-					$common;
+				return $common === false
+					? $opts->message()
+					: $common;
 			}
 
 			$editor = $host['editor'];
@@ -1006,9 +1006,9 @@ class Validate
 
 			$res = $query->exec();
 
-			return $res->count() === 0 ?
-				true :
-				$opts->message();
+			return $res->count() === 0
+				? true
+				: $opts->message();
 		};
 	}
 
@@ -1038,9 +1038,9 @@ class Validate
 			$common = Validate::_common($val, $opts, $data, $host);
 
 			if ($common !== null) {
-				return $common === false ?
-					$opts->message() :
-					$common;
+				return $common === false
+					? $opts->message()
+					: $common;
 			}
 
 			// Allow local values to be defined - for example null
@@ -1081,9 +1081,9 @@ class Validate
 					->exec()
 					->count();
 
-				return $count === 0 ?
-					$opts->message() :
-					true;
+				return $count === 0
+					? $opts->message()
+					: true;
 			} catch (\Exception $e) {
 				return $opts->message();
 			}
@@ -1111,9 +1111,9 @@ class Validate
 	public static function fileSize($size, $msg = 'Uploaded file is too large.')
 	{
 		return static function ($file) use ($size, $msg) {
-			return $file['size'] > $size ?
-				$msg :
-				true;
+			return $file['size'] > $size
+				? $msg
+				: true;
 		};
 	}
 
@@ -1124,9 +1124,9 @@ class Validate
 	{
 		return static function ($editor, $action, $values) use ($count, $msg) {
 			if ($action === 'create' || $action === 'edit') {
-				return count($values) < $count ?
-					$msg :
-					true;
+				return count($values) < $count
+					? $msg
+					: true;
 			}
 
 			return true;
@@ -1137,9 +1137,9 @@ class Validate
 	{
 		return static function ($editor, $action, $values) use ($count, $msg) {
 			if ($action === 'create' || $action === 'edit') {
-				return count($values) > $count ?
-					$msg :
-					true;
+				return count($values) > $count
+					? $msg
+					: true;
 			}
 
 			return true;
@@ -1220,9 +1220,9 @@ class Validate
 		]);
 		$opts = Validate::_commonLegacy($cfg);
 
-		return isset($legacyOpts['decimal']) ?
-			Validate::numeric($legacyOpts['decimal'], $opts) :
-			Validate::numeric('.', $opts);
+		return isset($legacyOpts['decimal'])
+			? Validate::numeric($legacyOpts['decimal'], $opts)
+			: Validate::numeric('.', $opts);
 	}
 
 	/**
@@ -1236,9 +1236,9 @@ class Validate
 		]);
 		$opts = Validate::_commonLegacy($cfg);
 
-		return isset($legacyOpts['decimal']) ?
-			Validate::minNum($min, $legacyOpts['decimal'], $opts) :
-			Validate::minNum($min, '.', $opts);
+		return isset($legacyOpts['decimal'])
+			? Validate::minNum($min, $legacyOpts['decimal'], $opts)
+			: Validate::minNum($min, '.', $opts);
 	}
 
 	/**
@@ -1252,9 +1252,9 @@ class Validate
 		]);
 		$opts = Validate::_commonLegacy($cfg);
 
-		return isset($legacyOpts['decimal']) ?
-			Validate::maxNum($max, $legacyOpts['decimal'], $opts) :
-			Validate::maxNum($max, '.', $opts);
+		return isset($legacyOpts['decimal'])
+			? Validate::maxNum($max, $legacyOpts['decimal'], $opts)
+			: Validate::maxNum($max, '.', $opts);
 	}
 
 	/**
@@ -1267,9 +1267,9 @@ class Validate
 		$cfg = Validate::_extend($legacyOpts, null, []);
 		$opts = Validate::_commonLegacy($cfg);
 
-		return isset($legacyOpts['decimal']) ?
-			Validate::minMaxNum($min, $max, $legacyOpts['decimal'], $opts) :
-			Validate::minMaxNum($min, $max, '.', $opts);
+		return isset($legacyOpts['decimal'])
+			? Validate::minMaxNum($min, $max, $legacyOpts['decimal'], $opts)
+			: Validate::minMaxNum($min, $max, '.', $opts);
 	}
 
 	/**

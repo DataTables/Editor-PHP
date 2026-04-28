@@ -510,9 +510,9 @@ class Join extends Ext
 
 		$dteTableLocal = $this->_aliasParentTable ?: $dteTable;  // Can be aliased to allow a self join
 
-		$joinField = isset($this->_join['table']) ?
-			$this->_join['parent'][0] :
-			$this->_join['parent'];
+		$joinField = isset($this->_join['table'])
+			? $this->_join['parent'][0]
+			: $this->_join['parent'];
 
 		// This is something that will likely come in a future version, but it
 		// is a relatively low use feature. Please get in touch if this is
@@ -589,9 +589,9 @@ class Join extends Ext
 				$whereIn = [];
 
 				for ($i = 0; $i < count($data); ++$i) {
-					$whereIn[] = $pkeyIsJoin ?
-						str_replace($idPrefix, '', $data[$i]['DT_RowId']) :
-						$this->_readProp($readField, $data[$i]);
+					$whereIn[] = $pkeyIsJoin
+						? str_replace($idPrefix, '', $data[$i]['DT_RowId'])
+						: $this->_readProp($readField, $data[$i]);
 				}
 
 				$stmt->where_in($dteTableLocal . '.' . $joinField, $whereIn);
@@ -627,15 +627,15 @@ class Join extends Ext
 
 			// Loop over the data and do a join based on the data available
 			for ($i = 0; $i < count($data); ++$i) {
-				$rowPKey = $pkeyIsJoin ?
-					str_replace($idPrefix, '', $data[$i]['DT_RowId']) :
-					$this->_readProp($readField, $data[$i]);
+				$rowPKey = $pkeyIsJoin
+					? str_replace($idPrefix, '', $data[$i]['DT_RowId'])
+					: $this->_readProp($readField, $data[$i]);
 
 				if (isset($join[$rowPKey])) {
 					$data[$i][$this->_name] = $join[$rowPKey];
 				} else {
-					$data[$i][$this->_name] = ($this->_type === 'object') ?
-						(object) [] : [];
+					$data[$i][$this->_name] = ($this->_type === 'object')
+						? (object) [] : [];
 				}
 			}
 		}
@@ -792,9 +792,9 @@ class Join extends Ext
 
 		$this->_prep($editor);
 
-		$joinData = isset($data[$this->_name]) ?
-			$data[$this->_name] :
-			[];
+		$joinData = isset($data[$this->_name])
+			? $data[$this->_name]
+			: [];
 
 		for ($i = 0; $i < count($this->_validators); ++$i) {
 			$validator = $this->_validators[$i];

@@ -841,9 +841,9 @@ abstract class Query
 	protected function _build_field($addAlias = false)
 	{
 		$a = [];
-		$asAlias = $this->_supportsAsAlias ?
-			' as ' :
-			' ';
+		$asAlias = $this->_supportsAsAlias
+			? ' as '
+			: ' ';
 
 		for ($i = 0; $i < count($this->_field); ++$i) {
 			$field = $this->_field[$i];
@@ -853,15 +853,15 @@ abstract class Query
 				$split = preg_split('/ as (?![^\(]*\))/i', $field);
 
 				if (count($split) > 1) {
-					$a[] = $this->_protect_identifiers($split[0]) . $asAlias .
-						$this->_field_quote . $split[1] . $this->_field_quote;
+					$a[] = $this->_protect_identifiers($split[0]) . $asAlias
+						. $this->_field_quote . $split[1] . $this->_field_quote;
 				} else {
-					$a[] = $this->_protect_identifiers($field) . $asAlias .
-						$this->_field_quote . $this->_escape_field($field) . $this->_field_quote;
+					$a[] = $this->_protect_identifiers($field) . $asAlias
+						. $this->_field_quote . $this->_escape_field($field) . $this->_field_quote;
 				}
 			} elseif ($addAlias && strpos($field, '(') !== false && !strpos($field, ' as ')) {
-				$a[] = $this->_protect_identifiers($field) . $asAlias .
-					$this->_field_quote . $this->_escape_field($field) . $this->_field_quote;
+				$a[] = $this->_protect_identifiers($field) . $asAlias
+					. $this->_field_quote . $this->_escape_field($field) . $this->_field_quote;
 			} else {
 				$a[] = $this->_protect_identifiers($field);
 			}
@@ -1237,9 +1237,9 @@ abstract class Query
 	 */
 	protected function _count()
 	{
-		$select = $this->_supportsAsAlias ?
-			'SELECT COUNT(' . $this->_build_field() . ') as ' . $this->_protect_identifiers('cnt') :
-			'SELECT COUNT(' . $this->_build_field() . ') ' . $this->_protect_identifiers('cnt');
+		$select = $this->_supportsAsAlias
+			? 'SELECT COUNT(' . $this->_build_field() . ') as ' . $this->_protect_identifiers('cnt')
+			: 'SELECT COUNT(' . $this->_build_field() . ') ' . $this->_protect_identifiers('cnt');
 
 		$this->_prepare(
 			$select
@@ -1299,9 +1299,9 @@ abstract class Query
 					'operator' => $type,
 					'group' => null,
 					'field' => $this->_protect_identifiers($key),
-					'query' => $this->_protect_identifiers($key) . ($op === '=' ?
-						' IS NULL' :
-						' IS NOT NULL'),
+					'query' => $this->_protect_identifiers($key) . ($op === '='
+						? ' IS NULL'
+						: ' IS NOT NULL'),
 				];
 			} elseif ($bind) {
 				// Binding condition (i.e. escape data)

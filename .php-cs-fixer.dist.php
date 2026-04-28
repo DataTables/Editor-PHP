@@ -1,12 +1,15 @@
 <?php
 
-$finder = PhpCsFixer\Finder::create()
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
+
+$finder = Finder::create()
 	->in([__DIR__])
 	->ignoreDotFiles(false)
 	->ignoreVCS(true)
 	->exclude(['vendor', 'HtmLawed']);
 
-$config = new PhpCsFixer\Config();
+$config = new Config();
 
 return $config
 	->setRiskyAllowed(true)

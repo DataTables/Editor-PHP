@@ -161,7 +161,7 @@ class Column extends Ext
 	/**
 	 * Get the field instance associated with this column.
 	 *
-	 * @return Editor\Field
+	 * @return Field
 	 *
 	 * @internal For use internally only
 	 */

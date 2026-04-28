@@ -53,24 +53,24 @@ class Editor extends Ext
 	 */
 
 	/** Request type - read */
-	const ACTION_READ = 'read';
+	public const ACTION_READ = 'read';
 
 	/** Request type - create */
-	const ACTION_CREATE = 'create';
+	public const ACTION_CREATE = 'create';
 
 	/** Request type - edit */
-	const ACTION_EDIT = 'edit';
+	public const ACTION_EDIT = 'edit';
 
 	/** Request type - delete */
-	const ACTION_DELETE = 'remove';
+	public const ACTION_DELETE = 'remove';
 
 	/** Request type - options search */
-	const ACTION_SEARCH = 'search';
+	public const ACTION_SEARCH = 'search';
 
 	/** Request type - upload */
-	const ACTION_UPLOAD = 'upload';
+	public const ACTION_UPLOAD = 'upload';
 
-	const VERSION = '3.0.0-beta.1';
+	public const VERSION = '3.0.0-beta.1';
 
 	/**
 	 * Determine the request type from an HTTP request.
@@ -144,7 +144,7 @@ class Editor extends Ext
 	/** @var Database */
 	private $_db;
 
-	/** @var Editor\Field[] */
+	/** @var Field[] */
 	private $_fields = [];
 
 	/** @var array */
@@ -156,7 +156,7 @@ class Editor extends Ext
 	/** @var string */
 	private $_idPrefix = 'row_';
 
-	/** @var Editor\Join[] */
+	/** @var Join[] */
 	private $_join = [];
 
 	/** @var string[] */
@@ -338,7 +338,7 @@ class Editor extends Ext
 	/**
 	 * Get / set field instances.
 	 *
-	 * An alias of {@see field}, for convenience.
+	 * An alias of {@see Field}, for convenience.
 	 *
 	 * @param Field|Field[] ...$_ Instances of the {@see Field} class, given as a single
 	 *                            instance of {@see Field}, an array of {@see Field} instances, or multiple
@@ -1064,9 +1064,9 @@ class Editor extends Ext
 
 				if ($valid) {
 					foreach ($data['data'] as $id => &$values) {
-						$d = $action === Editor::ACTION_CREATE ?
-							$this->_insert($values) :
-							$this->_update($id, $values);
+						$d = $action === Editor::ACTION_CREATE
+							? $this->_insert($values)
+							: $this->_update($id, $values);
 
 						if ($d !== null) {
 							$this->_out['data'][] = $d;
@@ -1227,9 +1227,9 @@ class Editor extends Ext
 
 		// Was the primary key altered as part of the edit, if so use the
 		// submitted values
-		$id = count($this->_pkey) > 1 ?
-			$this->pkeyToValue($all) :
-			$this->_pkey_submit_merge($id, $all);
+		$id = count($this->_pkey) > 1
+			? $this->pkeyToValue($all)
+			: $this->_pkey_submit_merge($id, $all);
 
 		// Join tables
 		for ($i = 0; $i < count($this->_join); ++$i) {
@@ -1240,9 +1240,9 @@ class Editor extends Ext
 
 		// Full data set for the created row
 		$row = $this->_get($id);
-		$row = count($row['data']) > 0 ?
-			$row['data'][0] :
-			null;
+		$row = count($row['data']) > 0
+			? $row['data'][0]
+			: null;
 
 		$this->_trigger('postCreate', $id, $values, $row);
 
@@ -1279,9 +1279,9 @@ class Editor extends Ext
 
 		// Full data set for the modified row
 		$row = $this->_get($getId);
-		$row = count($row['data']) > 0 ?
-			$row['data'][0] :
-			null;
+		$row = count($row['data']) > 0
+			? $row['data'][0]
+			: null;
 
 		$this->_trigger('postEdit', $id, $values, $row);
 
@@ -1647,8 +1647,8 @@ class Editor extends Ext
 				$order = $http['order'][$i];
 
 				$query->order(
-					$this->_ssp_field($http, $order['column']) . ' ' .
-					($order['dir'] === 'asc' ? 'asc' : 'desc')
+					$this->_ssp_field($http, $order['column']) . ' '
+					. ($order['dir'] === 'asc' ? 'asc' : 'desc')
 				);
 			}
 		}
@@ -2243,8 +2243,8 @@ class Editor extends Ext
 						}
 					} else {
 						throw new \Exception(
-							'Where condition used as a setter, ' .
-							'but value submitted for field: ' . $cond['key']
+							'Where condition used as a setter, '
+							. 'but value submitted for field: ' . $cond['key']
 						);
 					}
 				}
@@ -2257,9 +2257,9 @@ class Editor extends Ext
 		}
 
 		// Use pkey only for the host table
-		$pkey = in_array($table, $this->_table) !== false ?
-			$this->_pkey :
-			'';
+		$pkey = in_array($table, $this->_table) !== false
+			? $this->_pkey
+			: '';
 
 		// Insert or update
 		if ($action === 'create') {
@@ -2467,9 +2467,9 @@ class Editor extends Ext
 
 			if (strpos($name, '.') === false) {
 				throw new \Exception(
-					'Table part of the field "' . $name . '" was not found. ' .
-					'In Editor instances that use a join, all fields must have the ' .
-					'database table set explicitly.'
+					'Table part of the field "' . $name . '" was not found. '
+					. 'In Editor instances that use a join, all fields must have the '
+					. 'database table set explicitly.'
 				);
 			}
 		}
@@ -2488,17 +2488,17 @@ class Editor extends Ext
 		if (stripos($name, ' as ') !== false) {
 			$a = preg_split('/ as /i', $name);
 
-			return $type === 'alias' ?
-			$a[1] :
-			$a[0];
+			return $type === 'alias'
+			? $a[1]
+			: $a[0];
 		}
 
 		if (stripos($name, ' ') !== false) {
 			$a = preg_split('/ /i', $name);
 
-			return $type === 'alias' ?
-			$a[1] :
-			$a[0];
+			return $type === 'alias'
+			? $a[1]
+			: $a[0];
 		}
 
 		return $name;
@@ -2622,9 +2622,9 @@ class Editor extends Ext
 
 			if (!$field || !$field->apply('create', $row)) {
 				throw new \Exception(
-					'When inserting into a compound key table, ' .
-					'all fields that are part of the compound key must be ' .
-					'submitted with a specific value.',
+					'When inserting into a compound key table, '
+					. 'all fields that are part of the compound key must be '
+					. 'submitted with a specific value.',
 					1
 				);
 			}
@@ -2647,8 +2647,8 @@ class Editor extends Ext
 
 	private function _read_table()
 	{
-		return count($this->_readTableNames) ?
-			$this->_readTableNames :
-			$this->_table;
+		return count($this->_readTableNames)
+			? $this->_readTableNames
+			: $this->_table;
 	}
 }

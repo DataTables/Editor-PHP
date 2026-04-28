@@ -62,8 +62,8 @@ class MysqlQuery extends Query
 			// If we can't establish a DB connection then we return a DataTables
 			// error.
 			echo json_encode([
-				'error' => 'An error occurred while connecting to the database ' .
-					"'{$db}'. The error reported by the server was: " . $e->getMessage(),
+				'error' => 'An error occurred while connecting to the database '
+					. "'{$db}'. The error reported by the server was: " . $e->getMessage(),
 			]);
 
 			exit(1);

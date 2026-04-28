@@ -279,9 +279,9 @@ class SearchBuilderOptions extends Ext
 		}
 
 		// Set up the join variable so that it will fit nicely later
-		$leftJoin = gettype($this->_leftJoin) === 'array' ?
-			$this->_leftJoin :
-			[$this->_leftJoin];
+		$leftJoin = gettype($this->_leftJoin) === 'array'
+			? $this->_leftJoin
+			: [$this->_leftJoin];
 
 		foreach ($leftJoinIn as $lj) {
 			$found = false;
@@ -334,9 +334,9 @@ class SearchBuilderOptions extends Ext
 					$bLabel = '';
 				}
 
-				return is_numeric($aLabel) && is_numeric($bLabel) ?
-					($aLabel * 1) - ($bLabel * 1) :
-					strcmp($aLabel, $bLabel);
+				return is_numeric($aLabel) && is_numeric($bLabel)
+					? ($aLabel * 1) - ($bLabel * 1)
+					: strcmp($aLabel, $bLabel);
 			});
 		}
 
