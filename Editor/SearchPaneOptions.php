@@ -14,7 +14,9 @@
 
 namespace DataTables\Editor;
 
+use DataTables\Database;
 use DataTables\Database\Query;
+use DataTables\Editor;
 use DataTables\Ext;
 
 /**
@@ -459,5 +461,84 @@ class SearchPaneOptions extends Ext
 		}
 
 		return $out;
+	}
+
+	/**
+	 * Apply SearchPane conditions to a sever-side processing request query.
+	 *
+	 * @param Database $db       Database object
+	 * @param Editor   $editor   Database query object for the SSP query
+	 * @param Query    $query    Database query object for the SSP query
+	 * @param mixed    $http     SearchPane condition parameters
+	 * @param array    $leftJoin Left join configuration object
+	 *
+	 * @internal For use when processing an SSP request to add the require
+	 * conditions.
+	 */
+	public static function ssp($db, $editor, $query, $http, $leftJoin)
+	{
+		$fields = $editor->fields();
+
+		// For every selection in every column
+		foreach ($fields as $field) {
+			if (isset($http['searchPanes'][$field->name()])) {
+				for ($i = 0; $i < count($http['searchPanes'][$field->name()]); ++$i) {
+					// Check the number of rows...
+					$q = $db
+						->query('select')
+						->table($editor->table())
+						->get('COUNT(*) as cnt');
+
+					$q->left_join($leftJoin);
+
+					// ... where the selected option is present...
+					if (
+						isset($http['searchPanes_null'][$field->name()][$i])
+						&& $http['searchPanes_null'][$field->name()][$i] === 'true'
+					) {
+						$q->where(static function ($q2) use ($field) {
+							$q2->where($field->dbField(), null, '=');
+							$q2->or_where($field->dbField(), '', '=');
+						});
+					} else {
+						$q->where(
+							$field->dbField(),
+							$http['searchPanes'][$field->name()][$i],
+							'='
+						);
+					}
+
+					$r = $q
+						->exec()
+						->fetchAll();
+
+					// ... If there are none then don't bother with this selection
+					if ($r[0]['cnt'] == 0) {
+						array_splice($http['searchPanes'][$field->name()], $i, 1);
+						--$i;
+					}
+				}
+
+				$query->where(static function ($q) use ($field, $http) {
+					for ($j = 0; $j < count($http['searchPanes'][$field->name()]); ++$j) {
+						if (
+							isset($http['searchPanes_null'][$field->name()][$j])
+							&& $http['searchPanes_null'][$field->name()][$j] === 'true'
+						) {
+							$q->where(static function ($q2) use ($field) {
+								$q2->where($field->dbField(), null, '=');
+								$q2->or_where($field->dbField(), '', '=');
+							});
+						} else {
+							$q->or_where(
+								$field->dbField(),
+								$http['searchPanes'][$field->name()][$j],
+								'='
+							);
+						}
+					}
+				});
+			}
+		}
 	}
 }

@@ -6,6 +6,8 @@ use DataTables\Database\Query;
 use DataTables\Editor\ColumnControl;
 use DataTables\Editor\Field;
 use DataTables\Editor\Join;
+use DataTables\Editor\SearchBuilderOptions;
+use DataTables\Editor\SearchPaneOptions;
 
 /**
  * DataTables Editor base class for creating editable tables.
@@ -1661,230 +1663,6 @@ class Editor extends Ext
 		}
 	}
 
-	private function _constructSearchBuilderConditions($query, $data)
-	{
-		$first = true;
-
-		if (!isset($data['criteria'])) {
-			return;
-		}
-		// Iterate over every group or criteria in the current group
-		foreach ($data['criteria'] as $crit) {
-			// If criteria is defined then this must be a group
-			if (isset($crit['criteria'])) {
-				// Check if this is the first, or if it is and logic
-				if ($data['logic'] === 'AND' || $first) {
-					// Call the function for the next group
-					$query->where_group(function ($q) use ($crit) {
-						$this->_constructSearchBuilderConditions($q, $crit);
-					});
-					// Set first to false so that in future only the logic is checked
-					$first = false;
-				} else {
-					$query->where_group(function ($q) use ($crit) {
-						$this->_constructSearchBuilderConditions($q, $crit);
-					}, 'OR');
-				}
-			} elseif (isset($crit['condition']) && (isset($crit['value1']) || $crit['condition'] === 'null' || $crit['condition'] === '!null')) {
-				// Sometimes the structure of the object that is passed across is named in a strange way.
-				// This conditional assignment solves that issue
-				$val1 = isset($crit['value1']) ? $crit['value1'] : '';
-				$val2 = isset($crit['value2']) ? $crit['value2'] : '';
-
-				if ($val1 == '' && $crit['condition'] !== 'null' && $crit['condition'] !== '!null') {
-					continue;
-				}
-				if ($val2 == '' && ($crit['condition'] === 'between' || $crit['condition'] === '!between')) {
-					continue;
-				}
-
-				// Switch on the condition that has been passed in
-				switch ($crit['condition']) {
-					case '=':
-						// Check if this is the first, or if it is and logic
-						if ($data['logic'] === 'AND' || $first) {
-							// Call the where function for this condition
-							$query->where($crit['origData'], $val1, '=');
-							// Set first to false so that in future only the logic is checked
-							$first = false;
-						} else {
-							// Call the or_where function - has to be or logic in this block
-							$query->or_where($crit['origData'], $val1, '=');
-						}
-
-						break;
-					case '!=':
-						if ($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], $val1, '<>');
-							$first = false;
-						} else {
-							$query->or_where($crit['origData'], $val1, '<>');
-						}
-
-						break;
-					case 'contains':
-						if ($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], '%' . $val1 . '%', 'LIKE');
-							$first = false;
-						} else {
-							$query->or_where($crit['origData'], '%' . $val1 . '%', 'LIKE');
-						}
-
-						break;
-					case '!contains':
-						if ($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], '%' . $val1 . '%', 'NOT LIKE');
-							$first = false;
-						} else {
-							$query->or_where($crit['origData'], '%' . $val1 . '%', 'NOT LIKE');
-						}
-
-						break;
-					case 'starts':
-						if ($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], $val1 . '%', 'LIKE');
-							$first = false;
-						} else {
-							$query->or_where($crit['origData'], $val1 . '%', 'LIKE');
-						}
-
-						break;
-					case '!starts':
-						if ($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], $val1 . '%', 'NOT LIKE');
-							$first = false;
-						} else {
-							$query->or_where($crit['origData'], $val1 . '%', 'NOT LIKE');
-						}
-
-						break;
-					case 'ends':
-						if ($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], '%' . $val1, 'LIKE');
-							$first = false;
-						} else {
-							$query->or_where($crit['origData'], '%' . $val1, 'LIKE');
-						}
-
-						break;
-					case '!ends':
-						if ($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], '%' . $val1, 'NOT LIKE');
-							$first = false;
-						} else {
-							$query->or_where($crit['origData'], '%' . $val1, 'NOT LIKE');
-						}
-
-						break;
-					case '<':
-						if ($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], $val1, '<');
-							$first = false;
-						} else {
-							$query->or_where($crit['origData'], $val1, '<');
-						}
-
-						break;
-					case '<=':
-						if ($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], $val1, '<=');
-							$first = false;
-						} else {
-							$query->or_where($crit['origData'], $val1, '<=');
-						}
-
-						break;
-					case '>=':
-						if ($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], $val1, '>=');
-							$first = false;
-						} else {
-							$query->or_where($crit['origData'], $val1, '>=');
-						}
-
-						break;
-					case '>':
-						if ($data['logic'] === 'AND' || $first) {
-							$query->where($crit['origData'], $val1, '>');
-							$first = false;
-						} else {
-							$query->or_where($crit['origData'], $val1, '>');
-						}
-
-						break;
-					case 'between':
-						if ($data['logic'] === 'AND' || $first) {
-							$query->where_group(static function ($q) use ($crit, $val1, $val2) {
-								$q
-									->where($crit['origData'], is_numeric($val1) ? (int) $val1 : $val1, '>=')
-									->where($crit['origData'], is_numeric($val2) ? (int) $val2 : $val2, '<=');
-							});
-							$first = false;
-						} else {
-							$query
-								->or_where($crit['origData'], is_numeric($val1) ? (int) $val1 : $val1, '>=')
-								->where($crit['origData'], is_numeric($val2) ? (int) $val2 : $val2, '<=');
-						}
-
-						break;
-					case '!between':
-						if ($data['logic'] === 'AND' || $first) {
-							$query->where_group(static function ($q) use ($crit, $val1, $val2) {
-								$q->where($crit['origData'], is_numeric($val1) ? (int) $val1 : $val1, '<')->or_where($crit['origData'], is_numeric($val2) ? (int) $val2 : $val2, '>');
-							});
-							$first = false;
-						} else {
-							$query->or_where($crit['origData'], is_numeric($val1) ? (int) $val1 : $val1, '<')->or_where($crit['origData'], is_numeric($val2) ? (int) $val2 : $val2, '>');
-						}
-
-						break;
-					case 'null':
-						if ($data['logic'] === 'AND' || $first) {
-							$query->where_group(static function ($q) use ($crit) {
-								$q->where($crit['origData'], null, '=');
-								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
-									$q->or_where($crit['origData'], '', '=');
-								}
-							});
-							$first = false;
-						} else {
-							$query->where_group(static function ($q) use ($crit) {
-								$q->where($crit['origData'], null, '=');
-								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
-									$q->or_where($crit['origData'], '', '=');
-								}
-							}, 'OR');
-						}
-
-						break;
-					case '!null':
-						if ($data['logic'] === 'AND' || $first) {
-							$query->where_group(static function ($q) use ($crit) {
-								$q->where($crit['origData'], null, '!=');
-								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
-									$q->where($crit['origData'], '', '!=');
-								}
-							});
-							$first = false;
-						} else {
-							$query->where_group(static function ($q) use ($crit) {
-								$q->where($crit['origData'], null, '!=');
-								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
-									$q->where($crit['origData'], '', '!=');
-								}
-							}, 'OR');
-						}
-
-						break;
-					default:
-						break;
-				}
-			}
-		}
-
-		return $query;
-	}
-
 	/**
 	 * Add DataTables' 'where' condition to a server-side processing query. This
 	 * works for both global and individual column filtering.
@@ -1913,90 +1691,22 @@ class Editor extends Ext
 			});
 		}
 
-		// foreach ($this->_fields as $field) {
-		// 	// Don't reselect a pkey column if it was already added
-		// 	if ( in_array( $field->dbField(), $this->_pkey ) ) {
-		// 		continue;
-		// 	}
-
-		// 	if ( $field->apply('get') && $field->getValue() === null ) {
-		// 		$query->get( $field->dbField() );
-		// 	}
-		// }
-
 		if (isset($http['searchPanes'])) {
-			// Set the database from editor
-			$db = $this->_db;
-			// For every selection in every column
-			foreach ($this->_fields as $field) {
-				if (isset($http['searchPanes'][$field->name()])) {
-					for ($i = 0; $i < count($http['searchPanes'][$field->name()]); ++$i) {
-						// Check the number of rows...
-						$q = $db
-							->query('select')
-							->table($this->_table)
-							->get('COUNT(*) as cnt');
-
-						$q->left_join($this->_leftJoin);
-
-						// ... where the selected option is present...
-						if (
-							isset($http['searchPanes_null'][$field->name()][$i])
-							&& $http['searchPanes_null'][$field->name()][$i] === 'true'
-						) {
-							$q->where(static function ($q2) use ($field) {
-								$q2->where($field->dbField(), null, '=');
-								$q2->or_where($field->dbField(), '', '=');
-							});
-						} else {
-							$q->where(
-								$field->dbField(),
-								$http['searchPanes'][$field->name()][$i],
-								'='
-							);
-						}
-
-						$r = $q
-							->exec()
-							->fetchAll();
-
-						// ... If there are none then don't bother with this selection
-						if ($r[0]['cnt'] == 0) {
-							array_splice($http['searchPanes'][$field->name()], $i, 1);
-							--$i;
-						}
-					}
-
-					$query->where(static function ($q) use ($field, $http) {
-						for ($j = 0; $j < count($http['searchPanes'][$field->name()]); ++$j) {
-							if (
-								isset($http['searchPanes_null'][$field->name()][$j])
-								&& $http['searchPanes_null'][$field->name()][$j] === 'true'
-							) {
-								$q->where(static function ($q2) use ($field) {
-									$q2->where($field->dbField(), null, '=');
-									$q2->or_where($field->dbField(), '', '=');
-								});
-							} else {
-								$q->or_where(
-									$field->dbField(),
-									$http['searchPanes'][$field->name()][$j],
-									'='
-								);
-							}
-						}
-					});
-				}
-			}
+			SearchPaneOptions::ssp($this->_db, $this, $query, $http, $this->_leftJoin);
 		}
 
 		if (isset($http['searchBuilder']) && $http['searchBuilder'] !== 'false') {
-			$query->where_group(function ($q) use ($http) {
-				$this->_constructSearchBuilderConditions($q, $http['searchBuilder']);
+			$query->where_group(static function ($q) use ($http) {
+				SearchBuilderOptions::ssp($q, $http['searchBuilder']);
 			});
 		}
 
 		ColumnControl::ssp($this, $query, $http);
+
+		// The following is similar to the "smart" search on the client-side
+		// where the word order doesn't matter. This isn't used without manual
+		// configuration as it does add many more conditions. It might get a
+		// feature flag in future.
 
 		// if ( $http['search']['value'] ) {
 		// 	$words = explode(" ", $http['search']['value']);

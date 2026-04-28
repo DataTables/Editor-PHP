@@ -342,4 +342,239 @@ class SearchBuilderOptions extends Ext
 
 		return $out;
 	}
+
+	/**
+	 * Apply SearchBuilder conditions to a sever-side processing request query.
+	 *
+	 * @param Query $query Database query object
+	 * @param mixed $data  SearchBuilder condition parameters
+	 *
+	 * @internal For use when processing an SSP request to add the require
+	 * conditions.
+	 */
+	public static function ssp($query, $data)
+	{
+		$first = true;
+
+		if (!isset($data['criteria'])) {
+			return;
+		}
+
+		// Iterate over every group or criteria in the current group
+		foreach ($data['criteria'] as $crit) {
+			// If criteria is defined then this must be a group
+			if (isset($crit['criteria'])) {
+				// Check if this is the first, or if it is and logic
+				if ($data['logic'] === 'AND' || $first) {
+					// Call the function for the next group
+					$query->where_group(static function ($q) use ($crit) {
+						self::ssp($q, $crit);
+					});
+					// Set first to false so that in future only the logic is checked
+					$first = false;
+				} else {
+					$query->where_group(static function ($q) use ($crit) {
+						self::ssp($q, $crit);
+					}, 'OR');
+				}
+			} elseif (isset($crit['condition']) && (isset($crit['value1']) || $crit['condition'] === 'null' || $crit['condition'] === '!null')) {
+				// Sometimes the structure of the object that is passed across is named in a strange way.
+				// This conditional assignment solves that issue
+				$val1 = isset($crit['value1']) ? $crit['value1'] : '';
+				$val2 = isset($crit['value2']) ? $crit['value2'] : '';
+
+				if ($val1 == '' && $crit['condition'] !== 'null' && $crit['condition'] !== '!null') {
+					continue;
+				}
+
+				if ($val2 == '' && ($crit['condition'] === 'between' || $crit['condition'] === '!between')) {
+					continue;
+				}
+
+				// Switch on the condition that has been passed in
+				switch ($crit['condition']) {
+					case '=':
+						// Check if this is the first, or if it is and logic
+						if ($data['logic'] === 'AND' || $first) {
+							// Call the where function for this condition
+							$query->where($crit['origData'], $val1, '=');
+							// Set first to false so that in future only the logic is checked
+							$first = false;
+						} else {
+							// Call the or_where function - has to be or logic in this block
+							$query->or_where($crit['origData'], $val1, '=');
+						}
+
+						break;
+					case '!=':
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1, '<>');
+							$first = false;
+						} else {
+							$query->or_where($crit['origData'], $val1, '<>');
+						}
+
+						break;
+					case 'contains':
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], '%' . $val1 . '%', 'LIKE');
+							$first = false;
+						} else {
+							$query->or_where($crit['origData'], '%' . $val1 . '%', 'LIKE');
+						}
+
+						break;
+					case '!contains':
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], '%' . $val1 . '%', 'NOT LIKE');
+							$first = false;
+						} else {
+							$query->or_where($crit['origData'], '%' . $val1 . '%', 'NOT LIKE');
+						}
+
+						break;
+					case 'starts':
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1 . '%', 'LIKE');
+							$first = false;
+						} else {
+							$query->or_where($crit['origData'], $val1 . '%', 'LIKE');
+						}
+
+						break;
+					case '!starts':
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1 . '%', 'NOT LIKE');
+							$first = false;
+						} else {
+							$query->or_where($crit['origData'], $val1 . '%', 'NOT LIKE');
+						}
+
+						break;
+					case 'ends':
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], '%' . $val1, 'LIKE');
+							$first = false;
+						} else {
+							$query->or_where($crit['origData'], '%' . $val1, 'LIKE');
+						}
+
+						break;
+					case '!ends':
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], '%' . $val1, 'NOT LIKE');
+							$first = false;
+						} else {
+							$query->or_where($crit['origData'], '%' . $val1, 'NOT LIKE');
+						}
+
+						break;
+					case '<':
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1, '<');
+							$first = false;
+						} else {
+							$query->or_where($crit['origData'], $val1, '<');
+						}
+
+						break;
+					case '<=':
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1, '<=');
+							$first = false;
+						} else {
+							$query->or_where($crit['origData'], $val1, '<=');
+						}
+
+						break;
+					case '>=':
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1, '>=');
+							$first = false;
+						} else {
+							$query->or_where($crit['origData'], $val1, '>=');
+						}
+
+						break;
+					case '>':
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where($crit['origData'], $val1, '>');
+							$first = false;
+						} else {
+							$query->or_where($crit['origData'], $val1, '>');
+						}
+
+						break;
+					case 'between':
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where_group(static function ($q) use ($crit, $val1, $val2) {
+								$q
+									->where($crit['origData'], is_numeric($val1) ? (int) $val1 : $val1, '>=')
+									->where($crit['origData'], is_numeric($val2) ? (int) $val2 : $val2, '<=');
+							});
+							$first = false;
+						} else {
+							$query
+								->or_where($crit['origData'], is_numeric($val1) ? (int) $val1 : $val1, '>=')
+								->where($crit['origData'], is_numeric($val2) ? (int) $val2 : $val2, '<=');
+						}
+
+						break;
+					case '!between':
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where_group(static function ($q) use ($crit, $val1, $val2) {
+								$q->where($crit['origData'], is_numeric($val1) ? (int) $val1 : $val1, '<')->or_where($crit['origData'], is_numeric($val2) ? (int) $val2 : $val2, '>');
+							});
+							$first = false;
+						} else {
+							$query->or_where($crit['origData'], is_numeric($val1) ? (int) $val1 : $val1, '<')->or_where($crit['origData'], is_numeric($val2) ? (int) $val2 : $val2, '>');
+						}
+
+						break;
+					case 'null':
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where_group(static function ($q) use ($crit) {
+								$q->where($crit['origData'], null, '=');
+								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
+									$q->or_where($crit['origData'], '', '=');
+								}
+							});
+							$first = false;
+						} else {
+							$query->where_group(static function ($q) use ($crit) {
+								$q->where($crit['origData'], null, '=');
+								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
+									$q->or_where($crit['origData'], '', '=');
+								}
+							}, 'OR');
+						}
+
+						break;
+					case '!null':
+						if ($data['logic'] === 'AND' || $first) {
+							$query->where_group(static function ($q) use ($crit) {
+								$q->where($crit['origData'], null, '!=');
+								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
+									$q->where($crit['origData'], '', '!=');
+								}
+							});
+							$first = false;
+						} else {
+							$query->where_group(static function ($q) use ($crit) {
+								$q->where($crit['origData'], null, '!=');
+								if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
+									$q->where($crit['origData'], '', '!=');
+								}
+							}, 'OR');
+						}
+
+						break;
+					default:
+						break;
+				}
+			}
+		}
+
+		return $query;
+	}
 }
