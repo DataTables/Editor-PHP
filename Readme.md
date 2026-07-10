@@ -5,7 +5,7 @@ This is a PHP library to provide easy server-side support for [DataTables](https
 These libraries provide support for:
 
 * Server-side processing - work with millions of rows
-* [Editor](https://editor.datatables.net) - CRUD UI for DataTables
+* [Editor](https://datatables.net/manual/extensions/editor) - Editing UI for DataTables
 * ColumnControl - Column search controls for DataTables
 * SearchBuilder - Complex search logic UI
 
@@ -14,10 +14,10 @@ The library is framework-agnostic and can be used in any web framework, includin
 
 ## Installation
 
-Available on [Packagist](https://packagist.org/packages/datatables.net/editor-php), this package can be installed with:
+Available on [Packagist](https://packagist.org/packages/datatables.net/php), this package can be installed with:
 
 ```sh
-composer require datatables.net/editor-php
+composer require datatables.net/php
 ```
 
 Then add:
@@ -144,7 +144,7 @@ new DataTable( $db, 'datatables_demo' )
 
 ## Documentation
 
-For full documentation, [please refer to the DataTables site](https://datatables.net/manual/php).
+For full documentation, [please refer to the DataTables site](https://datatables.net/manual/server/php).
 
 
 ## License
