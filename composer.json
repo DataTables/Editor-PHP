@@ -1,12 +1,12 @@
 {
-	"name": "datatables.net/editor-php",
+	"name": "datatables.net/php",
 	"description": "PHP server-side libraries for DataTables",
 	"type": "library",
 	"require": {
 		"php": ">=5.6.0 <9"
 	},
 	"keywords": ["DataTables","Editor","table","javascript"],
-	"homepage": "https://editor.datatables.net",
+	"homepage": "https://datatables.net",
 	"authors": [
 		{
 			"name": "SpryMedia Ltd",

@@ -45,7 +45,7 @@ spl_autoload_register(function ($class) {
 // Configuration
 //   Load the database connection configuration options
 //
-if (!isset($sql_details)) {
+if (!isset($sql_details) && is_file(__DIR__ . '/config.php')) {
 	include __DIR__ . '/config.php';
 }
 
