@@ -5,11 +5,11 @@
  *
  * PHP libraries for DataTables and DataTables Editor.
  *
- * @author    SpryMedia
- * @copyright SpryMedia ( http://sprymedia.co.uk )
- * @license   http://editor.datatables.net/license DataTables Editor
+ * @author    SpryMedia Ltd
+ * @copyright SpryMedia Ltd
+ * @license   MIT
  *
- * @see       http://editor.datatables.net
+ * @see       https://datatables.net/manual/server/php
  */
 define('DATATABLES', true);
 
