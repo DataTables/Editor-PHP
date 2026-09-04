@@ -654,14 +654,14 @@ class StateRestore extends Ext
 	 *
 	 * @param mixed $data Submitted data
 	 *
-	 * @return array
+	 * @return void
 	 */
 	private function _removeDefault($data)
 	{
 		$validate = $this->_assertStateHost($data);
 
 		if ($validate !== true) {
-			return $validate;
+			return;
 		}
 
 		// Values to set
@@ -684,8 +684,6 @@ class StateRestore extends Ext
 		}
 
 		$this->db()->update($this->_table, $set, $where);
-
-		return $this->_read($data, $data['id']);
 	}
 
 	/**
