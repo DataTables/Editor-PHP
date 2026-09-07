@@ -463,7 +463,7 @@ class StateRestore extends Ext
 	}
 
 	/**
-	 * Add a new state to the database.
+	 * Update a state on the database.
 	 *
 	 * @param mixed $data State information
 	 *
@@ -667,11 +667,6 @@ class StateRestore extends Ext
 		// Values to set
 		$set = [];
 		$set[$this->_columnDefault] = 0;
-
-		// Dev defined values (server-side)
-		foreach ($this->_set as $key => $value) {
-			$set[$key] = $value;
-		}
 
 		// Conditions
 		$where = [];
